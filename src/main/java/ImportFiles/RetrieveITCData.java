@@ -19,7 +19,7 @@ public class RetrieveITCData {
     List<UnavailabilityConstraints> constraints = new ArrayList<>();
 
 
-        File myObj = new File("ITCFiles/comp01.ctt.txt");
+        File myObj = new File("src/Datasets/ITCFiles/comp01.ctt.txt");
         Scanner myReader;
     {
 
