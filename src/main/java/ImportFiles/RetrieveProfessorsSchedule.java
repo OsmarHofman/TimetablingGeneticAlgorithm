@@ -18,20 +18,19 @@ import java.util.List;
 
 public class RetrieveProfessorsSchedule {
 
-    public void pegarArquivo() {
+    public XSSFWorkbook pegarArquivo() throws IOException {
         try {
             // procura o arquivo a partir de seu caminho
             FileInputStream arquivo = new FileInputStream(new File("src/Datasets/IFSCFiles/Dados_ifsc_2019.xlsx"));
-            XSSFWorkbook wb = new XSSFWorkbook(arquivo);
-            this.converterWB(wb);
+            return new XSSFWorkbook(arquivo);
         } catch (IOException e) {
             System.out.println("Erro ao tentar ler o arquivo Excel");
             e.printStackTrace();
         }
-
+        throw new IOException("Erro ao pegar arquivo");
     }
 
-    private void converterWB(XSSFWorkbook wb) throws IOException {
+    public List<CourseRelation> converterWB(XSSFWorkbook wb) throws IOException {
         XSSFSheet planilha = wb.getSheetAt(0);
         XSSFRow linha;
         XSSFCell celula;
@@ -68,26 +67,32 @@ public class RetrieveProfessorsSchedule {
             if (linha.getRowNum() != 0)
                 listaProfessores.add(new Professor_Curso(profNome, listaCursosProfessor));
         }
-        this.contagemCurso(listaCursos, listaProfessores);
+         return this.contagemCurso(listaCursos, listaProfessores);
     }
 
-    private void contagemCurso(List<String> listaCursos, List<Professor_Curso> listaCursosProfessor) {
+    private List<CourseRelation> contagemCurso(List<String> listaCursos, List<Professor_Curso> listaCursosProfessor) {
         List<CourseRelation> courseRelation = new ArrayList<>();
 
 
         for (String curso : listaCursos) {
             CourseRelation iterationCourse = new CourseRelation(curso);
             for (Professor_Curso professor : listaCursosProfessor) {
-                String result[] = professor.verifyCourse(curso, listaCursos.indexOf(curso));
-                if (result[0].equals("0"))
+                String result[] = professor.verifyCourse(curso);
+                if (result[0].equals("0")) {
                     iterationCourse.setExclusiveProfessorCount(iterationCourse.getExclusiveProfessorCount() + 1);
+                    iterationCourse.setTotalProfessors(iterationCourse.getTotalProfessors() + 1);
+                }
                 else if (result[0].equals("1")) {
                     iterationCourse.checkListIntersection(result[1], professor.getCourse());
+                    iterationCourse.setTotalProfessors(iterationCourse.getTotalProfessors() + 1);
                 }
             }
             courseRelation.add(iterationCourse);
+
         }
+
         System.out.println(courseRelation.toString());
+        return  courseRelation;
     }
 
 

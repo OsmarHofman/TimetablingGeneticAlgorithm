@@ -41,12 +41,11 @@ public class Professor_Curso {
     }
 
     //-1 é quando não acha, 0 é exclusivo, e 1 não é exclusivo
-    public String[] verifyCourse(String course, int i) {
+    public String[] verifyCourse(String course) {
         if (this.course.size() == 1 && this.course.get(0).equals(course))
             return new String[]{"0"};
 
-        for (; i < this.course.size(); i++) {
-            String iterationCourse = this.course.get(i);
+        for (String iterationCourse: this.course) {
             if (iterationCourse.equals(course)) {
                 return new String[]{"1", iterationCourse};
             }

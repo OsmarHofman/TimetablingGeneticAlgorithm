@@ -1,6 +1,8 @@
 package ImportFiles.preProcessing;
 
-public class Intersection {
+import java.io.Serializable;
+
+public class Intersection implements Serializable {
     private int intersectionProfessorsCount;
     private String intersectionCourse;
 
@@ -31,9 +33,8 @@ public class Intersection {
 
     @Override
     public String toString() {
-        return "Intersection{" +
-                "intersectionProfessorsCount=" + intersectionProfessorsCount +
-                ", intersectionCourse='" + intersectionCourse + '\'' +
-                '}';
+        return "\n\n\t\tCurso relacionado: " + intersectionCourse +
+                "\n\t\tNúmero de professores compartilhados: " + intersectionProfessorsCount;
+
     }
 }
