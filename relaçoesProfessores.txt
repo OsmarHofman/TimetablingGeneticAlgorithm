@@ -1,0 +1,451 @@
+[
+
+Curso: CC
+	 Total de professores= 14
+	 Número de professores exclusivos=3
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: ENGMEC
+		Número de professores compartilhados: 3, 
+
+		Curso relacionado: ELETROMEC
+		Número de professores compartilhados: 2, 
+
+		Curso relacionado: TECINFO
+		Número de professores compartilhados: 6, 
+
+		Curso relacionado: PQ
+		Número de professores compartilhados: 2, 
+
+		Curso relacionado: BIOTEC
+		Número de professores compartilhados: 1, 
+
+		Curso relacionado: AQ
+		Número de professores compartilhados: 1, 
+
+		Curso relacionado: POS GEST ESC
+		Número de professores compartilhados: 1, 
+
+		Curso relacionado: ADM
+		Número de professores compartilhados: 1, 
+
+		Curso relacionado: MECAT
+		Número de professores compartilhados: 1, 
+
+		Curso relacionado: GEST AGRON 
+		Número de professores compartilhados: 1]}, 
+
+Curso: PQ
+	 Total de professores= 16
+	 Número de professores exclusivos=1
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: BIOTEC
+		Número de professores compartilhados: 9, 
+
+		Curso relacionado: CC
+		Número de professores compartilhados: 2, 
+
+		Curso relacionado: AQ
+		Número de professores compartilhados: 8, 
+
+		Curso relacionado: AGROECO
+		Número de professores compartilhados: 1, 
+
+		Curso relacionado: GEST AGRON 
+		Número de professores compartilhados: 1, 
+
+		Curso relacionado: ENGMEC
+		Número de professores compartilhados: 3, 
+
+		Curso relacionado: ELETROMEC
+		Número de professores compartilhados: 2, 
+
+		Curso relacionado: POS TEC E PR
+		Número de professores compartilhados: 1, 
+
+		Curso relacionado: MECAT
+		Número de professores compartilhados: 2, 
+
+		Curso relacionado: ADM
+		Número de professores compartilhados: 1]}, 
+
+Curso: BIOTEC
+	 Total de professores= 18
+	 Número de professores exclusivos=0
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: MECAT
+		Número de professores compartilhados: 2, 
+
+		Curso relacionado: POS GEST ESC
+		Número de professores compartilhados: 1, 
+
+		Curso relacionado: PQ
+		Número de professores compartilhados: 9, 
+
+		Curso relacionado: CC
+		Número de professores compartilhados: 1, 
+
+		Curso relacionado: AQ
+		Número de professores compartilhados: 8, 
+
+		Curso relacionado: AGROECO
+		Número de professores compartilhados: 6, 
+
+		Curso relacionado: GEST AGRON 
+		Número de professores compartilhados: 4, 
+
+		Curso relacionado: ENGMEC
+		Número de professores compartilhados: 1, 
+
+		Curso relacionado: TECINFO
+		Número de professores compartilhados: 1, 
+
+		Curso relacionado: ELETROMEC
+		Número de professores compartilhados: 1, 
+
+		Curso relacionado: ADM
+		Número de professores compartilhados: 2, 
+
+		Curso relacionado: POS TEC E PR
+		Número de professores compartilhados: 1]}, 
+
+Curso: ENGMEC
+	 Total de professores= 18
+	 Número de professores exclusivos=3
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: ELETROMEC
+		Número de professores compartilhados: 11, 
+
+		Curso relacionado: MECAT
+		Número de professores compartilhados: 4, 
+
+		Curso relacionado: CC
+		Número de professores compartilhados: 3, 
+
+		Curso relacionado: TECINFO
+		Número de professores compartilhados: 2, 
+
+		Curso relacionado: AQ
+		Número de professores compartilhados: 1, 
+
+		Curso relacionado: ADM
+		Número de professores compartilhados: 3, 
+
+		Curso relacionado: GEST AGRON 
+		Número de professores compartilhados: 2, 
+
+		Curso relacionado: PQ
+		Número de professores compartilhados: 3, 
+
+		Curso relacionado: BIOTEC
+		Número de professores compartilhados: 1, 
+
+		Curso relacionado: AGROECO
+		Número de professores compartilhados: 1]}, 
+
+Curso: TECINFO
+	 Total de professores= 11
+	 Número de professores exclusivos=1
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: CC
+		Número de professores compartilhados: 6, 
+
+		Curso relacionado: ELETROMEC
+		Número de professores compartilhados: 3, 
+
+		Curso relacionado: POS TEC E PR
+		Número de professores compartilhados: 1, 
+
+		Curso relacionado: ENGMEC
+		Número de professores compartilhados: 2, 
+
+		Curso relacionado: AQ
+		Número de professores compartilhados: 2, 
+
+		Curso relacionado: ADM
+		Número de professores compartilhados: 2, 
+
+		Curso relacionado: GEST AGRON 
+		Número de professores compartilhados: 1, 
+
+		Curso relacionado: POS GEST ESC
+		Número de professores compartilhados: 2, 
+
+		Curso relacionado: BIOTEC
+		Número de professores compartilhados: 1, 
+
+		Curso relacionado: AGROECO
+		Número de professores compartilhados: 1]}, 
+
+Curso: ELETROMEC
+	 Total de professores= 15
+	 Número de professores exclusivos=1
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: ENGMEC
+		Número de professores compartilhados: 11, 
+
+		Curso relacionado: MECAT
+		Número de professores compartilhados: 5, 
+
+		Curso relacionado: CC
+		Número de professores compartilhados: 2, 
+
+		Curso relacionado: TECINFO
+		Número de professores compartilhados: 3, 
+
+		Curso relacionado: POS TEC E PR
+		Número de professores compartilhados: 1, 
+
+		Curso relacionado: AQ
+		Número de professores compartilhados: 1, 
+
+		Curso relacionado: ADM
+		Número de professores compartilhados: 1, 
+
+		Curso relacionado: GEST AGRON 
+		Número de professores compartilhados: 1, 
+
+		Curso relacionado: PQ
+		Número de professores compartilhados: 2, 
+
+		Curso relacionado: BIOTEC
+		Número de professores compartilhados: 1, 
+
+		Curso relacionado: AGROECO
+		Número de professores compartilhados: 1]}, 
+
+Curso: MECAT
+	 Total de professores= 9
+	 Número de professores exclusivos=0
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: ENGMEC
+		Número de professores compartilhados: 4, 
+
+		Curso relacionado: ELETROMEC
+		Número de professores compartilhados: 5, 
+
+		Curso relacionado: BIOTEC
+		Número de professores compartilhados: 2, 
+
+		Curso relacionado: POS GEST ESC
+		Número de professores compartilhados: 1, 
+
+		Curso relacionado: CC
+		Número de professores compartilhados: 1, 
+
+		Curso relacionado: PQ
+		Número de professores compartilhados: 2, 
+
+		Curso relacionado: ADM
+		Número de professores compartilhados: 1]}, 
+
+Curso: AGROECO
+	 Total de professores= 9
+	 Número de professores exclusivos=1
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: PQ
+		Número de professores compartilhados: 1, 
+
+		Curso relacionado: BIOTEC
+		Número de professores compartilhados: 6, 
+
+		Curso relacionado: GEST AGRON 
+		Número de professores compartilhados: 6, 
+
+		Curso relacionado: AQ
+		Número de professores compartilhados: 1, 
+
+		Curso relacionado: ENGMEC
+		Número de professores compartilhados: 1, 
+
+		Curso relacionado: TECINFO
+		Número de professores compartilhados: 1, 
+
+		Curso relacionado: ELETROMEC
+		Número de professores compartilhados: 1, 
+
+		Curso relacionado: ADM
+		Número de professores compartilhados: 1]}, 
+
+Curso: AQ
+	 Total de professores= 12
+	 Número de professores exclusivos=0
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: CC
+		Número de professores compartilhados: 1, 
+
+		Curso relacionado: PQ
+		Número de professores compartilhados: 8, 
+
+		Curso relacionado: BIOTEC
+		Número de professores compartilhados: 8, 
+
+		Curso relacionado: ENGMEC
+		Número de professores compartilhados: 1, 
+
+		Curso relacionado: TECINFO
+		Número de professores compartilhados: 2, 
+
+		Curso relacionado: ELETROMEC
+		Número de professores compartilhados: 1, 
+
+		Curso relacionado: ADM
+		Número de professores compartilhados: 1, 
+
+		Curso relacionado: GEST AGRON 
+		Número de professores compartilhados: 1, 
+
+		Curso relacionado: AGROECO
+		Número de professores compartilhados: 1, 
+
+		Curso relacionado: POS GEST ESC
+		Número de professores compartilhados: 1, 
+
+		Curso relacionado: POS TEC E PR
+		Número de professores compartilhados: 1]}, 
+
+Curso: ADM
+	 Total de professores= 6
+	 Número de professores exclusivos=0
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: ENGMEC
+		Número de professores compartilhados: 3, 
+
+		Curso relacionado: TECINFO
+		Número de professores compartilhados: 2, 
+
+		Curso relacionado: ELETROMEC
+		Número de professores compartilhados: 1, 
+
+		Curso relacionado: AQ
+		Número de professores compartilhados: 1, 
+
+		Curso relacionado: GEST AGRON 
+		Número de professores compartilhados: 2, 
+
+		Curso relacionado: CC
+		Número de professores compartilhados: 1, 
+
+		Curso relacionado: PQ
+		Número de professores compartilhados: 1, 
+
+		Curso relacionado: BIOTEC
+		Número de professores compartilhados: 2, 
+
+		Curso relacionado: MECAT
+		Número de professores compartilhados: 1, 
+
+		Curso relacionado: AGROECO
+		Número de professores compartilhados: 1]}, 
+
+Curso: POS GEST ESC
+	 Total de professores= 4
+	 Número de professores exclusivos=1
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: BIOTEC
+		Número de professores compartilhados: 1, 
+
+		Curso relacionado: MECAT
+		Número de professores compartilhados: 1, 
+
+		Curso relacionado: CC
+		Número de professores compartilhados: 1, 
+
+		Curso relacionado: TECINFO
+		Número de professores compartilhados: 2, 
+
+		Curso relacionado: AQ
+		Número de professores compartilhados: 1]}, 
+
+Curso: GEST AGRON 
+	 Total de professores= 8
+	 Número de professores exclusivos=0
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: ENGMEC
+		Número de professores compartilhados: 2, 
+
+		Curso relacionado: TECINFO
+		Número de professores compartilhados: 1, 
+
+		Curso relacionado: ELETROMEC
+		Número de professores compartilhados: 1, 
+
+		Curso relacionado: AQ
+		Número de professores compartilhados: 1, 
+
+		Curso relacionado: ADM
+		Número de professores compartilhados: 2, 
+
+		Curso relacionado: PQ
+		Número de professores compartilhados: 1, 
+
+		Curso relacionado: BIOTEC
+		Número de professores compartilhados: 4, 
+
+		Curso relacionado: AGROECO
+		Número de professores compartilhados: 6, 
+
+		Curso relacionado: CC
+		Número de professores compartilhados: 1]}, 
+
+Curso: POS TEC E PR
+	 Total de professores= 3
+	 Número de professores exclusivos=0
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: TECINFO
+		Número de professores compartilhados: 1, 
+
+		Curso relacionado: ELETROMEC
+		Número de professores compartilhados: 1, 
+
+		Curso relacionado: PQ
+		Número de professores compartilhados: 1, 
+
+		Curso relacionado: AQ
+		Número de professores compartilhados: 1, 
+
+		Curso relacionado: BIOTEC
+		Número de professores compartilhados: 1]}, 
+
+Curso: POS GEST PUB 
+	 Total de professores= 1
+	 Número de professores exclusivos=0
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: POS DOC EP EAD
+		Número de professores compartilhados: 1]}, 
+
+Curso: POS DOC EP EAD
+	 Total de professores= 1
+	 Número de professores exclusivos=0
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: POS GEST PUB 
+		Número de professores compartilhados: 1]}]
