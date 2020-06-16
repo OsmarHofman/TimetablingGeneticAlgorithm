@@ -1,7 +1,10 @@
 package ImportFiles.preProcessing;
 
+import main.java.Main;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class CourseRelation implements Serializable {
@@ -12,6 +15,11 @@ public class CourseRelation implements Serializable {
 
     public CourseRelation(String name) {
         this.name = name;
+        exclusiveProfessorCount = 0;
+        intersection = new ArrayList<>();
+    }
+
+    public CourseRelation() {
         exclusiveProfessorCount = 0;
         intersection = new ArrayList<>();
     }
@@ -86,6 +94,29 @@ public class CourseRelation implements Serializable {
         for (IsRelated related: relateds) {
             if (related.getName().equals(name) && related.isHasAdded())
                 return true;
+        }
+        return false;
+    }
+
+    public boolean joinIntersections(int percentage, List<CourseRelation> cs) throws ClassNotFoundException {
+        List<String> listIntersection = new ArrayList<>(Arrays.asList(this.name));
+        StringBuilder nomeCurso = new StringBuilder(this.name + "-");
+        CourseRelation newCourse = new CourseRelation();
+        int exclusiveProfessors = this.exclusiveProfessorCount;
+        int proportion = this.totalProfessors * percentage /100;
+        for (Intersection iteratorIntersection: intersection) {
+            if (iteratorIntersection.getIntersectionProfessorsCount() >= proportion){
+                listIntersection.add(iteratorIntersection.getIntersectionCourse());
+                nomeCurso.append(iteratorIntersection.getIntersectionCourse()).append("-");
+                CourseRelation course = Main.getCourseByName(cs,iteratorIntersection.getIntersectionCourse());
+                exclusiveProfessors += course.getExclusiveProfessorCount();
+            }
+        }
+        if (listIntersection.size() > 1){
+            newCourse.setName(nomeCurso.toString());
+            newCourse.setExclusiveProfessorCount(exclusiveProfessors);
+            cs.add(newCourse);
+            return true;
         }
         return false;
     }

@@ -1,6 +1,7 @@
 package ImportFiles;
 
 import ImportFiles.preProcessing.CourseRelation;
+import ImportFiles.preProcessing.Intersection;
 import ImportFiles.preProcessing.Professor_Curso;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -17,6 +18,9 @@ import java.util.Iterator;
 import java.util.List;
 
 public class RetrieveProfessorsSchedule {
+
+    List<Professor_Curso> listaProfessores = new ArrayList<>();
+
 
     public XSSFWorkbook pegarArquivo() throws IOException {
         try {
@@ -37,7 +41,6 @@ public class RetrieveProfessorsSchedule {
 
 
         List<String> listaCursos = new ArrayList<>();
-        List<Professor_Curso> listaProfessores = new ArrayList<>();
         List<String> listaCursosProfessor = new ArrayList<>();
 
         Iterator<Row> linhas = planilha.rowIterator();
@@ -67,7 +70,7 @@ public class RetrieveProfessorsSchedule {
             if (linha.getRowNum() != 0)
                 listaProfessores.add(new Professor_Curso(profNome, listaCursosProfessor));
         }
-         return this.contagemCurso(listaCursos, listaProfessores);
+        return this.contagemCurso(listaCursos, listaProfessores);
     }
 
     private List<CourseRelation> contagemCurso(List<String> listaCursos, List<Professor_Curso> listaCursosProfessor) {
@@ -81,8 +84,7 @@ public class RetrieveProfessorsSchedule {
                 if (result[0].equals("0")) {
                     iterationCourse.setExclusiveProfessorCount(iterationCourse.getExclusiveProfessorCount() + 1);
                     iterationCourse.setTotalProfessors(iterationCourse.getTotalProfessors() + 1);
-                }
-                else if (result[0].equals("1")) {
+                } else if (result[0].equals("1")) {
                     iterationCourse.checkListIntersection(result[1], professor.getCourse());
                     iterationCourse.setTotalProfessors(iterationCourse.getTotalProfessors() + 1);
                 }
@@ -90,10 +92,31 @@ public class RetrieveProfessorsSchedule {
             courseRelation.add(iterationCourse);
 
         }
+        linkProfessors(courseRelation);
 
-        System.out.println(courseRelation.toString());
-        return  courseRelation;
+        return courseRelation;
     }
+
+    public void linkProfessors(List<CourseRelation> listaCurso) {
+        for (CourseRelation iterationCR : listaCurso) {
+            for (Intersection iterationIntersec : iterationCR.getIntersection()) {
+                for (Professor_Curso iteratorPC : listaProfessores) {
+                    int count = 0;
+                    for (String iterationCourse : iteratorPC.getCourse()) {
+                        if (iterationCourse.equals(iterationCR.getName()) || iterationCourse.equals(iterationIntersec.getIntersectionCourse())) {
+                            count++;
+                        }
+                        if (count == 2) {
+                            iterationIntersec.getProfessorsNameList().add(iteratorPC.getProfessor());
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
 
 
 }
