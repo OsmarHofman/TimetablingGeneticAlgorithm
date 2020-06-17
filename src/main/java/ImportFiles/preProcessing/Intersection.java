@@ -11,6 +11,7 @@ public class Intersection implements Serializable {
 
     public Intersection() {
         intersectionProfessorsCount = 0;
+        professorsNameList = new ArrayList<>();
     }
 
     public Intersection(int intersectionProfessorsCount, String intersectionCourse) {

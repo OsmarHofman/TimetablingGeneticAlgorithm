@@ -31,20 +31,21 @@ public class Main {
                     nomeTudoJunto = cs.get(cs.size() - 1).getName();
                     if (nomeTudoJunto.contains("--")) {
                         nomeSeparado = Arrays.asList(nomeTudoJunto.split("--"));
-                        nomeSeparado.set(1,nomeSeparado.get(1) + '-');
+                        nomeSeparado.set(1, nomeSeparado.get(1) + '-');
                     } else {
                         nomeSeparado = Arrays.asList(nomeTudoJunto.split("-"));
-                        //TODO remover ultimo "-" do nome do curso
                     }
                     break;
                 }
             }
             if (nomeSeparado.size() != 0) {
-                removeCourses(cs, nomeSeparado);
-                //FIXME verificar intersecções com nomes repetidos
+                List<Intersection> intersectionList = new ArrayList<>();
+                removeCourses(cs, nomeSeparado, intersectionList);
                 renameIntersection(cs, nomeSeparado, nomeTudoJunto);
+                mergeIntersections(cs, nomeTudoJunto);
 
             }
+            //FIXME adicionar informacao do professor exclusivo
         }
         System.out.println("alo?" + cs.toString());
     }
@@ -89,17 +90,92 @@ public class Main {
         throw new ClassNotFoundException("Curso não encontrado");
     }
 
-    private static boolean removeCourses(List<CourseRelation> cs, List<String> nomeSeparado) {
+    private static boolean removeCourses(List<CourseRelation> cs, List<String> nomeSeparado, List<Intersection> intersectionList) {
         for (int i = 0; i < cs.size(); i++) {
             for (int j = 0; j < nomeSeparado.size(); j++) {
                 if (cs.get(i).getName().equals(nomeSeparado.get(j))) {
+                    if (intersectionList.isEmpty())
+                        intersectionList.addAll(cs.get(i).getIntersection());
+                    else {
+                        joinIntersections(cs.get(i).getIntersection(), intersectionList);
+                    }
+                    cs.get(cs.size() - 1).setIntersection(intersectionList);
+                    removeCourses(nomeSeparado, cs.get(cs.size() - 1).getIntersection());
                     cs.remove(i);
-                    return removeCourses(cs, nomeSeparado);
+                    return removeCourses(cs, nomeSeparado, intersectionList);
                 }
             }
         }
         return true;
     }
 
+    private static boolean removeCourses(List<String> nomeSeparado, List<Intersection> intersectionList) {
+        for (int i = 0; i < intersectionList.size(); i++) {
+            for (int j = 0; j < nomeSeparado.size(); j++) {
+                if (intersectionList.get(i).getIntersectionCourse().equals(nomeSeparado.get(j))) {
+                    intersectionList.remove(i);
+                    return removeCourses(nomeSeparado, intersectionList);
+                }
+            }
+        }
+        return true;
+    }
+
+    private static void joinIntersections(List<Intersection> csIntersections, List<Intersection> intersectionList) {
+        List<String> auxList = new ArrayList<>();
+        for (Intersection iil : intersectionList) {
+            for (Intersection iteratorCS : csIntersections) {
+                if (iil.getIntersectionCourse().equals(iteratorCS.getIntersectionCourse())) {
+                    for (String iteratorStringInt : iil.getProfessorsNameList()) {
+                        for (String iteratorStringCS : iteratorCS.getProfessorsNameList()) {
+                            if (!iteratorStringInt.equals(iteratorStringCS)) {
+                                auxList.add(iteratorStringCS);
+                            }
+                        }
+                    }
+                    iil.getProfessorsNameList().addAll(auxList);
+                }
+            }
+        }
+    }
+
+    private static boolean mergeIntersections(List<CourseRelation> cs, String nomeTudoJunto) {
+        List<CourseRelation> newRelation = cs;
+        List<Integer> indexes = new ArrayList<>();
+        for (CourseRelation iteratorCS : newRelation) {
+            Intersection listSameName = new Intersection();
+            int intersecProfessorIndex = 0;
+            for (Intersection iteratorIntersec : iteratorCS.getIntersection()) {
+                if (iteratorIntersec.getIntersectionCourse().equals(nomeTudoJunto)) {
+                    if (listSameName.getProfessorsNameList().isEmpty()) {
+                        listSameName = iteratorIntersec;
+                        intersecProfessorIndex = iteratorCS.getIntersection().indexOf(iteratorIntersec);
+                    } else {
+                        List<String> professors = new ArrayList<>();
+                        int professorSize = listSameName.getProfessorsNameList().size();
+                        int count = 0;
+                        for (int i = 0; i < professorSize; i++) {
+                            for (String iteratorProfessorsCS : iteratorIntersec.getProfessorsNameList()) {
+                                if (!listSameName.getProfessorsNameList().get(i).equals(iteratorProfessorsCS)) {
+                                    count++;
+                                    if (count >= listSameName.getProfessorsNameList().size()) {
+                                        professors.add(iteratorProfessorsCS);
+                                        listSameName.setIntersectionProfessorsCount(listSameName.getIntersectionProfessorsCount() + 1);
+                                    }
+                                }
+                            }
+                        }
+                        iteratorCS.getIntersection().get(intersecProfessorIndex).getProfessorsNameList().addAll(professors);
+                        indexes.add(iteratorCS.getIntersection().indexOf(iteratorIntersec));
+                    }
+                }
+            }
+            //FIXME remover de tras para frente
+            for (int indexInt : indexes) {
+                iteratorCS.getIntersection().remove(indexInt);
+            }
+        }
+        return true;
+    }
 
 }
