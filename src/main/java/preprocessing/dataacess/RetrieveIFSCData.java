@@ -1,8 +1,6 @@
-package ImportFiles;
+package preprocessing.dataacess;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;

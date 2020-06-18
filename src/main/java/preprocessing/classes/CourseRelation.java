@@ -1,4 +1,4 @@
-package ImportFiles.preProcessing;
+package preprocessing.classes;
 
 import main.java.Main;
 
@@ -108,7 +108,7 @@ public class CourseRelation implements Serializable {
             if (iteratorIntersection.getIntersectionProfessorsCount() >= proportion){
                 listIntersection.add(iteratorIntersection.getIntersectionCourse());
                 nomeCurso.append(iteratorIntersection.getIntersectionCourse()).append("-");
-                CourseRelation course = Main.getCourseByName(cs,iteratorIntersection.getIntersectionCourse());
+                CourseRelation course = this.getCourseByName(cs,iteratorIntersection.getIntersectionCourse());
                 exclusiveProfessors += course.getExclusiveProfessorCount();
             }
         }
@@ -119,6 +119,15 @@ public class CourseRelation implements Serializable {
             return true;
         }
         return false;
+    }
+
+    public CourseRelation getCourseByName(List<CourseRelation> cs, String course) throws ClassNotFoundException {
+        for (CourseRelation iterationCS : cs) {
+            if (iterationCS.getName().equals(course)) {
+                return iterationCS;
+            }
+        }
+        throw new ClassNotFoundException("Curso não encontrado");
     }
 
 }

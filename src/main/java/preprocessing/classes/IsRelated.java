@@ -1,4 +1,4 @@
-package ImportFiles.preProcessing;
+package preprocessing.classes;
 
 public class IsRelated {
 

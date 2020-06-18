@@ -1,4 +1,4 @@
-package ImportFiles.preProcessing;
+package preprocessing.classes;
 
 import java.io.Serializable;
 import java.util.ArrayList;

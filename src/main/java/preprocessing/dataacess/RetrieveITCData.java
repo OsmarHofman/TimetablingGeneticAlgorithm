@@ -1,9 +1,9 @@
-package ImportFiles;
+package preprocessing.dataacess;
 
-import Domain.Courses;
-import Domain.Curriculas;
-import Domain.Rooms;
-import Domain.UnavailabilityConstraints;
+import domain.Courses;
+import domain.Curriculas;
+import domain.Rooms;
+import domain.UnavailabilityConstraints;
 
 import java.io.File;
 import java.io.FileNotFoundException;
