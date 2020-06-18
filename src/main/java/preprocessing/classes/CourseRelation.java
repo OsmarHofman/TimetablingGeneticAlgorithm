@@ -15,6 +15,7 @@ public class CourseRelation implements Serializable {
 
     public CourseRelation(String name) {
         this.name = name;
+        totalProfessors = 0;
         exclusiveProfessorCount = 0;
         intersection = new ArrayList<>();
     }
@@ -81,7 +82,7 @@ public class CourseRelation implements Serializable {
         }
 
         for (String profCourse : professorCourses) {
-            if (!profCourse.equals(course) && !findByName(profCourse,relateds)) {
+            if (!profCourse.equals(course) && !findByName(profCourse, relateds)) {
                 intersection.add(new Intersection(1, profCourse));
             }
 
@@ -90,8 +91,8 @@ public class CourseRelation implements Serializable {
 
     }
 
-    private Boolean findByName(String name, List<IsRelated>relateds){
-        for (IsRelated related: relateds) {
+    private Boolean findByName(String name, List<IsRelated> relateds) {
+        for (IsRelated related : relateds) {
             if (related.getName().equals(name) && related.isHasAdded())
                 return true;
         }
@@ -100,20 +101,24 @@ public class CourseRelation implements Serializable {
 
     public boolean joinIntersections(int percentage, List<CourseRelation> cs) throws ClassNotFoundException {
         List<String> listIntersection = new ArrayList<>(Arrays.asList(this.name));
-        StringBuilder nomeCurso = new StringBuilder(this.name + "-");
+        String nomeCurso = this.name;
         CourseRelation newCourse = new CourseRelation();
         int exclusiveProfessors = this.exclusiveProfessorCount;
-        int proportion = this.totalProfessors * percentage /100;
-        for (Intersection iteratorIntersection: intersection) {
-            if (iteratorIntersection.getIntersectionProfessorsCount() >= proportion){
+        int proportion = this.totalProfessors * percentage / 100;
+        for (Intersection iteratorIntersection : intersection) {
+            if (iteratorIntersection.getIntersectionProfessorsCount() >= proportion) {
                 listIntersection.add(iteratorIntersection.getIntersectionCourse());
-                nomeCurso.append(iteratorIntersection.getIntersectionCourse()).append("-");
-                CourseRelation course = this.getCourseByName(cs,iteratorIntersection.getIntersectionCourse());
+                if (iteratorIntersection.getIntersectionCourse().contains("-")) {
+                    nomeCurso = iteratorIntersection.getIntersectionCourse() + "--" + nomeCurso;
+                } else {
+                    nomeCurso += "-" +iteratorIntersection.getIntersectionCourse();
+                }
+                CourseRelation course = this.getCourseByName(cs, iteratorIntersection.getIntersectionCourse());
                 exclusiveProfessors += course.getExclusiveProfessorCount();
             }
         }
-        if (listIntersection.size() > 1){
-            newCourse.setName(nomeCurso.toString());
+        if (listIntersection.size() > 1) {
+            newCourse.setName(nomeCurso);
             newCourse.setExclusiveProfessorCount(exclusiveProfessors);
             cs.add(newCourse);
             return true;
