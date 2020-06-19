@@ -13,9 +13,11 @@ public class Main {
         ProfessorsScheduleCreation psc = new ProfessorsScheduleCreation("src/Datasets/IFSCFiles/Dados_ifsc_2019.xlsx");
         psc.createReport();
 
-        final int percentage = 80;
+
+        final int percentage = 50;
         EntitySchedule entitySchedule = new EntitySchedule(psc.getCourseRelationList());
         entitySchedule.createSet(percentage);
+
     }
 
 

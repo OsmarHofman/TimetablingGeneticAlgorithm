@@ -44,6 +44,34 @@ public class Intersection implements Serializable {
         this.professorsNameList = professorsNameList;
     }
 
+    //FIXME colocar métodos abaixo em uma classe e sobrecarregar
+    public static boolean hasIntersectionInList(String courseName, List<Intersection> intersections){
+        for (Intersection iteratorIntersection:intersections) {
+            if (iteratorIntersection.getIntersectionCourse().equals(courseName)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean hasProfessorInList(String professorName, List<String> professors){
+        for (String iteratorProfessor:professors) {
+            if (iteratorProfessor.equals(professorName)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean hasCourseRelationInList(String courseName, List<CourseRelation> courses){
+        for (CourseRelation iteratorCR:courses) {
+            if (iteratorCR.getName().equals(courseName)){
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public String toString() {
         return "\n\n\t\tCurso relacionado: " + intersectionCourse +

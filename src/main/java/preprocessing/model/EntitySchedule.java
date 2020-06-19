@@ -31,9 +31,21 @@ public class EntitySchedule {
                     setName = courseRelationList.get(courseRelationList.size() - 1).getName();
                     if (setName.contains("--")) {
                         splitedSetName.addAll(Arrays.asList(setName.split("--")));
-                        splitedSetName.addAll(Arrays.asList(splitedSetName.get(1).split("-")));
-                        splitedSetName.remove(1);
-
+                        List<String> nameCourses = new ArrayList<>();
+                        List<Integer> indexes = new ArrayList<>();
+                        for (String iteratorSplitName : splitedSetName) {
+                            if (iteratorSplitName.contains("-")) {
+                                if (!Intersection.hasCourseRelationInList(iteratorSplitName, this.courseRelationList)) {
+                                    nameCourses.addAll(Arrays.asList(iteratorSplitName.split("-")));
+                                    indexes.add(splitedSetName.indexOf(iteratorSplitName));
+                                }
+                            }
+                        }
+                        Collections.reverse(indexes);
+                        for (int iteratorInt : indexes) {
+                            splitedSetName.remove(iteratorInt);
+                        }
+                        splitedSetName.addAll(nameCourses);
 
                     } else {
                         splitedSetName = Arrays.asList(setName.split("-"));
@@ -48,12 +60,10 @@ public class EntitySchedule {
                 removeCourses(courseRelationList, splitedSetName, intersectionList);
                 renameIntersection(courseRelationList, splitedSetName, setName);
                 mergeIntersections(courseRelationList, setName);
+                //FIXME recalcular soma total dos professores
                 sumTotalProfessors(courseRelationList.get(courseRelationList.size() - 1));
-                //FIXME corrigir professores repetidos nas intersecções
-
 
             }
-            //FIXME adicionar informacao do professor exclusivo
         }
         System.out.println(courseRelationList.toString());
     }
@@ -107,25 +117,26 @@ public class EntitySchedule {
     }
 
     private void joinIntersections(List<Intersection> csIntersections, List<Intersection> intersectionList) {
+        List<Intersection> newIntersections = new ArrayList<>();
         for (Intersection iil : intersectionList) {
             for (Intersection iteratorCS : csIntersections) {
                 if (iil.getIntersectionCourse().equals(iteratorCS.getIntersectionCourse())) {
                     List<String> auxList = new ArrayList<>();
-                    for (String iteratorStringInt : iil.getProfessorsNameList()) {
-                        int count = 0;
-                        for (String iteratorStringCS : iteratorCS.getProfessorsNameList()) {
-                            if (!iteratorStringInt.equals(iteratorStringCS)) {
-                                count++;
-                                if (count >= iil.getProfessorsNameList().size()) {
-                                    auxList.add(iteratorStringCS);
-                                }
-                            }
+                    for (String iteratorStringCS : iteratorCS.getProfessorsNameList()) {
+                        if (!Intersection.hasProfessorInList(iteratorStringCS, iil.getProfessorsNameList()) && !auxList.contains(iteratorStringCS)) {
+                            auxList.add(iteratorStringCS);
                         }
                     }
                     iil.getProfessorsNameList().addAll(auxList);
                 }
+                if (!Intersection.hasIntersectionInList(iteratorCS.getIntersectionCourse(), intersectionList) && !newIntersections.contains(iteratorCS)) {
+                    newIntersections.add(iteratorCS);
+                }
+
             }
+
         }
+        intersectionList.addAll(newIntersections);
     }
 
     private void renameIntersection(List<CourseRelation> cs, List<String> nomeSeparado, String nomeTudoJunto) {
@@ -153,17 +164,11 @@ public class EntitySchedule {
                         intersecProfessorIndex = iteratorCS.getIntersection().indexOf(iteratorIntersec);
                     } else {
                         List<String> professors = new ArrayList<>();
-                        int professorSize = listSameName.getProfessorsNameList().size();
                         int count = 0;
-                        for (int i = 0; i < professorSize; i++) {
-                            for (String iteratorProfessorsCS : iteratorIntersec.getProfessorsNameList()) {
-                                if (!listSameName.getProfessorsNameList().get(i).equals(iteratorProfessorsCS)) {
-                                    count++;
-                                    if (count >= listSameName.getProfessorsNameList().size()) {
-                                        professors.add(iteratorProfessorsCS);
-                                        listSameName.setIntersectionProfessorsCount(listSameName.getIntersectionProfessorsCount() + 1);
-                                    }
-                                }
+                        for (String iteratorProfessorsCS : iteratorIntersec.getProfessorsNameList()) {
+                            if (!Intersection.hasProfessorInList(iteratorProfessorsCS, listSameName.getProfessorsNameList()) && !professors.contains(iteratorProfessorsCS)) {
+                                professors.add(iteratorProfessorsCS);
+                                listSameName.setIntersectionProfessorsCount(listSameName.getIntersectionProfessorsCount() + 1);
                             }
                         }
                         iteratorCS.getIntersection().get(intersecProfessorIndex).getProfessorsNameList().addAll(professors);
