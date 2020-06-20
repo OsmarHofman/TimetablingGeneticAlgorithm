@@ -2,6 +2,7 @@ package preprocessing.model;
 
 import preprocessing.classes.CourseRelation;
 import preprocessing.classes.Intersection;
+import preprocessing.classes.Professor_Course;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,9 +12,13 @@ import java.util.List;
 public class EntitySchedule {
 
     private List<CourseRelation> courseRelationList;
+    private List<Professor_Course> professorRelation;
+    private List<String> professorBlackList = new ArrayList<>();
 
-    public EntitySchedule(List<CourseRelation> courseRelationList) {
-        this.courseRelationList = courseRelationList;
+
+    public EntitySchedule(ProfessorsScheduleCreation professorsScheduleCreation) {
+        this.professorRelation = professorsScheduleCreation.getProfessorsList();
+        this.courseRelationList = professorsScheduleCreation.getCourseRelationList();
     }
 
     public void createSet(int percentage) throws ClassNotFoundException {
@@ -60,13 +65,48 @@ public class EntitySchedule {
                 removeCourses(courseRelationList, splitedSetName, intersectionList);
                 renameIntersection(courseRelationList, splitedSetName, setName);
                 mergeIntersections(courseRelationList, setName);
-                //FIXME recalcular soma total dos professores
+                renameProfessorsCourses(splitedSetName, courseRelationList.get(courseRelationList.size() - 1).getName());
+                //FIXME recalcular soma total dos professores (verificar professores exclusivos)
                 sumTotalProfessors(courseRelationList.get(courseRelationList.size() - 1));
 
             }
         }
         System.out.println(courseRelationList.toString());
+
     }
+
+    private void renameProfessorsCourses(List<String> splitedSetName, String courseRelation) {
+        for (Professor_Course iteratorPC : this.professorRelation) {
+            List<Integer> indexes = new ArrayList<>();
+            for (String iteratorCourses : iteratorPC.getCourse()) {
+                for (String iteratorCourseName : splitedSetName) {
+                    if (iteratorCourses.equals(iteratorCourseName))
+                        indexes.add(iteratorPC.getCourse().indexOf(iteratorCourses));
+                }
+            }
+            Collections.reverse(indexes);
+            for (int iteratorIndex : indexes) {
+                iteratorPC.getCourse().remove(iteratorIndex);
+            }
+            if (!indexes.isEmpty()) {
+                iteratorPC.getCourse().add(courseRelation);
+            }
+        }
+    }
+
+    private void verifyExclusiveProfessor(CourseRelation course, List<String> splitedSetName) throws ClassNotFoundException {
+        for (Intersection iteratorIntersection : course.getIntersection()) {
+            for (String iteratorProfessor : iteratorIntersection.getProfessorsNameList()) {
+                Professor_Course professor_course = Intersection.getProfessorByName(iteratorProfessor, this.professorRelation);
+                if (!professorBlackList.contains(professor_course.getProfessor()) && professor_course.checkExclusivity(splitedSetName)) {
+                    course.setExclusiveProfessorCount(course.getExclusiveProfessorCount() + 1);
+                    professorBlackList.add(professor_course.getProfessor());
+                }
+            }
+
+        }
+    }
+
 
     private void sumTotalProfessors(CourseRelation courseRelation) {
         List<String> professors = new ArrayList<>();
@@ -85,7 +125,7 @@ public class EntitySchedule {
         courseRelation.setTotalProfessors(professors.size() + courseRelation.getExclusiveProfessorCount());
     }
 
-    private boolean removeCourses(List<CourseRelation> cs, List<String> nomeSeparado, List<Intersection> intersectionList) {
+    private boolean removeCourses(List<CourseRelation> cs, List<String> nomeSeparado, List<Intersection> intersectionList) throws ClassNotFoundException {
         for (int i = 0; i < cs.size(); i++) {
             for (int j = 0; j < nomeSeparado.size(); j++) {
                 if (cs.get(i).getName().equals(nomeSeparado.get(j))) {
@@ -94,6 +134,7 @@ public class EntitySchedule {
                     else {
                         this.joinIntersections(cs.get(i).getIntersection(), intersectionList);
                     }
+                    verifyExclusiveProfessor(this.courseRelationList.get(this.courseRelationList.size() - 1), nomeSeparado);
                     cs.get(cs.size() - 1).setIntersection(intersectionList);
                     removeCourses(nomeSeparado, cs.get(cs.size() - 1).getIntersection());
                     cs.remove(i);
@@ -164,18 +205,18 @@ public class EntitySchedule {
                         intersecProfessorIndex = iteratorCS.getIntersection().indexOf(iteratorIntersec);
                     } else {
                         List<String> professors = new ArrayList<>();
-                        int count = 0;
                         for (String iteratorProfessorsCS : iteratorIntersec.getProfessorsNameList()) {
                             if (!Intersection.hasProfessorInList(iteratorProfessorsCS, listSameName.getProfessorsNameList()) && !professors.contains(iteratorProfessorsCS)) {
                                 professors.add(iteratorProfessorsCS);
-                                listSameName.setIntersectionProfessorsCount(listSameName.getIntersectionProfessorsCount() + 1);
                             }
                         }
                         iteratorCS.getIntersection().get(intersecProfessorIndex).getProfessorsNameList().addAll(professors);
                         indexes.add(iteratorCS.getIntersection().indexOf(iteratorIntersec));
                     }
                 }
+                iteratorIntersec.setIntersectionProfessorsCount(iteratorIntersec.getProfessorsNameList().size());
             }
+            listSameName.setIntersectionProfessorsCount(listSameName.getProfessorsNameList().size());
             Collections.reverse(indexes);
             for (int indexInt : indexes) {
                 iteratorCS.getIntersection().remove(indexInt);

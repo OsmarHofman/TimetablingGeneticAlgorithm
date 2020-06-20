@@ -14,8 +14,8 @@ public class Main {
         psc.createReport();
 
 
-        final int percentage = 50;
-        EntitySchedule entitySchedule = new EntitySchedule(psc.getCourseRelationList());
+        final int percentage = 30;
+        EntitySchedule entitySchedule = new EntitySchedule(psc);
         entitySchedule.createSet(percentage);
 
     }

@@ -72,6 +72,15 @@ public class Intersection implements Serializable {
         return false;
     }
 
+    public static Professor_Course getProfessorByName(String professorName, List<Professor_Course> professors) throws ClassNotFoundException {
+        for (Professor_Course iteratorProfessor:professors) {
+            if (iteratorProfessor.getProfessor().equals(professorName)){
+                return iteratorProfessor;
+            }
+        }
+        throw new ClassNotFoundException("Professor_Course não encontrado");
+    }
+
     @Override
     public String toString() {
         return "\n\n\t\tCurso relacionado: " + intersectionCourse +

@@ -32,6 +32,20 @@ public class Professor_Course {
         this.course = curso;
     }
 
+    public boolean checkExclusivity(List<String>coursesNames){
+        if (this.course.size() == coursesNames.size()) {
+            int count = 0;
+            for (String iteratorCoursesName : coursesNames) {
+                if (Intersection.hasProfessorInList(iteratorCoursesName,this.course))
+                    count++;
+
+            }
+            return count == this.course.size();
+        }
+        return false;
+    }
+
+
     @Override
     public String toString() {
         return "Professor_Course{" +
