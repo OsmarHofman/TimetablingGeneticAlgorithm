@@ -124,7 +124,7 @@ public class ProfessorsScheduleCreation {
         File file = new File("relaçoesProfessores.txt");
         if (file.createNewFile()) {
             try {
-                FileWriter arq = new FileWriter(file);
+                FileWriter arq = new FileWriter(file,true);
                 PrintWriter gravarArq = new PrintWriter(arq);
 
                 gravarArq.println(this.courseRelationList.toString());

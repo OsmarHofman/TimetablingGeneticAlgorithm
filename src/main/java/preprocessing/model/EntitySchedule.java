@@ -4,6 +4,10 @@ import preprocessing.classes.CourseRelation;
 import preprocessing.classes.Intersection;
 import preprocessing.classes.Professor_Course;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -21,7 +25,8 @@ public class EntitySchedule {
         this.courseRelationList = professorsScheduleCreation.getCourseRelationList();
     }
 
-    public void createSet(int percentage) throws ClassNotFoundException {
+    public void createSet(int percentage) throws ClassNotFoundException, IOException {
+        FileWriter report = this.generateReport(percentage);
         List<String> splitedSetName;
         String setName;
         boolean hasJoined = true;
@@ -83,10 +88,17 @@ public class EntitySchedule {
                 mergeIntersections(courseRelationList, setName);
                 sumTotalProfessors(courseRelationList.get(courseRelationList.size() - 1));
 
+
+                report.append("\n\n\n--------------------------Nova Geração--------------------------\nNovo conjunto: " + setName + "\n\n");
+
+                report.append(courseRelationList.toString());
             }
+
         }
         System.out.println(courseRelationList.toString());
-
+        PrintWriter gravarArq = new PrintWriter(report);
+        report.close();
+        gravarArq.close();
     }
 
     private void renameProfessorsCourses(List<String> splitedSetName, String courseRelation) {
@@ -244,5 +256,23 @@ public class EntitySchedule {
         }
     }
 
+    private FileWriter generateReport(int percentage) throws IOException {
+        File file = new File(percentage + "%.txt");
+        if (file.createNewFile()) {
+            try {
+                FileWriter arq = new FileWriter(file,true);
+                PrintWriter gravarArq = new PrintWriter(arq);
+
+                gravarArq.println(this.courseRelationList.toString());
+                return  arq;
+            } catch (IOException ex) {
+                System.err.println("Erro ao tentar criar o relatório do curso com os professores.");
+                ex.printStackTrace();
+            }
+        } else {
+            System.out.println("Arquivo já existe!");
+        }
+        throw new IOException("arquivo " + file.getName()+ "Ja existe");
+    }
 
 }
