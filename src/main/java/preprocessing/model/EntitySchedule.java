@@ -23,7 +23,7 @@ public class EntitySchedule {
 
     public void createSet(int percentage) throws ClassNotFoundException {
         List<String> splitedSetName;
-        String setName = "";
+        String setName;
         boolean hasJoined = true;
 
         while (hasJoined) {
@@ -62,11 +62,25 @@ public class EntitySchedule {
                 List<Intersection> intersectionList = new ArrayList<>();
                 courseRelationList.get(courseRelationList.size() - 1).setName(courseRelationList.get(courseRelationList.size() - 1).getName().replace("--", "-"));
                 setName = courseRelationList.get(courseRelationList.size() - 1).getName();
-                removeCourses(courseRelationList, splitedSetName, intersectionList);
+
+                List<Integer> toRemoveIndexes = new ArrayList<>();
+                //antigo remove courses
+                List<Intersection> innerIntersections = selectCoursesToRemove(splitedSetName, intersectionList, toRemoveIndexes);
+
+                //renomea o nome dos cursos de cada professor, para substituirem pelo conjunto formado
+                renameProfessorsCourses(splitedSetName, courseRelationList.get(courseRelationList.size() - 1).getName());
+
+                //agora passa o setName, que é o nome inteiro do conjunto sem split, ja que foi substituido antes
+                verifyExclusiveProfessor(innerIntersections, setName);
+
+                //efetivamente retira os cursos que compoem um conjunto
+                Collections.reverse(toRemoveIndexes);
+                for (int iteratorIndexes : toRemoveIndexes) {
+                    this.courseRelationList.remove(iteratorIndexes);
+                }
+
                 renameIntersection(courseRelationList, splitedSetName, setName);
                 mergeIntersections(courseRelationList, setName);
-                renameProfessorsCourses(splitedSetName, courseRelationList.get(courseRelationList.size() - 1).getName());
-                //FIXME recalcular soma total dos professores (verificar professores exclusivos)
                 sumTotalProfessors(courseRelationList.get(courseRelationList.size() - 1));
 
             }
@@ -94,12 +108,13 @@ public class EntitySchedule {
         }
     }
 
-    private void verifyExclusiveProfessor(CourseRelation course, List<String> splitedSetName) throws ClassNotFoundException {
-        for (Intersection iteratorIntersection : course.getIntersection()) {
+    private void verifyExclusiveProfessor(List<Intersection> innerIntersections, String setname) throws ClassNotFoundException {
+        CourseRelation lastCourse = this.courseRelationList.get(this.courseRelationList.size() - 1);
+        for (Intersection iteratorIntersection : innerIntersections) {
             for (String iteratorProfessor : iteratorIntersection.getProfessorsNameList()) {
                 Professor_Course professor_course = Intersection.getProfessorByName(iteratorProfessor, this.professorRelation);
-                if (!professorBlackList.contains(professor_course.getProfessor()) && professor_course.checkExclusivity(splitedSetName)) {
-                    course.setExclusiveProfessorCount(course.getExclusiveProfessorCount() + 1);
+                if (!professorBlackList.contains(professor_course.getProfessor()) && professor_course.checkExclusivity(setname)) {
+                    lastCourse.setExclusiveProfessorCount(lastCourse.getExclusiveProfessorCount() + 1);
                     professorBlackList.add(professor_course.getProfessor());
                 }
             }
@@ -125,36 +140,41 @@ public class EntitySchedule {
         courseRelation.setTotalProfessors(professors.size() + courseRelation.getExclusiveProfessorCount());
     }
 
-    private boolean removeCourses(List<CourseRelation> cs, List<String> nomeSeparado, List<Intersection> intersectionList) throws ClassNotFoundException {
-        for (int i = 0; i < cs.size(); i++) {
+    private List<Intersection> selectCoursesToRemove(List<String> nomeSeparado, List<Intersection> intersectionList, List<Integer> toRemoveIndexes) {
+        /*lista que vai receber os intersections removidos que tem o nome do conjunto. Ex.: Conjunto TECINFO-CC, vai tirar
+        as intersecções TECINFO e CC, e adicionar a essa lista*/
+        List<Intersection> removedInnerIntersection = new ArrayList<>();
+        for (int i = 0; i < this.courseRelationList.size(); i++) {
             for (int j = 0; j < nomeSeparado.size(); j++) {
-                if (cs.get(i).getName().equals(nomeSeparado.get(j))) {
+                if (this.courseRelationList.get(i).getName().equals(nomeSeparado.get(j))) {
                     if (intersectionList.isEmpty())
-                        intersectionList.addAll(cs.get(i).getIntersection());
+                        intersectionList.addAll(this.courseRelationList.get(i).getIntersection());
                     else {
-                        this.joinIntersections(cs.get(i).getIntersection(), intersectionList);
+                        this.joinIntersections(this.courseRelationList.get(i).getIntersection(), intersectionList);
                     }
-                    verifyExclusiveProfessor(this.courseRelationList.get(this.courseRelationList.size() - 1), nomeSeparado);
-                    cs.get(cs.size() - 1).setIntersection(intersectionList);
-                    removeCourses(nomeSeparado, cs.get(cs.size() - 1).getIntersection());
-                    cs.remove(i);
-                    return removeCourses(cs, nomeSeparado, intersectionList);
+                    this.courseRelationList.get(this.courseRelationList.size() - 1).setIntersection(intersectionList);
+                    //antigo removeCourses sobrecarregado. Método que remove as intersections e as retorna, como explicado acima
+                    removedInnerIntersection = removeInnerDuplicatedCourses(nomeSeparado, this.courseRelationList.get(this.courseRelationList.size() - 1).getIntersection(), removedInnerIntersection);
+
+                    //não efetivamente tira os cursos da lista, mas guarda seus indices em uma lista, para remove-los depois
+                    toRemoveIndexes.add(i);
                 }
             }
         }
-        return true;
+        return removedInnerIntersection;
     }
 
-    private boolean removeCourses(List<String> nomeSeparado, List<Intersection> intersectionList) {
+    private List<Intersection> removeInnerDuplicatedCourses(List<String> nomeSeparado, List<Intersection> intersectionList, List<Intersection> removedInnerIntersection) {
         for (int i = 0; i < intersectionList.size(); i++) {
             for (int j = 0; j < nomeSeparado.size(); j++) {
                 if (intersectionList.get(i).getIntersectionCourse().equals(nomeSeparado.get(j))) {
-                    intersectionList.remove(i);
-                    return removeCourses(nomeSeparado, intersectionList);
+                    //essa lista é onde vai ser colocada as intersections removidas
+                    removedInnerIntersection.add(intersectionList.remove(i));
+                    return removeInnerDuplicatedCourses(nomeSeparado, intersectionList, removedInnerIntersection);
                 }
             }
         }
-        return true;
+        return removedInnerIntersection;
     }
 
     private void joinIntersections(List<Intersection> csIntersections, List<Intersection> intersectionList) {

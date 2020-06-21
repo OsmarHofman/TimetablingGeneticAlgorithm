@@ -32,17 +32,9 @@ public class Professor_Course {
         this.course = curso;
     }
 
-    public boolean checkExclusivity(List<String>coursesNames){
-        if (this.course.size() == coursesNames.size()) {
-            int count = 0;
-            for (String iteratorCoursesName : coursesNames) {
-                if (Intersection.hasProfessorInList(iteratorCoursesName,this.course))
-                    count++;
-
-            }
-            return count == this.course.size();
-        }
-        return false;
+    public boolean checkExclusivity(String courseName){
+        //verifica se só tem um item, e esse item é o conjunto
+        return this.course.size() == 1 && this.course.get(0).equals(courseName);
     }
 
 
