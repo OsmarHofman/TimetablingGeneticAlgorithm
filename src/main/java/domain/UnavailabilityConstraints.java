@@ -1,52 +1,52 @@
 package domain;
 
 public class UnavailabilityConstraints {
-    private String at1;
-    private String at2;
-    private String at3;
+    private int courseId;
+    private int day;
+    private int dayPeriod;
 
-    public UnavailabilityConstraints(String at1, String at2, String at3) {
-        this.at1 = at1;
-        this.at2 = at2;
-        this.at3 = at3;
+    public UnavailabilityConstraints(int courseId, int day, int dayPeriod) {
+        this.courseId = courseId;
+        this.day = day;
+        this.dayPeriod = dayPeriod;
     }
 
     public UnavailabilityConstraints(String[] s) {
-        at1 = s[0];
-        at2 = s[1];
-        at3 = s[2];
+        courseId = Integer.parseInt(s[0]);
+        day = Integer.parseInt(s[1]);
+        dayPeriod = Integer.parseInt(s[2]);
     }
 
-    public String getAt1() {
-        return at1;
+    public int getCourseId() {
+        return courseId;
     }
 
-    public void setAt1(String at1) {
-        this.at1 = at1;
+    public void setCourseId(int courseId) {
+        this.courseId = courseId;
     }
 
-    public String getAt2() {
-        return at2;
+    public int getDay() {
+        return day;
     }
 
-    public void setAt2(String at2) {
-        this.at2 = at2;
+    public void setDay(int day) {
+        this.day = day;
     }
 
-    public String getAt3() {
-        return at3;
+    public int getDayPeriod() {
+        return dayPeriod;
     }
 
-    public void setAt3(String at3) {
-        this.at3 = at3;
+    public void setDayPeriod(int dayPeriod) {
+        this.dayPeriod = dayPeriod;
     }
 
     @Override
     public String toString() {
         return "UnavailabilityConstraints{" +
-                "at1='" + at1 + '\'' +
-                ", at2='" + at2 + '\'' +
-                ", at3='" + at3 + '\'' +
+                "at1='" + courseId + '\'' +
+                ", at2='" + day + '\'' +
+                ", at3='" + dayPeriod + '\'' +
                 '}';
     }
 }

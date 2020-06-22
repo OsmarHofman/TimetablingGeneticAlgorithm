@@ -1,15 +1,15 @@
 package domain;
 
-public class Rooms {
+public class Room {
     private String id;
     private String capacity;
 
-    public Rooms(String id, String capacity) {
+    public Room(String id, String capacity) {
         this.id = id;
         this.capacity = capacity;
     }
 
-    public Rooms(String[] s) {
+    public Room(String[] s) {
         this.id = s[0];
         this.capacity = s[1];
     }

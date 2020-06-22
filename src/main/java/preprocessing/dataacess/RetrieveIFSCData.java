@@ -16,7 +16,7 @@ import org.w3c.dom.NodeList;
        // private static DTOServerData serverData;
 
         public static void getAllData() {
-           // setUp();
+            //setUp();
             //serverData.setChromosomes(Arrays.asList(chromosomes));
             try {
                 File fXmlFile = new File("src/dados.xml");
@@ -59,25 +59,25 @@ import org.w3c.dom.NodeList;
                         switch (column) {
                             case 0:
                                 // Classes
-                                int idClass = Integer.parseInt(eElement.getAttribute("id"));
+                                String idClass = eElement.getAttribute("id");
                                 String nameClass = eElement.getAttribute("name");
                                 String shortNameClass = eElement.getAttribute("short");
-                                int teacherIdClass = Integer.parseInt(eElement.getAttribute("teacherid"));
+                                String teacherIdClass = eElement.getAttribute("teacherid");
                                 String timeoffClass = eElement.getAttribute("timeoff");
-//                                serverData.getClasses()
-//                                        .add(new Classes(idClass, nameClass, shortNameClass, teacherIdClass, timeoffClass));
+//                                //TODO atribui a classe Courses
                                 break;
                             case 1:
                                 // Lesson
                                 int idLesson = Integer.parseInt(eElement.getAttribute("id"));
-                                int subjectId = Integer.parseInt(eElement.getAttribute("subjectid"));
-                                int classesId = Integer.parseInt(eElement.getAttribute("classid"));
+                                String subjectId = eElement.getAttribute("subjectid");
+                                String classesId = eElement.getAttribute("classid");
                                 int teacherIdLesson;
                                 if (eElement.getAttribute("teacherid").equals("")) {
                                     teacherIdLesson = -1;
                                 } else {
                                     teacherIdLesson = Integer.parseInt(eElement.getAttribute("teacherid"));
                                 }
+                                //TODO terminar modelagem da classe Lesson
 
 
                                 int periodsPerWeek = Integer.parseInt(eElement.getAttribute("periodsperweek"));

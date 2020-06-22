@@ -1,8 +1,8 @@
 package preprocessing.dataacess;
 
-import domain.Courses;
-import domain.Curriculas;
-import domain.Rooms;
+import domain.Course;
+import domain.Lesson;
+import domain.Room;
 import domain.UnavailabilityConstraints;
 
 import java.io.File;
@@ -13,15 +13,18 @@ import java.util.Scanner;
 
 public class RetrieveITCData {
 
-    List<Courses> cursos = new ArrayList<>();
-    List<Rooms> salas = new ArrayList<>();
-    List<Curriculas> curriculas = new ArrayList<>();
+    List<Course> cursos = new ArrayList<>();
+    List<Room> salas = new ArrayList<>();
+    List<Lesson> curricula = new ArrayList<>();
     List<UnavailabilityConstraints> constraints = new ArrayList<>();
 
 
+
+
+
+    public void getFromITC() {
         File myObj = new File("src/Datasets/ITCFiles/comp01.ctt.txt");
         Scanner myReader;
-    {
 
         try {
             myReader = new Scanner(myObj);
@@ -35,7 +38,7 @@ public class RetrieveITCData {
                     while (!myReader.hasNext("ROOMS:")) {
                         data = myReader.nextLine();
                         if (!data.equals("")) {
-                            Courses curso = new Courses(data.split(" "));
+                            Course curso = new Course(data.split(" "));
                             cursos.add(curso);
                         }
                     }
@@ -47,8 +50,8 @@ public class RetrieveITCData {
                     while (!myReader.hasNext("CURRICULA:")) {
                         data = myReader.nextLine();
                         if (!data.equals("")) {
-                            Rooms rooms = new Rooms(data.split("\t"));
-                            salas.add(rooms);
+                            Room room = new Room(data.split("\t"));
+                            salas.add(room);
                         }
                     }
                 }
@@ -59,8 +62,8 @@ public class RetrieveITCData {
                     while (!myReader.hasNext("UNAVAILABILITY_CONSTRAINTS:")) {
                         data = myReader.nextLine();
                         if (!data.equals("")) {
-                            Curriculas cur = new Curriculas(data.split(" "));
-                            curriculas.add(cur);
+                            Lesson cur = new Lesson(data.split(" "));
+                            curricula.add(cur);
                         }
                     }
                 }
@@ -87,6 +90,7 @@ public class RetrieveITCData {
             e.printStackTrace();
         }
     }
+}
 //        System.out.println("Cursos:" + cursos.toString());
 //        System.out.println("---------------------------------");
 //        System.out.println("Rooms : " + salas.toString());
@@ -96,4 +100,4 @@ public class RetrieveITCData {
 //        System.out.println("Constraints : " + constraints.toString());
 
 
-}
+
