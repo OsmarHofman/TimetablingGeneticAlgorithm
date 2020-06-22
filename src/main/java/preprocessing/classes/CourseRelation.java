@@ -1,10 +1,8 @@
 package preprocessing.classes;
 
-import main.java.Main;
-
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class CourseRelation implements Serializable {
@@ -100,8 +98,8 @@ public class CourseRelation implements Serializable {
     }
 
     public boolean joinIntersections(int percentage, List<CourseRelation> cs) throws ClassNotFoundException {
-        List<String> listIntersection = new ArrayList<>(Arrays.asList(this.name));
-        String nomeCurso = this.name;
+        List<String> listIntersection = new ArrayList<>(Collections.singletonList(this.name));
+        StringBuilder nomeCurso = new StringBuilder(this.name);
         CourseRelation newCourse = new CourseRelation();
         int exclusiveProfessors = this.exclusiveProfessorCount;
         int proportion = this.totalProfessors * percentage / 100;
@@ -109,16 +107,16 @@ public class CourseRelation implements Serializable {
             if (iteratorIntersection.getIntersectionProfessorsCount() >= proportion) {
                 listIntersection.add(iteratorIntersection.getIntersectionCourse());
                 if (iteratorIntersection.getIntersectionCourse().contains("-")) {
-                    nomeCurso = iteratorIntersection.getIntersectionCourse() + "--" + nomeCurso;
+                    nomeCurso.insert(0, iteratorIntersection.getIntersectionCourse() + "--");
                 } else {
-                    nomeCurso += "-" + iteratorIntersection.getIntersectionCourse();
+                    nomeCurso.append("-").append(iteratorIntersection.getIntersectionCourse());
                 }
                 CourseRelation course = this.getCourseByName(cs, iteratorIntersection.getIntersectionCourse());
                 exclusiveProfessors += course.getExclusiveProfessorCount();
             }
         }
         if (listIntersection.size() > 1) {
-            newCourse.setName(nomeCurso);
+            newCourse.setName(nomeCurso.toString());
             newCourse.setExclusiveProfessorCount(exclusiveProfessors);
             cs.add(newCourse);
             return true;

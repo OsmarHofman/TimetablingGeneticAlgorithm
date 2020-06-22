@@ -1,5 +1,7 @@
 package preprocessing.classes;
 
+import preprocessing.model.ListOperationUtil;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +44,20 @@ public class Intersection implements Serializable {
 
     public void setProfessorsNameList(List<String> professorsNameList) {
         this.professorsNameList = professorsNameList;
+    }
+
+    public void addProfessorsToIntersection(List<String> professorsList) {
+        List<String> newProfessorsList = new ArrayList<>();
+        for (String professorName : professorsList) {
+            if (ListOperationUtil.itemIsNotInList(professorName, this.professorsNameList) && !newProfessorsList.contains(professorName)) {
+                newProfessorsList.add(professorName);
+            }
+        }
+        this.professorsNameList.addAll(newProfessorsList);
+    }
+
+    public void adjustProfessorsCount(){
+        this.intersectionProfessorsCount = this.professorsNameList.size();
     }
 
     @Override

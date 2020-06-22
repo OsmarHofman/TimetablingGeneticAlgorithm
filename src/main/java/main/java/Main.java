@@ -1,5 +1,7 @@
 package main.java;
 
+import preprocessing.dataaccess.FileHandler;
+import preprocessing.interfaces.IFileHandler;
 import preprocessing.model.EntitySchedule;
 import preprocessing.model.ProfessorsScheduleCreation;
 
@@ -12,10 +14,11 @@ public class Main {
         //Porcentagem para unir os cursos em conjuntos
         ProfessorsScheduleCreation psc = new ProfessorsScheduleCreation("src/Datasets/IFSCFiles/Dados_ifsc_2019.xlsx");
 
-        final int percentage = 70;
+        final int percentage = 60;
         EntitySchedule entitySchedule = new EntitySchedule(psc);
-        entitySchedule.createSet(percentage);
-
+        String text = entitySchedule.createSet(percentage);
+        IFileHandler fileHandler = new FileHandler();
+        fileHandler.createReport(text, percentage + "%");
     }
 
 

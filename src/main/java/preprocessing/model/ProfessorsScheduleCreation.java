@@ -1,21 +1,18 @@
 package preprocessing.model;
 
-import preprocessing.classes.CourseRelation;
-import preprocessing.classes.Intersection;
-import preprocessing.classes.ProfessorCourseStatus;
-import preprocessing.classes.Professor_Course;
-import preprocessing.dataacess.RetrieveSpreadSheetData;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import preprocessing.classes.CourseRelation;
+import preprocessing.classes.Intersection;
+import preprocessing.classes.ProfessorCourseStatus;
+import preprocessing.classes.Professor_Course;
+import preprocessing.dataaccess.RetrieveSpreadSheetData;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -124,24 +121,5 @@ public class ProfessorsScheduleCreation {
         System.out.println("Relação entre professores e cursos criada!\n");
     }
 
-    public void createReport() throws IOException {
-        String pathname = "relaçoesProfessores.txt";
-        System.out.println("Criando arquivo " + pathname + " ...\n");
-        File file = new File("out/" + pathname);
-        if (file.createNewFile()) {
-            try {
-                FileWriter arq = new FileWriter(file, true);
-                PrintWriter gravarArq = new PrintWriter(arq);
 
-                gravarArq.println(this.courseRelationList.toString());
-                arq.close();
-                System.out.println("Arquivo " + pathname + " criado com sucesso!\n");
-            } catch (IOException ex) {
-                System.err.println("Erro ao tentar criar o relatório do curso com os professores.");
-                ex.printStackTrace();
-            }
-        } else {
-            System.out.println("Arquivo " + pathname + " já existe!");
-        }
-    }
 }
