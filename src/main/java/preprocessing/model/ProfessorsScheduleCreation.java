@@ -56,6 +56,7 @@ public class ProfessorsScheduleCreation {
         Iterator<Row> rowIterator = sheet.rowIterator();
         XSSFRow row;
         XSSFCell cell;
+        System.out.println("Lendo informações do arquivo .xlsx e atribuindo as classes respectivas...\n");
         while (rowIterator.hasNext()) {
             row = (XSSFRow) rowIterator.next();
 
@@ -81,21 +82,23 @@ public class ProfessorsScheduleCreation {
             if (row.getRowNum() != 0)
                 this.professorsList.add(new Professor_Course(profName, professorCoursesList));
         }
+        System.out.println("Classes modeladas e preenchidas com sucesso!\n");
     }
 
     private void createCourseRelation() {
         courseRelationList = new ArrayList<>();
 
+        System.out.println("Criando a relação entre os professores e os cursos...\n");
         for (String courseName : this.coursesList) {
             CourseRelation iterationCourseRelation = new CourseRelation(courseName);
             for (Professor_Course professor : this.professorsList) {
                 String[] result = professor.verifyCourse(courseName);
                 if (result[0].equals(ProfessorCourseStatus.EXCLUSIVE.toString())) {
-                    iterationCourseRelation.setExclusiveProfessorCount(iterationCourseRelation.getExclusiveProfessorCount() + 1);
-                    iterationCourseRelation.setTotalProfessors(iterationCourseRelation.getTotalProfessors() + 1);
+                    iterationCourseRelation.incrementExclusiveProfessorCount();
+                    iterationCourseRelation.incrementTotalProfessorCount();
                 } else if (result[0].equals(ProfessorCourseStatus.SHARED.toString())) {
                     iterationCourseRelation.checkListIntersection(result[1], professor.getCourse());
-                    iterationCourseRelation.setTotalProfessors(iterationCourseRelation.getTotalProfessors() + 1);
+                    iterationCourseRelation.incrementTotalProfessorCount();
                 }
             }
             this.courseRelationList.add(iterationCourseRelation);
@@ -118,23 +121,27 @@ public class ProfessorsScheduleCreation {
                 }
             }
         }
+        System.out.println("Relação entre professores e cursos criada!\n");
     }
 
     public void createReport() throws IOException {
-        File file = new File("relaçoesProfessores.txt");
+        String pathname = "relaçoesProfessores.txt";
+        System.out.println("Criando arquivo " + pathname + " ...\n");
+        File file = new File("out/" + pathname);
         if (file.createNewFile()) {
             try {
-                FileWriter arq = new FileWriter(file,true);
+                FileWriter arq = new FileWriter(file, true);
                 PrintWriter gravarArq = new PrintWriter(arq);
 
                 gravarArq.println(this.courseRelationList.toString());
                 arq.close();
+                System.out.println("Arquivo " + pathname + " criado com sucesso!\n");
             } catch (IOException ex) {
                 System.err.println("Erro ao tentar criar o relatório do curso com os professores.");
                 ex.printStackTrace();
             }
         } else {
-            System.out.println("Arquivo já existe!");
+            System.out.println("Arquivo " + pathname + " já existe!");
         }
     }
 }

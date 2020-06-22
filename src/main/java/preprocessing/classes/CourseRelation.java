@@ -111,7 +111,7 @@ public class CourseRelation implements Serializable {
                 if (iteratorIntersection.getIntersectionCourse().contains("-")) {
                     nomeCurso = iteratorIntersection.getIntersectionCourse() + "--" + nomeCurso;
                 } else {
-                    nomeCurso += "-" +iteratorIntersection.getIntersectionCourse();
+                    nomeCurso += "-" + iteratorIntersection.getIntersectionCourse();
                 }
                 CourseRelation course = this.getCourseByName(cs, iteratorIntersection.getIntersectionCourse());
                 exclusiveProfessors += course.getExclusiveProfessorCount();
@@ -133,6 +133,31 @@ public class CourseRelation implements Serializable {
             }
         }
         throw new ClassNotFoundException("Curso não encontrado");
+    }
+
+    public void incrementExclusiveProfessorCount() {
+        this.exclusiveProfessorCount++;
+    }
+
+    public void incrementTotalProfessorCount() {
+        this.totalProfessors++;
+    }
+
+    public void sumTotalProfessors() {
+        List<String> professors = new ArrayList<>();
+        for (Intersection iteratorIntersection : this.getIntersection()) {
+            if (professors.isEmpty()) {
+                professors.addAll(iteratorIntersection.getProfessorsNameList());
+            } else {
+                for (String iteratorProfessors : iteratorIntersection.getProfessorsNameList()) {
+                    if (!professors.contains(iteratorProfessors)) {
+                        professors.add(iteratorProfessors);
+                    }
+                }
+            }
+
+        }
+        this.totalProfessors = professors.size() + exclusiveProfessorCount;
     }
 
 }

@@ -17,7 +17,6 @@ public class EntitySchedule {
 
     private List<CourseRelation> courseRelationList;
     private List<Professor_Course> professorRelation;
-    private List<String> professorBlackList = new ArrayList<>();
 
 
     public EntitySchedule(ProfessorsScheduleCreation professorsScheduleCreation) {
@@ -27,53 +26,54 @@ public class EntitySchedule {
 
     public void createSet(int percentage) throws ClassNotFoundException, IOException {
         FileWriter report = this.generateReport(percentage);
-        List<String> splitedSetName;
+        String reportData = "";
+        List<String> splitSetName;
         String setName;
         boolean hasJoined = true;
-
         while (hasJoined) {
-
-            splitedSetName = new ArrayList<>();
-            for (CourseRelation iterationCS : courseRelationList) {
-                hasJoined = iterationCS.joinIntersections(percentage, courseRelationList);
+            CourseRelation lastCourse = null;
+            splitSetName = new ArrayList<>();
+            for (CourseRelation iterationCS : this.courseRelationList) {
+                hasJoined = iterationCS.joinIntersections(percentage, this.courseRelationList);
 
                 if (hasJoined) {
-                    setName = courseRelationList.get(courseRelationList.size() - 1).getName();
+                    lastCourse = this.courseRelationList.get(this.courseRelationList.size() - 1);
+                    setName = lastCourse.getName();
                     if (setName.contains("--")) {
-                        splitedSetName.addAll(Arrays.asList(setName.split("--")));
+                        splitSetName.addAll(Arrays.asList(setName.split("--")));
                         List<String> nameCourses = new ArrayList<>();
                         List<Integer> indexes = new ArrayList<>();
-                        for (String iteratorSplitName : splitedSetName) {
+                        for (String iteratorSplitName : splitSetName) {
                             if (iteratorSplitName.contains("-")) {
-                                if (!Intersection.hasCourseRelationInList(iteratorSplitName, this.courseRelationList)) {
+                                if (ListOperationUtil.itemIsNotInList(iteratorSplitName, this.courseRelationList)) {
                                     nameCourses.addAll(Arrays.asList(iteratorSplitName.split("-")));
-                                    indexes.add(splitedSetName.indexOf(iteratorSplitName));
+                                    indexes.add(splitSetName.indexOf(iteratorSplitName));
                                 }
                             }
                         }
                         Collections.reverse(indexes);
                         for (int iteratorInt : indexes) {
-                            splitedSetName.remove(iteratorInt);
+                            splitSetName.remove(iteratorInt);
                         }
-                        splitedSetName.addAll(nameCourses);
+                        splitSetName.addAll(nameCourses);
 
                     } else {
-                        splitedSetName = Arrays.asList(setName.split("-"));
+                        splitSetName = Arrays.asList(setName.split("-"));
                     }
                     break;
                 }
             }
-            if (splitedSetName.size() != 0) {
+            if (splitSetName.size() != 0) {
                 List<Intersection> intersectionList = new ArrayList<>();
-                courseRelationList.get(courseRelationList.size() - 1).setName(courseRelationList.get(courseRelationList.size() - 1).getName().replace("--", "-"));
-                setName = courseRelationList.get(courseRelationList.size() - 1).getName();
+                lastCourse.setName(lastCourse.getName().replace("--", "-"));
+                setName = lastCourse.getName();
 
                 List<Integer> toRemoveIndexes = new ArrayList<>();
                 //antigo remove courses
-                List<Intersection> innerIntersections = selectCoursesToRemove(splitedSetName, intersectionList, toRemoveIndexes);
+                List<Intersection> innerIntersections = selectCoursesToRemove(splitSetName, intersectionList, toRemoveIndexes);
 
                 //renomea o nome dos cursos de cada professor, para substituirem pelo conjunto formado
-                renameProfessorsCourses(splitedSetName, courseRelationList.get(courseRelationList.size() - 1).getName());
+                renameProfessorsCourses(splitSetName, lastCourse.getName());
 
                 //agora passa o setName, que é o nome inteiro do conjunto sem split, ja que foi substituido antes
                 verifyExclusiveProfessor(innerIntersections, setName);
@@ -84,9 +84,9 @@ public class EntitySchedule {
                     this.courseRelationList.remove(iteratorIndexes);
                 }
 
-                renameIntersection(courseRelationList, splitedSetName, setName);
-                mergeIntersections(courseRelationList, setName);
-                sumTotalProfessors(courseRelationList.get(courseRelationList.size() - 1));
+                renameIntersection(splitSetName, setName);
+                mergeIntersections(setName);
+                lastCourse.sumTotalProfessors();
 
 
                 report.append("\n\n\n--------------------------Nova Geração--------------------------\nNovo conjunto: " + setName + "\n\n");
@@ -95,38 +95,36 @@ public class EntitySchedule {
             }
 
         }
-        System.out.println(courseRelationList.toString());
+        System.out.println(reportData);
         PrintWriter gravarArq = new PrintWriter(report);
         report.close();
         gravarArq.close();
     }
 
-    private void renameProfessorsCourses(List<String> splitedSetName, String courseRelation) {
+    private void renameProfessorsCourses(List<String> splitSetName, String courseRelation) {
         for (Professor_Course iteratorPC : this.professorRelation) {
             List<Integer> indexes = new ArrayList<>();
             for (String iteratorCourses : iteratorPC.getCourse()) {
-                for (String iteratorCourseName : splitedSetName) {
+                for (String iteratorCourseName : splitSetName) {
                     if (iteratorCourses.equals(iteratorCourseName))
                         indexes.add(iteratorPC.getCourse().indexOf(iteratorCourses));
                 }
             }
-            Collections.reverse(indexes);
-            for (int iteratorIndex : indexes) {
-                iteratorPC.getCourse().remove(iteratorIndex);
-            }
+            this.removeItemsOnIndexes(indexes, iteratorPC.getCourse());
             if (!indexes.isEmpty()) {
                 iteratorPC.getCourse().add(courseRelation);
             }
         }
     }
 
-    private void verifyExclusiveProfessor(List<Intersection> innerIntersections, String setname) throws ClassNotFoundException {
+    private void verifyExclusiveProfessor(List<Intersection> innerIntersections, String setName) throws ClassNotFoundException {
         CourseRelation lastCourse = this.courseRelationList.get(this.courseRelationList.size() - 1);
+        List<String> professorBlackList = new ArrayList<>();
         for (Intersection iteratorIntersection : innerIntersections) {
             for (String iteratorProfessor : iteratorIntersection.getProfessorsNameList()) {
-                Professor_Course professor_course = Intersection.getProfessorByName(iteratorProfessor, this.professorRelation);
-                if (!professorBlackList.contains(professor_course.getProfessor()) && professor_course.checkExclusivity(setname)) {
-                    lastCourse.setExclusiveProfessorCount(lastCourse.getExclusiveProfessorCount() + 1);
+                Professor_Course professor_course = ListOperationUtil.getProfessorByName(iteratorProfessor, this.professorRelation);
+                if (!professorBlackList.contains(professor_course.getProfessor()) && professor_course.checkExclusivity(setName)) {
+                    lastCourse.incrementExclusiveProfessorCount();
                     professorBlackList.add(professor_course.getProfessor());
                 }
             }
@@ -134,24 +132,7 @@ public class EntitySchedule {
         }
     }
 
-
-    private void sumTotalProfessors(CourseRelation courseRelation) {
-        List<String> professors = new ArrayList<>();
-        for (Intersection iteratorIntersection : courseRelation.getIntersection()) {
-            if (professors.isEmpty()) {
-                professors.addAll(iteratorIntersection.getProfessorsNameList());
-            } else {
-                for (String iteratorProfessors : iteratorIntersection.getProfessorsNameList()) {
-                    if (!professors.contains(iteratorProfessors)) {
-                        professors.add(iteratorProfessors);
-                    }
-                }
-            }
-
-        }
-        courseRelation.setTotalProfessors(professors.size() + courseRelation.getExclusiveProfessorCount());
-    }
-
+    //TODO refatorar daqui para baixo, e o metodo createSet
     private List<Intersection> selectCoursesToRemove(List<String> nomeSeparado, List<Intersection> intersectionList, List<Integer> toRemoveIndexes) {
         /*lista que vai receber os intersections removidos que tem o nome do conjunto. Ex.: Conjunto TECINFO-CC, vai tirar
         as intersecções TECINFO e CC, e adicionar a essa lista*/
@@ -196,13 +177,13 @@ public class EntitySchedule {
                 if (iil.getIntersectionCourse().equals(iteratorCS.getIntersectionCourse())) {
                     List<String> auxList = new ArrayList<>();
                     for (String iteratorStringCS : iteratorCS.getProfessorsNameList()) {
-                        if (!Intersection.hasProfessorInList(iteratorStringCS, iil.getProfessorsNameList()) && !auxList.contains(iteratorStringCS)) {
+                        if (ListOperationUtil.itemIsNotInList(iteratorStringCS, iil.getProfessorsNameList()) && !auxList.contains(iteratorStringCS)) {
                             auxList.add(iteratorStringCS);
                         }
                     }
                     iil.getProfessorsNameList().addAll(auxList);
                 }
-                if (!Intersection.hasIntersectionInList(iteratorCS.getIntersectionCourse(), intersectionList) && !newIntersections.contains(iteratorCS)) {
+                if (ListOperationUtil.itemIsNotInList(iteratorCS.getIntersectionCourse(), intersectionList) && !newIntersections.contains(iteratorCS)) {
                     newIntersections.add(iteratorCS);
                 }
 
@@ -212,8 +193,8 @@ public class EntitySchedule {
         intersectionList.addAll(newIntersections);
     }
 
-    private void renameIntersection(List<CourseRelation> cs, List<String> nomeSeparado, String nomeTudoJunto) {
-        for (CourseRelation iterationCR : cs) {
+    private void renameIntersection(List<String> nomeSeparado, String nomeTudoJunto) {
+        for (CourseRelation iterationCR : this.courseRelationList) {
             for (Intersection iterationIntersec : iterationCR.getIntersection()) {
                 for (String iterationName : nomeSeparado) {
                     if (iterationIntersec.getIntersectionCourse().equals(iterationName)) {
@@ -225,8 +206,8 @@ public class EntitySchedule {
         }
     }
 
-    private static void mergeIntersections(List<CourseRelation> cs, String nomeTudoJunto) {
-        for (CourseRelation iteratorCS : cs) {
+    private void mergeIntersections(String nomeTudoJunto) {
+        for (CourseRelation iteratorCS : this.courseRelationList) {
             List<Integer> indexes = new ArrayList<>();
             Intersection listSameName = new Intersection();
             int intersecProfessorIndex = 0;
@@ -238,7 +219,7 @@ public class EntitySchedule {
                     } else {
                         List<String> professors = new ArrayList<>();
                         for (String iteratorProfessorsCS : iteratorIntersec.getProfessorsNameList()) {
-                            if (!Intersection.hasProfessorInList(iteratorProfessorsCS, listSameName.getProfessorsNameList()) && !professors.contains(iteratorProfessorsCS)) {
+                            if (ListOperationUtil.itemIsNotInList(iteratorProfessorsCS, listSameName.getProfessorsNameList()) && !professors.contains(iteratorProfessorsCS)) {
                                 professors.add(iteratorProfessorsCS);
                             }
                         }
@@ -249,30 +230,37 @@ public class EntitySchedule {
                 iteratorIntersec.setIntersectionProfessorsCount(iteratorIntersec.getProfessorsNameList().size());
             }
             listSameName.setIntersectionProfessorsCount(listSameName.getProfessorsNameList().size());
-            Collections.reverse(indexes);
-            for (int indexInt : indexes) {
-                iteratorCS.getIntersection().remove(indexInt);
-            }
+            this.removeItemsOnIndexes(indexes, iteratorCS.getIntersection());
         }
     }
 
     private FileWriter generateReport(int percentage) throws IOException {
-        File file = new File(percentage + "%.txt");
+        String pathname = percentage + "%.txt";
+        System.out.println("Criando arquivo " + pathname + " ...\n");
+        File file = new File("out/" + pathname);
         if (file.createNewFile()) {
             try {
-                FileWriter arq = new FileWriter(file,true);
+                FileWriter arq = new FileWriter(file, true);
                 PrintWriter gravarArq = new PrintWriter(arq);
 
                 gravarArq.println(this.courseRelationList.toString());
-                return  arq;
+                System.out.println("Arquivo " + pathname + " criado com sucesso!\n");
+                return arq;
             } catch (IOException ex) {
                 System.err.println("Erro ao tentar criar o relatório do curso com os professores.");
                 ex.printStackTrace();
             }
-        } else {
-            System.out.println("Arquivo já existe!");
         }
-        throw new IOException("arquivo " + file.getName()+ "Ja existe");
+        throw new IOException("Arquivo " + file.getName() + " já existe!");
     }
+
+    private void removeItemsOnIndexes(List<Integer> indexes, List<?> list) {
+        Collections.reverse(indexes);
+        for (int index : indexes) {
+            list.remove(index);
+        }
+
+    }
+
 
 }

@@ -9,9 +9,11 @@ import java.io.IOException;
 public class RetrieveSpreadSheetData {
 
     public static XSSFWorkbook getWorkBook(String pathname) throws IOException {
+        System.out.println("Lendo arquivo " + pathname + " ...\n");
         try {
             // procura o arquivo a partir de seu caminho
             FileInputStream arquivo = new FileInputStream(new File(pathname));
+            System.out.println("Arquivo " + pathname + " lido com sucesso...\n");
             return new XSSFWorkbook(arquivo);
         } catch (
                 IOException e) {
