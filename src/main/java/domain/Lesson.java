@@ -1,35 +1,23 @@
 package domain;
 
-import java.util.Arrays;
+import java.util.Objects;
 
 public class Lesson {
     private int id;
-    private String name;
-    private int days;
-    private int dayPeriod;
-    private Room[] rooms;
-    private Course[] course;
+    private int subjectId;
+    private int classesId;
+    private int teacherId;
+    private int periodsPerWeek;
 
-    public Lesson(int id, String name, int days, int dayPeriod, Room[] rooms, String course) {
-        this.id = id;
-        this.name = name;
-        this.days = days;
-        this.dayPeriod = dayPeriod;
-        this.rooms = rooms;
-        this.course = new Course[1];
-        this.course[0].setId(course);
+    public Lesson() {
     }
 
-    public Lesson(String[] s) {
-        this.id = Integer.parseInt(s[0]);
-        this.name = s[0];
-        this.days = 0;
-        this.dayPeriod = 0;
-        this.rooms = null;
-        this.course = new Course[s.length - 2];
-        for (int i = 0; i < s.length - 2; i++) {
-            this.course[i].setName(s[i + 2]);
-        }
+    public Lesson(int id, int subjectId, int classesId, int teacherId, int periodsPerWeek) {
+        this.id = id;
+        this.subjectId = subjectId;
+        this.classesId = classesId;
+        this.teacherId = teacherId;
+        this.periodsPerWeek = periodsPerWeek;
     }
 
     public int getId() {
@@ -40,55 +28,57 @@ public class Lesson {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public int getSubjectId() {
+        return subjectId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setSubjectId(int subjectId) {
+        this.subjectId = subjectId;
     }
 
-    public int getDays() {
-        return days;
+    public int getClassesId() {
+        return classesId;
     }
 
-    public void setDays(int days) {
-        this.days = days;
+    public void setClassesId(int classesId) {
+        this.classesId = classesId;
     }
 
-    public int getDayPeriod() {
-        return dayPeriod;
+    public int getTeacherId() {
+        return teacherId;
     }
 
-    public void setDayPeriod(int dayPeriod) {
-        this.dayPeriod = dayPeriod;
+    public void setTeacherId(int teacherId) {
+        this.teacherId = teacherId;
     }
 
-    public Room[] getRooms() {
-        return rooms;
+    public int getPeriodsPerWeek() {
+        return periodsPerWeek;
     }
 
-    public void setRooms(Room[] rooms) {
-        this.rooms = rooms;
+    public void setPeriodsPerWeek(int periodsPerWeek) {
+        this.periodsPerWeek = periodsPerWeek;
     }
 
-    public Course[] getCourse() {
-        return course;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        Lesson lesson = (Lesson) o;
+        return id == lesson.id && subjectId == lesson.subjectId && classesId == lesson.classesId
+                && teacherId == lesson.teacherId && periodsPerWeek == lesson.periodsPerWeek;
     }
 
-    public void setCourse(Course[] course) {
-        this.course = course;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, subjectId, classesId, teacherId, periodsPerWeek);
     }
 
     @Override
     public String toString() {
-        return "Curriculas{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", days=" + days +
-                ", dayPeriod=" + dayPeriod +
-                ", rooms=" + Arrays.toString(rooms) +
-                ", courses=" + Arrays.toString(course) +
-                '}';
+        return "Lesson{" + "id=" + id + ", subjectId=" + subjectId + ", classesId=" + classesId + ", teacherId="
+                + teacherId + ", periodsPerWeek=" + periodsPerWeek + '}';
     }
 }

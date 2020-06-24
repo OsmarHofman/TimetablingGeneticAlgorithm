@@ -1,9 +1,9 @@
 package preprocessing.dataaccess;
 
-import domain.Course;
-import domain.Lesson;
-import domain.Room;
-import domain.UnavailabilityConstraints;
+import dto.Course;
+import dto.Lesson;
+import dto.Room;
+import dto.UnavailabilityConstraints;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -13,9 +13,9 @@ import java.util.Scanner;
 
 public class RetrieveITCData {
 
-    List<Course> cursos = new ArrayList<>();
+    List<Lesson> cursos = new ArrayList<>();
     List<Room> salas = new ArrayList<>();
-    List<Lesson> curricula = new ArrayList<>();
+    List<Course> curricula = new ArrayList<>();
     List<UnavailabilityConstraints> constraints = new ArrayList<>();
 
 
@@ -38,7 +38,7 @@ public class RetrieveITCData {
                     while (!myReader.hasNext("ROOMS:")) {
                         data = myReader.nextLine();
                         if (!data.equals("")) {
-                            Course curso = new Course(data.split(" "));
+                            Lesson curso = new Lesson(data.split(" "));
                             cursos.add(curso);
                         }
                     }
@@ -62,7 +62,7 @@ public class RetrieveITCData {
                     while (!myReader.hasNext("UNAVAILABILITY_CONSTRAINTS:")) {
                         data = myReader.nextLine();
                         if (!data.equals("")) {
-                            Lesson cur = new Lesson(data.split(" "));
+                            Course cur = new Course(data.split(" "));
                             curricula.add(cur);
                         }
                     }

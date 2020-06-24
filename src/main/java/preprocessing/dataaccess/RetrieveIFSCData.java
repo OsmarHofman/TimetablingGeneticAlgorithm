@@ -1,145 +1,122 @@
 package preprocessing.dataaccess;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import domain.Classes;
+import domain.Lesson;
+import domain.Subject;
+import dto.Professor;
+import dto.Room;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import util.DTOServerData;
 
 
-    public class RetrieveIFSCData {
+public class RetrieveIFSCData {
 
-       // private static DTOServerData serverData;
+    private static DTOServerData serverData;
 
-        public static void getAllData() {
-            //setUp();
-            //serverData.setChromosomes(Arrays.asList(chromosomes));
-            try {
-                File fXmlFile = new File("src/dados.xml");
-                DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-                DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-                Document doc = dBuilder.parse(fXmlFile);
+    public static DTOServerData getAllData() {
+        setUp();
+        try {
+            File fXmlFile = new File("src/Datasets/IFSCFiles/dados.xml");
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.parse(fXmlFile);
 
-                doc.getDocumentElement().normalize();
+            doc.getDocumentElement().normalize();
 
-                NodeList classe = doc.getElementsByTagName("class");
-                getData(classe, 0);
+            NodeList classe = doc.getElementsByTagName("class");
+            getData(classe, 0);
 
-                NodeList lesson = doc.getElementsByTagName("lesson");
-                getData(lesson, 1);
+            NodeList lesson = doc.getElementsByTagName("lesson");
+            getData(lesson, 1);
 
-                NodeList subject = doc.getElementsByTagName("subject");
-                getData(subject, 2);
+            NodeList subject = doc.getElementsByTagName("subject");
+            getData(subject, 2);
 
-                NodeList teacher = doc.getElementsByTagName("teacher");
-                getData(teacher, 3);
+            NodeList teacher = doc.getElementsByTagName("teacher");
+            getData(teacher, 3);
 
-                NodeList classRoom = doc.getElementsByTagName("classroom");
-                getData(classRoom, 4);
+            NodeList room = doc.getElementsByTagName("classroom");
+            getData(room, 4);
 
-            } catch (Exception e) {
-                System.err.println("Erro ao tentar puxar dados do xml: " + e.getMessage());
-                System.exit(1);
-            }
-
-           // return serverData;
-
+        } catch (Exception e) {
+            System.err.println("Erro ao tentar puxar dados do xml: " + e.getMessage());
+            System.exit(1);
         }
 
-        private static Object getData(NodeList nList, int column) {
-            try {
-                for (int temp = 0; temp < nList.getLength(); temp++) {
-                    Node nNode = nList.item(temp);
-                    if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-                        Element eElement = (Element) nNode;
-                        switch (column) {
-                            case 0:
-                                // Classes
-                                String idClass = eElement.getAttribute("id");
-                                String nameClass = eElement.getAttribute("name");
-                                String shortNameClass = eElement.getAttribute("short");
-                                String teacherIdClass = eElement.getAttribute("teacherid");
-                                String timeoffClass = eElement.getAttribute("timeoff");
-//                                //TODO atribui a classe Courses
-                                break;
-                            case 1:
-                                // Lesson
-                                int idLesson = Integer.parseInt(eElement.getAttribute("id"));
-                                String subjectId = eElement.getAttribute("subjectid");
-                                String classesId = eElement.getAttribute("classid");
-                                int teacherIdLesson;
-                                if (eElement.getAttribute("teacherid").equals("")) {
-                                    teacherIdLesson = -1;
-                                } else {
-                                    teacherIdLesson = Integer.parseInt(eElement.getAttribute("teacherid"));
-                                }
-                                //TODO terminar modelagem da classe Lesson
+        return serverData;
 
+    }
 
-                                int periodsPerWeek = Integer.parseInt(eElement.getAttribute("periodsperweek"));
-//                                serverData.getLessons()
-//                                        .add(new Lesson(idLesson, subjectId, classesId, teacherIdLesson, periodsPerWeek));
-                                System.out.println("----------------------------------------------");
-                                System.out.println("idLesson" + idLesson);
-                                System.out.println("subjectId" + subjectId);
-                                System.out.println("classesId" + classesId);
-                                System.out.println("TeacherIdLesson" + teacherIdLesson);
-                                System.out.println("periodsPerWeek" + periodsPerWeek);
-                                break;
-                            case 2:
-                                // Subject
-                                int idSubject = Integer.parseInt(eElement.getAttribute("id"));
-                                String nameSubject = eElement.getAttribute("name");
-                                String shortNameSubject = eElement.getAttribute("short");
-//                                serverData.getSubjects().add(new Subject(idSubject, nameSubject, shortNameSubject));
-                                System.out.println("----------------------------------------------");
-                                System.out.println("idSubject" + idSubject);
-                                System.out.println("nameSubject" + nameSubject);
-                                System.out.println("shortNameSubject" + shortNameSubject);
-                                break;
-                            case 3:
-                                // Teacher
-                                int idTeacher = Integer.parseInt(eElement.getAttribute("id"));
-                                String nameTeacher = eElement.getAttribute("name");
-                                String shortNameTeacher = eElement.getAttribute("short");
-                                String timeoffTeacher = eElement.getAttribute("timeoff");
-//                                serverData.getTeachers()
-//                                        .add(new Teacher(idTeacher, nameTeacher, shortNameTeacher, timeoffTeacher));
-                                System.out.println("----------------------------------------------");
-                                System.out.println("idTeacher" + idTeacher);
-                                System.out.println("nameTeacher" + nameTeacher);
-                                System.out.println("shortNameTeacher" + shortNameTeacher);
-                                System.out.println("timeoffTeacher" + timeoffTeacher);
-                                break;
-                            case 4:
-                                int idClassrooms = Integer.parseInt(eElement.getAttribute("id"));
-                                String capacity = eElement.getAttribute("capacity");
-                                System.out.println("idClassrooms" + idClassrooms);
-                                System.out.println("capacity" + capacity);
-                                break;
-                            default:
-                                System.out.println("Não existente");
-                                break;
+    private static void getData(NodeList nList, int column) {
+        try {
+            for (int temp = 0; temp < nList.getLength(); temp++) {
+                Node nNode = nList.item(temp);
+                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+                    Element eElement = (Element) nNode;
+                    if (column == 0) {// Classes
+                        int idClass = Integer.parseInt(eElement.getAttribute("id"));
+                        String nameClass = eElement.getAttribute("name");
+                        String shortNameClass = eElement.getAttribute("short");
+                        int teacherIdClass = Integer.parseInt(eElement.getAttribute("teacherid"));
+                        String timeoffClass = eElement.getAttribute("timeoff");
+                        serverData.getClasses()
+                                .add(new Classes(idClass, nameClass, shortNameClass, teacherIdClass, timeoffClass));
+                    } else if (column == 1) {// Lesson
+                        int idLesson = Integer.parseInt(eElement.getAttribute("id"));
+                        int subjectId = Integer.parseInt(eElement.getAttribute("subjectid"));
+                        int classesId = Integer.parseInt(eElement.getAttribute("classid"));
+                        int teacherIdLesson;
+                        if (eElement.getAttribute("teacherid").equals("")) {
+                            teacherIdLesson = -1;
+                        } else {
+                            teacherIdLesson = Integer.parseInt(eElement.getAttribute("teacherid"));
                         }
+
+                        int periodsPerWeek = Integer.parseInt(eElement.getAttribute("periodsperweek"));
+                        serverData.getLessons()
+                                .add(new Lesson(idLesson, subjectId, classesId, teacherIdLesson, periodsPerWeek));
+                    } else if (column == 2) {// Subject
+                        int idSubject = Integer.parseInt(eElement.getAttribute("id"));
+                        String nameSubject = eElement.getAttribute("name");
+                        String shortNameSubject = eElement.getAttribute("short");
+                        serverData.getSubjects().add(new Subject(idSubject, nameSubject, shortNameSubject));
+                    } else if (column == 3) {// Teacher
+                        String idTeacher = eElement.getAttribute("id");
+                        String nameTeacher = eElement.getAttribute("name");
+                        String timeoffTeacher = eElement.getAttribute("timeoff");
+                        serverData.getProfessors()
+                                .add(new Professor(idTeacher, nameTeacher, timeoffTeacher));
+                    } else if (column == 4) {// Room
+                        String idRoom = eElement.getAttribute("id");
+                        String nameRoom = eElement.getAttribute("name");
+                        serverData.getRooms()
+                                .add(new Room(idRoom, nameRoom));
+                    } else {
+                        System.out.println("Não existente");
                     }
                 }
-            } catch (Exception e) {
-                System.err.println("Erro ao tentar pegar dados específicos: " + e.getMessage());
-                System.exit(1);
             }
-            return null;
+        } catch (Exception e) {
+            System.err.println("Erro ao tentar pegar dados específicos: " + e.getMessage());
+            System.exit(1);
         }
-
-//        private static void setUp() {
-//            serverData = new DTOServerData();
-//            serverData.setClasses(new ArrayList<Classes>());
-//            serverData.setLessons(new ArrayList<Lesson>());
-//            serverData.setSubjects(new ArrayList<Subject>());
-//            serverData.setTeachers(new ArrayList<Teacher>());
-//        }
     }
+
+    private static void setUp() {
+        serverData = new DTOServerData();
+        serverData.setClasses(new ArrayList<>());
+        serverData.setLessons(new ArrayList<>());
+        serverData.setSubjects(new ArrayList<>());
+        serverData.setProfessors(new ArrayList<>());
+    }
+}
 

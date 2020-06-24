@@ -1,9 +1,11 @@
 package main.java;
 
 import preprocessing.dataaccess.FileHandler;
+import preprocessing.dataaccess.RetrieveIFSCData;
 import preprocessing.interfaces.IFileHandler;
 import preprocessing.model.EntitySchedule;
 import preprocessing.model.ProfessorsScheduleCreation;
+import util.DTOServerData;
 
 import java.io.*;
 
@@ -12,13 +14,16 @@ public class Main {
         //TODO Alterar atributos do domain e corrigir possiveis conflitos
 
         //Porcentagem para unir os cursos em conjuntos
-        ProfessorsScheduleCreation psc = new ProfessorsScheduleCreation("src/Datasets/IFSCFiles/Dados_ifsc_2019.xlsx");
+//        ProfessorsScheduleCreation psc = new ProfessorsScheduleCreation("src/Datasets/IFSCFiles/Dados_ifsc_2019.xlsx");
+//
+//        final int percentage = 60;
+//        EntitySchedule entitySchedule = new EntitySchedule(psc);
+//        String text = entitySchedule.createSet(percentage);
+//        IFileHandler fileHandler = new FileHandler();
+//        fileHandler.createReport(text, percentage + "%");
 
-        final int percentage = 60;
-        EntitySchedule entitySchedule = new EntitySchedule(psc);
-        String text = entitySchedule.createSet(percentage);
-        IFileHandler fileHandler = new FileHandler();
-        fileHandler.createReport(text, percentage + "%");
+        DTOServerData serverData = RetrieveIFSCData.getAllData();
+        System.out.println(serverData.toString());
     }
 
 
