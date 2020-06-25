@@ -1,4 +1,4 @@
-package domain;
+package domain.ifsc;
 
 import java.util.Date;
 import java.util.Objects;

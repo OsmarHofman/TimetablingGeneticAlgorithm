@@ -2,10 +2,12 @@ package main.java;
 
 import preprocessing.dataaccess.FileHandler;
 import preprocessing.dataaccess.RetrieveIFSCData;
+import preprocessing.dataaccess.RetrieveITCData;
 import preprocessing.interfaces.IFileHandler;
 import preprocessing.model.EntitySchedule;
 import preprocessing.model.ProfessorsScheduleCreation;
-import util.DTOServerData;
+import util.DTOIFSC;
+import util.DTOITC;
 
 import java.io.*;
 
@@ -13,7 +15,6 @@ public class Main {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         //TODO Alterar atributos do domain e corrigir possiveis conflitos
 
-        //Porcentagem para unir os cursos em conjuntos
 //        ProfessorsScheduleCreation psc = new ProfessorsScheduleCreation("src/Datasets/IFSCFiles/Dados_ifsc_2019.xlsx");
 //
 //        final int percentage = 60;
@@ -22,8 +23,13 @@ public class Main {
 //        IFileHandler fileHandler = new FileHandler();
 //        fileHandler.createReport(text, percentage + "%");
 
-        DTOServerData serverData = RetrieveIFSCData.getAllData();
-        System.out.println(serverData.toString());
+        RetrieveIFSCData retrieveIFSCData = new RetrieveIFSCData();
+        DTOIFSC dtoifsc = retrieveIFSCData.getAllData();
+
+        RetrieveITCData rid = new RetrieveITCData();
+        DTOITC dtoitc = rid.getFromITC();
+        System.out.println("osmar ne");
+
     }
 
 

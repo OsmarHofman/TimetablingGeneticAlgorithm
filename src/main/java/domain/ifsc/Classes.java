@@ -1,4 +1,4 @@
-package domain;
+package domain.ifsc;
 
 public class Classes {
     private int id;

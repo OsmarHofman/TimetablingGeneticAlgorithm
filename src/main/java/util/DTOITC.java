@@ -1,0 +1,82 @@
+package util;
+
+import domain.itc.Course;
+import domain.itc.Lesson;
+import domain.itc.Room;
+import domain.itc.UnavailabilityConstraint;
+
+import java.util.Arrays;
+import java.util.List;
+
+public class DTOITC {
+
+    private Course[] courses;
+    private Lesson[] lessons;
+    private Room[] rooms;
+    private UnavailabilityConstraint[] constraints;
+
+    public DTOITC() {
+    }
+
+    public DTOITC(List<Course> courses, List<Lesson> lessons, List<Room> rooms, List<UnavailabilityConstraint> constraints) {
+        this.courses = new Course[courses.size()];
+        this.lessons = new Lesson[lessons.size()];
+        this.rooms = new Room[rooms.size()];
+        this.constraints = new UnavailabilityConstraint[constraints.size()];
+        this.courses = new Course[courses.size()];
+        this.courses = courses.toArray(this.courses);
+        this.lessons = lessons.toArray(this.lessons);
+        this.rooms = rooms.toArray(this.rooms);
+        this.constraints = constraints.toArray(this.constraints);
+
+    }
+
+    public DTOITC(Course[] courses, Lesson[] lessons, Room[] rooms, UnavailabilityConstraint[] constraints) {
+        this.courses = courses;
+        this.lessons = lessons;
+        this.rooms = rooms;
+        this.constraints = constraints;
+    }
+
+    public Course[] getCourses() {
+        return courses;
+    }
+
+    public void setCourses(Course[] courses) {
+        this.courses = courses;
+    }
+
+    public Lesson[] getLessons() {
+        return lessons;
+    }
+
+    public void setLessons(Lesson[] lessons) {
+        this.lessons = lessons;
+    }
+
+    public Room[] getRooms() {
+        return rooms;
+    }
+
+    public void setRooms(Room[] rooms) {
+        this.rooms = rooms;
+    }
+
+    public UnavailabilityConstraint[] getConstraints() {
+        return constraints;
+    }
+
+    public void setConstraints(UnavailabilityConstraint[] constraints) {
+        this.constraints = constraints;
+    }
+
+    @Override
+    public String toString() {
+        return "DTOITC{" +
+                "courses=" + Arrays.toString(courses) +
+                ", lessons=" + Arrays.toString(lessons) +
+                ", rooms=" + Arrays.toString(rooms) +
+                ", constraints=" + Arrays.toString(constraints) +
+                '}';
+    }
+}

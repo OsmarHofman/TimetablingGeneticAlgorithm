@@ -6,24 +6,28 @@ import java.util.ArrayList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import domain.Classes;
-import domain.Lesson;
-import domain.Subject;
-import dto.Professor;
-import dto.Room;
+import domain.ifsc.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import util.DTOServerData;
+import util.DTOIFSC;
 
 
 public class RetrieveIFSCData {
+    private DTOIFSC dtoifsc;
 
-    private static DTOServerData serverData;
+    public RetrieveIFSCData() {
+        dtoifsc = new DTOIFSC();
+        dtoifsc.setClasses(new ArrayList<>());
+        dtoifsc.setLessons(new ArrayList<>());
+        dtoifsc.setSubjects(new ArrayList<>());
+        dtoifsc.setProfessors(new ArrayList<>());
+        dtoifsc.setRooms(new ArrayList<>());
+    }
 
-    public static DTOServerData getAllData() {
-        setUp();
+
+    public DTOIFSC getAllData() {
         try {
             File fXmlFile = new File("src/Datasets/IFSCFiles/dados.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -52,11 +56,11 @@ public class RetrieveIFSCData {
             System.exit(1);
         }
 
-        return serverData;
+        return dtoifsc;
 
     }
 
-    private static void getData(NodeList nList, int column) {
+    private void getData(NodeList nList, int column) {
         try {
             for (int temp = 0; temp < nList.getLength(); temp++) {
                 Node nNode = nList.item(temp);
@@ -68,38 +72,32 @@ public class RetrieveIFSCData {
                         String shortNameClass = eElement.getAttribute("short");
                         int teacherIdClass = Integer.parseInt(eElement.getAttribute("teacherid"));
                         String timeoffClass = eElement.getAttribute("timeoff");
-                        serverData.getClasses()
+                        dtoifsc.getClasses()
                                 .add(new Classes(idClass, nameClass, shortNameClass, teacherIdClass, timeoffClass));
                     } else if (column == 1) {// Lesson
                         int idLesson = Integer.parseInt(eElement.getAttribute("id"));
                         int subjectId = Integer.parseInt(eElement.getAttribute("subjectid"));
                         int classesId = Integer.parseInt(eElement.getAttribute("classid"));
-                        int teacherIdLesson;
-                        if (eElement.getAttribute("teacherid").equals("")) {
-                            teacherIdLesson = -1;
-                        } else {
-                            teacherIdLesson = Integer.parseInt(eElement.getAttribute("teacherid"));
-                        }
-
+                        int teacherIdLesson = this.getTeacherId(eElement.getAttribute("teacherids"));
                         int periodsPerWeek = Integer.parseInt(eElement.getAttribute("periodsperweek"));
-                        serverData.getLessons()
+                        dtoifsc.getLessons()
                                 .add(new Lesson(idLesson, subjectId, classesId, teacherIdLesson, periodsPerWeek));
                     } else if (column == 2) {// Subject
                         int idSubject = Integer.parseInt(eElement.getAttribute("id"));
                         String nameSubject = eElement.getAttribute("name");
                         String shortNameSubject = eElement.getAttribute("short");
-                        serverData.getSubjects().add(new Subject(idSubject, nameSubject, shortNameSubject));
+                        dtoifsc.getSubjects().add(new Subject(idSubject, nameSubject, shortNameSubject));
                     } else if (column == 3) {// Teacher
                         String idTeacher = eElement.getAttribute("id");
                         String nameTeacher = eElement.getAttribute("name");
                         String timeoffTeacher = eElement.getAttribute("timeoff");
-                        serverData.getProfessors()
-                                .add(new Professor(idTeacher, nameTeacher, timeoffTeacher));
+                        dtoifsc.getProfessors()
+                                .add(new Teacher(Integer.parseInt(idTeacher), nameTeacher, timeoffTeacher));
                     } else if (column == 4) {// Room
                         String idRoom = eElement.getAttribute("id");
                         String nameRoom = eElement.getAttribute("name");
-                        serverData.getRooms()
-                                .add(new Room(idRoom, nameRoom));
+                        dtoifsc.getRooms()
+                                .add(new Classroom(Integer.parseInt(idRoom),nameRoom, Integer.MAX_VALUE));
                     } else {
                         System.out.println("Não existente");
                     }
@@ -111,12 +109,18 @@ public class RetrieveIFSCData {
         }
     }
 
-    private static void setUp() {
-        serverData = new DTOServerData();
-        serverData.setClasses(new ArrayList<>());
-        serverData.setLessons(new ArrayList<>());
-        serverData.setSubjects(new ArrayList<>());
-        serverData.setProfessors(new ArrayList<>());
+    private int getTeacherId(String element) throws ClassNotFoundException {
+        if (element.equals("")) {
+            return -1;
+        }
+            String[] teacher = element.split(",");
+            for (String iterationString: teacher) {
+                if (!iterationString.isEmpty()){
+                    return Integer.parseInt(iterationString);
+                }
+
+        }
+            throw new ClassNotFoundException("Teacher não encontrado");
     }
 }
 

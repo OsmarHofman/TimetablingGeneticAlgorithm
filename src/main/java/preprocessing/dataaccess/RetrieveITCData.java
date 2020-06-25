@@ -1,9 +1,12 @@
 package preprocessing.dataaccess;
 
-import dto.Course;
-import dto.Lesson;
-import dto.Room;
-import dto.UnavailabilityConstraints;
+
+
+import domain.itc.Course;
+import domain.itc.Lesson;
+import domain.itc.Room;
+import domain.itc.UnavailabilityConstraint;
+import util.DTOITC;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -13,16 +16,19 @@ import java.util.Scanner;
 
 public class RetrieveITCData {
 
-    List<Lesson> cursos = new ArrayList<>();
-    List<Room> salas = new ArrayList<>();
-    List<Course> curricula = new ArrayList<>();
-    List<UnavailabilityConstraints> constraints = new ArrayList<>();
+    private DTOITC dtoitc;
+
+    List<Lesson> lessons = new ArrayList<>();
+    List<Room> rooms = new ArrayList<>();
+    List<Course> courses = new ArrayList<>();
+    List<UnavailabilityConstraint> constraints = new ArrayList<>();
 
 
 
 
 
-    public void getFromITC() {
+
+    public DTOITC getFromITC() {
         File myObj = new File("src/Datasets/ITCFiles/comp01.ctt.txt");
         Scanner myReader;
 
@@ -38,8 +44,8 @@ public class RetrieveITCData {
                     while (!myReader.hasNext("ROOMS:")) {
                         data = myReader.nextLine();
                         if (!data.equals("")) {
-                            Lesson curso = new Lesson(data.split(" "));
-                            cursos.add(curso);
+                            Lesson lesson = new Lesson(data.split(" "));
+                            lessons.add(lesson);
                         }
                     }
                 }
@@ -51,7 +57,7 @@ public class RetrieveITCData {
                         data = myReader.nextLine();
                         if (!data.equals("")) {
                             Room room = new Room(data.split("\t"));
-                            salas.add(room);
+                            rooms.add(room);
                         }
                     }
                 }
@@ -62,8 +68,8 @@ public class RetrieveITCData {
                     while (!myReader.hasNext("UNAVAILABILITY_CONSTRAINTS:")) {
                         data = myReader.nextLine();
                         if (!data.equals("")) {
-                            Course cur = new Course(data.split(" "));
-                            curricula.add(cur);
+                            Course course = new Course(data.split(" "),lessons);
+                            courses.add(course);
                         }
                     }
                 }
@@ -74,30 +80,25 @@ public class RetrieveITCData {
                     while (!myReader.hasNext("END.")) {
                         data = myReader.nextLine();
                         if (!data.equals("")) {
-                            UnavailabilityConstraints unavailabilityConstraints = new UnavailabilityConstraints(data.split(" "));
-                            constraints.add(unavailabilityConstraints);
+                            UnavailabilityConstraint unavailabilityConstraint = new UnavailabilityConstraint(data.split(" "));
+                            constraints.add(unavailabilityConstraint);
                         }
                     }
                 }
                 myReader.nextLine();
             }
             myReader.close();
+            dtoitc = new DTOITC(courses,lessons,rooms,constraints);
 
 
         } catch (
-                FileNotFoundException e) {
+                FileNotFoundException | ClassNotFoundException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
+        return dtoitc;
     }
 }
-//        System.out.println("Cursos:" + cursos.toString());
-//        System.out.println("---------------------------------");
-//        System.out.println("Rooms : " + salas.toString());
-//        System.out.println("---------------------------------");
-//        System.out.println("Curricula : " + curriculas.toString());
-//        System.out.println("---------------------------------");
-//        System.out.println("Constraints : " + constraints.toString());
 
 
 
