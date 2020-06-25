@@ -34,7 +34,11 @@ hs_err_pid*
 .idea//workspace.xml
 .idea//tasks.xml
 .idea/dictionaries
-.idea/libraries
+/.idea/libraries
+/.idea/misc.xml
+/.idea/compiler.xml
+/src/datasets/IFSCFiles/dados.xml
+/src/datasets/ITCFiles/comp01.ctt.txt
 
 # Sensitive or high-churn files:
 .idea//dataSources/
@@ -75,6 +79,4 @@ buildNumber.properties
 
 # Avoid ignoring Maven wrapper jar file (.jar files are usually ignored)
 !/.mvn/wrapper/maven-wrapper.jar
-/.idea/misc.xml
-/src/datasets/IFSCFiles/dados.xml
-/src/datasets/ITCFiles/comp01.ctt.txt
+
