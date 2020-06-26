@@ -80,8 +80,9 @@ public class RetrieveIFSCData {
                         int classesId = Integer.parseInt(eElement.getAttribute("classid"));
                         int teacherIdLesson = this.getTeacherId(eElement.getAttribute("teacherids"));
                         int periodsPerWeek = Integer.parseInt(eElement.getAttribute("periodsperweek"));
+                        int durationPeriods = Integer.parseInt(eElement.getAttribute("durationperiods"));
                         dtoifsc.getLessons()
-                                .add(new Lesson(idLesson, subjectId, classesId, teacherIdLesson, periodsPerWeek));
+                                .add(new Lesson(idLesson, subjectId, classesId, teacherIdLesson, periodsPerWeek,durationPeriods));
                     } else if (column == 2) {// Subject
                         int idSubject = Integer.parseInt(eElement.getAttribute("id"));
                         String nameSubject = eElement.getAttribute("name");
@@ -97,7 +98,7 @@ public class RetrieveIFSCData {
                         String idRoom = eElement.getAttribute("id");
                         String nameRoom = eElement.getAttribute("name");
                         dtoifsc.getRooms()
-                                .add(new Classroom(Integer.parseInt(idRoom),nameRoom, Integer.MAX_VALUE));
+                                .add(new Classroom(Integer.parseInt(idRoom),nameRoom));
                     } else {
                         System.out.println("Não existente");
                     }

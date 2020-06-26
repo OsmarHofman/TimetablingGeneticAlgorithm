@@ -88,6 +88,9 @@ public class RetrieveITCData {
                 myReader.nextLine();
             }
             myReader.close();
+            for (Lesson iterationLesson:lessons) {
+                iterationLesson.retrieveConstraints(constraints);
+            }
             dtoitc = new DTOITC(courses,lessons,rooms,constraints);
 
 

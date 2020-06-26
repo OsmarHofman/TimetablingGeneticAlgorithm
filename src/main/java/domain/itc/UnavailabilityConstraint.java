@@ -1,25 +1,31 @@
 package domain.itc;
 
 public class UnavailabilityConstraint {
-    private String courseId;
+    private String lessonId;
     private int day;
     private int dayPeriod;
 
     public UnavailabilityConstraint() {
     }
 
+    public UnavailabilityConstraint(String lessonId, int day, int dayPeriod) {
+        this.lessonId = lessonId;
+        this.day = day;
+        this.dayPeriod = dayPeriod;
+    }
+
     public UnavailabilityConstraint(String[]parameters) {
-        this.courseId = parameters[0];
+        this.lessonId = parameters[0];
         this.day = Integer.parseInt(parameters[1]);
         this.dayPeriod = Integer.parseInt(parameters[2]);
     }
 
-    public String getCourseId() {
-        return courseId;
+    public String getLessonId() {
+        return lessonId;
     }
 
-    public void setCourseId(String courseId) {
-        this.courseId = courseId;
+    public void setLessonId(String lessonId) {
+        this.lessonId = lessonId;
     }
 
     public int getDay() {
@@ -41,7 +47,7 @@ public class UnavailabilityConstraint {
     @Override
     public String toString() {
         return "UnavailabilityConstraint{" +
-                "courseId='" + courseId + '\'' +
+                "courseId='" + lessonId + '\'' +
                 ", day=" + day +
                 ", dayPeriod=" + dayPeriod +
                 '}';

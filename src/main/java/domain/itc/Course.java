@@ -8,7 +8,8 @@ public class Course {
     private int coursesNumber;
     private Lesson[] lessons;
 
-    public Course() {
+    public Course(int size) {
+        lessons = new Lesson[size];
     }
 
     public Course(String[]parameters, List<Lesson> allLessons) throws ClassNotFoundException {
@@ -16,7 +17,7 @@ public class Course {
         this.coursesNumber = Integer.parseInt(parameters[1]);
         this.lessons = new Lesson[this.coursesNumber];
         for (int i = 2; i <parameters.length ; i++) {
-            this.lessons[i-2] = Lesson.getLessonById(allLessons,parameters[i],this.coursesNumber);
+            this.lessons[i-2] = Lesson.getLessonById(allLessons,parameters[i]);
         }
     }
 
@@ -53,4 +54,5 @@ public class Course {
                 ", lessons=" + Arrays.toString(lessons) +
                 '}';
     }
+
 }

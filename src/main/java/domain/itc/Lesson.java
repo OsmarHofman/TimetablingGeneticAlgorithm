@@ -1,5 +1,6 @@
 package domain.itc;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -95,12 +96,24 @@ public class Lesson {
                 '}';
     }
 
-    public static Lesson getLessonById(List<Lesson> allLessons, String id, int size) throws ClassNotFoundException {
+    public static Lesson getLessonById(List<Lesson> allLessons, String id) throws ClassNotFoundException {
         for (Lesson iteratorLesson:allLessons) {
             if (iteratorLesson.getLessonId().equals(id)){
                 return iteratorLesson;
             }
         }
         throw new ClassNotFoundException("Lesson não encontrada");
+    }
+
+    public void retrieveConstraints(List<UnavailabilityConstraint> constraints){
+        List<UnavailabilityConstraint>constraintList = new ArrayList<>();
+        for (UnavailabilityConstraint iterationConstraints:constraints) {
+            if (iterationConstraints.getLessonId().equals(this.lessonId)){
+                constraintList.add(iterationConstraints);
+            }
+        }
+        this.constraints = new UnavailabilityConstraint[constraintList.size()];
+        this.constraints = constraintList.toArray(this.constraints);
+
     }
 }

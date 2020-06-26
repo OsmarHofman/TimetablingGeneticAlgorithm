@@ -8,16 +8,18 @@ public class Lesson {
     private int classesId;
     private int teacherId;
     private int periodsPerWeek;
+    private int durationPeriods;
 
     public Lesson() {
     }
 
-    public Lesson(int id, int subjectId, int classesId, int teacherId, int periodsPerWeek) {
+    public Lesson(int id, int subjectId, int classesId, int teacherId, int periodsPerWeek, int durationPeriods) {
         this.id = id;
         this.subjectId = subjectId;
         this.classesId = classesId;
         this.teacherId = teacherId;
         this.periodsPerWeek = periodsPerWeek;
+        this.durationPeriods = durationPeriods;
     }
 
     public int getId() {
@@ -60,25 +62,23 @@ public class Lesson {
         this.periodsPerWeek = periodsPerWeek;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
-        Lesson lesson = (Lesson) o;
-        return id == lesson.id && subjectId == lesson.subjectId && classesId == lesson.classesId
-                && teacherId == lesson.teacherId && periodsPerWeek == lesson.periodsPerWeek;
+    public int getDurationPeriods() {
+        return durationPeriods;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, subjectId, classesId, teacherId, periodsPerWeek);
+    public void setDurationPeriods(int durationPeriods) {
+        this.durationPeriods = durationPeriods;
     }
 
     @Override
     public String toString() {
-        return "Lesson{" + "id=" + id + ", subjectId=" + subjectId + ", classesId=" + classesId + ", teacherId="
-                + teacherId + ", periodsPerWeek=" + periodsPerWeek + '}';
+        return "Lesson{" +
+                "id=" + id +
+                ", subjectId=" + subjectId +
+                ", classesId=" + classesId +
+                ", teacherId=" + teacherId +
+                ", periodsPerWeek=" + periodsPerWeek +
+                ", durationPeriods=" + durationPeriods +
+                '}';
     }
 }

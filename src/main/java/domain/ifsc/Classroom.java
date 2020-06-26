@@ -5,15 +5,13 @@ import java.util.Arrays;
 public class Classroom {
     private int roomId;
     private String name;
-    private int capacity;
 
     public Classroom() {
     }
 
-    public Classroom(int roomId,String name, int capacity) {
+    public Classroom(int roomId,String name) {
         this.roomId = roomId;
         this.name = name;
-        this.capacity = capacity;
     }
 
     public int getRoomId() {
@@ -24,13 +22,6 @@ public class Classroom {
         this.roomId = roomId;
     }
 
-    public int getCapacity() {
-        return capacity;
-    }
-
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
-    }
 
     public String getName() {
         return name;
@@ -45,7 +36,6 @@ public class Classroom {
         return "Classroom{" +
                 "roomId=" + roomId +
                 ", name='" + name + '\'' +
-                ", capacity=" + capacity +
                 '}';
     }
 }
