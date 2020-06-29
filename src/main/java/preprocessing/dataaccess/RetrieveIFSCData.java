@@ -2,6 +2,7 @@ package preprocessing.dataaccess;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -15,7 +16,8 @@ import util.DTOIFSC;
 
 
 public class RetrieveIFSCData {
-    private DTOIFSC dtoifsc;
+    private final DTOIFSC dtoifsc;
+    private List<Integer> coursesBlacklist;
 
     public RetrieveIFSCData() {
         dtoifsc = new DTOIFSC();
@@ -24,6 +26,7 @@ public class RetrieveIFSCData {
         dtoifsc.setSubjects(new ArrayList<>());
         dtoifsc.setProfessors(new ArrayList<>());
         dtoifsc.setRooms(new ArrayList<>());
+        coursesBlacklist = new ArrayList<>();
     }
 
 
@@ -68,26 +71,37 @@ public class RetrieveIFSCData {
                     Element eElement = (Element) nNode;
                     if (column == 0) {// Classes
                         int idClass = Integer.parseInt(eElement.getAttribute("id"));
-                        String nameClass = eElement.getAttribute("name");
                         String shortNameClass = eElement.getAttribute("short");
-                        int teacherIdClass = Integer.parseInt(eElement.getAttribute("teacherid"));
-                        String timeoffClass = eElement.getAttribute("timeoff");
-                        dtoifsc.getClasses()
-                                .add(new Classes(idClass, nameClass, shortNameClass, teacherIdClass, timeoffClass));
+                        if (shortNameClass.toUpperCase().startsWith("G") || shortNameClass.toUpperCase().startsWith("T")) {
+                            String nameClass = eElement.getAttribute("name");
+                            int teacherIdClass = Integer.parseInt(eElement.getAttribute("teacherid"));
+                            String timeoffClass = eElement.getAttribute("timeoff");
+                            dtoifsc.getClasses()
+                                    .add(new Classes(idClass, nameClass, shortNameClass, teacherIdClass, timeoffClass));
+                        } else {
+                            coursesBlacklist.add(idClass);
+                        }
                     } else if (column == 1) {// Lesson
-                        int idLesson = Integer.parseInt(eElement.getAttribute("id"));
-                        int subjectId = Integer.parseInt(eElement.getAttribute("subjectid"));
                         int classesId = Integer.parseInt(eElement.getAttribute("classid"));
-                        int teacherIdLesson = this.getTeacherId(eElement.getAttribute("teacherids"));
-                        int periodsPerWeek = Integer.parseInt(eElement.getAttribute("periodsperweek"));
-                        int durationPeriods = Integer.parseInt(eElement.getAttribute("durationperiods"));
-                        dtoifsc.getLessons()
-                                .add(new Lesson(idLesson, subjectId, classesId, teacherIdLesson, periodsPerWeek,durationPeriods));
+
+                        if (!coursesBlacklist.contains(classesId)) {
+                            int idLesson = Integer.parseInt(eElement.getAttribute("id"));
+                            int subjectId = Integer.parseInt(eElement.getAttribute("subjectid"));
+                            int teacherIdLesson = this.getTeacherId(eElement.getAttribute("teacherids"));
+                            int periodsPerWeek = Integer.parseInt(eElement.getAttribute("periodsperweek"));
+                            int durationPeriods = Integer.parseInt(eElement.getAttribute("durationperiods"));
+                            dtoifsc.getLessons()
+                                    .add(new Lesson(idLesson, subjectId, classesId, teacherIdLesson, periodsPerWeek, durationPeriods));
+                        }
                     } else if (column == 2) {// Subject
                         int idSubject = Integer.parseInt(eElement.getAttribute("id"));
-                        String nameSubject = eElement.getAttribute("name");
-                        String shortNameSubject = eElement.getAttribute("short");
-                        dtoifsc.getSubjects().add(new Subject(idSubject, nameSubject, shortNameSubject));
+                        for (Lesson iteratorLesson : dtoifsc.getLessons()) {
+                            if (iteratorLesson.getSubjectId() == idSubject && !coursesBlacklist.contains(iteratorLesson.getClassesId())) {
+                                String nameSubject = eElement.getAttribute("name");
+                                String shortNameSubject = eElement.getAttribute("short");
+                                dtoifsc.getSubjects().add(new Subject(idSubject, nameSubject, shortNameSubject));
+                            }
+                        }
                     } else if (column == 3) {// Teacher
                         String idTeacher = eElement.getAttribute("id");
                         String nameTeacher = eElement.getAttribute("name");
@@ -98,7 +112,7 @@ public class RetrieveIFSCData {
                         String idRoom = eElement.getAttribute("id");
                         String nameRoom = eElement.getAttribute("name");
                         dtoifsc.getRooms()
-                                .add(new Classroom(Integer.parseInt(idRoom),nameRoom));
+                                .add(new Classroom(Integer.parseInt(idRoom), nameRoom));
                     } else {
                         System.out.println("Não existente");
                     }
@@ -114,14 +128,14 @@ public class RetrieveIFSCData {
         if (element.equals("")) {
             return -1;
         }
-            String[] teacher = element.split(",");
-            for (String iterationString: teacher) {
-                if (!iterationString.isEmpty()){
-                    return Integer.parseInt(iterationString);
-                }
+        String[] teacher = element.split(",");
+        for (String iterationString : teacher) {
+            if (!iterationString.isEmpty()) {
+                return Integer.parseInt(iterationString);
+            }
 
         }
-            throw new ClassNotFoundException("Teacher não encontrado");
+        throw new ClassNotFoundException("Teacher não encontrado");
     }
 }
 

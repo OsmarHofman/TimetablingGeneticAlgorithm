@@ -15,8 +15,6 @@ public class ConvertFactory {
     public static DTOITC convertIFSCtoITC(DTOIFSC dtoifsc) throws ClassNotFoundException {
         DTOITC dtoitc = new DTOITC();
 
-        //TODO converter os dados do ifsc para itc na ordem : Rooms -> Lessons -> Constraints -> Courses
-
         //ROOMS
         int roomSize = dtoifsc.getRooms().size();
         Room[] room = new Room[roomSize];
@@ -49,7 +47,7 @@ public class ConvertFactory {
             String professorName = lessons[i].getProfessorName();
             for (Teacher iterationTeacher : dtoifsc.getProfessors()) {
                 if (iterationTeacher.getName().equals(professorName)) {
-                    List<UnavailabilityConstraint> constraintList = convertProfessorTimeoff(iterationTeacher.getTimeoff(), lessons[i].getLessonId());
+                    List<UnavailabilityConstraint> constraintList = convertTimeoff(iterationTeacher.getTimeoff(), lessons[i].getLessonId());
                     lessons[i].setConstraints(new UnavailabilityConstraint[constraintList.size()]);
                     lessons[i].setConstraints(constraintList.toArray(lessons[i].getConstraints()));
                 }
@@ -59,7 +57,6 @@ public class ConvertFactory {
         //COURSES
         int courseSize = dtoifsc.getClasses().size();
         Course[] courses = new Course[courseSize];
-        //FIXME verificar pq nao ta entrando no IF do metodo RETRIEVE...
         for (int i = 0; i < courseSize; i++) {
             List<Lesson> lessonList = retrieveCoursesLesson(dtoifsc.getClasses().get(i).getId(),dtoifsc.getLessons(),lessons);
             int size = lessonList.size();
@@ -67,9 +64,16 @@ public class ConvertFactory {
             courses[i].setCourseId(String.valueOf(dtoifsc.getClasses().get(i).getId()));
             courses[i].setLessons(lessonList.toArray(courses[i].getLessons()));
             courses[i].setCoursesNumber(size);
-        }
-        dtoitc.setCourses(courses);
 
+            for (Lesson iterationLesson:courses[i].getLessons()) {
+                List<UnavailabilityConstraint>courseConstraints = convertTimeoff(String.valueOf(dtoifsc.getClasses().get(i).getTimeoff()),String.valueOf(dtoifsc.getClasses().get(i).getId()));
+                iterationLesson.mergeCourseLessonConstraints(courseConstraints);
+            }
+        }
+
+
+
+        dtoitc.setCourses(courses);
 
         return dtoitc;
     }
@@ -106,7 +110,7 @@ public class ConvertFactory {
         throw new ClassNotFoundException("LecturesNumber não encontrado");
     }
 
-    private static List<UnavailabilityConstraint> convertProfessorTimeoff(String timeoff, String lessonId) {
+    private static List<UnavailabilityConstraint> convertTimeoff(String timeoff, String lessonId) {
         List<UnavailabilityConstraint> constraintList = new ArrayList<>();
         String[] days = timeoff.replace(".", "").split(",");
         for (int i = 0; i < days.length - 1; i++) {
@@ -124,7 +128,7 @@ public class ConvertFactory {
         for (domain.ifsc.Lesson iterationLesson: IFSCLessons) {
             if (iterationLesson.getClassesId() == courseId){
                 for (Lesson iterationITCLesson: ITCLesson) {
-                   if (iterationITCLesson.getLessonId().equals(iterationLesson.getSubjectId())){
+                   if (iterationITCLesson.getLessonId().equals(String.valueOf(iterationLesson.getSubjectId()))){
                        lessonList.add(iterationITCLesson);
                    }
                 }

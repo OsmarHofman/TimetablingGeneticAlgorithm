@@ -50,6 +50,14 @@ public class Classes {
         this.teacherId = teacherId;
     }
 
+    public String getTimeoff() {
+        return timeoff;
+    }
+
+    public void setTimeoff(String timeoff) {
+        this.timeoff = timeoff;
+    }
+
     @Override
     public String toString() {
         return "Classes [id=" + id + ", name=" + name + ", shortName=" + shortName + ", teacherId=" + teacherId

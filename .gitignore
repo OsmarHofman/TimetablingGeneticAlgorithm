@@ -40,6 +40,7 @@ hs_err_pid*
 /src/datasets/IFSCFiles/dados.xml
 /src/datasets/ITCFiles/comp01.ctt.txt
 
+
 # Sensitive or high-churn files:
 .idea//dataSources/
 .idea//dataSources.ids

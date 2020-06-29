@@ -17,14 +17,13 @@ public class Lesson {
     public Lesson() {
     }
 
-    public Lesson(String[]parameters) {
+    public Lesson(String[] parameters) {
         this.lessonId = parameters[0];
         this.professorName = parameters[1];
         this.lecturesNumber = Integer.parseInt(parameters[2]);
         this.minWorkingDays = Integer.parseInt(parameters[3]);
         this.studentsNumber = Integer.parseInt(parameters[4]);
     }
-
 
 
     public String getLessonId() {
@@ -83,6 +82,12 @@ public class Lesson {
         this.room = room;
     }
 
+    public void mergeCourseLessonConstraints(List<UnavailabilityConstraint> newConstraints) {
+        newConstraints.addAll(Arrays.asList(this.constraints));
+        this.constraints = new UnavailabilityConstraint[newConstraints.size()];
+        this.constraints = newConstraints.toArray(this.constraints);
+    }
+
     @Override
     public String toString() {
         return "Lesson{" +
@@ -97,18 +102,19 @@ public class Lesson {
     }
 
     public static Lesson getLessonById(List<Lesson> allLessons, String id) throws ClassNotFoundException {
-        for (Lesson iteratorLesson:allLessons) {
-            if (iteratorLesson.getLessonId().equals(id)){
+        for (Lesson iteratorLesson : allLessons) {
+            if (iteratorLesson.getLessonId().equals(id)) {
                 return iteratorLesson;
             }
         }
         throw new ClassNotFoundException("Lesson não encontrada");
     }
 
-    public void retrieveConstraints(List<UnavailabilityConstraint> constraints){
-        List<UnavailabilityConstraint>constraintList = new ArrayList<>();
-        for (UnavailabilityConstraint iterationConstraints:constraints) {
-            if (iterationConstraints.getLessonId().equals(this.lessonId)){
+
+    public void retrieveConstraints(List<UnavailabilityConstraint> constraints) {
+        List<UnavailabilityConstraint> constraintList = new ArrayList<>();
+        for (UnavailabilityConstraint iterationConstraints : constraints) {
+            if (iterationConstraints.getLessonId().equals(this.lessonId)) {
                 constraintList.add(iterationConstraints);
             }
         }
