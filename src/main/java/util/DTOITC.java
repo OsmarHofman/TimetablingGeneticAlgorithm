@@ -70,6 +70,24 @@ public class DTOITC {
         this.constraints = constraints;
     }
 
+    public String getProfessorByLessonId(int index) throws ClassNotFoundException {
+        for (Lesson iterationLesson : this.lessons) {
+            if (iterationLesson.getLessonId().equals(String.valueOf(index))) {
+                return iterationLesson.getProfessorId();
+            }
+        }
+        throw new ClassNotFoundException("Professor não encontrado");
+    }
+
+    public Lesson getLessonById(int index) throws ClassNotFoundException {
+        for (Lesson iterationLesson : this.lessons) {
+            if (iterationLesson.getLessonId().equals(String.valueOf(index))) {
+                return iterationLesson;
+            }
+        }
+        throw new ClassNotFoundException("Lesson não encontrada");
+    }
+
     @Override
     public String toString() {
         return "DTOITC{" +
@@ -79,4 +97,6 @@ public class DTOITC {
                 ", constraints=" + Arrays.toString(constraints) +
                 '}';
     }
+
+
 }

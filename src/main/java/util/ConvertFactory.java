@@ -34,7 +34,7 @@ public class ConvertFactory {
             lessons[i] = new Lesson();
             int lessonId = dtoifsc.getSubjects().get(i).getId();
             lessons[i].setLessonId(String.valueOf(lessonId));
-            lessons[i].setProfessorName(retrieveProfessorName(lessonId, dtoifsc.getLessons(), dtoifsc.getProfessors()));
+            lessons[i].setProfessorId(retrieveProfessorId(lessonId, dtoifsc.getLessons(), dtoifsc.getProfessors()));
             lessons[i].setLecturesNumber(retrieveLecturesNumber(lessonId, dtoifsc.getLessons()));
             lessons[i].setMinWorkingDays(retrievePeriodsPerWeek(lessonId, dtoifsc.getLessons()));
             lessons[i].setStudentsNumber(0);
@@ -44,10 +44,10 @@ public class ConvertFactory {
 
         //CONSTRAINTS
         for (int i = 0; i < lessons.length; i++) {
-            String professorName = lessons[i].getProfessorName();
+            String professorId = lessons[i].getProfessorId();
             for (Teacher iterationTeacher : dtoifsc.getProfessors()) {
-                if (iterationTeacher.getName().equals(professorName)) {
-                    List<UnavailabilityConstraint> constraintList = convertTimeoff(iterationTeacher.getTimeoff(), lessons[i].getLessonId());
+                if (String.valueOf(iterationTeacher.getId()).equals(professorId)) {
+                    List<UnavailabilityConstraint> constraintList = convertTimeoff(iterationTeacher.getTimeoff(), String.valueOf(iterationTeacher.getId()));
                     lessons[i].setConstraints(new UnavailabilityConstraint[constraintList.size()]);
                     lessons[i].setConstraints(constraintList.toArray(lessons[i].getConstraints()));
                 }
@@ -78,13 +78,13 @@ public class ConvertFactory {
         return dtoitc;
     }
 
-    private static String retrieveProfessorName(int id, List<domain.ifsc.Lesson> lessons, List<Teacher> teachers) throws ClassNotFoundException {
+    private static String retrieveProfessorId(int id, List<domain.ifsc.Lesson> lessons, List<Teacher> teachers) throws ClassNotFoundException {
         for (domain.ifsc.Lesson iterationLesson : lessons) {
             if (iterationLesson.getSubjectId() == id) {
                 int professorId = iterationLesson.getTeacherId();
                 for (Teacher iterationTeacher : teachers) {
                     if (iterationTeacher.getId() == professorId) {
-                        return iterationTeacher.getName();
+                        return String.valueOf(iterationTeacher.getId());
                     }
                 }
             }

@@ -1,5 +1,7 @@
 package main.java;
 
+import domain.Chromosome;
+import genetics.Avaliation;
 import preprocessing.dataaccess.FileHandler;
 import preprocessing.dataaccess.RetrieveIFSCData;
 import preprocessing.dataaccess.RetrieveITCData;
@@ -11,6 +13,7 @@ import util.DTOIFSC;
 import util.DTOITC;
 
 import java.io.*;
+import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
@@ -31,6 +34,26 @@ public class Main {
         RetrieveITCData rid = new RetrieveITCData();
         DTOITC dtoitc = rid.getFromITC();
         DTOITC fromIfSC = ConvertFactory.convertIFSCtoITC(dtoifsc);
+
+
+        Chromosome[] population = new Chromosome[100];
+        //Inicializando população
+        Arrays.setAll(population, i -> new Chromosome(fromIfSC.getCourses().length, fromIfSC.getLessons()));
+
+
+
+        //função de avaliacao acumulada
+        System.out.println("\nCalculando FaA...");
+        int faA = 0;
+        for (int i = 0; i < population.length; i++) {
+            faA += population[i].getAvaliation();
+        }
+
+
+        for (int i = 0; i < population.length; i++) {
+            Avaliation.rate(population[i],fromIfSC);
+        }
+
 
     }
 
