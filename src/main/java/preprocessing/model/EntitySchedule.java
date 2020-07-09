@@ -3,6 +3,7 @@ package preprocessing.model;
 import preprocessing.classes.CourseRelation;
 import preprocessing.classes.Intersection;
 import preprocessing.classes.Professor_Course;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -19,8 +20,8 @@ public class EntitySchedule {
         this.courseRelationList = professorsScheduleCreation.getCourseRelationList();
     }
 
-    public String createSet(int percentage) throws ClassNotFoundException {
-        StringBuilder reportData = new StringBuilder(this.courseRelationList.toString());
+    public List[] createSet(int percentage) throws ClassNotFoundException {
+        String reportData = this.courseRelationList.toString();
         List<String> splitSetName;
         String setName;
 
@@ -64,12 +65,16 @@ public class EntitySchedule {
                 //recalcula o total de professores do conjunto
                 lastCourse.sumTotalProfessors();
 
-                reportData.append("\n\n\n--------------------------Nova Geração--------------------------\nNovo conjunto: ")
-                        .append(setName).append("\n\n").append(this.courseRelationList.toString());
+                reportData = this.courseRelationList.toString();
             }
-
         }
-        return reportData.toString();
+        String newReportData = reportData.replace("[", "").replace("]", "");
+        String[] splitNewReportData = newReportData.split(",");
+        List[] formattedDataList = new ArrayList[splitNewReportData.length];
+        for (int i = 0; i < formattedDataList.length; i++)
+            formattedDataList[i] = Arrays.asList(splitNewReportData[i].split("-"));
+
+        return formattedDataList;
     }
 
     private List<String> adjustSetName(String setName, List<String> splitSetName) {

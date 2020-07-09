@@ -57,11 +57,7 @@ public class CourseRelation implements Serializable {
 
     @Override
     public String toString() {
-        return "\n\nCurso: " + name +
-                "\n\t Total de professores= " + totalProfessors +
-                "\n\t Número de professores exclusivos=" + exclusiveProfessorCount +
-                "\n\t Professores com intersecção=\n\t" + intersection +
-                "}";
+        return name;
     }
 
     public void checkListIntersection(String course, List<String> professorCourses) {
