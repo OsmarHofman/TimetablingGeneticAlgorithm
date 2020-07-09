@@ -1,6 +1,8 @@
 package main.java;
 
 import domain.Chromosome;
+import domain.itc.Lesson;
+import domain.itc.UnavailabilityConstraint;
 import genetics.Avaliation;
 import preprocessing.dataaccess.FileHandler;
 import preprocessing.dataaccess.RetrieveIFSCData;
@@ -36,10 +38,17 @@ public class Main {
         DTOITC fromIfSC = ConvertFactory.convertIFSCtoITC(dtoifsc);
 
 
+        boolean[][] scheduleRelation = new boolean[fromIfSC.getLessons().length][60];
+        for (int i = 0; i < fromIfSC.getLessons().length; i++) {
+            for (UnavailabilityConstraint iterationConstraints : fromIfSC.getLessons()[i].getConstraints()) {
+                scheduleRelation[i][12 * iterationConstraints.getDay() + iterationConstraints.getDayPeriod()] = true;
+            }
+        }
+
+
         Chromosome[] population = new Chromosome[100];
         //Inicializando população
         Arrays.setAll(population, i -> new Chromosome(fromIfSC.getCourses().length, fromIfSC.getLessons()));
-
 
 
         //função de avaliacao acumulada
@@ -51,7 +60,7 @@ public class Main {
 
 
         for (int i = 0; i < population.length; i++) {
-            Avaliation.rate(population[i],fromIfSC);
+            Avaliation.rate(population[i], fromIfSC);
         }
 
 

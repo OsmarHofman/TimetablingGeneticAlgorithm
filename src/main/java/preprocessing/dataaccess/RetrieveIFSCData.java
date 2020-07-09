@@ -17,7 +17,7 @@ import util.DTOIFSC;
 
 public class RetrieveIFSCData {
     private final DTOIFSC dtoifsc;
-    private List<Integer> coursesBlacklist;
+    private final List<Integer> coursesBlacklist;
 
     public RetrieveIFSCData() {
         dtoifsc = new DTOIFSC();

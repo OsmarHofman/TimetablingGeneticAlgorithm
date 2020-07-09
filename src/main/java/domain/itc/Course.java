@@ -7,6 +7,7 @@ public class Course {
     private String courseId;
     private int coursesNumber;
     private Lesson[] lessons;
+    private byte shift;
 
     public Course(int size) {
         lessons = new Lesson[size];
@@ -45,6 +46,13 @@ public class Course {
         this.lessons = lessons;
     }
 
+    public byte getShift() {
+        return shift;
+    }
+
+    public void setShift(byte shift) {
+        this.shift = shift;
+    }
 
     @Override
     public String toString() {
@@ -52,7 +60,7 @@ public class Course {
                 "courseId='" + courseId + '\'' +
                 ", coursesNumber=" + coursesNumber +
                 ", lessons=" + Arrays.toString(lessons) +
+                ", turno=" + shift +
                 '}';
     }
-
 }

@@ -43,13 +43,13 @@ public class ConvertFactory {
         dtoitc.setLessons(lessons);
 
         //CONSTRAINTS
-        for (int i = 0; i < lessons.length; i++) {
-            String professorId = lessons[i].getProfessorId();
+        for (Lesson lesson : lessons) {
+            String professorId = lesson.getProfessorId();
             for (Teacher iterationTeacher : dtoifsc.getProfessors()) {
                 if (String.valueOf(iterationTeacher.getId()).equals(professorId)) {
-                    List<UnavailabilityConstraint> constraintList = convertTimeoff(iterationTeacher.getTimeoff(), String.valueOf(iterationTeacher.getId()));
-                    lessons[i].setConstraints(new UnavailabilityConstraint[constraintList.size()]);
-                    lessons[i].setConstraints(constraintList.toArray(lessons[i].getConstraints()));
+                    List<UnavailabilityConstraint> constraintList = convertTimeoffToUnavailability(iterationTeacher.getTimeoff(), String.valueOf(iterationTeacher.getId()));
+                    lesson.setConstraints(new UnavailabilityConstraint[constraintList.size()]);
+                    lesson.setConstraints(constraintList.toArray(lesson.getConstraints()));
                 }
             }
         }
@@ -58,19 +58,15 @@ public class ConvertFactory {
         int courseSize = dtoifsc.getClasses().size();
         Course[] courses = new Course[courseSize];
         for (int i = 0; i < courseSize; i++) {
-            List<Lesson> lessonList = retrieveCoursesLesson(dtoifsc.getClasses().get(i).getId(),dtoifsc.getLessons(),lessons);
+            List<Lesson> lessonList = retrieveCoursesLesson(dtoifsc.getClasses().get(i).getId(), dtoifsc.getLessons(), lessons);
             int size = lessonList.size();
             courses[i] = new Course(size);
             courses[i].setCourseId(String.valueOf(dtoifsc.getClasses().get(i).getId()));
             courses[i].setLessons(lessonList.toArray(courses[i].getLessons()));
             courses[i].setCoursesNumber(size);
+            courses[i].setShift(convertTimeoffToShift(String.valueOf(dtoifsc.getClasses().get(i).getTimeoff())));
 
-            for (Lesson iterationLesson:courses[i].getLessons()) {
-                List<UnavailabilityConstraint>courseConstraints = convertTimeoff(String.valueOf(dtoifsc.getClasses().get(i).getTimeoff()),String.valueOf(dtoifsc.getClasses().get(i).getId()));
-                iterationLesson.mergeCourseLessonConstraints(courseConstraints);
-            }
         }
-
 
 
         dtoitc.setCourses(courses);
@@ -110,7 +106,7 @@ public class ConvertFactory {
         throw new ClassNotFoundException("LecturesNumber não encontrado");
     }
 
-    private static List<UnavailabilityConstraint> convertTimeoff(String timeoff, String lessonId) {
+    private static List<UnavailabilityConstraint> convertTimeoffToUnavailability(String timeoff, String lessonId) {
         List<UnavailabilityConstraint> constraintList = new ArrayList<>();
         String[] days = timeoff.replace(".", "").split(",");
         for (int i = 0; i < days.length - 1; i++) {
@@ -123,14 +119,24 @@ public class ConvertFactory {
         return constraintList;
     }
 
-    private static List<Lesson> retrieveCoursesLesson(int courseId, List<domain.ifsc.Lesson> IFSCLessons, Lesson[] ITCLesson){
-        List<Lesson>lessonList = new ArrayList<>();
-        for (domain.ifsc.Lesson iterationLesson: IFSCLessons) {
-            if (iterationLesson.getClassesId() == courseId){
-                for (Lesson iterationITCLesson: ITCLesson) {
-                   if (iterationITCLesson.getLessonId().equals(String.valueOf(iterationLesson.getSubjectId()))){
-                       lessonList.add(iterationITCLesson);
-                   }
+    private static byte convertTimeoffToShift(String timeoff) {
+        String[] days = timeoff.replace(".", "").split(",");
+            if (days[0].charAt(0) == '1')
+                return 0;
+            else if (days[0].charAt(4) == '1')
+                return 1;
+            return 2;
+
+    }
+
+    private static List<Lesson> retrieveCoursesLesson(int courseId, List<domain.ifsc.Lesson> IFSCLessons, Lesson[] ITCLesson) {
+        List<Lesson> lessonList = new ArrayList<>();
+        for (domain.ifsc.Lesson iterationLesson : IFSCLessons) {
+            if (iterationLesson.getClassesId() == courseId) {
+                for (Lesson iterationITCLesson : ITCLesson) {
+                    if (iterationITCLesson.getLessonId().equals(String.valueOf(iterationLesson.getSubjectId()))) {
+                        lessonList.add(iterationITCLesson);
+                    }
                 }
             }
         }

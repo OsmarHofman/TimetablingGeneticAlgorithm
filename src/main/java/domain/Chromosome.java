@@ -9,6 +9,7 @@ import java.util.Random;
 public class Chromosome {
     private int[] genes;
     private int avaliation;
+    private boolean hasViolatedHardConstraint;
 
     public Chromosome() {
     }
@@ -16,6 +17,7 @@ public class Chromosome {
     public Chromosome(int size, Lesson[] lessons) {
         this.genes = new int[size * 20] ;
         this.avaliation = 5000;
+        this.hasViolatedHardConstraint = false;
         generateRandom(lessons);
     }
 
@@ -35,6 +37,13 @@ public class Chromosome {
         this.avaliation = avaliation;
     }
 
+    public boolean isHasViolatedHardConstraint() {
+        return hasViolatedHardConstraint;
+    }
+
+    public void setHasViolatedHardConstraint(boolean hasViolatedHardConstraint) {
+        this.hasViolatedHardConstraint = hasViolatedHardConstraint;
+    }
 
     private void generateRandom(Lesson[] lessons){
         Random random = new Random();
@@ -50,7 +59,7 @@ public class Chromosome {
         return "Chromosome{" +
                 "genes=" + Arrays.toString(genes) +
                 ", avaliation=" + avaliation +
+                ", hasViolatedHardConstraint=" + hasViolatedHardConstraint +
                 '}';
     }
-
 }
