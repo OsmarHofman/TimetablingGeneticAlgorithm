@@ -72,7 +72,7 @@ public class EntitySchedule {
         String[] splitNewReportData = newReportData.split(",");
         List[] formattedDataList = new ArrayList[splitNewReportData.length];
         for (int i = 0; i < formattedDataList.length; i++)
-            formattedDataList[i] = Arrays.asList(splitNewReportData[i].split("-"));
+            formattedDataList[i] = new ArrayList<>(Arrays.asList(splitNewReportData[i].split("-")));
 
         return formattedDataList;
     }

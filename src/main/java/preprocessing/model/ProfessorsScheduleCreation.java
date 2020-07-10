@@ -1,5 +1,8 @@
 package preprocessing.model;
 
+import domain.ifsc.Classes;
+import domain.ifsc.Lesson;
+import domain.ifsc.Teacher;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFCell;
@@ -11,11 +14,10 @@ import preprocessing.classes.Intersection;
 import preprocessing.classes.ProfessorCourseStatus;
 import preprocessing.classes.Professor_Course;
 import preprocessing.dataaccess.RetrieveSpreadSheetData;
+import util.DTOIFSC;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class ProfessorsScheduleCreation {
 
@@ -23,8 +25,8 @@ public class ProfessorsScheduleCreation {
     private List<Professor_Course> professorsList;
     private List<CourseRelation> courseRelationList;
 
-    public ProfessorsScheduleCreation(String pathname) throws IOException {
-        this.getCoursesAndProfessorsByFile(RetrieveSpreadSheetData.getWorkBook(pathname));
+    public ProfessorsScheduleCreation(DTOIFSC dtoifsc) throws IOException {
+        this.getCoursesAndProfessorsByFile(dtoifsc);
         if (this.coursesList != null && this.professorsList != null) {
             this.createCourseRelation();
         } else {
@@ -44,43 +46,69 @@ public class ProfessorsScheduleCreation {
         return courseRelationList;
     }
 
-    private void getCoursesAndProfessorsByFile(XSSFWorkbook wb) {
-        List<String> professorCoursesList;
-        String profName = "";
+    private void getCoursesAndProfessorsByFile(DTOIFSC dtoifsc) {
         this.coursesList = new ArrayList<>();
         this.professorsList = new ArrayList<>();
-        XSSFSheet sheet = wb.getSheetAt(0);
-        Iterator<Row> rowIterator = sheet.rowIterator();
-        XSSFRow row;
-        XSSFCell cell;
-        System.out.println("Lendo informações do arquivo .xlsx e atribuindo as classes respectivas...\n");
-        while (rowIterator.hasNext()) {
-            row = (XSSFRow) rowIterator.next();
+        List<CourseGroup> courseGroupList = joinCourses(dtoifsc.getClasses());
+        getProfessors(dtoifsc, courseGroupList);
 
-            Iterator<Cell> cellIterator = row.cellIterator();
+    }
 
-            professorCoursesList = new ArrayList<>();
-
-            while (cellIterator.hasNext()) {
-                cell = (XSSFCell) cellIterator.next();
-
-                if (row.getRowNum() == 0 && cell.getColumnIndex() != 0) {
-                    this.coursesList.add(cell.getStringCellValue());
-                } else {
-
-                    if (cell.getColumnIndex() == 0)
-                        profName = cell.getStringCellValue();
-                    else {
-                        professorCoursesList.add(this.coursesList.get(cell.getColumnIndex() - 1));
+    private List<CourseGroup> joinCourses(List<Classes> courses) {
+        List<CourseGroup> cg125 = new ArrayList<>();
+        for (Classes iterationClasses : courses) {
+            String courseName = iterationClasses.getShortName().substring(0, iterationClasses.getShortName().length() - 1);
+            if (cg125.isEmpty()) {
+                cg125.add(new CourseGroup(courseName, new ArrayList<>(Collections.singletonList(iterationClasses.getId()))));
+                this.coursesList.add(courseName);
+            } else {
+                boolean hasAdded = false;
+                for (int i = 0; i < cg125.size(); i++) {
+                    if (cg125.get(i).getName().equals(courseName)) {
+                        cg125.get(i).getCoursesIds().add(iterationClasses.getId());
+                        hasAdded = true;
                     }
-
+                }
+                if (!hasAdded) {
+                    cg125.add(new CourseGroup(courseName, new ArrayList<>(Collections.singletonList(iterationClasses.getId()))));
+                    this.coursesList.add(courseName);
                 }
             }
-            if (row.getRowNum() != 0)
-                this.professorsList.add(new Professor_Course(profName, professorCoursesList));
         }
-        System.out.println("Classes modeladas e preenchidas com sucesso!\n");
+        return cg125;
     }
+
+    private void getProfessors(DTOIFSC dtoifsc, List<CourseGroup> courseGroups) {
+        for (CourseGroup cg : courseGroups) {
+            for (int ids : cg.getCoursesIds()) {
+                for (Lesson iterationLesson : dtoifsc.getLessons()) {
+                    if (iterationLesson.getClassesId() == ids) {
+                        for (Teacher iterationTeacher : dtoifsc.getProfessors()) {
+                            if (iterationTeacher.getId() == iterationLesson.getTeacherId()) {
+                                if (this.professorsList.isEmpty()) {
+                                    this.professorsList.add(new Professor_Course(iterationTeacher.getName(), new ArrayList<>(Collections.singletonList(cg.getName()))));
+                                } else {
+                                    boolean hasAdded = false;
+                                    for (Professor_Course iterationPC : professorsList) {
+                                        if (iterationPC.getProfessor().equals(iterationTeacher.getName())) {
+                                            if (!iterationPC.getCourse().contains(cg.getName())) {
+                                                iterationPC.getCourse().add(cg.getName());
+                                            }
+                                            hasAdded = true;
+                                        }
+                                    }
+                                    if (!hasAdded) {
+                                        this.professorsList.add(new Professor_Course(iterationTeacher.getName(), new ArrayList<>(Collections.singletonList(cg.getName()))));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 
     private void createCourseRelation() {
         courseRelationList = new ArrayList<>();
@@ -119,6 +147,35 @@ public class ProfessorsScheduleCreation {
             }
         }
         System.out.println("Relação entre professores e cursos criada!\n");
+    }
+
+    private class CourseGroup {
+        private String name;
+        private List<Integer> coursesIds;
+
+        public CourseGroup() {
+        }
+
+        public CourseGroup(String name, List<Integer> coursesIds) {
+            this.name = name;
+            this.coursesIds = coursesIds;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public List<Integer> getCoursesIds() {
+            return coursesIds;
+        }
+
+        public void setCoursesIds(List<Integer> coursesIds) {
+            this.coursesIds = coursesIds;
+        }
     }
 
 
