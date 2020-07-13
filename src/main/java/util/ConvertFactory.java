@@ -33,6 +33,7 @@ public class ConvertFactory {
         for (int i = 0; i < lessonSize; i++) {
             lessons[i] = new Lesson();
             int lessonId = dtoifsc.getSubjects().get(i).getId();
+            lessons[i].setCourseId(retriveLessonsCourse(lessonId,dtoifsc.getLessons()));
             lessons[i].setLessonId(String.valueOf(lessonId));
             lessons[i].setProfessorId(retrieveProfessorId(lessonId, dtoifsc.getLessons(), dtoifsc.getProfessors()));
             lessons[i].setLecturesNumber(retrieveLecturesNumber(lessonId, dtoifsc.getLessons()));
@@ -60,9 +61,8 @@ public class ConvertFactory {
         for (int i = 0; i < courseSize; i++) {
             List<Lesson> lessonList = retrieveCoursesLesson(dtoifsc.getClasses().get(i).getId(), dtoifsc.getLessons(), lessons);
             int size = lessonList.size();
-            courses[i] = new Course(size);
+            courses[i] = new Course();
             courses[i].setCourseId(String.valueOf(dtoifsc.getClasses().get(i).getId()));
-            courses[i].setLessons(lessonList.toArray(courses[i].getLessons()));
             courses[i].setCoursesNumber(size);
             courses[i].setShift(convertTimeoffToShift(String.valueOf(dtoifsc.getClasses().get(i).getTimeoff())));
 
@@ -72,6 +72,14 @@ public class ConvertFactory {
         dtoitc.setCourses(courses);
 
         return dtoitc;
+    }
+
+    private static String retriveLessonsCourse(int lessonId, List<domain.ifsc.Lesson> lessons) throws ClassNotFoundException {
+        for (domain.ifsc.Lesson iterationLesson:lessons) {
+            if (iterationLesson.getSubjectId() == lessonId)
+                return String.valueOf(iterationLesson.getClassesId());
+        }
+        throw new ClassNotFoundException("Lesson não atribuida à um curso");
     }
 
     private static String retrieveProfessorId(int id, List<domain.ifsc.Lesson> lessons, List<Teacher> teachers) throws ClassNotFoundException {

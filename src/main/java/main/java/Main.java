@@ -62,8 +62,10 @@ public class Main {
 
 
             for (int i = 0; i < population.length; i++) {
-                Avaliation.rate(population[i], fromIfSC);
+                Avaliation.rate(population[i], fromIfSC,scheduleRelation);
             }
+
+            //TODO realizar seleção por eletismo
 
 
         }

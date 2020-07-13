@@ -68,7 +68,7 @@ public class RetrieveITCData {
                     while (!myReader.hasNext("UNAVAILABILITY_CONSTRAINTS:")) {
                         data = myReader.nextLine();
                         if (!data.equals("")) {
-                            Course course = new Course(data.split(" "),lessons);
+                            Course course = new Course(data.split(" "));
                             courses.add(course);
                         }
                     }

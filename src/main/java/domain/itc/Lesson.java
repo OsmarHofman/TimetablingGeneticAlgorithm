@@ -7,6 +7,7 @@ import java.util.List;
 public class Lesson {
 
     private String lessonId;
+    private String courseId;
     private String professorId;
     private int lecturesNumber; //lecturesNumber = durationPeriods do IFSC
     private int minWorkingDays; //minWorkingDays = calculo do periodPerWeek do IFSC
@@ -25,6 +26,13 @@ public class Lesson {
         this.studentsNumber = Integer.parseInt(parameters[4]);
     }
 
+    public String getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(String courseId) {
+        this.courseId = courseId;
+    }
 
     public String getLessonId() {
         return lessonId;
@@ -92,7 +100,8 @@ public class Lesson {
     public String toString() {
         return "Lesson{" +
                 "lessonId='" + lessonId + '\'' +
-                ", professorName='" + professorId + '\'' +
+                ", courseId='" + courseId + '\'' +
+                ", professorId='" + professorId + '\'' +
                 ", lecturesNumber=" + lecturesNumber +
                 ", minWorkingDays=" + minWorkingDays +
                 ", studentsNumber=" + studentsNumber +

@@ -98,5 +98,13 @@ public class DTOITC {
                 '}';
     }
 
+    public byte getShiftByCourseId(String courseId) throws ClassNotFoundException {
+        for (Course iterationCourse:this.courses) {
+            if (iterationCourse.getCourseId().equals(courseId)){
+               return iterationCourse.getShift();
+            }
+        }
+        throw new ClassNotFoundException("Curso não encontrado");
+    }
 
 }
