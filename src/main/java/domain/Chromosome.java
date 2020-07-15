@@ -1,7 +1,6 @@
 package domain;
 
 import domain.itc.Lesson;
-import util.DTOITC;
 
 import java.util.Arrays;
 import java.util.Random;
@@ -19,6 +18,12 @@ public class Chromosome {
         this.avaliation = 5000;
         this.hasViolatedHardConstraint = false;
         generateRandom(lessons);
+    }
+
+    public Chromosome(int[] genes, int avaliation) {
+        this.genes = genes;
+        this.avaliation = avaliation;
+        this.hasViolatedHardConstraint = false;
     }
 
     public int[] getGenes() {
@@ -62,4 +67,5 @@ public class Chromosome {
                 ", hasViolatedHardConstraint=" + hasViolatedHardConstraint +
                 '}';
     }
+
 }

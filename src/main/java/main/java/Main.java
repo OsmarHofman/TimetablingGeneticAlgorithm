@@ -3,6 +3,7 @@ package main.java;
 import domain.Chromosome;
 import domain.itc.UnavailabilityConstraint;
 import genetics.Avaliation;
+import genetics.Selection;
 import preprocessing.dataaccess.FileHandler;
 import preprocessing.dataaccess.RetrieveIFSCData;
 import preprocessing.dataaccess.RetrieveITCData;
@@ -20,7 +21,7 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
 
-
+        final int populationSize = 30;
         RetrieveIFSCData retrieveIFSCData = new RetrieveIFSCData();
         DTOIFSC dtoifsc = retrieveIFSCData.getAllData();
         ProfessorsScheduleCreation psc = new ProfessorsScheduleCreation(dtoifsc);
@@ -29,7 +30,7 @@ public class Main {
         final int percentage = 60;
         EntitySchedule entitySchedule = new EntitySchedule(psc);
         //Lista que cada posição é uma lista de cursos
-        List[] text = entitySchedule.createSet(percentage);
+        List[] coursesSet = entitySchedule.createSet(percentage);
         //IFileHandler fileHandler = new FileHandler();
         // fileHandler.createReport(text, percentage + "%");
 
@@ -48,24 +49,32 @@ public class Main {
         while (true) { // fazer verificar baseado no BOOLEAN do cromossomo, além das outras condições
 
 
-            Chromosome[] population = new Chromosome[100];
+            Chromosome[] population = new Chromosome[populationSize];
             //Inicializando população
             Arrays.setAll(population, i -> new Chromosome(fromIfSC.getCourses().length, fromIfSC.getLessons()));
 
 
+            for (int i = 0; i < population.length; i++) {
+                population[i].setAvaliation(population[i].getAvaliation() - Avaliation.rate(population[i], fromIfSC, scheduleRelation));
+            }
+
             //função de avaliacao acumulada
             System.out.println("\nCalculando FaA...");
+            int[] ratingHandler = new int[populationSize];
             int faA = 0;
             for (int i = 0; i < population.length; i++) {
                 faA += population[i].getAvaliation();
+                ratingHandler[i] = faA;
             }
 
 
-            for (int i = 0; i < population.length; i++) {
-                Avaliation.rate(population[i], fromIfSC,scheduleRelation);
-            }
+            //Seleção por roleta
+            Chromosome[] newCouples = new Chromosome[populationSize * 2];
+            newCouples = Selection.roulleteWheel(population, ratingHandler, faA);
 
-            //TODO realizar seleção por eletismo
+            final byte elitismPercentage = 10;
+            byte proportion = populationSize / elitismPercentage;
+            Chromosome[] eliteChromosomes = Selection.elitism(population, proportion);
 
 
         }

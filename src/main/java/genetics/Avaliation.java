@@ -7,7 +7,7 @@ import util.DTOITC;
 public class Avaliation {
 
 
-    public static void rate(Chromosome chromosome, DTOITC dtoitc, boolean[][]relationMatrix) throws ClassNotFoundException {
+    public static int rate(Chromosome chromosome, DTOITC dtoitc, boolean[][]relationMatrix) throws ClassNotFoundException {
 
         int avaliation = 0;
 
@@ -15,7 +15,7 @@ public class Avaliation {
 
         avaliation =  professorsUnavailabilities(chromosome,avaliation,dtoitc,relationMatrix);
 
-        avaliation = missingLessonsInCourse(chromosome,avaliation,dtoitc);
+        return avaliation;
 
     }
 
@@ -26,6 +26,7 @@ public class Avaliation {
                 String iterationProfessor = dtoitc.getProfessorByLessonId(chromosome.getGenes()[j]);
                 if (currentProfessor.equals(iterationProfessor)) {
                     avaliation += 10;
+                    chromosome.setHasViolatedHardConstraint(true);
                 }
             }
         }
@@ -33,27 +34,23 @@ public class Avaliation {
     }
 
     private static int professorsUnavailabilities(Chromosome chromosome, int avaliation, DTOITC dtoitc, boolean[][] relationMatrix) throws ClassNotFoundException {
-        byte offset = 0;
+        byte periodOffset = 0;
+        byte weekOffset = 0;
         for (int i = 0; i < chromosome.getGenes().length; i++) {
-            if (offset > 3)
-                offset = 0;
+            if (periodOffset > 3)
+                periodOffset = 0;
+            if (weekOffset > 19)
+                weekOffset = 0;
             Lesson lesson = dtoitc.getLessonById(chromosome.getGenes()[i]);
+            int lessonPosition = dtoitc.getLessonPosition(lesson.getLessonId());
             byte shift = dtoitc.getShiftByCourseId(lesson.getCourseId());
-            if (relationMatrix[i][((shift*4 + offset) + (12* Math.floorDiv(i,4)))]){
+            if (relationMatrix[lessonPosition][((shift*4 + periodOffset) + (12* Math.floorDiv(weekOffset,4)))]){
                 avaliation+=5;
             }
-            offset++;
+            periodOffset++;
+            weekOffset++;
         }
         return avaliation;
     }
 
-    private static int missingLessonsInCourse(Chromosome chromosome, int avaliation, DTOITC dtoitc) throws ClassNotFoundException {
-
-        for (int i = 0; i < chromosome.getGenes().length; i++) {
-            Lesson lesson = dtoitc.getLessonById(chromosome.getGenes()[i]);
-            int qtdPerWeek = lesson.getMinWorkingDays();
-            //TODO fazer esse regra após inicializar o cromossomo corretamente
-        }
-        return avaliation;
-    }
 }
