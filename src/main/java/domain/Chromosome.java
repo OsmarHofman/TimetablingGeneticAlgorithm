@@ -13,8 +13,14 @@ public class Chromosome {
     public Chromosome() {
     }
 
+    public Chromosome(int size){
+        this.genes = new int[size];
+        this.avaliation = 5000;
+        this.hasViolatedHardConstraint = false;
+    }
+
     public Chromosome(int size, Lesson[] lessons) {
-        this.genes = new int[size * 20] ;
+        this.genes = new int[size] ;
         this.avaliation = 5000;
         this.hasViolatedHardConstraint = false;
         generateRandom(lessons);

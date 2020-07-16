@@ -8,8 +8,8 @@ import java.util.Random;
 
 public class Selection {
 
-    public static Chromosome[] roulleteWheel(Chromosome[] chromosomes, int[] ratingHandler, int faA) throws ClassNotFoundException {
-        Chromosome[] parents = new Chromosome[chromosomes.length * 2];
+    public static Chromosome[] roulleteWheel(Chromosome[] chromosomes, int[] ratingHandler, int faA,int elitismProportion) throws ClassNotFoundException {
+        Chromosome[] parents = new Chromosome[(chromosomes.length- elitismProportion)];
         for (int i = 0; i < parents.length; i++) {
             Random random = new Random();
             int parentRNG = random.nextInt(faA) + 1;

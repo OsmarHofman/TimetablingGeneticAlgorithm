@@ -3,6 +3,7 @@ package main.java;
 import domain.Chromosome;
 import domain.itc.UnavailabilityConstraint;
 import genetics.Avaliation;
+import genetics.Crossover;
 import genetics.Selection;
 import preprocessing.dataaccess.FileHandler;
 import preprocessing.dataaccess.RetrieveIFSCData;
@@ -21,7 +22,7 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
 
-        final int populationSize = 30;
+        final int populationSize = 40;
         RetrieveIFSCData retrieveIFSCData = new RetrieveIFSCData();
         DTOIFSC dtoifsc = retrieveIFSCData.getAllData();
         ProfessorsScheduleCreation psc = new ProfessorsScheduleCreation(dtoifsc);
@@ -51,7 +52,9 @@ public class Main {
 
             Chromosome[] population = new Chromosome[populationSize];
             //Inicializando população
-            Arrays.setAll(population, i -> new Chromosome(fromIfSC.getCourses().length, fromIfSC.getLessons()));
+            Arrays.setAll(population, i -> {
+                return new Chromosome(fromIfSC.getCourses().length, fromIfSC.getLessons());
+            });
 
 
             for (int i = 0; i < population.length; i++) {
@@ -67,16 +70,28 @@ public class Main {
                 ratingHandler[i] = faA;
             }
 
-
-            //Seleção por roleta
-            Chromosome[] newCouples = new Chromosome[populationSize * 2];
-            newCouples = Selection.roulleteWheel(population, ratingHandler, faA);
-
+            //Seleção por elitismo
             final byte elitismPercentage = 10;
             byte proportion = populationSize / elitismPercentage;
             Chromosome[] eliteChromosomes = Selection.elitism(population, proportion);
 
 
+            //Seleção por roleta
+            Chromosome[] newCouples = Selection.roulleteWheel(population, ratingHandler, faA, proportion);
+
+
+            //Crossover
+            Chromosome[] crossedChromosomes = Crossover.cross(newCouples);
+
+            //Unindo elitismo com selecao por roleta
+            Chromosome[] newGeneration = new Chromosome[populationSize];
+            for (int i = 0; i < crossedChromosomes.length; i++) {
+                newGeneration[i] = crossedChromosomes[i];
+            }
+
+            for (int i = 0; i < eliteChromosomes.length; i++) {
+                newGeneration[i + crossedChromosomes.length] = eliteChromosomes[i];
+            }
         }
     }
 
