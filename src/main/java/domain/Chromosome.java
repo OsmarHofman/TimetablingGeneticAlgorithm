@@ -3,6 +3,7 @@ package domain;
 import domain.itc.Lesson;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Random;
 
 public class Chromosome {
@@ -19,8 +20,8 @@ public class Chromosome {
         this.hasViolatedHardConstraint = false;
     }
 
-    public Chromosome(int size, Lesson[] lessons) {
-        this.genes = new int[size] ;
+    public Chromosome(int size, int classSize, Lesson[] lessons) {
+        this.genes = new int[size * classSize] ;
         this.avaliation = 5000;
         this.hasViolatedHardConstraint = false;
         generateRandom(lessons);
@@ -63,6 +64,26 @@ public class Chromosome {
             this.genes[i] = Integer.parseInt(lessons[index].getLessonId());
         }
     }
+
+    public static Chromosome getBestChromosome(Chromosome[] chromosomes){
+        Arrays.sort(chromosomes, Comparator.comparing(Chromosome::getAvaliation).reversed());
+        return chromosomes[0];
+    }
+
+    public static Chromosome getBest2(Chromosome[] chromosomes){
+        Chromosome best = null;
+        for (int i = 0; i < chromosomes.length; i++) {
+            if (i == 0){
+                best = chromosomes[0];
+            }else {
+                if (chromosomes[i].getAvaliation() > best.getAvaliation())
+                    best = chromosomes[i];
+
+            }
+        }
+        return best;
+    }
+
 
 
     @Override
