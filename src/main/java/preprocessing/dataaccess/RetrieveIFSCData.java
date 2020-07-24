@@ -87,7 +87,7 @@ public class RetrieveIFSCData {
                         if (!coursesBlacklist.contains(classesId)) {
                             int idLesson = Integer.parseInt(eElement.getAttribute("id"));
                             int subjectId = Integer.parseInt(eElement.getAttribute("subjectid"));
-                            int teacherIdLesson = this.getTeacherId(eElement.getAttribute("teacherids"));
+                            int[] teacherIdLesson = this.getTeacherId(eElement.getAttribute("teacherids"));
                             int periodsPerWeek = Integer.parseInt(eElement.getAttribute("periodsperweek"));
                             int durationPeriods = Integer.parseInt(eElement.getAttribute("durationperiods"));
                             dtoifsc.getLessons()
@@ -124,17 +124,25 @@ public class RetrieveIFSCData {
         }
     }
 
-    private int getTeacherId(String element) throws ClassNotFoundException {
+    private int[] getTeacherId(String element) throws ClassNotFoundException {
         if (element.equals("")) {
-            return -1;
+            return null;
         }
-        String[] teacher = element.split(",");
-        for (String iterationString : teacher) {
-            if (!iterationString.isEmpty()) {
-                return Integer.parseInt(iterationString);
-            }
+        String newElement = element;
+        if (newElement.startsWith(","))
+            newElement = newElement.replaceFirst(",", "");
+        String[] teacher = newElement.split(",");
 
+        int[] professors = new int[teacher.length];
+
+        for (int i = 0; i < professors.length; i++) {
+            professors[i] = (Integer.parseInt(teacher[i]));
         }
+
+        if (professors.length != 0){
+            return professors;
+        }
+
         throw new ClassNotFoundException("Teacher não encontrado");
     }
 }

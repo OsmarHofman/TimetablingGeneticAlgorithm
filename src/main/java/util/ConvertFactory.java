@@ -35,7 +35,7 @@ public class ConvertFactory {
             int lessonId = dtoifsc.getSubjects().get(i).getId();
             lessons[i].setCourseId(retriveLessonsCourse(lessonId,dtoifsc.getLessons()));
             lessons[i].setLessonId(String.valueOf(lessonId));
-            lessons[i].setProfessorId(retrieveProfessorId(lessonId, dtoifsc.getLessons(), dtoifsc.getProfessors()));
+            lessons[i].setProfessorId(retrieveProfessorsId(lessonId, dtoifsc.getLessons(), dtoifsc.getProfessors()));
             lessons[i].setLecturesNumber(retrieveLecturesNumber(lessonId, dtoifsc.getLessons()));
             lessons[i].setMinWorkingDays(retrievePeriodsPerWeek(lessonId, dtoifsc.getLessons()));
             lessons[i].setStudentsNumber(0);
@@ -45,12 +45,14 @@ public class ConvertFactory {
 
         //CONSTRAINTS
         for (Lesson lesson : lessons) {
-            String professorId = lesson.getProfessorId();
-            for (Teacher iterationTeacher : dtoifsc.getProfessors()) {
-                if (String.valueOf(iterationTeacher.getId()).equals(professorId)) {
-                    List<UnavailabilityConstraint> constraintList = convertTimeoffToUnavailability(iterationTeacher.getTimeoff(), String.valueOf(iterationTeacher.getId()));
-                    lesson.setConstraints(new UnavailabilityConstraint[constraintList.size()]);
-                    lesson.setConstraints(constraintList.toArray(lesson.getConstraints()));
+            String[] professorIds = lesson.getProfessorId();
+            for (String professorId : professorIds) {
+                for (Teacher iterationTeacher : dtoifsc.getProfessors()) {
+                    if (String.valueOf(iterationTeacher.getId()).equals(professorId)) {
+                        List<UnavailabilityConstraint> constraintList = convertTimeoffToUnavailability(iterationTeacher.getTimeoff(), String.valueOf(iterationTeacher.getId()));
+                        lesson.setConstraints(new UnavailabilityConstraint[constraintList.size()]);
+                        lesson.setConstraints(constraintList.toArray(lesson.getConstraints()));
+                    }
                 }
             }
         }
@@ -82,16 +84,25 @@ public class ConvertFactory {
         throw new ClassNotFoundException("Lesson não atribuida à um curso");
     }
 
-    private static String retrieveProfessorId(int id, List<domain.ifsc.Lesson> lessons, List<Teacher> teachers) throws ClassNotFoundException {
+    private static String[] retrieveProfessorsId(int id, List<domain.ifsc.Lesson> lessons, List<Teacher> teachers) throws ClassNotFoundException {
+        String[] professorsList = new String[0];
+        int count = 0;
         for (domain.ifsc.Lesson iterationLesson : lessons) {
             if (iterationLesson.getSubjectId() == id) {
-                int professorId = iterationLesson.getTeacherId();
-                for (Teacher iterationTeacher : teachers) {
-                    if (iterationTeacher.getId() == professorId) {
-                        return String.valueOf(iterationTeacher.getId());
+                int[] professorId = iterationLesson.getTeacherId();
+                professorsList = new String[professorId.length];
+                for (int value : professorId) {
+                    for (Teacher iterationTeacher : teachers) {
+                        if (iterationTeacher.getId() == value) {
+                            professorsList[count] = String.valueOf(iterationTeacher.getId());
+                            count++;
+                        }
                     }
                 }
             }
+        }
+        if (professorsList.length != 0){
+            return professorsList;
         }
         throw new ClassNotFoundException("Teacher ou Lesson não encontrado");
     }

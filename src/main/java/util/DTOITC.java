@@ -1,5 +1,6 @@
 package util;
 
+import domain.Chromosome;
 import domain.itc.Course;
 import domain.itc.Lesson;
 import domain.itc.Room;
@@ -70,7 +71,7 @@ public class DTOITC {
         this.constraints = constraints;
     }
 
-    public String getProfessorByLessonId(int index) throws ClassNotFoundException {
+    public String[] getProfessorByLessonId(int index, Chromosome chromosome) throws ClassNotFoundException {
         for (Lesson iterationLesson : this.lessons) {
             if (iterationLesson.getLessonId().equals(String.valueOf(index))) {
                 return iterationLesson.getProfessorId();

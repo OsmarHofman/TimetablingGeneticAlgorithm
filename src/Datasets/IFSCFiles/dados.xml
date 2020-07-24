@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="WINDOWS-1252"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <timetable options="export:idprefix:%CHRID,import:idprefix:%TEMPID,groupstype1,decimalseparatordot,lessonsincludeclasseswithoutstudents,handlestudentsafterlessons">
   <periods columns="period,name,short,starttime,endtime">
     <period name="Primeira Aula" short="M1" period="1" starttime="8:00" endtime="8:55"/>
@@ -32,16 +32,12 @@
     <subject id="342" name="Metrologia " short=""/>
     <subject id="343" name="Eletricidade" short=""/>
     <subject id="344" name="C�lculo T�cnico" short=""/>
-    <subject id="345" name="Metrologia " short=""/>
     <subject id="346" name="Linguagem e Comunica��o" short=""/>
     <subject id="347" name="Inform�tica" short=""/>
     <subject id="415" name="Sistemas de Gerenciamento de Conte�do" short="SIS"/>
     <subject id="416" name="Web Design" short="WEB"/>
     <subject id="417" name="Seguran�a da Informa��o" short="SEG"/>
-    <subject id="437" name="Fundamentos de Laborat�rio" short="FGL"/>
     <subject id="459" name="Sistemas e Conectividade" short="SEC"/>
-    <subject id="462" name="Biotecnologia Ambiental" short="BAM"/>
-    <subject id="463" name="Qu�mica Geral" short="QUI"/>
     <subject id="464" name="Qu�mica Anal�tica Experimental" short="QAE"/>
     <subject id="465" name="Tecnologia de Fermenta��es" short="TFE"/>
     <subject id="466" name="Ingl�s Aplicado � Biotecnologia" short="ING"/>
@@ -87,7 +83,6 @@
     <subject id="609" name="Linguagem e Comunica��o" short="LIN"/>
     <subject id="610" name="Empreendedorismo" short="EMP"/>
     <subject id="611" name="Biotecnologia Agr�cola" short="BAG"/>
-    <subject id="613" name="Citologia e Gen�tica Aplicada" short="CGA"/>
     <subject id="615" name="Desenvolvimento de Sistema WEB II" short="DES2"/>
     <subject id="617" name="Administra��o e Suporte de Sistemas" short="ADM"/>
     <subject id="618" name="Ingl�s" short="IGL"/>
@@ -95,8 +90,6 @@
     <subject id="621" name="Gest�o e �tica em TI" short="GTI"/>
     <subject id="649" name="Produ��o Vegetal 3" short="PV3015303"/>
     <subject id="650" name="TOPOGRAFIA E CARTOGRAFIA" short="TPC015303"/>
-    <subject id="655" name="PRODU��O VEGETAL 1" short="PV1015301"/>
-    <subject id="656" name="PRODU��O VEGETAL 1" short="PV1015301"/>
     <subject id="658" name="CONSTRU��ES RURAIS" short="CRU015303"/>
     <subject id="659" name="ZOOTECNIA 1" short="Z01015301"/>
     <subject id="667" name="Matem�tica B�sica e In" short="MB"/>
@@ -104,7 +97,6 @@
     <subject id="670" name="F�sica Geral e Experimental" short="FIS"/>
     <subject id="672" name="Fundamentos de Economia" short="ECN"/>
     <subject id="673" name="Qu�mica Geral e Experimental I" short="QGE"/>
-    <subject id="674" name="Qu�mica Geral e Experimental I" short="QGE"/>
     <subject id="675" name="Higiene e Seguran�a do Trabalho" short="HST"/>
     <subject id="676" name="Estat�stica" short="EST"/>
     <subject id="677" name="F�sico-qu�mica II" short="FSQ2"/>
@@ -118,17 +110,13 @@
     <subject id="689" name="Tecnologia de Alimentos" short="TAL"/>
     <subject id="690" name="TCC1" short="TCC1"/>
     <subject id="691" name="Controle, Processos e Gest�o de Laborat�rios" short="CPGL"/>
-    <subject id="692" name="Controle, Processos e Gest�o de Laborat�rios" short="CPGL"/>
     <subject id="693" name="Qu�mica Org�nica I" short="QOI"/>
-    <subject id="694" name="Qu�mica Org�nica I" short="QOI"/>
     <subject id="695" name="Qu�mica Geral" short="QG"/>
-    <subject id="696" name="Qu�mica Geral" short="QG"/>
     <subject id="697" name="Citohistologia Animal" short="CHA"/>
     <subject id="698" name="Portugu�s Instrumental" short="PI"/>
     <subject id="699" name="An�lises de Solos" short="ANS"/>
     <subject id="702" name="F�sico-Qu�mica" short="FIQ"/>
     <subject id="703" name="Qu�mica Ambiental" short="QAM"/>
-    <subject id="704" name="Qu�mica Ambiental" short="QAM"/>
     <subject id="705" name="An�lise Instrumental (laborat�rio)" short="AIN"/>
     <subject id="706" name="Trabalho de Conclus�o de Curso I" short="TCCI"/>
     <subject id="713" name="Instala��es El�tricas Industriais" short=""/>
@@ -154,7 +142,6 @@
     <subject id="738" name="Comando Num�rico Computadorizado" short="CNC"/>
     <subject id="739" name="Projeto Integrador III" short="PI-III"/>
     <subject id="740" name="Desenho T�cnico" short=""/>
-    <subject id="741" name="Desenho t�cnico" short=""/>
     <subject id="742" name="Processos de Soldagem" short=""/>
     <subject id="745" name="Processos Qu�mico" short="PQI2"/>
     <subject id="746" name="Qu�mica Anal�tica I" short="QAN1"/>
@@ -174,7 +161,6 @@
     <subject id="864" name="CNC" short=""/>
     <subject id="865" name="Controle e Automa��o" short=""/>
     <subject id="866" name="Controle e Automa��o" short=""/>
-    <subject id="878" name="Introdu��o �Programa��o" short="IPI"/>
     <subject id="879" name="Desenvolvimento de Sistema WEB I" short="DES"/>
     <subject id="880" name="Desenvolvimento de Sistema WEB II" short="DES2"/>
     <subject id="882" name="Desenvolvimento para Dispositivos M�veis" short="DDM"/>
@@ -188,7 +174,6 @@
     <subject id="960" name="INGLES.III" short="ING.III"/>
     <subject id="961" name="INGLES.IV" short="ING.IV"/>
     <subject id="963" name="Ingl�s V" short="IING.IV"/>
-    <subject id="966" name="An�lise Instrumental (laborat�rio)" short="AIN"/>
     <subject id="967" name="Estudos Fisiol�gicos Vegetais" short="EFV"/>
     <subject id="977" name="Atividades de Extens�o III" short="ATE-III"/>
     <subject id="978" name="Cadeias Produtivas de Oler�colas" short="CPO"/>
@@ -204,9 +189,7 @@
     <subject id="988" name="Geometria Anal�tica" short="GAN"/>
     <subject id="989" name="Qu�mica Geral" short="QGE"/>
     <subject id="990" name="Sa�de e Seguran�a do Trabalho" short="SST"/>
-    <subject id="991" name="Sa�de e Seguran�a do Trabalho" short="SST"/>
     <subject id="992" name="Desenho T�cnico I" short="DES-I"/>
-    <subject id="993" name="Desenho T�cnico I" short="DES-I"/>
     <subject id="994" name="Engenharia e Sustentabilidade" short="ENS"/>
     <subject id="996" name="Acion. Hidr�ulicos e Pneum�ticos" short="AHP"/>
     <subject id="997" name="Projetos Mec�nicos" short="PRM"/>
@@ -215,25 +198,14 @@
     <subject id="1000" name="Eletricidade" short=""/>
     <subject id="1001" name="Acion. El�tricos Industriais" short="OPT-II"/>
     <subject id="1002" name="Trabalho de Conclus�o de Curso" short="TCC-I"/>
-    <subject id="1003" name="BOT�NICA APLICADA" short="BAP015301"/>
     <subject id="1004" name="Qu�mica Anal�tica I" short="QANI"/>
     <subject id="1005" name="Introdu��o � Gest�o" short="IGE"/>
     <subject id="1009" name="Eletricidade A" short=""/>
-    <subject id="1010" name="Eletricidade B" short=""/>
     <subject id="1011" name="Calculo T�cnico" short=""/>
     <subject id="1012" name="Desenho T�cnico A" short=""/>
-    <subject id="1013" name="Desenho T�cnico B" short=""/>
     <subject id="1014" name="Metrologia A" short=""/>
-    <subject id="1015" name="Metrologia B" short=""/>
     <subject id="1016" name="Inform�tica" short=""/>
     <subject id="1017" name="Linguagem e Comunica��o" short=""/>
-    <subject id="1018" name="Eletr�nica Industrial" short=""/>
-    <subject id="1019" name="Linguagem e Programa��o" short=""/>
-    <subject id="1020" name="CNC" short=""/>
-    <subject id="1021" name="Instrumenta��o" short=""/>
-    <subject id="1022" name="Projeto Integrador I" short=""/>
-    <subject id="1023" name="Motores e Acionamentos" short=""/>
-    <subject id="1024" name="Hidraulica e Pneumatica I" short=""/>
     <subject id="1025" name="Estat�stica e probabilidade" short="EPB"/>
     <subject id="1026" name="Administra��o para Computa��o" short="ADM"/>
     <subject id="1027" name="Eletr�nica Digital" short="ELG"/>
@@ -253,8 +225,7 @@
     <subject id="1042" name="Modelagem e simula��o" short="MDS"/>
     <subject id="1043" name="Empreendedorismo" short="EPM"/>
     <subject id="1044" name="Trabalho de conclus�o de curso I" short="TCA"/>
-    <subject id="1045" name="Internet das Coisas" short="ELB1"/>
-    <subject id="1046" name="T�picos Especiais em IA" short="ELB2"/>
+    <subject id="1045" name="Eletiva 1" short="ELT1CC7"/>
     <subject id="1047" name="An�lise Instrumental (te�rica)" short="AIN"/>
     <subject id="1048" name="Desenvolvimento de Sistema WEB I" short="DES"/>
     <subject id="1049" name="INGLES.VI" short="ING.VI"/>
@@ -406,13 +377,12 @@
     <class id="333" name="Tec Eletromec�nica(grade nova) 3" short="T3" teacherid="49" timeoff=".000000001111,.000000001111,.000000001111,.000000001111,.000000001111,.000000000000"/>
     <class id="334" name="Tec Eletromec�nica(grade nova) 4" short="T4" teacherid="49" timeoff=".000000001111,.000000001111,.000000001111,.000000001111,.000000001111,.000000000000"/>
     <class id="341" name="Tec Mecatr�nica  1" short="TM1" teacherid="56" timeoff=".000011110000,.000011110000,.000011110000,.000011110000,.000011110000,.000000000000"/>
-    <class id="343" name="Tec Mecatr�nica  3" short="TM3" teacherid="56" timeoff=".000011110000,.000011110000,.000011110000,.000011110000,.000011110000,.000000000000"/>
     <class id="351" name="Tec Agroecologia (grade nova) 1" short="TA1" teacherid="32" timeoff=".000011110000,.000011110000,.000011110000,.000011110000,.000000000000,.000000000000"/>
     <class id="353" name="Tec Agroecologia (grade nova) 3" short="TA3" teacherid="32" timeoff=".000011110000,.000011110000,.000011110000,.000011110000,.000000000000,.000000000000"/>
     <class id="361" name="Tec An. Qu�micas 1" short="TAQ1" teacherid="41" timeoff=".000011110000,.000011110000,.000011110000,.000011110000,.000000000000,.000000000000"/>
     <class id="363" name="Tec An. Qu�micas 3" short="TAQ3" teacherid="41" timeoff=".000011110000,.000011110000,.000011110000,.000011110000,.000000000000,.000000000000"/>
-    <class id="371" name="Tec Administra��o 1" short="TA1" teacherid="29" timeoff=".000011110000,.000011110000,.000011110000,.000011110000,.000011110000,.000000000000"/>
-    <class id="373" name="Tec Administra��o 3" short="TA3" teacherid="29" timeoff=".000011110000,.000011110000,.000011110000,.000011110000,.000011110000,.000000000000"/>
+    <class id="371" name="Tec Administra��o 1" short="TAD1" teacherid="29" timeoff=".000011110000,.000011110000,.000011110000,.000011110000,.000011110000,.000000000000"/>
+    <class id="373" name="Tec Administra��o 3" short="TAD3" teacherid="29" timeoff=".000011110000,.000011110000,.000011110000,.000011110000,.000011110000,.000000000000"/>
     <class id="531" name="Grad Gest�o do Agroneg�cio 1" short="GGA1" teacherid="14" timeoff=".000000001111,.000000001111,.000000001111,.000000001111,.000000001111,.000000000000"/>
     <class id="533" name="Grad Gest�o do Agroneg�cio 3" short="GGA3" teacherid="14" timeoff=".000000001111,.000000001111,.000000001111,.000000001111,.000000001111,.000000000000"/>
     <class id="603" name="P�s-Gradua��o Tecnologias e Pr 3" short="PTP3" teacherid="41" timeoff=".000000000000,.000000000000,.000000000000,.000000000000,.000000001111,.111111110000"/>
@@ -593,16 +563,12 @@
     <lesson id="14" subjectid="342" groupid="10" classid="331" teacherids="52," classroomids="22" durationperiods="2" periodsperweek="2"/>
     <lesson id="15" subjectid="343" groupid="10" classid="331" teacherids="73," classroomids="60" durationperiods="4" periodsperweek="4"/>
     <lesson id="16" subjectid="344" groupid="9" classid="331" teacherids="27," classroomids="33" durationperiods="4" periodsperweek="4"/>
-    <lesson id="17" subjectid="345" groupid="11" classid="331" teacherids="52," classroomids="22" durationperiods="2" periodsperweek="2"/>
     <lesson id="18" subjectid="346" groupid="9" classid="331" teacherids="80,," classroomids="33" durationperiods="2" periodsperweek="2"/>
     <lesson id="19" subjectid="347" groupid="9" classid="331" teacherids="19," classroomids="53" durationperiods="2" periodsperweek="2"/>
     <lesson id="20" subjectid="415" groupid="12" classid="322" teacherids="99," classroomids="53" durationperiods="2" periodsperweek="4"/>
     <lesson id="21" subjectid="416" groupid="12" classid="322" teacherids="68," classroomids="53" durationperiods="4" periodsperweek="4"/>
     <lesson id="22" subjectid="417" groupid="12" classid="322" teacherids="20," classroomids="53" durationperiods="2" periodsperweek="2"/>
-    <lesson id="23" subjectid="437" groupid="2" classid="201" teacherids="38," classroomids="45" durationperiods="2" periodsperweek="2"/>
     <lesson id="24" subjectid="459" groupid="3" classid="321" teacherids="99," classroomids="54" durationperiods="2" periodsperweek="4"/>
-    <lesson id="25" subjectid="462" groupid="2" classid="201" teacherids="90," classroomids="45" durationperiods="2" periodsperweek="2"/>
-    <lesson id="26" subjectid="463" groupid="1" classid="201" teacherids="59," classroomids="46" durationperiods="3" periodsperweek="3"/>
     <lesson id="27" subjectid="464" groupid="15" classid="203" teacherids="90," classroomids="38" durationperiods="3" periodsperweek="3"/>
     <lesson id="28" subjectid="465" groupid="15" classid="203" teacherids="34," classroomids="38" durationperiods="3" periodsperweek="3"/>
     <lesson id="29" subjectid="466" groupid="15" classid="203" teacherids="25," classroomids="38" durationperiods="1" periodsperweek="2"/>
@@ -629,7 +595,7 @@
     <lesson id="50" subjectid="573" groupid="27" classid="351" teacherids="30," classroomids="81" durationperiods="2" periodsperweek="2"/>
     <lesson id="51" subjectid="575" groupid="27" classid="351" teacherids="14," classroomids="81" durationperiods="2" periodsperweek="2"/>
     <lesson id="52" subjectid="576" groupid="27" classid="351" teacherids="19," classroomids="50" durationperiods="2" periodsperweek="2"/>
-    <lesson id="53" subjectid="578" groupid="27" classid="351" teacherids="31," classroomids="81" durationperiods="2" periodsperweek="2"/>
+    <lesson id="53" subjectid="578" groupid="27" classid="351" teacherids="31," classroomids="81" durationperiods="2" periodsperweek="4"/>
     <lesson id="54" subjectid="583" groupid="30" classid="353" teacherids="34," classroomids="30" durationperiods="2" periodsperweek="4"/>
     <lesson id="55" subjectid="584" groupid="30" classid="353" teacherids="30," classroomids="30" durationperiods="2" periodsperweek="4"/>
     <lesson id="56" subjectid="586" groupid="33" classid="371" teacherids="77," classroomids="33" durationperiods="2" periodsperweek="4"/>
@@ -648,7 +614,6 @@
     <lesson id="69" subjectid="609" groupid="39" classid="204" teacherids="80," classroomids="41" durationperiods="2" periodsperweek="2"/>
     <lesson id="70" subjectid="610" groupid="39" classid="204" teacherids="72," classroomids="41" durationperiods="1" periodsperweek="2"/>
     <lesson id="71" subjectid="611" groupid="6" classid="202" teacherids="15,14," classroomids="34" durationperiods="3" periodsperweek="3"/>
-    <lesson id="72" subjectid="613" groupid="2" classid="201" teacherids="40," classroomids="45" durationperiods="3" periodsperweek="3"/>
     <lesson id="73" subjectid="615" groupid="42" classid="323" teacherids="68," classroomids="51" durationperiods="4" periodsperweek="4"/>
     <lesson id="74" subjectid="617" groupid="42" classid="323" teacherids="19," classroomids="51" durationperiods="2" periodsperweek="2"/>
     <lesson id="75" subjectid="618" groupid="42" classid="323" teacherids="25," classroomids="51" durationperiods="2" periodsperweek="2"/>
@@ -656,16 +621,13 @@
     <lesson id="77" subjectid="621" groupid="42" classid="323" teacherids="19," classroomids="51" durationperiods="2" periodsperweek="2"/>
     <lesson id="78" subjectid="649" groupid="30" classid="353" teacherids="33," classroomids="30" durationperiods="2" periodsperweek="4"/>
     <lesson id="79" subjectid="650" groupid="30" classid="353" teacherids="32," classroomids="30" durationperiods="2" periodsperweek="2"/>
-    <lesson id="80" subjectid="655" groupid="28" classid="351" teacherids="31," classroomids="38" durationperiods="2" periodsperweek="2"/>
-    <lesson id="81" subjectid="656" groupid="29" classid="351" teacherids="31," classroomids="41" durationperiods="2" periodsperweek="2"/>
     <lesson id="82" subjectid="658" groupid="30" classid="353" teacherids="64,32," classroomids="30" durationperiods="2" periodsperweek="2"/>
     <lesson id="83" subjectid="659" groupid="27" classid="351" teacherids="64,32," classroomids="81" durationperiods="2" periodsperweek="2"/>
     <lesson id="84" subjectid="667" groupid="45" classid="361" teacherids="27," classroomids="36" durationperiods="2" periodsperweek="2"/>
     <lesson id="85" subjectid="669" groupid="48" classid="191" teacherids="92," classroomids="34" durationperiods="2" periodsperweek="4"/>
     <lesson id="86" subjectid="670" groupid="48" classid="191" teacherids="53," classroomids="34" durationperiods="2" periodsperweek="4"/>
     <lesson id="87" subjectid="672" groupid="48" classid="191" teacherids=",94," classroomids="34" durationperiods="2" periodsperweek="2"/>
-    <lesson id="88" subjectid="673" groupid="49" classid="191" teacherids="59," classroomids="34" durationperiods="2" periodsperweek="6"/>
-    <lesson id="89" subjectid="674" groupid="50" classid="191" teacherids="65," classroomids="33" durationperiods="2" periodsperweek="6"/>
+    <lesson id="88" subjectid="673" groupid="49" classid="191" teacherids="59,65" classroomids="34" durationperiods="2" periodsperweek="6"/>
     <lesson id="90" subjectid="675" groupid="48" classid="191" teacherids="38," classroomids="34" durationperiods="2" periodsperweek="2"/>
     <lesson id="91" subjectid="676" groupid="51" classid="193" teacherids="92," classroomids="37" durationperiods="2" periodsperweek="2"/>
     <lesson id="92" subjectid="677" groupid="51" classid="193" teacherids="41," classroomids="37" durationperiods="2" periodsperweek="2"/>
@@ -679,17 +641,13 @@
     <lesson id="100" subjectid="689" groupid="54" classid="195" teacherids="34," classroomids="40" durationperiods="2" periodsperweek="4"/>
     <lesson id="101" subjectid="690" groupid="54" classid="195" teacherids="38," classroomids="40" durationperiods="2" periodsperweek="2"/>
     <lesson id="102" subjectid="691" groupid="46" classid="361" teacherids="38," classroomids="40" durationperiods="2" periodsperweek="2"/>
-    <lesson id="103" subjectid="692" groupid="47" classid="361" teacherids="38," classroomids="37" durationperiods="2" periodsperweek="2"/>
     <lesson id="104" subjectid="693" groupid="46" classid="361" teacherids="65," classroomids="40" durationperiods="2" periodsperweek="2"/>
-    <lesson id="105" subjectid="694" groupid="47" classid="361" teacherids="65," classroomids="37" durationperiods="2" periodsperweek="2"/>
     <lesson id="106" subjectid="695" groupid="46" classid="361" teacherids="60," classroomids="40" durationperiods="2" periodsperweek="4"/>
-    <lesson id="107" subjectid="696" groupid="47" classid="361" teacherids="60," classroomids="37" durationperiods="2" periodsperweek="4"/>
     <lesson id="108" subjectid="697" groupid="45" classid="361" teacherids="45," classroomids="36" durationperiods="4" periodsperweek="4"/>
     <lesson id="109" subjectid="698" groupid="45" classid="361" teacherids="8," classroomids="36" durationperiods="2" periodsperweek="2"/>
     <lesson id="110" subjectid="699" groupid="57" classid="363" teacherids="30," classroomids="32" durationperiods="2" periodsperweek="2"/>
     <lesson id="111" subjectid="702" groupid="57" classid="363" teacherids="41," classroomids="32" durationperiods="2" periodsperweek="4"/>
     <lesson id="112" subjectid="703" groupid="58" classid="363" teacherids="58," classroomids="41" durationperiods="2" periodsperweek="2"/>
-    <lesson id="113" subjectid="704" groupid="59" classid="363" teacherids="58," classroomids="38" durationperiods="2" periodsperweek="2"/>
     <lesson id="114" subjectid="705" groupid="58" classid="363" teacherids="79," classroomids="72" durationperiods="2" periodsperweek="2"/>
     <lesson id="115" subjectid="706" groupid="57" classid="363" teacherids="38,41," classroomids="32" durationperiods="2" periodsperweek="2"/>
     <lesson id="116" subjectid="713" groupid="60" classid="333" teacherids="49," classroomids="61" durationperiods="4" periodsperweek="4"/>
@@ -715,7 +673,6 @@
     <lesson id="136" subjectid="738" groupid="66" classid="277" teacherids=",36," classroomids="52" durationperiods="4" periodsperweek="4"/>
     <lesson id="137" subjectid="739" groupid="66" classid="277" teacherids="87,," classroomids="52" durationperiods="2" periodsperweek="2"/>
     <lesson id="138" subjectid="740" groupid="10" classid="331" teacherids="87," classroomids="59" durationperiods="2" periodsperweek="2"/>
-    <lesson id="139" subjectid="741" groupid="11" classid="331" teacherids="87," classroomids="59" durationperiods="2" periodsperweek="2"/>
     <lesson id="140" subjectid="742" groupid="60" classid="333" teacherids="44," classroomids="37" durationperiods="1" periodsperweek="1"/>
     <lesson id="141" subjectid="745" groupid="54" classid="195" teacherids="90," classroomids="40" durationperiods="2" periodsperweek="4"/>
     <lesson id="142" subjectid="746" groupid="51" classid="193" teacherids="79," classroomids="37" durationperiods="2" periodsperweek="2"/>
@@ -725,7 +682,7 @@
     <lesson id="146" subjectid="772" groupid="51" classid="193" teacherids="65," classroomids="37" durationperiods="3" periodsperweek="3"/>
     <lesson id="147" subjectid="773" groupid="54" classid="195" teacherids="58," classroomids="40" durationperiods="2" periodsperweek="2"/>
     <lesson id="148" subjectid="774" groupid="54" classid="195" teacherids="46," classroomids="40" durationperiods="1" periodsperweek="1"/>
-    <lesson id="149" subjectid="777" groupid="4" classid="321" teacherids="19,88," classroomids="50" durationperiods="2" periodsperweek="6"/>
+    <lesson id="149" subjectid="777" groupid="4" classid="321" teacherids="19,88,11" classroomids="50" durationperiods="2" periodsperweek="6"/>
     <lesson id="150" subjectid="778" groupid="69" classid="681" teacherids="77," classroomids="32" durationperiods="4" periodsperweek="8"/>
     <lesson id="151" subjectid="859" groupid="21" classid="332" teacherids="56,," classroomids="60" durationperiods="2" periodsperweek="2"/>
     <lesson id="152" subjectid="860" groupid="72" classid="334" teacherids=",72," classroomids="40" durationperiods="2" periodsperweek="2"/>
@@ -735,7 +692,6 @@
     <lesson id="156" subjectid="864" groupid="72" classid="334" teacherids="36,," classroomids="67" durationperiods="2" periodsperweek="2"/>
     <lesson id="157" subjectid="865" groupid="72" classid="334" teacherids="48,," classroomids="56" durationperiods="1" periodsperweek="1"/>
     <lesson id="158" subjectid="866" groupid="72" classid="334" teacherids=",48," classroomids="56" durationperiods="2" periodsperweek="2"/>
-    <lesson id="159" subjectid="878" groupid="5" classid="321" teacherids="11," classroomids="54" durationperiods="2" periodsperweek="6"/>
     <lesson id="160" subjectid="879" groupid="12" classid="322" teacherids="88," classroomids="53" durationperiods="2" periodsperweek="2"/>
     <lesson id="161" subjectid="880" groupid="42" classid="323" teacherids="68," classroomids="51" durationperiods="2" periodsperweek="2"/>
     <lesson id="162" subjectid="882" groupid="75" classid="324" teacherids="84," classroomids="52" durationperiods="4" periodsperweek="4"/>
@@ -749,7 +705,6 @@
     <lesson id="170" subjectid="960" groupid="87" classid="640" teacherids="25," classroomids="45" durationperiods="3" periodsperweek="3"/>
     <lesson id="171" subjectid="961" groupid="90" classid="210" teacherids="8," classroomids="45" durationperiods="3" periodsperweek="3"/>
     <lesson id="172" subjectid="963" groupid="93" classid="740" teacherids="25," classroomids="46" durationperiods="3" periodsperweek="3"/>
-    <lesson id="173" subjectid="966" groupid="59" classid="363" teacherids=",79," classroomids="72" durationperiods="2" periodsperweek="2"/>
     <lesson id="174" subjectid="967" groupid="57" classid="363" teacherids="33," classroomids="32" durationperiods="2" periodsperweek="2"/>
     <lesson id="175" subjectid="977" groupid="96" classid="533" teacherids="14,63," classroomids="31" durationperiods="2" periodsperweek="2"/>
     <lesson id="176" subjectid="978" groupid="96" classid="533" teacherids="14," classroomids="31" durationperiods="2" periodsperweek="2"/>
@@ -765,9 +720,7 @@
     <lesson id="186" subjectid="988" groupid="102" classid="761" teacherids="92," classroomids="33" durationperiods="2" periodsperweek="4"/>
     <lesson id="187" subjectid="989" groupid="102" classid="761" teacherids=",90," classroomids="33" durationperiods="4" periodsperweek="4"/>
     <lesson id="188" subjectid="990" groupid="103" classid="761" teacherids=",44," classroomids="33" durationperiods="2" periodsperweek="2"/>
-    <lesson id="189" subjectid="991" groupid="104" classid="761" teacherids="44,," classroomids="33" durationperiods="2" periodsperweek="2"/>
     <lesson id="190" subjectid="992" groupid="103" classid="761" teacherids="82," classroomids="59" durationperiods="2" periodsperweek="2"/>
-    <lesson id="191" subjectid="993" groupid="104" classid="761" teacherids="82,," classroomids="59" durationperiods="2" periodsperweek="2"/>
     <lesson id="192" subjectid="994" groupid="102" classid="761" teacherids="54,14," classroomids="33" durationperiods="2" periodsperweek="2"/>
     <lesson id="193" subjectid="996" groupid="105" classid="279" teacherids="71," classroomids="40" durationperiods="4" periodsperweek="4"/>
     <lesson id="194" subjectid="997" groupid="105" classid="279" teacherids="69," classroomids="40" durationperiods="2" periodsperweek="2"/>
@@ -776,25 +729,14 @@
     <lesson id="197" subjectid="1000" groupid="11" classid="331" teacherids="55," classroomids="33" durationperiods="4" periodsperweek="4"/>
     <lesson id="198" subjectid="1001" groupid="105" classid="279" teacherids="73," classroomids="40" durationperiods="4" periodsperweek="4"/>
     <lesson id="199" subjectid="1002" groupid="105" classid="279" teacherids="54," classroomids="40" durationperiods="2" periodsperweek="2"/>
-    <lesson id="200" subjectid="1003" groupid="29" classid="351" teacherids="64," classroomids="41" durationperiods="2" periodsperweek="2"/>
     <lesson id="201" subjectid="1004" groupid="51" classid="193" teacherids="79," classroomids="37" durationperiods="2" periodsperweek="2"/>
     <lesson id="202" subjectid="1005" groupid="108" classid="751" teacherids="94,," classroomids="29" durationperiods="2" periodsperweek="4"/>
-    <lesson id="203" subjectid="1009" groupid="111" classid="341" teacherids="73," classroomids="60" durationperiods="4" periodsperweek="4"/>
-    <lesson id="204" subjectid="1010" groupid="111" classid="341" teacherids="55," classroomids="35" durationperiods="4" periodsperweek="4"/>
+    <lesson id="203" subjectid="1009" groupid="111" classid="341" teacherids="73,55" classroomids="60" durationperiods="4" periodsperweek="4"/>
     <lesson id="205" subjectid="1011" groupid="111" classid="341" teacherids="55,53," classroomids="35" durationperiods="4" periodsperweek="4"/>
     <lesson id="206" subjectid="1012" groupid="111" classid="341" teacherids="55," classroomids="59" durationperiods="2" periodsperweek="2"/>
-    <lesson id="207" subjectid="1013" groupid="111" classid="341" teacherids="55," classroomids="59" durationperiods="2" periodsperweek="2"/>
     <lesson id="208" subjectid="1014" groupid="111" classid="341" teacherids="82," classroomids="59" durationperiods="2" periodsperweek="2"/>
-    <lesson id="209" subjectid="1015" groupid="111" classid="341" teacherids="82," classroomids="22" durationperiods="2" periodsperweek="2"/>
     <lesson id="210" subjectid="1016" groupid="111" classid="341" teacherids="11,," classroomids="54" durationperiods="2" periodsperweek="2"/>
     <lesson id="211" subjectid="1017" groupid="111" classid="341" teacherids="8,," classroomids="35" durationperiods="2" periodsperweek="2"/>
-    <lesson id="212" subjectid="1018" groupid="114" classid="343" teacherids="56," classroomids="60" durationperiods="4" periodsperweek="4"/>
-    <lesson id="213" subjectid="1019" groupid="114" classid="343" teacherids=",11," classroomids="50" durationperiods="2" periodsperweek="2"/>
-    <lesson id="214" subjectid="1020" groupid="114" classid="343" teacherids="36," classroomids="36" durationperiods="2" periodsperweek="2"/>
-    <lesson id="215" subjectid="1021" groupid="114" classid="343" teacherids=",48," classroomids="56" durationperiods="4" periodsperweek="4"/>
-    <lesson id="216" subjectid="1022" groupid="114" classid="343" teacherids="71," classroomids="56" durationperiods="2" periodsperweek="2"/>
-    <lesson id="217" subjectid="1023" groupid="114" classid="343" teacherids="55," classroomids="61" durationperiods="4" periodsperweek="4"/>
-    <lesson id="218" subjectid="1024" groupid="114" classid="343" teacherids="48," classroomids="56" durationperiods="4" periodsperweek="4"/>
     <lesson id="219" subjectid="1025" groupid="117" classid="145" teacherids="29,27," classroomids="31" durationperiods="2" periodsperweek="4"/>
     <lesson id="220" subjectid="1026" groupid="120" classid="141" teacherids="94," classroomids="29" durationperiods="2" periodsperweek="4"/>
     <lesson id="221" subjectid="1027" groupid="120" classid="141" teacherids="56," classroomids="54" durationperiods="2" periodsperweek="4"/>
@@ -814,8 +756,7 @@
     <lesson id="235" subjectid="1042" groupid="126" classid="147" teacherids="18," classroomids="51" durationperiods="2" periodsperweek="4"/>
     <lesson id="236" subjectid="1043" groupid="126" classid="147" teacherids="63," classroomids="32" durationperiods="2" periodsperweek="4"/>
     <lesson id="237" subjectid="1044" groupid="126" classid="147" teacherids="10," classroomids="51" durationperiods="4" periodsperweek="8"/>
-    <lesson id="238" subjectid="1045" groupid="126" classid="147" teacherids="20," classroomids="50" durationperiods="2" periodsperweek="4"/>
-    <lesson id="239" subjectid="1046" groupid="126" classid="147" teacherids="88," classroomids="51" durationperiods="2" periodsperweek="4"/>
+    <lesson id="238" subjectid="1045" groupid="126" classid="147" teacherids="20,88" classroomids="50" durationperiods="2" periodsperweek="4"/>
     <lesson id="240" subjectid="1047" groupid="57" classid="363" teacherids="79,," classroomids="32" durationperiods="2" periodsperweek="2"/>
     <lesson id="241" subjectid="1048" groupid="12" classid="322" teacherids="88," classroomids="53" durationperiods="4" periodsperweek="4"/>
     <lesson id="242" subjectid="1049" groupid="129" classid="770" teacherids="25," classroomids="46" durationperiods="3" periodsperweek="3"/>

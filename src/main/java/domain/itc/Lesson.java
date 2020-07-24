@@ -8,7 +8,7 @@ public class Lesson {
 
     private String lessonId;
     private String courseId;
-    private String professorId;
+    private String[] professorId;
     private int lecturesNumber; //lecturesNumber = durationPeriods do IFSC
     private int minWorkingDays; //minWorkingDays = calculo do periodPerWeek do IFSC
     private int studentsNumber;
@@ -18,13 +18,7 @@ public class Lesson {
     public Lesson() {
     }
 
-    public Lesson(String[] parameters) {
-        this.lessonId = parameters[0];
-        this.professorId = parameters[1];
-        this.lecturesNumber = Integer.parseInt(parameters[2]);
-        this.minWorkingDays = Integer.parseInt(parameters[3]);
-        this.studentsNumber = Integer.parseInt(parameters[4]);
-    }
+
 
     public String getCourseId() {
         return courseId;
@@ -42,11 +36,11 @@ public class Lesson {
         this.lessonId = lessonId;
     }
 
-    public String getProfessorId() {
+    public String[] getProfessorId() {
         return professorId;
     }
 
-    public void setProfessorId(String professorId) {
+    public void setProfessorId(String[] professorId) {
         this.professorId = professorId;
     }
 
@@ -101,7 +95,7 @@ public class Lesson {
         return "Lesson{" +
                 "lessonId='" + lessonId + '\'' +
                 ", courseId='" + courseId + '\'' +
-                ", professorId='" + professorId + '\'' +
+                ", professorId=" + Arrays.toString(professorId) +
                 ", lecturesNumber=" + lecturesNumber +
                 ", minWorkingDays=" + minWorkingDays +
                 ", studentsNumber=" + studentsNumber +

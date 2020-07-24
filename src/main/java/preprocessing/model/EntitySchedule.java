@@ -4,10 +4,7 @@ import preprocessing.classes.CourseRelation;
 import preprocessing.classes.Intersection;
 import preprocessing.classes.Professor_Course;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class EntitySchedule {
 
@@ -73,6 +70,7 @@ public class EntitySchedule {
         List[] formattedDataList = new ArrayList[splitNewReportData.length];
         for (int i = 0; i < formattedDataList.length; i++)
             formattedDataList[i] = new ArrayList<>(Arrays.asList(splitNewReportData[i].split("-")));
+
 
         return formattedDataList;
     }

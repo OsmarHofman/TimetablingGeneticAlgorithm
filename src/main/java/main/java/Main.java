@@ -1,6 +1,8 @@
 package main.java;
 
 import domain.Chromosome;
+import domain.ifsc.Classes;
+import domain.ifsc.Lesson;
 import domain.itc.UnavailabilityConstraint;
 import genetics.Avaliation;
 import genetics.Crossover;
@@ -8,7 +10,6 @@ import genetics.Mutation;
 import genetics.Selection;
 import preprocessing.dataaccess.FileHandler;
 import preprocessing.dataaccess.RetrieveIFSCData;
-import preprocessing.dataaccess.RetrieveITCData;
 import preprocessing.interfaces.IFileHandler;
 import preprocessing.model.EntitySchedule;
 import preprocessing.model.ProfessorsScheduleCreation;
@@ -16,14 +17,14 @@ import util.ConvertFactory;
 import util.DTOIFSC;
 import util.DTOITC;
 
-import java.io.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class Main {
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
+    public static void main(String[] args) throws ClassNotFoundException {
 
-        final int populationSize = 40;
+        final int populationSize = 100;
         final int classSize = 20;
         final byte elitismPercentage = 10;
         final int joinSetPercentage = 60;
@@ -37,10 +38,11 @@ public class Main {
 
 
         EntitySchedule entitySchedule = new EntitySchedule(psc);
+
         //Lista que cada posição é uma lista de cursos
         List[] coursesSet = entitySchedule.createSet(joinSetPercentage);
-        //IFileHandler fileHandler = new FileHandler();
-        // fileHandler.createReport(text, percentage + "%");
+        IFileHandler fileHandler = new FileHandler();
+       // fileHandler.createReport(coursesSet, joinSetPercentage + "%");
 
 
         DTOITC fromIfSC = ConvertFactory.convertIFSCtoITC(dtoifsc);
@@ -58,19 +60,22 @@ public class Main {
 
         Chromosome[] population = new Chromosome[populationSize];
         //Inicializando população
-        Arrays.setAll(population, i -> new Chromosome(fromIfSC.getCourses().length, classSize, fromIfSC.getLessons()));
+        Arrays.setAll(population, i -> new Chromosome(fromIfSC.getCourses().length, classSize, fromIfSC.getLessons(), fromIfSC.getCourses()));
 
 
+       // checkCourses(dtoifsc);
         Chromosome best = Chromosome.getBestChromosome(population);
 
-        while (iterationLimit < 1000 && ((best.getAvaliation() < 3800) || best.isHasViolatedHardConstraint()) || iterationLimit == 0) { // fazer verificação baseado no BOOLEAN do cromossomo, além das outras condições
+        while (iterationLimit < 1000 && ((best.getAvaliation() < 3000) || best.isHasViolatedHardConstraint())) { // fazer verificação baseado no BOOLEAN do cromossomo, além das outras condições
+
 
             for (Chromosome chromosome : population) {
-                chromosome.setAvaliation(chromosome.getAvaliation() - Avaliation.rate(chromosome, fromIfSC, scheduleRelation));
+                chromosome.setHasViolatedHardConstraint(false);
+                chromosome.setAvaliation(Avaliation.rate(chromosome, fromIfSC, scheduleRelation));
             }
 
             //função de avaliacao acumulada
-            System.out.println("\nCalculando FaA...");
+            //System.out.println("\nCalculando FaA...");
             int[] ratingHandler = new int[populationSize];
             int faA = 0;
             for (int i = 0; i < population.length; i++) {
@@ -87,7 +92,6 @@ public class Main {
             Chromosome[] newCouples = Selection.roulleteWheel(population, ratingHandler, faA, proportion);
 
 
-            //FIXME verificar chance de cruzar
             //Crossover
             Chromosome[] crossedChromosomes = Crossover.cross(newCouples, classSize, crossPercentage);
 
@@ -103,18 +107,50 @@ public class Main {
             iterationLimit++;
 
 
-            //TODO verificar desempenho dos métodos abaixo, após realizar a inicialização correta
-            long startTime = System.currentTimeMillis();
             best = Chromosome.getBestChromosome(population);
-            long endTime = System.currentTimeMillis();
 
-            System.out.println("Resultado collections: " + (endTime-startTime));
 
-            startTime = System.currentTimeMillis();
-            Chromosome best2 = Chromosome.getBest2(population);
-            endTime = System.currentTimeMillis();
-
-            System.out.println("Resultado manual: " + (endTime-startTime));
+            System.out.println("\nIteração: " + iterationLimit);
+            System.out.println("Avaliação: " + best.getAvaliation());
+            System.out.println("Violou? " + best.isHasViolatedHardConstraint());
         }
+        System.out.println(best.toString());
     }
+    
+    private static void checkCourses(DTOIFSC ifsc){
+        List<Integer> morningCourses = new ArrayList<>();
+        List<Integer> afternoonCourses = new ArrayList<>();
+        List<Integer> nightCourses = new ArrayList<>();
+        for (Classes classe: ifsc.getClasses()) {
+            byte shift = convertTimeoffToShift(classe.getTimeoff());
+            int count = 0;
+            for (Lesson lesson :ifsc.getLessons()) {
+                if (lesson.getClassesId() == classe.getId()){
+                    count += lesson.getPeriodsPerWeek();
+                }
+            }
+            if (shift == 0 && count > 20)
+                morningCourses.add(classe.getId());
+            else if(shift == 1 && count > 16)
+                afternoonCourses.add(classe.getId());
+            else if (shift == 2 && count > 20)
+                nightCourses.add(classe.getId());
+        }
+
+        System.out.println("manha: " + morningCourses.toString());
+        System.out.println("tarde: " + afternoonCourses.toString());
+        System.out.println("noite: " + nightCourses.toString());
+    }
+
+
+    private static byte convertTimeoffToShift(String timeoff) {
+        String[] days = timeoff.replace(".", "").split(",");
+        if (days[0].charAt(0) == '1')
+            return 0;
+        else if (days[0].charAt(4) == '1')
+            return 1;
+        return 2;
+
+    }
+
 }

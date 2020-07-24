@@ -3,21 +3,15 @@ package preprocessing.model;
 import domain.ifsc.Classes;
 import domain.ifsc.Lesson;
 import domain.ifsc.Teacher;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import preprocessing.classes.CourseRelation;
 import preprocessing.classes.Intersection;
 import preprocessing.classes.ProfessorCourseStatus;
 import preprocessing.classes.Professor_Course;
-import preprocessing.dataaccess.RetrieveSpreadSheetData;
 import util.DTOIFSC;
 
-import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class ProfessorsScheduleCreation {
 
@@ -25,7 +19,7 @@ public class ProfessorsScheduleCreation {
     private List<Professor_Course> professorsList;
     private List<CourseRelation> courseRelationList;
 
-    public ProfessorsScheduleCreation(DTOIFSC dtoifsc) throws IOException {
+    public ProfessorsScheduleCreation(DTOIFSC dtoifsc){
         this.getCoursesAndProfessorsByFile(dtoifsc);
         if (this.coursesList != null && this.professorsList != null) {
             this.createCourseRelation();
@@ -63,9 +57,9 @@ public class ProfessorsScheduleCreation {
                 this.coursesList.add(courseName);
             } else {
                 boolean hasAdded = false;
-                for (int i = 0; i < cg125.size(); i++) {
-                    if (cg125.get(i).getName().equals(courseName)) {
-                        cg125.get(i).getCoursesIds().add(iterationClasses.getId());
+                for (CourseGroup courseGroup : cg125) {
+                    if (courseGroup.getName().equals(courseName)) {
+                        courseGroup.getCoursesIds().add(iterationClasses.getId());
                         hasAdded = true;
                     }
                 }
@@ -84,21 +78,23 @@ public class ProfessorsScheduleCreation {
                 for (Lesson iterationLesson : dtoifsc.getLessons()) {
                     if (iterationLesson.getClassesId() == ids) {
                         for (Teacher iterationTeacher : dtoifsc.getProfessors()) {
-                            if (iterationTeacher.getId() == iterationLesson.getTeacherId()) {
-                                if (this.professorsList.isEmpty()) {
-                                    this.professorsList.add(new Professor_Course(iterationTeacher.getName(), new ArrayList<>(Collections.singletonList(cg.getName()))));
-                                } else {
-                                    boolean hasAdded = false;
-                                    for (Professor_Course iterationPC : professorsList) {
-                                        if (iterationPC.getProfessor().equals(iterationTeacher.getName())) {
-                                            if (!iterationPC.getCourse().contains(cg.getName())) {
-                                                iterationPC.getCourse().add(cg.getName());
-                                            }
-                                            hasAdded = true;
-                                        }
-                                    }
-                                    if (!hasAdded) {
+                            for (int i = 0; i < iterationLesson.getTeacherId().length; i++) {
+                                if (iterationTeacher.getId() == iterationLesson.getTeacherId()[i]) {
+                                    if (this.professorsList.isEmpty()) {
                                         this.professorsList.add(new Professor_Course(iterationTeacher.getName(), new ArrayList<>(Collections.singletonList(cg.getName()))));
+                                    } else {
+                                        boolean hasAdded = false;
+                                        for (Professor_Course iterationPC : professorsList) {
+                                            if (iterationPC.getProfessor().equals(iterationTeacher.getName())) {
+                                                if (!iterationPC.getCourse().contains(cg.getName())) {
+                                                    iterationPC.getCourse().add(cg.getName());
+                                                }
+                                                hasAdded = true;
+                                            }
+                                        }
+                                        if (!hasAdded) {
+                                            this.professorsList.add(new Professor_Course(iterationTeacher.getName(), new ArrayList<>(Collections.singletonList(cg.getName()))));
+                                        }
                                     }
                                 }
                             }
@@ -149,12 +145,10 @@ public class ProfessorsScheduleCreation {
         System.out.println("Relação entre professores e cursos criada!\n");
     }
 
-    private class CourseGroup {
+    private static class CourseGroup {
         private String name;
         private List<Integer> coursesIds;
 
-        public CourseGroup() {
-        }
 
         public CourseGroup(String name, List<Integer> coursesIds) {
             this.name = name;

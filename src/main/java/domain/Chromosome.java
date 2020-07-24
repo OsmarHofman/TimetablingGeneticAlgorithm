@@ -1,9 +1,9 @@
 package domain;
 
+import domain.itc.Course;
 import domain.itc.Lesson;
 
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.Random;
 
 public class Chromosome {
@@ -11,20 +11,19 @@ public class Chromosome {
     private int avaliation;
     private boolean hasViolatedHardConstraint;
 
-    public Chromosome() {
-    }
 
-    public Chromosome(int size){
+
+    public Chromosome(int size) {
         this.genes = new int[size];
-        this.avaliation = 5000;
+        this.avaliation = 0;
         this.hasViolatedHardConstraint = false;
     }
 
-    public Chromosome(int size, int classSize, Lesson[] lessons) {
-        this.genes = new int[size * classSize] ;
-        this.avaliation = 5000;
+    public Chromosome(int size, int classSize, Lesson[] lessons, Course[] courses) {
+        this.genes = new int[size * classSize];
+        this.avaliation = 0;
         this.hasViolatedHardConstraint = false;
-        generateRandom(lessons);
+        generateRandom(lessons, courses, classSize);
     }
 
     public Chromosome(int[] genes, int avaliation) {
@@ -57,33 +56,52 @@ public class Chromosome {
         this.hasViolatedHardConstraint = hasViolatedHardConstraint;
     }
 
-    private void generateRandom(Lesson[] lessons){
+    private void generateRandom(Lesson[] lessons, Course[] courses, int classSize) {
         Random random = new Random();
-        for (int i = 0; i <this.genes.length; i++) {
-            int index= random.nextInt(lessons.length);
-            this.genes[i] = Integer.parseInt(lessons[index].getLessonId());
+        for (int i = 0; i < courses.length; i++) {
+            int courseIndex = i * classSize;
+            Lesson[] coursesLesson = new Lesson[courses[i].getCoursesNumber()];
+            int count = 0;
+            for (Lesson lesson : lessons) {
+                if (lesson.getCourseId().equals(String.valueOf(courses[i].getCourseId()))) {
+                    coursesLesson[count] = lesson;
+                    count++;
+                }
+            }
+            count = 0;
+            for (Lesson lesson : coursesLesson) {
+                for (int k = 0; k < lesson.getMinWorkingDays() * lesson.getLecturesNumber(); k++) {
+                    genes[count + courseIndex] = Integer.parseInt(lesson.getLessonId());
+                    count++;
+                }
+            }
+            for (int k = 0; k < count / 2; k++) {
+                int p1 = random.nextInt(count) + courseIndex;
+                int p2 = random.nextInt(count) + courseIndex;
+                if (p1 != p2) {
+                    int aux = genes[p2];
+                    genes[p2] = genes[p1];
+                    genes[p1] = aux;
+                }
+            }
+
         }
     }
 
-    public static Chromosome getBestChromosome(Chromosome[] chromosomes){
-        Arrays.sort(chromosomes, Comparator.comparing(Chromosome::getAvaliation).reversed());
-        return chromosomes[0];
-    }
-
-    public static Chromosome getBest2(Chromosome[] chromosomes){
+    public static Chromosome getBestChromosome(Chromosome[] chromosomes) {
         Chromosome best = null;
         for (int i = 0; i < chromosomes.length; i++) {
-            if (i == 0){
+            if (i == 0) {
                 best = chromosomes[0];
-            }else {
+            } else {
                 if (chromosomes[i].getAvaliation() > best.getAvaliation())
                     best = chromosomes[i];
 
             }
         }
+
         return best;
     }
-
 
 
     @Override

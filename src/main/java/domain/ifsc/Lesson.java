@@ -1,19 +1,20 @@
 package domain.ifsc;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 public class Lesson {
     private int id;
     private int subjectId;
     private int classesId;
-    private int teacherId;
+    private int[] teacherId;
     private int periodsPerWeek;
     private int durationPeriods;
 
     public Lesson() {
     }
 
-    public Lesson(int id, int subjectId, int classesId, int teacherId, int periodsPerWeek, int durationPeriods) {
+    public Lesson(int id, int subjectId, int classesId, int[] teacherId, int periodsPerWeek, int durationPeriods) {
         this.id = id;
         this.subjectId = subjectId;
         this.classesId = classesId;
@@ -46,11 +47,11 @@ public class Lesson {
         this.classesId = classesId;
     }
 
-    public int getTeacherId() {
+    public int[] getTeacherId() {
         return teacherId;
     }
 
-    public void setTeacherId(int teacherId) {
+    public void setTeacherId(int[] teacherId) {
         this.teacherId = teacherId;
     }
 
@@ -76,7 +77,7 @@ public class Lesson {
                 "id=" + id +
                 ", subjectId=" + subjectId +
                 ", classesId=" + classesId +
-                ", teacherId=" + teacherId +
+                ", teacherId=" + Arrays.toString(teacherId) +
                 ", periodsPerWeek=" + periodsPerWeek +
                 ", durationPeriods=" + durationPeriods +
                 '}';

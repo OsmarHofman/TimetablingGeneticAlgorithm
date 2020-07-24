@@ -13,8 +13,8 @@ public class Crossover {
 
         for (int i = 0; i < chromosomes.length; i += 2) {
             int crossChance = random.nextInt(100);
-            Chromosome p1 = new Chromosome(chromosomes[i].getGenes(), chromosomes[i].getAvaliation());
-            Chromosome p2 = new Chromosome(chromosomes[i + 1].getGenes(), chromosomes[i + 1].getAvaliation());
+            Chromosome p1 = new Chromosome(chromosomes[i].getGenes(),0);
+            Chromosome p2 = new Chromosome(chromosomes[i + 1].getGenes(),0);
             if (crossChance < crossPercentage) {
                 int group = random.nextInt(size) / classSize;
                 int infLimit = group * classSize;
