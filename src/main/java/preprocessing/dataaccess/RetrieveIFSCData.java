@@ -32,7 +32,7 @@ public class RetrieveIFSCData {
 
     public DTOIFSC getAllData() {
         try {
-            File fXmlFile = new File("src/Datasets/IFSCFiles/dados.xml");
+            File fXmlFile = new File("src/assets/Datasets/IFSCFiles/dados.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(fXmlFile);

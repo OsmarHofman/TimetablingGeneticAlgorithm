@@ -3,6 +3,7 @@ package main.java;
 import domain.Chromosome;
 import domain.ifsc.Classes;
 import domain.ifsc.Lesson;
+import domain.ifsc.Teacher;
 import domain.itc.UnavailabilityConstraint;
 import genetics.Avaliation;
 import genetics.Crossover;
@@ -13,36 +14,39 @@ import preprocessing.dataaccess.RetrieveIFSCData;
 import preprocessing.interfaces.IFileHandler;
 import preprocessing.model.EntitySchedule;
 import preprocessing.model.ProfessorsScheduleCreation;
+import util.ConfigReader;
 import util.ConvertFactory;
 import util.DTOIFSC;
 import util.DTOITC;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class Main {
-    public static void main(String[] args) throws ClassNotFoundException {
-
-        final int populationSize = 100;
-        final int classSize = 20;
-        final byte elitismPercentage = 10;
-        final int joinSetPercentage = 60;
-        final int crossPercentage = 60;
-        final int mutationPercentage = 10;
+    public static void main(String[] args) throws ClassNotFoundException, IOException {
+        int[] config = ConfigReader.readConfiguration(args[0]);
+        final int populationSize = config[0];
+        final int classSize = config[1];
+        final int elitismPercentage = config[2];
+        final int crossPercentage = config[3];
+        final int mutationPercentage = config[4];
+       // final int joinSetPercentage = config[5];
+        final int geracoes = config[6];
 
 
         RetrieveIFSCData retrieveIFSCData = new RetrieveIFSCData();
         DTOIFSC dtoifsc = retrieveIFSCData.getAllData();
         ProfessorsScheduleCreation psc = new ProfessorsScheduleCreation(dtoifsc);
 
-
+        //slaves(dtoifsc);
         EntitySchedule entitySchedule = new EntitySchedule(psc);
 
         //Lista que cada posição é uma lista de cursos
-        List[] coursesSet = entitySchedule.createSet(joinSetPercentage);
-        IFileHandler fileHandler = new FileHandler();
-       // fileHandler.createReport(coursesSet, joinSetPercentage + "%");
+        //List[] coursesSet = entitySchedule.createSet(joinSetPercentage);
+        // IFileHandler fileHandler = new FileHandler();
+        // fileHandler.createReport(coursesSet, joinSetPercentage + "%");
 
 
         DTOITC fromIfSC = ConvertFactory.convertIFSCtoITC(dtoifsc);
@@ -64,9 +68,10 @@ public class Main {
 
 
        // checkCourses(dtoifsc);
-        Chromosome best = Chromosome.getBestChromosome(population);
-
-        while (iterationLimit < 1000 && ((best.getAvaliation() < 3000) || best.isHasViolatedHardConstraint())) { // fazer verificação baseado no BOOLEAN do cromossomo, além das outras condições
+        Chromosome localBest = Chromosome.getBestChromosome(population);
+        Chromosome globalBestChromosome = localBest;
+        long startTime = System.currentTimeMillis();
+        while (iterationLimit < geracoes && ((localBest.getAvaliation() < 3800) || localBest.isHasViolatedHardConstraint())) { // fazer verificação baseado no BOOLEAN do cromossomo, além das outras condições
 
 
             for (Chromosome chromosome : population) {
@@ -84,7 +89,7 @@ public class Main {
             }
 
             //Seleção por elitismo
-            byte proportion = populationSize / elitismPercentage;
+            byte proportion = (byte) (populationSize / elitismPercentage);
             Chromosome[] eliteChromosomes = Selection.elitism(population, proportion);
 
 
@@ -107,14 +112,20 @@ public class Main {
             iterationLimit++;
 
 
-            best = Chromosome.getBestChromosome(population);
+            localBest = Chromosome.getBestChromosome(population);
+            if (globalBestChromosome.getAvaliation() < localBest.getAvaliation())
+                globalBestChromosome = localBest;
 
 
-            System.out.println("\nIteração: " + iterationLimit);
-            System.out.println("Avaliação: " + best.getAvaliation());
-            System.out.println("Violou? " + best.isHasViolatedHardConstraint());
+//            System.out.println("\nIteração: " + iterationLimit);
+//            System.out.println("Avaliação: " + localBest.getAvaliation());
+//            System.out.println("Violou: " + localBest.isHasViolatedHardConstraint());
         }
-        System.out.println(best.toString());
+        long endTime = System.currentTimeMillis();
+        System.out.println(globalBestChromosome.toString());
+        System.out.println("tempo Final: " + (endTime - startTime));
+        System.out.println("iteração: " + iterationLimit);
+
     }
     
     private static void checkCourses(DTOIFSC ifsc){
@@ -152,5 +163,23 @@ public class Main {
         return 2;
 
     }
+
+    private static void slaves (DTOIFSC dtoifsc){
+        List <Teacher> slaves = new ArrayList<>();
+        for (Teacher teacher :dtoifsc.getProfessors()) {
+            int count = 0;
+            for (Lesson lesson:dtoifsc.getLessons()) {
+                for (int i = 0; i < lesson.getTeacherId().length; i++) {
+                    if (lesson.getTeacherId()[i] == teacher.getId())
+                        count++;
+                }
+            }
+            if (count > 20){
+                slaves.add(teacher);
+            }
+        }
+        System.out.println(slaves.toString());
+    }
+
 
 }
