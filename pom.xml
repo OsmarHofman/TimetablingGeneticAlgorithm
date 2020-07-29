@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>br.edu.ifsc</groupId>
-    <artifactId>TimetablingGeneticAlgorythm</artifactId>
+    <artifactId>TimetablingGeneticAlgorithm</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>TimetablingGeneticAlgorythm</name>
-    <description>Genetic Algorythm project for Spring Boot</description>
+    <name>TimetablingGeneticAlgorithm</name>
+    <description>Genetic Algorithm project for Spring Boot</description>
 
     <properties>
         <java.version>11</java.version>
