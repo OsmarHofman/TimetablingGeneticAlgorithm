@@ -9,30 +9,33 @@ import genetics.Avaliation;
 import genetics.Crossover;
 import genetics.Mutation;
 import genetics.Selection;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import preprocessing.dataaccess.FileHandler;
 import preprocessing.dataaccess.RetrieveIFSCData;
 import preprocessing.interfaces.IFileHandler;
 import preprocessing.model.EntitySchedule;
 import preprocessing.model.ProfessorsScheduleCreation;
-import util.ConfigReader;
-import util.ConvertFactory;
-import util.DTOIFSC;
-import util.DTOITC;
+import util.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@SpringBootApplication
 public class Main {
+
     public static void main(String[] args) throws ClassNotFoundException, IOException {
+        SpringApplication.run(Main.class, args);
+
         int[] config = ConfigReader.readConfiguration(args[0]);
         final int populationSize = config[0];
         final int classSize = config[1];
         final int elitismPercentage = config[2];
         final int crossPercentage = config[3];
         final int mutationPercentage = config[4];
-       // final int joinSetPercentage = config[5];
+        final int joinSetPercentage = config[5];
         final int geracoes = config[6];
 
 
@@ -67,11 +70,13 @@ public class Main {
         Arrays.setAll(population, i -> new Chromosome(fromIfSC.getCourses().length, classSize, fromIfSC.getLessons(), fromIfSC.getCourses()));
 
 
-       // checkCourses(dtoifsc);
+        // checkCourses(dtoifsc);
         Chromosome localBest = Chromosome.getBestChromosome(population);
         Chromosome globalBestChromosome = localBest;
         long startTime = System.currentTimeMillis();
-        while (iterationLimit < geracoes && ((localBest.getAvaliation() < 3800) || localBest.isHasViolatedHardConstraint())) { // fazer verificação baseado no BOOLEAN do cromossomo, além das outras condições
+
+        //FIXME alterar 2 para "geracoes"
+        while (iterationLimit < 2 && ((localBest.getAvaliation() < 3800) || localBest.isHasViolatedHardConstraint())) { // fazer verificação baseado no BOOLEAN do cromossomo, além das outras condições
 
 
             for (Chromosome chromosome : population) {
@@ -125,24 +130,26 @@ public class Main {
         System.out.println(globalBestChromosome.toString());
         System.out.println("tempo Final: " + (endTime - startTime));
         System.out.println("iteração: " + iterationLimit);
+        List<DTOSchedule> dtoSchedule = DTOSchedule.convertChromosome(globalBestChromosome, dtoifsc, fromIfSC);
+        System.out.println(dtoifsc.toString());
 
     }
-    
-    private static void checkCourses(DTOIFSC ifsc){
+
+    private static void checkCourses(DTOIFSC ifsc) {
         List<Integer> morningCourses = new ArrayList<>();
         List<Integer> afternoonCourses = new ArrayList<>();
         List<Integer> nightCourses = new ArrayList<>();
-        for (Classes classe: ifsc.getClasses()) {
+        for (Classes classe : ifsc.getClasses()) {
             byte shift = convertTimeoffToShift(classe.getTimeoff());
             int count = 0;
-            for (Lesson lesson :ifsc.getLessons()) {
-                if (lesson.getClassesId() == classe.getId()){
+            for (Lesson lesson : ifsc.getLessons()) {
+                if (lesson.getClassesId() == classe.getId()) {
                     count += lesson.getPeriodsPerWeek();
                 }
             }
             if (shift == 0 && count > 20)
                 morningCourses.add(classe.getId());
-            else if(shift == 1 && count > 16)
+            else if (shift == 1 && count > 16)
                 afternoonCourses.add(classe.getId());
             else if (shift == 2 && count > 20)
                 nightCourses.add(classe.getId());
@@ -164,17 +171,17 @@ public class Main {
 
     }
 
-    private static void slaves (DTOIFSC dtoifsc){
-        List <Teacher> slaves = new ArrayList<>();
-        for (Teacher teacher :dtoifsc.getProfessors()) {
+    private static void slaves(DTOIFSC dtoifsc) {
+        List<Teacher> slaves = new ArrayList<>();
+        for (Teacher teacher : dtoifsc.getProfessors()) {
             int count = 0;
-            for (Lesson lesson:dtoifsc.getLessons()) {
+            for (Lesson lesson : dtoifsc.getLessons()) {
                 for (int i = 0; i < lesson.getTeacherId().length; i++) {
                     if (lesson.getTeacherId()[i] == teacher.getId())
                         count++;
                 }
             }
-            if (count > 20){
+            if (count > 20) {
                 slaves.add(teacher);
             }
         }
