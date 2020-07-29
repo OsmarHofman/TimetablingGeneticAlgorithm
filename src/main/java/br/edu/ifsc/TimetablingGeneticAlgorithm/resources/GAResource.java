@@ -19,6 +19,7 @@ public class GAResource {
     }
 
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping(value = "/schedule", method = RequestMethod.GET)
     public ResponseEntity<List<DTOSchedule>> getGA() {
         try {

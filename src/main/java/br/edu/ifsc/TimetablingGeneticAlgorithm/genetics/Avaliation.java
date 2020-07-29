@@ -71,11 +71,13 @@ public class Avaliation {
         int avaliation = 0;
         for (int i = 0; i < chromosome.getGenes().length; i += 4) {
             for (int j = i; j < i + 3; j++) {
-                for (int k = j + 1; k < i + 4; k++) {
-                    if (chromosome.getGenes()[j] == chromosome.getGenes()[k] && k - j > 1) {
-                        avaliation += 2;
-                    } else if (chromosome.getGenes()[j] == chromosome.getGenes()[k] && k - j == 1) {
-                        break;
+                if (chromosome.getGenes()[j] != 0) {
+                    for (int k = j + 1; k < i + 4; k++) {
+                        if (chromosome.getGenes()[j] == chromosome.getGenes()[k] && k - j > 1) {
+                            avaliation += 2;
+                        } else if (chromosome.getGenes()[j] == chromosome.getGenes()[k] && k - j == 1) {
+                            break;
+                        }
                     }
                 }
             }

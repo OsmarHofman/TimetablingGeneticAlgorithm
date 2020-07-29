@@ -6,10 +6,12 @@ import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.ifsc.Subject;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.ifsc.Teacher;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Lesson;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DTOSchedule {
+public class DTOSchedule implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     private String courseName;
     private List<ScheduleSubject> subjects;
@@ -19,13 +21,28 @@ public class DTOSchedule {
         this.subjects = subjects;
     }
 
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
+    }
+
+    public List<ScheduleSubject> getSubjects() {
+        return subjects;
+    }
+
+    public void setSubjects(List<ScheduleSubject> subjects) {
+        this.subjects = subjects;
+    }
+
     public static List<DTOSchedule> convertChromosome(Chromosome chromosome, DTOIFSC dtoifsc, DTOITC dtoitc) throws ClassNotFoundException {
         List<DTOSchedule> schedules = new ArrayList<>();
-        //FIXME corrigir dtoSchedule
         for (int i = 0; i < dtoitc.getCourses().length; i++) {
             String courseId = dtoitc.getCourses()[i].getCourseId();
             String courseName = getCourseName(courseId, dtoifsc.getClasses());
-            schedules.add(new DTOSchedule(courseName, retrieveScheduleSubjects(dtoitc, dtoifsc, chromosome, courseId)));
+            schedules.add(new DTOSchedule(courseName, retrieveScheduleSubjects(dtoitc, dtoifsc, chromosome, courseId, courseName)));
         }
         return schedules;
     }
@@ -34,16 +51,20 @@ public class DTOSchedule {
         for (Classes classe : classes) {
             String courseId = String.valueOf(classe.getId());
             if (courseId.equals(id))
-                return courseId;
+                return classe.getName();
         }
         throw new ClassNotFoundException("Erro ao encontrar nome do curso");
     }
 
-    private static List<ScheduleSubject> retrieveScheduleSubjects(DTOITC dtoitc, DTOIFSC dtoifsc, Chromosome chromosome, String courseId) {
+    private static List<ScheduleSubject> retrieveScheduleSubjects(DTOITC dtoitc, DTOIFSC dtoifsc, Chromosome chromosome, String courseId, String courseName) {
         List<ScheduleSubject> subjects = new ArrayList<>();
         byte weekOffset = 0;
         byte periodOffset = 0;
         for (int i = 0; i < chromosome.getGenes().length; i++) {
+            if (courseName.contains("Biotecnologia")) {
+                if (periodOffset > 2)
+                    periodOffset = 0;
+            }
             if (periodOffset > 3)
                 periodOffset = 0;
             if (weekOffset > 19)
@@ -84,7 +105,9 @@ public class DTOSchedule {
     }
 
 
-    private static class ScheduleSubject {
+    private static class ScheduleSubject implements Serializable {
+        private static final long serialVersionUID = 1L;
+
         private String subjectName;
         private String professorsName;
         private int weekDay;
