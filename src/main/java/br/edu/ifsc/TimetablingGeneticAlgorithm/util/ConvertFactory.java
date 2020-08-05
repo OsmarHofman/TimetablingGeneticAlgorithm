@@ -129,10 +129,14 @@ public class ConvertFactory {
         List<UnavailabilityConstraint> constraintList = new ArrayList<>();
         String[] days = timeoff.replace(".", "").split(",");
         for (int i = 0; i < days.length - 1; i++) {
-            for (int j = 0; j < 12; j++) {
+            int count = 0;
+            for (int j = 0; j < 12; j+= 2) {
                 if (days[i].charAt(j) == '0') {
-                    constraintList.add(new UnavailabilityConstraint(lessonId, i, j));
+                    constraintList.add(new UnavailabilityConstraint(lessonId, i, count));
+                } else if (days[i].charAt(j+1) == '0') {
+                    constraintList.add(new UnavailabilityConstraint(lessonId, i, count));
                 }
+                count++;
             }
         }
         return constraintList;

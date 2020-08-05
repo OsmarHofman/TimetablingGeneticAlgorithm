@@ -35,6 +35,8 @@ public class GeneticAlgorithm {
 
         RetrieveIFSCData retrieveIFSCData = new RetrieveIFSCData();
         DTOIFSC dtoifsc = retrieveIFSCData.getAllData();
+        //TODO pre-processar para não ter turmas com numero de aulas impar
+
         ProfessorsScheduleCreation psc = new ProfessorsScheduleCreation(dtoifsc);
 
         //slaves(dtoifsc);
@@ -48,16 +50,20 @@ public class GeneticAlgorithm {
 
         DTOITC fromIfSC = ConvertFactory.convertIFSCtoITC(dtoifsc);
 
-        //Matriz de relação dos horarios
-        boolean[][] scheduleRelation = new boolean[fromIfSC.getLessons().length][60];
+        /*Matriz de relação dos horarios
+        Sendo que 30 é o número de períodos no dia * dias na semana, ou seja, 6 * 5 = 30
+        */
+
+        //TODO verificar onde colocamos os constraints do curso
+        boolean[][] scheduleRelation = new boolean[fromIfSC.getLessons().length][30];
         for (int i = 0; i < fromIfSC.getLessons().length; i++) {
             for (UnavailabilityConstraint iterationConstraints : fromIfSC.getLessons()[i].getConstraints()) {
-                scheduleRelation[i][12 * iterationConstraints.getDay() + iterationConstraints.getDayPeriod()] = true;
+                scheduleRelation[i][6 * iterationConstraints.getDay() + iterationConstraints.getDayPeriod()] = true;
             }
         }
         int iterationLimit = 0;
-        // A partir daqui realizar processamento pensando em objetos distribuidos
 
+        // A partir daqui realizar processamento pensando em objetos distribuidos
 
         Chromosome[] population = new Chromosome[populationSize];
         //Inicializando população

@@ -15,7 +15,7 @@ public class Avaliation {
 
         avaliation -= professorsUnavailabilities(chromosome, dtoitc, relationMatrix);
 
-        avaliation -= curriculumCompactness(chromosome);
+        //avaliation -= curriculumCompactness(chromosome);
 
         return avaliation;
 
@@ -49,15 +49,15 @@ public class Avaliation {
         byte periodOffset = 0;
         byte weekOffset = 0;
         for (int i = 0; i < chromosome.getGenes().length; i++) {
-            if (periodOffset > 3)
+            if (periodOffset > 1)
                 periodOffset = 0;
-            if (weekOffset > 19)
+            if (weekOffset > 9)
                 weekOffset = 0;
             if (chromosome.getGenes()[i] != 0) {
                 Lesson lesson = dtoitc.getLessonById(chromosome.getGenes()[i]);
                 int lessonPosition = dtoitc.getLessonPosition(lesson.getLessonId());
                 byte shift = dtoitc.getShiftByCourseId(lesson.getCourseId());
-                if (relationMatrix[lessonPosition][((shift * 4 + periodOffset) + (12 * Math.floorDiv(weekOffset, 4)))]) {
+                if (relationMatrix[lessonPosition][((shift * 2 + periodOffset) + (6 * Math.floorDiv(weekOffset,2)))]) {
                     avaliation += 5;
                 }
                 periodOffset++;

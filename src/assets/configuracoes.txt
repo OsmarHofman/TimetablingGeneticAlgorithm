@@ -1,7 +1,7 @@
 tamanhoPopulacao=100
-tamanhoTurma=20
+tamanhoTurma=10
 porcentagemElitismo=10
 porcentagemCruzamento=60
 porcentagemMutacao=10
 porcentagemJuncaoCurso=60
-geracoes=10000
+geracoes=1000

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="WINDOWS-1252"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <timetable options="export:idprefix:%CHRID,import:idprefix:%TEMPID,groupstype1,decimalseparatordot,lessonsincludeclasseswithoutstudents,handlestudentsafterlessons">
     <periods columns="period,name,short,starttime,endtime">
         <period name="Primeira Aula" short="M1" period="1" starttime="8:00" endtime="8:55"/>
@@ -169,7 +169,6 @@
         <subject id="884" name="Empreendedorismo" short="EMP"/>
         <subject id="885" name="Teste de Software" short="Tes"/>
         <subject id="886" name="Tópicos em programação" short="TOP"/>
-        <subject id="928" name="Cálculo II" short="CAL2"/>
         <subject id="957" name="Docência EP" short=""/>
         <subject id="958" name="Gestão Pública EPT" short="GPEPT"/>
         <subject id="960" name="INGLES.III" short="ING.III"/>
@@ -373,7 +372,6 @@
         <class id="203" name="Tec Biotecnologia 3" short="TB3" teacherid="65" timeoff=".000000001110,.000000001110,.000000001110,.000000001110,.000000001110,.000000000000"/>
         <class id="204" name="Tec Biotecnologia 4" short="TB4" teacherid="65" timeoff=".000000001110,.000000001110,.000000001110,.000000001110,.000000001110,.000000000000"/>
         <class id="210" name="FIC - Inglês IV 0" short="FII0" teacherid="99" timeoff=".000011110000,.000011110000,.000011110000,.000011110000,.000011110000,.000000000000"/>
-        <class id="272" name="Grad Eng. Mecânica (NOITE) 2" short="GEM2" teacherid="54" timeoff=".000000001111,.000000001111,.000000001111,.000000001111,.000000001111,.000000000000"/>
         <class id="273" name="Grad Eng. Mecânica (NOITE) 3" short="GEM3" teacherid="54" timeoff=".000000001111,.000000001111,.000000001111,.000000001111,.000000001111,.000000000000"/>
         <class id="275" name="Grad Eng. Mecânica (NOITE) 5" short="GEM5" teacherid="54" timeoff=".000000001111,.000000001111,.000000001111,.000000001111,.000000001111,.000000000000"/>
         <class id="277" name="Grad Eng. Mecânica (NOITE) 7" short="GEM7" teacherid="54" timeoff=".000000001111,.000000001111,.000000001111,.000000001111,.000000001111,.000000000000"/>
@@ -382,10 +380,10 @@
         <class id="322" name="Tec Informática para Internet 2" short="TII2" teacherid="99" timeoff=".000011110000,.000011110000,.000011110000,.000011110000,.000000000000,.000000000000"/>
         <class id="323" name="Tec Informática para Internet 3" short="TII3" teacherid="99" timeoff=".000011110000,.000011110000,.000011110000,.000011110000,.000000000000,.000000000000"/>
         <class id="324" name="Tec Informática para Internet 4" short="TII4" teacherid="99" timeoff=".000011110000,.000011110000,.000011110000,.000011110000,.000000000000,.000000000000"/>
-        <class id="331" name="Tec Eletromecânica(grade nova) 1" short="T1" teacherid="49" timeoff=".000000001111,.000000001111,.000000001111,.000000001111,.000000001111,.000000000000"/>
-        <class id="332" name="Tec Eletromecânica(grade nova) 2" short="T2" teacherid="49" timeoff=".000000001111,.000000001111,.000000001111,.000000001111,.000000001111,.000000000000"/>
-        <class id="333" name="Tec Eletromecânica(grade nova) 3" short="T3" teacherid="49" timeoff=".000000001111,.000000001111,.000000001111,.000000001111,.000000001111,.000000000000"/>
-        <class id="334" name="Tec Eletromecânica(grade nova) 4" short="T4" teacherid="49" timeoff=".000000001111,.000000001111,.000000001111,.000000001111,.000000001111,.000000000000"/>
+        <class id="331" name="Tec Eletromecânica(grade nova) 1" short="T1" teacherid="49" timeoff=".000000001111,.000000001111,.000000001111,.000000001111,.000000000000,.000000000000"/>
+        <class id="332" name="Tec Eletromecânica(grade nova) 2" short="T2" teacherid="49" timeoff=".000000001111,.000000001111,.000000001111,.000000001111,.000000000000,.000000000000"/>
+        <class id="333" name="Tec Eletromecânica(grade nova) 3" short="T3" teacherid="49" timeoff=".000000001111,.000000001111,.000000001111,.000000001111,.000000001100,.000000000000"/>
+        <class id="334" name="Tec Eletromecânica(grade nova) 4" short="T4" teacherid="49" timeoff=".000000001111,.000000001111,.000000001111,.000000001111,.000000001100,.000000000000"/>
         <class id="341" name="Tec Mecatrônica  1" short="TM1" teacherid="56" timeoff=".000011110000,.000011110000,.000011110000,.000011110000,.000011110000,.000000000000"/>
         <class id="343" name="Tec Mecatrônica  3" short="TM3" teacherid="56" timeoff=".000011110000,.000011110000,.000011110000,.000011110000,.000011110000,.000000000000"/>
         <class id="351" name="Tec Agroecologia (grade nova) 1" short="TA1" teacherid="32" timeoff=".000011110000,.000011110000,.000011110000,.000011110000,.000000000000,.000000000000"/>
@@ -710,7 +708,6 @@
         <lesson id="164" subjectid="884" groupid="75" classid="324" teacherids="63," classroomids="52" durationperiods="2" periodsperweek="2"/>
         <lesson id="165" subjectid="885" groupid="75" classid="324" teacherids="12," classroomids="52" durationperiods="2" periodsperweek="2"/>
         <lesson id="166" subjectid="886" groupid="75" classid="324" teacherids="999," classroomids="52" durationperiods="2" periodsperweek="2"/>
-        <lesson id="167" subjectid="928" groupid="78" classid="272" teacherids="29," classroomids="30" durationperiods="4" periodsperweek="4"/>
         <lesson id="168" subjectid="957" groupid="81" classid="620" teacherids="96," classroomids="50" durationperiods="4" periodsperweek="4"/>
         <lesson id="169" subjectid="958" groupid="84" classid="610" teacherids="96," classroomids="50" durationperiods="4" periodsperweek="4"/>
         <lesson id="170" subjectid="960" groupid="87" classid="640" teacherids="25," classroomids="45" durationperiods="3" periodsperweek="3"/>

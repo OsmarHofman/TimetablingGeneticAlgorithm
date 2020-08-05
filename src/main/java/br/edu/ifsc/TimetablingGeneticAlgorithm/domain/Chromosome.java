@@ -69,7 +69,10 @@ public class Chromosome {
             }
             count = 0;
             for (Lesson lesson : coursesLesson) {
-                for (int k = 0; k < lesson.getMinWorkingDays() * lesson.getLecturesNumber(); k++) {
+                for (int k = 0; k < lesson.getMinWorkingDays() * (lesson.getLecturesNumber()/2); k++) {
+                    if(lesson.getLecturesNumber() == 3){
+                        System.out.println("3");
+                    }
                     genes[count + courseIndex] = Integer.parseInt(lesson.getLessonId());
                     count++;
                 }
@@ -95,7 +98,6 @@ public class Chromosome {
             } else {
                 if (chromosomes[i].getAvaliation() > best.getAvaliation())
                     best = chromosomes[i];
-
             }
         }
 
