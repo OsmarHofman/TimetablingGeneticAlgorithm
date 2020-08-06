@@ -4,20 +4,22 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Classe que representa a matéria de um {@link Course}
+ */
 public class Lesson {
 
     private String lessonId;
     private String courseId;
     private String[] professorId;
     private int lecturesNumber; //lecturesNumber = durationPeriods do IFSC
-    private int minWorkingDays; //minWorkingDays = calculo do periodPerWeek do IFSC
+    private int minWorkingDays; //minWorkingDays = calculo (periodPerWeek / durationPeriod) do IFSC
     private int studentsNumber;
     private UnavailabilityConstraint[] constraints;
     private Room room;
 
     public Lesson() {
     }
-
 
 
     public String getCourseId() {

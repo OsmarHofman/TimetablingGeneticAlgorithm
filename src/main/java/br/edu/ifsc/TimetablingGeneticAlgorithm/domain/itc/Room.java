@@ -1,5 +1,8 @@
 package br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc;
 
+/**
+ * Classe que representa as salas e laboratórios
+ */
 public class Room {
     private String roomId;
     private int capacity;

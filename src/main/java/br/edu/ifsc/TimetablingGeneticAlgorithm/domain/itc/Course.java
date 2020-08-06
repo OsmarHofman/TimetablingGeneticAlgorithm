@@ -1,5 +1,8 @@
 package br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc;
 
+/**
+ * Classe que representa um curso
+ */
 public class Course {
     private String courseId;
     private int coursesNumber;
@@ -42,7 +45,7 @@ public class Course {
         return "Course{" +
                 "courseId='" + courseId + '\'' +
                 ", coursesNumber=" + coursesNumber +
-                ", turno=" + shift +
+                ", shift=" + shift +
                 '}';
     }
 }
