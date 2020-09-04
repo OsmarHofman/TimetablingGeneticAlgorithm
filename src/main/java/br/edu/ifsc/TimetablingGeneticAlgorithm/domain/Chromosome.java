@@ -1,10 +1,11 @@
 package br.edu.ifsc.TimetablingGeneticAlgorithm.domain;
 
+import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.ifsc.Subject;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Course;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Lesson;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.util.DTOIFSC;
 
-import java.util.Arrays;
-import java.util.Random;
+import java.util.*;
 
 public class Chromosome {
     private int[] genes;
@@ -18,11 +19,11 @@ public class Chromosome {
         this.hasViolatedHardConstraint = false;
     }
 
-    public Chromosome(int size, int classSize, Lesson[] lessons, Course[] courses) {
+    public Chromosome(int size, int classSize, Lesson[] lessons, Course[] courses, DTOIFSC dtoIfsc) {
         this.genes = new int[size * classSize];
         this.avaliation = 0;
         this.hasViolatedHardConstraint = false;
-        this.generateRandom(lessons, courses, classSize);
+        this.generateRandom(lessons, courses, classSize, dtoIfsc);
     }
 
     public Chromosome(int[] genes, int avaliation) {
@@ -62,7 +63,7 @@ public class Chromosome {
      * @param courses   vetor de {@link Course} que representa todos os cursos.
      * @param classSize valor que representa a quantidade de aulas semanais de todos os cursos.
      */
-    private void generateRandom(Lesson[] lessons, Course[] courses, int classSize) {
+    private void generateRandom(Lesson[] lessons, Course[] courses, int classSize, DTOIFSC dtoifsc) {
         Random random = new Random();
         for (int i = 0; i < courses.length; i++) {
             Lesson[] coursesLesson = new Lesson[courses[i].getCoursesNumber()];
@@ -82,6 +83,8 @@ public class Chromosome {
             int courseIndex = i * classSize;
 
             count = 0;
+
+            joinOddLessons(coursesLesson, dtoifsc);
             for (Lesson lesson : coursesLesson) {
                 //esse cálculo representa quantas vezes por semana uma matéria deve estar em um curso
                 for (int k = 0; k < lesson.getMinWorkingDays() * (lesson.getLecturesNumber() / 2); k++) {
@@ -103,6 +106,51 @@ public class Chromosome {
 
         }
     }
+
+    private void joinOddLessons(Lesson[] coursesLesson, DTOIFSC dtoifsc) {
+        for (Lesson courseLesson : coursesLesson) {
+            if (courseLesson.getLecturesNumber() == 3) {
+                for (Lesson innercourseLesson : coursesLesson) {
+                    if (innercourseLesson.getLecturesNumber() == 1) {
+                        courseLesson.setLecturesNumber(2);
+                        joinName(dtoifsc, courseLesson.getLessonId(), innercourseLesson.getLessonId());
+                        innercourseLesson.setLecturesNumber(2);
+                    }
+                }
+            }
+        }
+        for (Lesson courseLesson : coursesLesson) {
+            if (courseLesson.getLecturesNumber() == 1) {
+                for (Lesson innercourseLesson : coursesLesson) {
+                    if (innercourseLesson.getLecturesNumber() == 1 && !innercourseLesson.equals(courseLesson)) {
+                        courseLesson.setLecturesNumber(2);
+                        int index = joinName(dtoifsc, courseLesson.getLessonId(), innercourseLesson.getLessonId());
+                        dtoifsc.getSubjects().remove(index);
+                    }
+                }
+            }
+        }
+
+    }
+
+
+    private int joinName(DTOIFSC dtoifsc, String courseId, String innerCourseId) {
+        for (Subject subject : dtoifsc.getSubjects()) {
+            if (subject.getId() == Integer.parseInt(innerCourseId)) {
+                for (Subject innerSubject : dtoifsc.getSubjects()) {
+                    if (innerSubject.getId() == Integer.parseInt(courseId)) {
+                        subject.setName(subject.getName() + " - " + innerSubject.getName());
+                        return dtoifsc.getSubjects().indexOf(innerSubject);
+                    }
+                }
+            }
+        }
+        return -1;
+    }
+
+
+
+
 
     /**
      * Obtém o cromossomo com a melhor avaliação a partir da população.

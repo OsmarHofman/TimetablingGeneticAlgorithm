@@ -43,7 +43,7 @@ public class GeneticAlgorithm {
         EntitySchedule entitySchedule = new EntitySchedule(psc);
 
         //Lista que cada posição é uma lista de cursos
-        //List[] coursesSet = entitySchedule.createSet(joinSetPercentage);
+        List[] coursesSet = entitySchedule.createSet(joinSetPercentage);
         // IFileHandler fileHandler = new FileHandler();
         // fileHandler.createReport(coursesSet, joinSetPercentage + "%");
 
@@ -67,7 +67,7 @@ public class GeneticAlgorithm {
 
         Chromosome[] population = new Chromosome[populationSize];
         //Inicializando população
-        Arrays.setAll(population, i -> new Chromosome(fromIfSC.getCourses().length, classSize, fromIfSC.getLessons(), fromIfSC.getCourses()));
+        Arrays.setAll(population, i -> new Chromosome(fromIfSC.getCourses().length, classSize, fromIfSC.getLessons(), fromIfSC.getCourses(),dtoifsc));
 
 
         // checkCourses(dtoifsc);

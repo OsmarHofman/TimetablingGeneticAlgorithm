@@ -13,7 +13,7 @@ public class TimetablingGeneticAlgorithmApplication {
 
 		//SpringApplication.run(TimetablingGeneticAlgorithmApplication.class, args);
 		GeneticAlgorithm ga = new GeneticAlgorithm();
-		ga.process("src\\assets\\configuracoes.txt");
+		ga.process("src//assets//configuracoes.txt");
 	}
 
 }
