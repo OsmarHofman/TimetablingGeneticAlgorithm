@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Cria as listas de professores com os cursos que leciona, e a relação entre os cursos
+ */
 public class ProfessorsScheduleCreation {
 
     private List<String> coursesList;
@@ -43,7 +46,7 @@ public class ProfessorsScheduleCreation {
     private void getCoursesAndProfessorsByFile(DTOIFSC dtoifsc) {
         this.coursesList = new ArrayList<>();
         this.professorsList = new ArrayList<>();
-        List<CourseGroup> courseGroupList = joinCourses(dtoifsc.getClasses());
+        List<CourseGroup> courseGroupList = this.joinCourses(dtoifsc.getClasses());
         getProfessors(dtoifsc, courseGroupList);
 
     }

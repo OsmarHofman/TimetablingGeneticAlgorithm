@@ -21,6 +21,10 @@ public class Lesson {
     public Lesson() {
     }
 
+    public Lesson(String[] parameters) {
+        //Dados vindos do arquivo txt do ITC
+    }
+
 
     public String getCourseId() {
         return courseId;
@@ -116,6 +120,11 @@ public class Lesson {
     }
 
 
+    /**
+     * Associa as constraints a lesson.
+     *
+     * @param constraints {@link List} de {@link UnavailabilityConstraint} a ser associada.
+     */
     public void retrieveConstraints(List<UnavailabilityConstraint> constraints) {
         List<UnavailabilityConstraint> constraintList = new ArrayList<>();
         for (UnavailabilityConstraint iterationConstraints : constraints) {

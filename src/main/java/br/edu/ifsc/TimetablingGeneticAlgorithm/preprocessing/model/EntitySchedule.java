@@ -6,6 +6,9 @@ import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.classes.Professor_C
 
 import java.util.*;
 
+/**
+ * Classe que representa as relações entre os cursos e os professores
+ */
 public class EntitySchedule {
 
     private List<CourseRelation> courseRelationList;

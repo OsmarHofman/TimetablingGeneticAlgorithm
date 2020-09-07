@@ -12,7 +12,7 @@ public class Crossover {
      * @param chromosomes     vetor de {@link Chromosome} que representa a população de cromossomos
      * @param classSize       valor que representa a quantidade de aulas semanais de todos os cursos.
      * @param crossPercentage porcentagem de cruzamento, ou seja, 10%, 20%, etc.
-     * @return
+     * @return nova população de {@link Chromosome}.
      */
     public static Chromosome[] cross(Chromosome[] chromosomes, int classSize, int crossPercentage) {
         Random random = new Random();

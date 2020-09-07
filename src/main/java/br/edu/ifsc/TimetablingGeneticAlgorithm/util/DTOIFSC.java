@@ -71,6 +71,64 @@ public class DTOIFSC {
         this.rooms = rooms;
     }
 
+    /**
+     * Verifica se há algum dado inconsistente.
+     */
+    public void checkCourses() {
+        List<Integer> morningCourses = new ArrayList<>();
+        List<Integer> afternoonCourses = new ArrayList<>();
+        List<Integer> nightCourses = new ArrayList<>();
+        for (Classes classe : this.getClasses()) {
+            byte shift = convertTimeoffToShift(classe.getTimeoff());
+            int count = 0;
+            for (Lesson lesson : this.getLessons()) {
+                if (lesson.getClassesId() == classe.getId()) {
+                    count += lesson.getPeriodsPerWeek();
+                }
+            }
+            if (shift == 0 && count > 20)
+                morningCourses.add(classe.getId());
+            else if (shift == 1 && count > 16)
+                afternoonCourses.add(classe.getId());
+            else if (shift == 2 && count > 20)
+                nightCourses.add(classe.getId());
+        }
+
+        System.out.println("manha: " + morningCourses.toString());
+        System.out.println("tarde: " + afternoonCourses.toString());
+        System.out.println("noite: " + nightCourses.toString());
+    }
+
+    private byte convertTimeoffToShift(String timeoff) {
+        String[] days = timeoff.replace(".", "").split(",");
+        if (days[0].charAt(0) == '1')
+            return 0;
+        else if (days[0].charAt(4) == '1')
+            return 1;
+        return 2;
+    }
+
+    /**
+     * Verifica se há algum professor que não tem timeoff
+     */
+    public void noTimeoffTeachers() {
+        List<Teacher> slaves = new ArrayList<>();
+        for (Teacher teacher : this.getProfessors()) {
+            int count = 0;
+            for (Lesson lesson : this.getLessons()) {
+                for (int i = 0; i < lesson.getTeacherId().length; i++) {
+                    if (lesson.getTeacherId()[i] == teacher.getId())
+                        count++;
+                }
+            }
+            if (count > 20) {
+                slaves.add(teacher);
+            }
+        }
+        System.out.println(slaves.toString());
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

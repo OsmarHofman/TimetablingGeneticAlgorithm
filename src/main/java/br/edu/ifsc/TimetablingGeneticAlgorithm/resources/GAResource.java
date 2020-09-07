@@ -13,18 +13,14 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/ga")
 public class GAResource {
-
-
     public GAResource() {
     }
-
 
     @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping(value = "/schedule", method = RequestMethod.GET)
     public ResponseEntity<List<DTOSchedule>> getGA() {
         try {
             GeneticAlgorithm geneticAlgorithm = new GeneticAlgorithm();
-            //TODO verificar se a List<DTOSchedule> sem formatação explícita causa problema no frontend
             return new ResponseEntity<>(geneticAlgorithm.process("src\\assets\\configuracoes.txt"), HttpStatus.OK);
         } catch (IOException iEx) {
             iEx.printStackTrace();

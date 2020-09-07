@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public class FileHandler implements IFileHandler {
+
     @Override
     public void createReport(String text, String fileName) throws IOException {
         String pathname = fileName + ".txt";

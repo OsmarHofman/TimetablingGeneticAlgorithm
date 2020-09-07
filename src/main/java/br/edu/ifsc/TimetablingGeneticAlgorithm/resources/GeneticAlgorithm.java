@@ -20,7 +20,14 @@ import java.util.Arrays;
 import java.util.List;
 
 public class GeneticAlgorithm {
-
+    /**
+     * Execução do Algoritmo Genetico
+     *
+     * @param path caminho do arquivo de configuração que contém os parâmetros necessários ao AG
+     * @return {@link List} de {@link DTOSchedule} que representa os cursos e suas matérias
+     * @throws IOException            Erro ao tentar obter os dados do arquivo de configuração
+     * @throws ClassNotFoundException Erro ao obter alguma informação de alguma das classes
+     */
     public List<DTOSchedule> process(String path) throws IOException, ClassNotFoundException {
 
         int[] config = ConfigReader.readConfiguration(path);
@@ -67,7 +74,7 @@ public class GeneticAlgorithm {
 
         Chromosome[] population = new Chromosome[populationSize];
         //Inicializando população
-        Arrays.setAll(population, i -> new Chromosome(fromIfSC.getCourses().length, classSize, fromIfSC.getLessons(), fromIfSC.getCourses(),dtoifsc));
+        Arrays.setAll(population, i -> new Chromosome(fromIfSC.getCourses().length, classSize, fromIfSC.getLessons(), fromIfSC.getCourses(), dtoifsc));
 
 
         // checkCourses(dtoifsc);
@@ -99,13 +106,12 @@ public class GeneticAlgorithm {
 
 
             //Seleção por roleta
-            Chromosome[] newCouples = Selection.roulleteWheel(population, ratingHandler, faA, proportion);
-
+            Chromosome[] newCouples = Selection.rouletteWheel(population, ratingHandler, faA, proportion);
 
             //Crossover
             Chromosome[] crossedChromosomes = Crossover.cross(newCouples, classSize, crossPercentage);
 
-            //Unindo elitismo com selecao por roleta
+            //Unindo as Subpopulações geradas por elitismo e roleta
             Chromosome[] newGeneration = new Chromosome[populationSize];
             System.arraycopy(crossedChromosomes, 0, newGeneration, 0, crossedChromosomes.length);
 
@@ -131,59 +137,6 @@ public class GeneticAlgorithm {
         System.out.println("tempo Final: " + (endTime - startTime));
         System.out.println("iteração: " + iterationLimit);
         return DTOSchedule.convertChromosome(globalBestChromosome, dtoifsc, fromIfSC);
-    }
-
-    private static void checkCourses(DTOIFSC ifsc) {
-        List<Integer> morningCourses = new ArrayList<>();
-        List<Integer> afternoonCourses = new ArrayList<>();
-        List<Integer> nightCourses = new ArrayList<>();
-        for (Classes classe : ifsc.getClasses()) {
-            byte shift = convertTimeoffToShift(classe.getTimeoff());
-            int count = 0;
-            for (Lesson lesson : ifsc.getLessons()) {
-                if (lesson.getClassesId() == classe.getId()) {
-                    count += lesson.getPeriodsPerWeek();
-                }
-            }
-            if (shift == 0 && count > 20)
-                morningCourses.add(classe.getId());
-            else if (shift == 1 && count > 16)
-                afternoonCourses.add(classe.getId());
-            else if (shift == 2 && count > 20)
-                nightCourses.add(classe.getId());
-        }
-
-        System.out.println("manha: " + morningCourses.toString());
-        System.out.println("tarde: " + afternoonCourses.toString());
-        System.out.println("noite: " + nightCourses.toString());
-    }
-
-
-    private static byte convertTimeoffToShift(String timeoff) {
-        String[] days = timeoff.replace(".", "").split(",");
-        if (days[0].charAt(0) == '1')
-            return 0;
-        else if (days[0].charAt(4) == '1')
-            return 1;
-        return 2;
-
-    }
-
-    private static void slaves(DTOIFSC dtoifsc) {
-        List<Teacher> slaves = new ArrayList<>();
-        for (Teacher teacher : dtoifsc.getProfessors()) {
-            int count = 0;
-            for (Lesson lesson : dtoifsc.getLessons()) {
-                for (int i = 0; i < lesson.getTeacherId().length; i++) {
-                    if (lesson.getTeacherId()[i] == teacher.getId())
-                        count++;
-                }
-            }
-            if (count > 20) {
-                slaves.add(teacher);
-            }
-        }
-        System.out.println(slaves.toString());
     }
 
 }

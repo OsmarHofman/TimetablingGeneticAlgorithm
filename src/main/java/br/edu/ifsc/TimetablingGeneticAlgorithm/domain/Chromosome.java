@@ -84,7 +84,9 @@ public class Chromosome {
 
             count = 0;
 
-            joinOddLessons(coursesLesson, dtoifsc);
+            //transforma as matérias com aulas impares (1 ou 3 créditos) em pares (2 ou 4 créditos)
+            joinOddLessons(coursesLesson, dtoifsc.getSubjects());
+
             for (Lesson lesson : coursesLesson) {
                 //esse cálculo representa quantas vezes por semana uma matéria deve estar em um curso
                 for (int k = 0; k < lesson.getMinWorkingDays() * (lesson.getLecturesNumber() / 2); k++) {
@@ -107,25 +109,60 @@ public class Chromosome {
         }
     }
 
-    private void joinOddLessons(Lesson[] coursesLesson, DTOIFSC dtoifsc) {
+    /**
+     * Realiza a junção das matérias com créditos ({@code lecturesNumber}) ímpares em pares, sendo que caso os créditos
+     * sejam:
+     *
+     * <ul>
+     *     <li>
+     *         3: procura-se uma outra matéria com 1 crédito, e cria-se uma matéria que é a junção das duas, mantendo
+     *         ainda a inicial;
+     *         <ul>
+     *             <li>
+     *             Ex.: M1 com 3 créditos, M2 com 1 crédito --> M1 com 2 créditos, M1 - M2 com 2 créditos.
+     *             </li>
+     *         </ul>
+     *     </li>
+     *     <li>
+     *         1: procura-se uma outra matéria com 1 crédito, e cria-se uma matéria que é a junção das duas, não
+     *         mantendo a inicial.
+     *         <ul>
+     *             <li>
+     *             Ex.: M1 com 1 crédito, M2 com 1 crédito --> M1 - M2 com 2 créditos.
+     *             </li>
+     *         </ul>
+     *     </li>
+     * </ul>
+     *
+     * @param coursesLesson Lista de {@link Lesson} que contém as matérias de uma turma.
+     * @param ifscSubjects  {@link List} de {@link Subject} que contém os nomes das matérias.
+     */
+    private void joinOddLessons(Lesson[] coursesLesson, List<Subject> ifscSubjects) {
         for (Lesson courseLesson : coursesLesson) {
             if (courseLesson.getLecturesNumber() == 3) {
-                for (Lesson innercourseLesson : coursesLesson) {
-                    if (innercourseLesson.getLecturesNumber() == 1) {
+                for (Lesson innerCourseLesson : coursesLesson) {
+
+                    //caso encontrar uma matéria com 3, deve haver outra com 1
+                    if (innerCourseLesson.getLecturesNumber() == 1) {
                         courseLesson.setLecturesNumber(2);
-                        joinName(dtoifsc, courseLesson.getLessonId(), innercourseLesson.getLessonId());
-                        innercourseLesson.setLecturesNumber(2);
+                        this.joinName(ifscSubjects, courseLesson.getLessonId(), innerCourseLesson.getLessonId());
+                        innerCourseLesson.setLecturesNumber(2);
                     }
                 }
             }
         }
+
         for (Lesson courseLesson : coursesLesson) {
             if (courseLesson.getLecturesNumber() == 1) {
-                for (Lesson innercourseLesson : coursesLesson) {
-                    if (innercourseLesson.getLecturesNumber() == 1 && !innercourseLesson.equals(courseLesson)) {
+                for (Lesson innerCourseLesson : coursesLesson) {
+
+                    //caso encontrar uma matéria com 1, deve haver outra com 1 que não seja ela mesma
+                    if (innerCourseLesson.getLecturesNumber() == 1 && !innerCourseLesson.equals(courseLesson)) {
                         courseLesson.setLecturesNumber(2);
-                        int index = joinName(dtoifsc, courseLesson.getLessonId(), innercourseLesson.getLessonId());
-                        dtoifsc.getSubjects().remove(index);
+
+                        //obtém qual o índice da segunda matéria para retirá-la
+                        int index = this.joinName(ifscSubjects, courseLesson.getLessonId(), innerCourseLesson.getLessonId());
+                        ifscSubjects.remove(index);
                     }
                 }
             }
@@ -134,22 +171,27 @@ public class Chromosome {
     }
 
 
-    private int joinName(DTOIFSC dtoifsc, String courseId, String innerCourseId) {
-        for (Subject subject : dtoifsc.getSubjects()) {
+    /**
+     * Realiza a junção dos nomes de duas matérias.
+     *
+     * @param ifscSubjects  {@link List} de {@link Subject} que contém os nomes das matérias.
+     * @param courseId      Identificador do primeiro {@link Course}.
+     * @param innerCourseId Identificador do segundo {@link Course}.
+     * @return o índice do {@code innerCourseId}.
+     */
+    private int joinName(List<Subject> ifscSubjects, String courseId, String innerCourseId) {
+        for (Subject subject : ifscSubjects) {
             if (subject.getId() == Integer.parseInt(innerCourseId)) {
-                for (Subject innerSubject : dtoifsc.getSubjects()) {
+                for (Subject innerSubject : ifscSubjects) {
                     if (innerSubject.getId() == Integer.parseInt(courseId)) {
                         subject.setName(subject.getName() + " - " + innerSubject.getName());
-                        return dtoifsc.getSubjects().indexOf(innerSubject);
+                        return ifscSubjects.indexOf(innerSubject);
                     }
                 }
             }
         }
         return -1;
     }
-
-
-
 
 
     /**
