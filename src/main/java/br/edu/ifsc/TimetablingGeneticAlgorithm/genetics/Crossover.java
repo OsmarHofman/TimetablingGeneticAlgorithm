@@ -29,9 +29,9 @@ public class Crossover {
                 int group = random.nextInt(size) / classSize;
                 //variável que indica a metade inferior do número de matérias. Isso para garantir que o primeiro
                 //valor aleatório para ponte de corte, será menor que o segundo.
-                int infLimit = group * classSize;
-                int cutPoint1 = random.nextInt(classSize / 2) + infLimit;
-                int cutPoint2 = random.nextInt(classSize / 2) + infLimit + (classSize / 2);
+                //TODO verificar conta do cutPoint2 e o restante do processamento
+                int cutPoint1 = group * classSize;
+                int cutPoint2 = random.nextInt(size-cutPoint1)/classSize * classSize + cutPoint1;
                 Chromosome c1 = new Chromosome(size);
                 Chromosome c2 = new Chromosome(size);
                 for (int j = cutPoint1 + 1; j <= cutPoint2; j++) {
@@ -64,19 +64,23 @@ public class Crossover {
      * @param size      quantidade total de gênes presentes em um cromossomo
      */
     private static void transfer(Chromosome child, int cutPoint1, int cutPoint2, int[] p1, int[] p2, int size) {
-        int aux = cutPoint2 + 1;
+        int parentIterator = cutPoint2 + 1;
         for (int j = 0; j < size; j++) {
-            if (aux == size)
-                aux = 0;
-            if (isNotRepeated(p1, cutPoint1, cutPoint2, p2[aux])) {
-                if (j <= cutPoint1 || j > cutPoint2) {
-                    child.getGenes()[j] = p2[aux];
-                    aux++;
+            if (parentIterator == size)
+                parentIterator = 0;
+           // if (p2[parentIterator] != 0) {
+                if (isNotRepeated(p1, cutPoint1, cutPoint2, p2[parentIterator])) {
+                    if (j <= cutPoint1 || j > cutPoint2) {
+                        child.getGenes()[j] = p2[parentIterator];
+                        parentIterator++;
+                    }
+                } else {
+                    parentIterator++;
+                    j--;
                 }
-            } else {
-                aux++;
-                j--;
-            }
+//            }else{
+//                parentIterator ++;
+//            }
         }
     }
 

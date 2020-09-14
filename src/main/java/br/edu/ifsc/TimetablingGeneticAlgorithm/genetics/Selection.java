@@ -38,7 +38,7 @@ public class Selection {
      * @param parentRNG     Valor aleatório que vai indicar a partir do {@code ratingHandler} qual é o {@link Chromosome}
      *                      escolhido.
      * @return pai ({@link Chromosome}) gerado.
-     * @throws ClassNotFoundException
+     * @throws ClassNotFoundException Erro ao tentar obter o pai através do {@code ratingHandler}.
      */
     private static Chromosome generateParent(Chromosome[] chromosomes, int[] ratingHandler, int parentRNG) throws ClassNotFoundException {
         for (int i = 0; i < ratingHandler.length; i++) {

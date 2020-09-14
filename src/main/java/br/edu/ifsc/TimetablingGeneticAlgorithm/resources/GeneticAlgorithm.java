@@ -76,34 +76,30 @@ public class GeneticAlgorithm {
         //Inicializando população
         Arrays.setAll(population, i -> new Chromosome(fromIfSC.getCourses().length, classSize, fromIfSC.getLessons(), fromIfSC.getCourses(), dtoifsc));
 
+        for (Chromosome chromosome : population) {
+            chromosome.setHasViolatedHardConstraint(false);
+            chromosome.setAvaliation(Avaliation.rate(chromosome, fromIfSC, scheduleRelation));
+        }
 
         // checkCourses(dtoifsc);
         Chromosome localBest = Chromosome.getBestChromosome(population);
         Chromosome globalBestChromosome = localBest;
         long startTime = System.currentTimeMillis();
 
-        //FIXME alterar 2 para "geracoes"
-        while (iterationLimit < 2 && ((localBest.getAvaliation() < 3800) || localBest.isHasViolatedHardConstraint())) { // fazer verificação baseado no BOOLEAN do cromossomo, além das outras condições
+        while (iterationLimit < geracoes && ((localBest.getAvaliation() < 4700) || localBest.isHasViolatedHardConstraint())) { // fazer verificação baseado no BOOLEAN do cromossomo, além das outras condições
 
 
-            for (Chromosome chromosome : population) {
-                chromosome.setHasViolatedHardConstraint(false);
-                chromosome.setAvaliation(Avaliation.rate(chromosome, fromIfSC, scheduleRelation));
-            }
+            //Seleção por elitismo
+            byte proportion = (byte) (populationSize / elitismPercentage);
+            Chromosome[] eliteChromosomes = Selection.elitism(population, proportion);
 
             //função de avaliacao acumulada
-            //System.out.println("\nCalculando FaA...");
             int[] ratingHandler = new int[populationSize];
             int faA = 0;
             for (int i = 0; i < population.length; i++) {
                 faA += population[i].getAvaliation();
                 ratingHandler[i] = faA;
             }
-
-            //Seleção por elitismo
-            byte proportion = (byte) (populationSize / elitismPercentage);
-            Chromosome[] eliteChromosomes = Selection.elitism(population, proportion);
-
 
             //Seleção por roleta
             Chromosome[] newCouples = Selection.rouletteWheel(population, ratingHandler, faA, proportion);
@@ -118,10 +114,16 @@ public class GeneticAlgorithm {
             System.arraycopy(eliteChromosomes, 0, newGeneration, crossedChromosomes.length, eliteChromosomes.length);
 
             //Mutação
-            Mutation.swapMutation(newGeneration, classSize, mutationPercentage);
+             Mutation.swapMutation(newGeneration, classSize, mutationPercentage);
 
             iterationLimit++;
 
+            population = newGeneration;
+
+            for (Chromosome chromosome : population) {
+                chromosome.setHasViolatedHardConstraint(false);
+                chromosome.setAvaliation(Avaliation.rate(chromosome, fromIfSC, scheduleRelation));
+            }
 
             localBest = Chromosome.getBestChromosome(population);
             if (globalBestChromosome.getAvaliation() < localBest.getAvaliation())
