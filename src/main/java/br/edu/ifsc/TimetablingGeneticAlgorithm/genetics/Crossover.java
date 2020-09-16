@@ -30,24 +30,27 @@ public class Crossover {
                 //variável que indica a metade inferior do número de matérias. Isso para garantir que o primeiro
                 //valor aleatório para ponte de corte, será menor que o segundo.
                 int cutPoint1 = group * classSize;
-                //TODO Testar calculo do cutpoint2
                 int cutPoint2 = (random.nextInt(size-cutPoint1)+10)/classSize * classSize + cutPoint1;
-                if(cutPoint1 == cutPoint2)
-                    System.out.println("igual");
-                Chromosome c1 = new Chromosome(size);
-                Chromosome c2 = new Chromosome(size);
-                for (int j = cutPoint1; j < cutPoint2; j++) {
-                    c1.getGenes()[j] = p1.getGenes()[j];
-                    c2.getGenes()[j] = p2.getGenes()[j];
+
+                if(cutPoint1 == 0 && cutPoint2 == 300){
+                    newGeneration[i] = p1;
+                    newGeneration[i + 1] = p2;
+                }else {
+
+                    Chromosome c1 = new Chromosome(size);
+                    Chromosome c2 = new Chromosome(size);
+                    for (int j = cutPoint1; j < cutPoint2; j++) {
+                        c1.getGenes()[j] = p1.getGenes()[j];
+                        c2.getGenes()[j] = p2.getGenes()[j];
+                    }
+
+                    //passa os gênes dos pais para seus dois filhos
+                    transfer(c1, cutPoint1, cutPoint2, p1.getGenes(), p2.getGenes(), size);
+                    transfer(c2, cutPoint1, cutPoint2, p2.getGenes(), p1.getGenes(), size);
+
+                    newGeneration[i] = c1;
+                    newGeneration[i + 1] = c2;
                 }
-
-                //passa os gênes dos pais para seus dois filhos
-                //FIXME corrigir o problema dos 0 quando é feito a tranferencia dos genes dos pais para os filhos
-                transfer(c1, cutPoint1, cutPoint2, p1.getGenes(), p2.getGenes(), size);
-                transfer(c2, cutPoint1, cutPoint2, p2.getGenes(), p1.getGenes(), size);
-
-                newGeneration[i] = c1;
-                newGeneration[i + 1] = c2;
             } else {
                 newGeneration[i] = p1;
                 newGeneration[i + 1] = p2;
@@ -68,17 +71,19 @@ public class Crossover {
      */
     private static void transfer(Chromosome child, int cutPoint1, int cutPoint2, int[] p1, int[] p2, int size) {
         int parentIterator = cutPoint2;
-        //FIXME alterar modelo de verificação das posicoes repetidas para turma repetida (verificar as 10 posicoes de uma vez)
         for (int j = 0; j < size; j++) {
             if (parentIterator == size)
                 parentIterator = 0;
                 if (isNotRepeated(p1, cutPoint1, cutPoint2, p2[parentIterator])) {
                     if (j < cutPoint1 || j >= cutPoint2) {
-                        child.getGenes()[j] = p2[parentIterator];
-                        parentIterator++;
+                        for (int i = j; i < j+10; i++) {
+                            child.getGenes()[i] = p2[parentIterator];
+                            parentIterator++;
+                        }
+                        j+=9;
                     }
                 } else {
-                    parentIterator++;
+                    parentIterator+=10;
                     j--;
                 }
         }

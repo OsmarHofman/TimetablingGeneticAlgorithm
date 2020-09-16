@@ -42,7 +42,6 @@ public class GeneticAlgorithm {
 
         RetrieveIFSCData retrieveIFSCData = new RetrieveIFSCData();
         DTOIFSC dtoifsc = retrieveIFSCData.getAllData();
-        //TODO pre-processar para não ter turmas com numero de aulas impar
 
         ProfessorsScheduleCreation psc = new ProfessorsScheduleCreation(dtoifsc);
 
@@ -61,7 +60,6 @@ public class GeneticAlgorithm {
         Sendo que 30 é o número de períodos no dia * dias na semana, ou seja, 6 * 5 = 30
         */
 
-        //TODO verificar onde colocamos os constraints do curso
         boolean[][] scheduleRelation = new boolean[fromIfSC.getLessons().length][30];
         for (int i = 0; i < fromIfSC.getLessons().length; i++) {
             for (UnavailabilityConstraint iterationConstraints : fromIfSC.getLessons()[i].getConstraints()) {
@@ -86,7 +84,7 @@ public class GeneticAlgorithm {
         Chromosome globalBestChromosome = localBest;
         long startTime = System.currentTimeMillis();
 
-        while (iterationLimit < geracoes && ((localBest.getAvaliation() < 4700) || localBest.isHasViolatedHardConstraint())) { // fazer verificação baseado no BOOLEAN do cromossomo, além das outras condições
+        while (iterationLimit < 300 && ((localBest.getAvaliation() < 4700) || localBest.isHasViolatedHardConstraint())) { // fazer verificação baseado no BOOLEAN do cromossomo, além das outras condições
 
 
             //Seleção por elitismo
@@ -130,7 +128,7 @@ public class GeneticAlgorithm {
                 globalBestChromosome = localBest;
 
 
-//            System.out.println("\nIteração: " + iterationLimit);
+            System.out.println("\nIteração: " + iterationLimit);
 //            System.out.println("Avaliação: " + localBest.getAvaliation());
 //            System.out.println("Violou: " + localBest.isHasViolatedHardConstraint());
         }

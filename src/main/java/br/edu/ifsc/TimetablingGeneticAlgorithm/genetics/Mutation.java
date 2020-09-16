@@ -31,7 +31,6 @@ public class Mutation {
                 //Então ao invés de ser atribuído um valor aleatório, serão trocados dois valores em posições aleatórias
 
                 int swapPoint1 = random.nextInt(classSize / 2) + infLimit;
-                //FIXME corrigir problema de nãos air do while devido aos 0 no começo do cromossomo (possivel correção quando resolver problema do cross)
                 while(chromosome.getGenes()[swapPoint1] == 0){
                     swapPoint1 = random.nextInt(classSize / 2) + infLimit;
                 }
