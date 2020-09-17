@@ -16,7 +16,7 @@ public class ConvertFactory {
      * Converte os dados vindos do XML do IFSC para a modelagem do ITC
      *
      * @param dtoifsc dados do XML do IFSC
-     * @return
+     * @return {@link DTOITC} que representa o modelo adapdado do ITC
      * @throws ClassNotFoundException
      */
     public static DTOITC convertIFSCtoITC(DTOIFSC dtoifsc) throws ClassNotFoundException {

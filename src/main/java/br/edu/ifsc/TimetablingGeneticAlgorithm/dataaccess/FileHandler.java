@@ -1,6 +1,6 @@
-package br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.dataaccess;
+package br.edu.ifsc.TimetablingGeneticAlgorithm.dataaccess;
 
-import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.interfaces.IFileHandler;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.datapreview.interfaces.IFileHandler;
 
 import java.io.File;
 import java.io.FileWriter;

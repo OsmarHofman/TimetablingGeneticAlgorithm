@@ -1,4 +1,4 @@
-package br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.classes;
+package br.edu.ifsc.TimetablingGeneticAlgorithm.datapreview.classes;
 
 public enum ProfessorCourseStatus {
     EXCLUSIVE,

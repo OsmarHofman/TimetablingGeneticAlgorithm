@@ -1,21 +1,17 @@
 package br.edu.ifsc.TimetablingGeneticAlgorithm.resources;
 
+import br.edu.ifsc.TimetablingGeneticAlgorithm.datapreview.model.EntitySchedule;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.datapreview.model.ProfessorsScheduleCreation;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.Chromosome;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.ifsc.Classes;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.ifsc.Lesson;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.ifsc.Teacher;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.UnavailabilityConstraint;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.genetics.Avaliation;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.genetics.Crossover;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.genetics.Mutation;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.genetics.Selection;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.dataaccess.RetrieveIFSCData;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.model.EntitySchedule;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.model.ProfessorsScheduleCreation;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.dataaccess.RetrieveIFSCData;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.util.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -43,7 +39,7 @@ public class GeneticAlgorithm {
         RetrieveIFSCData retrieveIFSCData = new RetrieveIFSCData();
         DTOIFSC dtoifsc = retrieveIFSCData.getAllData();
 
-        ProfessorsScheduleCreation psc = new ProfessorsScheduleCreation(dtoifsc);
+       ProfessorsScheduleCreation psc = new ProfessorsScheduleCreation(dtoifsc);
 
         //slaves(dtoifsc);
         EntitySchedule entitySchedule = new EntitySchedule(psc);
