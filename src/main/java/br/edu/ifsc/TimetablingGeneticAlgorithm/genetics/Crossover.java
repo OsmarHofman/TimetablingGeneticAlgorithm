@@ -26,25 +26,31 @@ public class Crossover {
 
             //se cruzar
             if (crossChance < crossPercentage) {
-                int group = random.nextInt(size) / classSize;
+                int group = random.nextInt(size - classSize) / classSize;
                 //variável que indica a metade inferior do número de matérias. Isso para garantir que o primeiro
                 //valor aleatório para ponte de corte, será menor que o segundo.
-                int infLimit = group * classSize;
-                int cutPoint1 = random.nextInt(classSize / 2) + infLimit;
-                int cutPoint2 = random.nextInt(classSize / 2) + infLimit + (classSize / 2);
-                Chromosome c1 = new Chromosome(size);
-                Chromosome c2 = new Chromosome(size);
-                for (int j = cutPoint1 + 1; j <= cutPoint2; j++) {
-                    c1.getGenes()[j] = p1.getGenes()[j];
-                    c2.getGenes()[j] = p2.getGenes()[j];
+                int cutPoint1 = group * classSize;
+                int cutPoint2 = (random.nextInt(size-cutPoint1)+10)/classSize * classSize + cutPoint1;
+
+                if(cutPoint1 == 0 && cutPoint2 == 300){
+                    newGeneration[i] = p1;
+                    newGeneration[i + 1] = p2;
+                }else {
+
+                    Chromosome c1 = new Chromosome(size);
+                    Chromosome c2 = new Chromosome(size);
+                    for (int j = cutPoint1; j < cutPoint2; j++) {
+                        c1.getGenes()[j] = p1.getGenes()[j];
+                        c2.getGenes()[j] = p2.getGenes()[j];
+                    }
+
+                    //passa os gênes dos pais para seus dois filhos
+                    transfer(c1, cutPoint1, cutPoint2, p1.getGenes(), p2.getGenes(), size);
+                    transfer(c2, cutPoint1, cutPoint2, p2.getGenes(), p1.getGenes(), size);
+
+                    newGeneration[i] = c1;
+                    newGeneration[i + 1] = c2;
                 }
-
-                //passa os gênes dos pais para seus dois filhos
-                transfer(c1, cutPoint1, cutPoint2, p1.getGenes(), p2.getGenes(), size);
-                transfer(c2, cutPoint1, cutPoint2, p2.getGenes(), p1.getGenes(), size);
-
-                newGeneration[i] = c1;
-                newGeneration[i + 1] = c2;
             } else {
                 newGeneration[i] = p1;
                 newGeneration[i + 1] = p2;
@@ -64,19 +70,22 @@ public class Crossover {
      * @param size      quantidade total de gênes presentes em um cromossomo
      */
     private static void transfer(Chromosome child, int cutPoint1, int cutPoint2, int[] p1, int[] p2, int size) {
-        int aux = cutPoint2 + 1;
+        int parentIterator = cutPoint2;
         for (int j = 0; j < size; j++) {
-            if (aux == size)
-                aux = 0;
-            if (isNotRepeated(p1, cutPoint1, cutPoint2, p2[aux])) {
-                if (j <= cutPoint1 || j > cutPoint2) {
-                    child.getGenes()[j] = p2[aux];
-                    aux++;
+            if (parentIterator == size)
+                parentIterator = 0;
+                if (isNotRepeated(p1, cutPoint1, cutPoint2, p2[parentIterator])) {
+                    if (j < cutPoint1 || j >= cutPoint2) {
+                        for (int i = j; i < j+10; i++) {
+                            child.getGenes()[i] = p2[parentIterator];
+                            parentIterator++;
+                        }
+                        j+=9;
+                    }
+                } else {
+                    parentIterator+=10;
+                    j--;
                 }
-            } else {
-                aux++;
-                j--;
-            }
         }
     }
 
@@ -90,8 +99,8 @@ public class Crossover {
      * @return true caso o {@code gene} já esteja no {@code p1}, e else caso contrário.
      */
     private static boolean isNotRepeated(int[] p1, int cutPoint1, int cutPoint2, int gene) {
-        for (int i = cutPoint1; i <= cutPoint2; i++) {
-            if (p1[i] == gene)
+        for (int i = cutPoint1; i < cutPoint2; i++) {
+            if (p1[i] == gene && p1[i] != 0)
                 return false;
         }
         return true;

@@ -1,8 +1,8 @@
-package br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.model;
+package br.edu.ifsc.TimetablingGeneticAlgorithm.datapreview.model;
 
-import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.classes.CourseRelation;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.classes.Intersection;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.classes.Professor_Course;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.datapreview.classes.CourseRelation;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.datapreview.classes.Intersection;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.datapreview.classes.Professor_Course;
 
 import java.util.List;
 

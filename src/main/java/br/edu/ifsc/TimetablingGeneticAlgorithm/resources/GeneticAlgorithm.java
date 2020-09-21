@@ -1,21 +1,17 @@
 package br.edu.ifsc.TimetablingGeneticAlgorithm.resources;
 
+import br.edu.ifsc.TimetablingGeneticAlgorithm.datapreview.model.EntitySchedule;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.datapreview.model.ProfessorsScheduleCreation;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.Chromosome;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.ifsc.Classes;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.ifsc.Lesson;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.ifsc.Teacher;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.UnavailabilityConstraint;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.genetics.Avaliation;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.genetics.Crossover;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.genetics.Mutation;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.genetics.Selection;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.dataaccess.RetrieveIFSCData;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.model.EntitySchedule;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.model.ProfessorsScheduleCreation;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.dataaccess.RetrieveIFSCData;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.util.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -42,9 +38,8 @@ public class GeneticAlgorithm {
 
         RetrieveIFSCData retrieveIFSCData = new RetrieveIFSCData();
         DTOIFSC dtoifsc = retrieveIFSCData.getAllData();
-        //TODO pre-processar para não ter turmas com numero de aulas impar
 
-        ProfessorsScheduleCreation psc = new ProfessorsScheduleCreation(dtoifsc);
+       ProfessorsScheduleCreation psc = new ProfessorsScheduleCreation(dtoifsc);
 
         //slaves(dtoifsc);
         EntitySchedule entitySchedule = new EntitySchedule(psc);
@@ -61,7 +56,6 @@ public class GeneticAlgorithm {
         Sendo que 30 é o número de períodos no dia * dias na semana, ou seja, 6 * 5 = 30
         */
 
-        //TODO verificar onde colocamos os constraints do curso
         boolean[][] scheduleRelation = new boolean[fromIfSC.getLessons().length][30];
         for (int i = 0; i < fromIfSC.getLessons().length; i++) {
             for (UnavailabilityConstraint iterationConstraints : fromIfSC.getLessons()[i].getConstraints()) {
@@ -76,34 +70,30 @@ public class GeneticAlgorithm {
         //Inicializando população
         Arrays.setAll(population, i -> new Chromosome(fromIfSC.getCourses().length, classSize, fromIfSC.getLessons(), fromIfSC.getCourses(), dtoifsc));
 
+        for (Chromosome chromosome : population) {
+            chromosome.setHasViolatedHardConstraint(false);
+            chromosome.setAvaliation(Avaliation.rate(chromosome, fromIfSC, scheduleRelation));
+        }
 
         // checkCourses(dtoifsc);
         Chromosome localBest = Chromosome.getBestChromosome(population);
         Chromosome globalBestChromosome = localBest;
         long startTime = System.currentTimeMillis();
 
-        //FIXME alterar 2 para "geracoes"
-        while (iterationLimit < 2 && ((localBest.getAvaliation() < 3800) || localBest.isHasViolatedHardConstraint())) { // fazer verificação baseado no BOOLEAN do cromossomo, além das outras condições
+        while (iterationLimit < 300 && ((localBest.getAvaliation() < 4700) || localBest.isHasViolatedHardConstraint())) { // fazer verificação baseado no BOOLEAN do cromossomo, além das outras condições
 
 
-            for (Chromosome chromosome : population) {
-                chromosome.setHasViolatedHardConstraint(false);
-                chromosome.setAvaliation(Avaliation.rate(chromosome, fromIfSC, scheduleRelation));
-            }
+            //Seleção por elitismo
+            byte proportion = (byte) (populationSize / elitismPercentage);
+            Chromosome[] eliteChromosomes = Selection.elitism(population, proportion);
 
             //função de avaliacao acumulada
-            //System.out.println("\nCalculando FaA...");
             int[] ratingHandler = new int[populationSize];
             int faA = 0;
             for (int i = 0; i < population.length; i++) {
                 faA += population[i].getAvaliation();
                 ratingHandler[i] = faA;
             }
-
-            //Seleção por elitismo
-            byte proportion = (byte) (populationSize / elitismPercentage);
-            Chromosome[] eliteChromosomes = Selection.elitism(population, proportion);
-
 
             //Seleção por roleta
             Chromosome[] newCouples = Selection.rouletteWheel(population, ratingHandler, faA, proportion);
@@ -118,17 +108,23 @@ public class GeneticAlgorithm {
             System.arraycopy(eliteChromosomes, 0, newGeneration, crossedChromosomes.length, eliteChromosomes.length);
 
             //Mutação
-            Mutation.swapMutation(newGeneration, classSize, mutationPercentage);
+             Mutation.swapMutation(newGeneration, classSize, mutationPercentage);
 
             iterationLimit++;
 
+            population = newGeneration;
+
+            for (Chromosome chromosome : population) {
+                chromosome.setHasViolatedHardConstraint(false);
+                chromosome.setAvaliation(Avaliation.rate(chromosome, fromIfSC, scheduleRelation));
+            }
 
             localBest = Chromosome.getBestChromosome(population);
             if (globalBestChromosome.getAvaliation() < localBest.getAvaliation())
                 globalBestChromosome = localBest;
 
 
-//            System.out.println("\nIteração: " + iterationLimit);
+            System.out.println("\nIteração: " + iterationLimit);
 //            System.out.println("Avaliação: " + localBest.getAvaliation());
 //            System.out.println("Violou: " + localBest.isHasViolatedHardConstraint());
         }

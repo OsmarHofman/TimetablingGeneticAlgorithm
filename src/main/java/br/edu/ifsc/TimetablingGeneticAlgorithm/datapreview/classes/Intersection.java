@@ -1,6 +1,6 @@
-package br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.classes;
+package br.edu.ifsc.TimetablingGeneticAlgorithm.datapreview.classes;
 
-import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.model.ListOperationUtil;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.datapreview.model.ListOperationUtil;
 
 import java.io.Serializable;
 import java.util.ArrayList;
