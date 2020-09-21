@@ -9,6 +9,9 @@ import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.UnavailabilityConstrai
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Classe DTO((Data Transfer Object) que representa o modelo adaptado (ITC)
+ */
 public class DTOITC {
 
     private Course[] courses;
@@ -71,24 +74,61 @@ public class DTOITC {
         this.constraints = constraints;
     }
 
-    public String[] getProfessorByLessonId(int index, Chromosome chromosome) throws ClassNotFoundException {
-        for (Lesson iterationLesson : this.lessons) {
-            if (iterationLesson.getLessonId().equals(String.valueOf(index))) {
-                return iterationLesson.getProfessorId();
+    /**
+     * Obtém o professor pelo identificador da {@link Lesson}.
+     *
+     * @param index índice que será verificado com os valores das {@link Lesson}s.
+     * @return Vetor de {@link String} com os Ids dos professores.
+     * @throws ClassNotFoundException Erro quando o professor não é encontrado
+     */
+    public String[] getProfessorByLessonId(int index) throws ClassNotFoundException {
+        for (Lesson lesson : this.lessons) {
+            if (lesson.getLessonId().equals(String.valueOf(index))) {
+                return lesson.getProfessorId();
             }
         }
         throw new ClassNotFoundException("Professor não encontrado");
     }
 
+    /**
+     * Obtém a matéria pelo identificador da {@link Lesson}.
+     *
+     * @param index índice que será verificado com os valores das {@link Lesson}s.
+     * @return {@link Lesson} com o Id correspondente.
+     * @throws ClassNotFoundException Erro quando a matéria não é encontrado
+     */
     public Lesson getLessonById(int index) throws ClassNotFoundException {
-        for (Lesson iterationLesson : this.lessons) {
-            if (iterationLesson.getLessonId().equals(String.valueOf(index))) {
-                return iterationLesson;
+        for (Lesson lesson : this.lessons) {
+            if (lesson.getLessonId().equals(String.valueOf(index))) {
+                return lesson;
             }
         }
         throw new ClassNotFoundException("Lesson não encontrada");
     }
 
+    /**
+     * Obtém o turno de uma turma pelo identificador do {@link Course}.
+     *
+     * @param courseId índice que será verificado com os valores das {@link Course}s.
+     * @return {@link Lesson} com o Id correspondente.
+     * @throws ClassNotFoundException Erro quando a matéria não é encontrado
+     */
+    public Shift getShiftByCourseId(String courseId) throws ClassNotFoundException {
+        for (Course course : this.courses) {
+            if (course.getCourseId().equals(courseId)) {
+                return course.getShift();
+            }
+        }
+        throw new ClassNotFoundException("Curso não encontrado");
+    }
+
+    /**
+     * Obtém o índice que está um item da {@link Lesson}.
+     *
+     * @param lessonId valor que será verificado para obter o índice.
+     * @return {@link Integer} do índice do {@code lessonId}.
+     * @throws ClassNotFoundException Erro quando a Lesson não é encontrada.
+     */
     public int getLessonPosition(String lessonId) throws ClassNotFoundException {
         for (int i = 0; i < lessons.length; i++) {
             if (lessons[i].getLessonId().equals(lessonId))
@@ -107,13 +147,5 @@ public class DTOITC {
                 '}';
     }
 
-    public byte getShiftByCourseId(String courseId) throws ClassNotFoundException {
-        for (Course iterationCourse : this.courses) {
-            if (iterationCourse.getCourseId().equals(courseId)) {
-                return iterationCourse.getShift();
-            }
-        }
-        throw new ClassNotFoundException("Curso não encontrado");
-    }
 
 }

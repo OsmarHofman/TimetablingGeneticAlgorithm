@@ -1,12 +1,14 @@
 package br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc;
 
+import br.edu.ifsc.TimetablingGeneticAlgorithm.util.Shift;
+
 /**
  * Classe que representa um curso
  */
 public class Course {
     private String courseId;
     private int coursesNumber;
-    private byte shift;
+    private Shift shift;
 
     public Course() {
     }
@@ -32,11 +34,11 @@ public class Course {
         this.coursesNumber = coursesNumber;
     }
 
-    public byte getShift() {
+    public Shift getShift() {
         return shift;
     }
 
-    public void setShift(byte shift) {
+    public void setShift(Shift shift) {
         this.shift = shift;
     }
 

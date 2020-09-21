@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Classe DTO (Data Transfer Object) de todas as classes que representam o XML do IFSC
+ */
 public class DTOIFSC {
     private List<Classes> classes;
     private List<Lesson> lessons;
@@ -72,25 +75,25 @@ public class DTOIFSC {
     }
 
     /**
-     * Verifica se há algum dado inconsistente.
+     * Verifica se há algum dado inconsistente (somente para verificação).
      */
     public void checkCourses() {
         List<Integer> morningCourses = new ArrayList<>();
         List<Integer> afternoonCourses = new ArrayList<>();
         List<Integer> nightCourses = new ArrayList<>();
         for (Classes classe : this.getClasses()) {
-            byte shift = convertTimeoffToShift(classe.getTimeoff());
+            Shift shift = convertTimeoffToShift(classe.getTimeoff());
             int count = 0;
             for (Lesson lesson : this.getLessons()) {
                 if (lesson.getClassesId() == classe.getId()) {
                     count += lesson.getPeriodsPerWeek();
                 }
             }
-            if (shift == 0 && count > 20)
+            if (shift == Shift.MATUTINO && count > 20)
                 morningCourses.add(classe.getId());
-            else if (shift == 1 && count > 16)
+            else if (shift == Shift.VESPERTINO && count > 16)
                 afternoonCourses.add(classe.getId());
-            else if (shift == 2 && count > 20)
+            else if (shift == Shift.NOTURNO && count > 20)
                 nightCourses.add(classe.getId());
         }
 
@@ -99,20 +102,26 @@ public class DTOIFSC {
         System.out.println("noite: " + nightCourses.toString());
     }
 
-    private byte convertTimeoffToShift(String timeoff) {
+    /**
+     * Converte um timeoff (formato do XMl do IFSC) para um turno.
+     *
+     * @param timeoff {@link String} que representa o timeoff a ser convertido.
+     * @return {@link Shift} com o turno correspondente.
+     */
+    private Shift convertTimeoffToShift(String timeoff) {
         String[] days = timeoff.replace(".", "").split(",");
         if (days[0].charAt(0) == '1')
-            return 0;
+            return Shift.MATUTINO;
         else if (days[0].charAt(4) == '1')
-            return 1;
-        return 2;
+            return Shift.VESPERTINO;
+        return Shift.NOTURNO;
     }
 
     /**
-     * Verifica se há algum professor que não tem timeoff
+     * Verifica se há algum professor que não tem timeoff (somente verificação).
      */
     public void noTimeoffTeachers() {
-        List<Teacher> slaves = new ArrayList<>();
+        List<Teacher> timeofflessTeachers = new ArrayList<>();
         for (Teacher teacher : this.getProfessors()) {
             int count = 0;
             for (Lesson lesson : this.getLessons()) {
@@ -122,10 +131,10 @@ public class DTOIFSC {
                 }
             }
             if (count > 20) {
-                slaves.add(teacher);
+                timeofflessTeachers.add(teacher);
             }
         }
-        System.out.println(slaves.toString());
+        System.out.println(timeofflessTeachers.toString());
     }
 
 

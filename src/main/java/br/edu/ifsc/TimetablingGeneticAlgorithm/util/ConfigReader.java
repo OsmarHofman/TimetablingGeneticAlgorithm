@@ -8,11 +8,11 @@ import java.util.Scanner;
 public class ConfigReader {
 
     /**
-     * Lê as parâmetros necessários para o AG executar
+     * A partir de um arquivo, lê as parâmetros necessários para o AG executar.
      *
-     * @param path caminho do arquivo com as configurações
-     * @return Vetor com cada um dos parâmetros em cada posição
-     * @throws IOException Erro ao tentar ler o arquivo
+     * @param path caminho do arquivo com as configurações.
+     * @return Vetor com cada um dos parâmetros em cada posição.
+     * @throws IOException Erro ao tentar ler o arquivo.
      */
     public static int[] readConfiguration(String path) throws IOException {
         int[] config = new int[7];
@@ -21,31 +21,12 @@ public class ConfigReader {
 
         try {
             myReader = new Scanner(myObj);
-            while (myReader.hasNextLine()) {
-                String linha;
-                if (myReader.hasNext("tamanhoPopulacao=[0-9]+")) {
-                    linha = myReader.nextLine();
-                    config[0] = Integer.parseInt(linha.split("=")[1]);
-                } else if (myReader.hasNext("tamanhoTurma=[0-9]+")) {
-                    linha = myReader.nextLine();
-                    config[1] = Integer.parseInt(linha.split("=")[1]);
-                } else if (myReader.hasNext("porcentagemElitismo=[0-9]+")) {
-                    linha = myReader.nextLine();
-                    config[2] = Integer.parseInt(linha.split("=")[1]);
-                } else if (myReader.hasNext("porcentagemCruzamento=[0-9]+")) {
-                    linha = myReader.nextLine();
-                    config[3] = Integer.parseInt(linha.split("=")[1]);
-                } else if (myReader.hasNext("porcentagemMutacao=[0-9]+")) {
-                    linha = myReader.nextLine();
-                    config[4] = Integer.parseInt(linha.split("=")[1]);
-                } else if (myReader.hasNext("porcentagemJuncaoCurso=[0-9]+")) {
-                    linha = myReader.nextLine();
-                    config[5] = Integer.parseInt(linha.split("=")[1]);
-                } else if (myReader.hasNext("geracoes=[0-9]+")) {
-                    linha = myReader.nextLine();
-                    config[6] = Integer.parseInt(linha.split("=")[1]);
-                }
+            String linha;
+            for (int i = 0; i < config.length; i++) {
+                linha = myReader.nextLine();
+                config[i] = Integer.parseInt(linha.split("=")[1]);
             }
+
             return config;
         } catch (FileNotFoundException e) {
             e.printStackTrace();

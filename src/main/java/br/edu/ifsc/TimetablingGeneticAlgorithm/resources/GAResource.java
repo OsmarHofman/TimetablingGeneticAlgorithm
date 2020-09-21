@@ -23,16 +23,16 @@ public class GAResource {
             GeneticAlgorithm geneticAlgorithm = new GeneticAlgorithm();
             return new ResponseEntity<>(geneticAlgorithm.process("src\\assets\\configuracoes.txt"), HttpStatus.OK);
         } catch (IOException iEx) {
-            iEx.printStackTrace();
             System.err.println("Erro de IO");
+            iEx.printStackTrace();
             return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
         } catch (ClassNotFoundException cEx) {
-            cEx.printStackTrace();
             System.err.println("Erro de alguma entidade não encontrada");
+            cEx.printStackTrace();
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception ex) {
-            ex.printStackTrace();
             System.err.println("Erro na execução");
+            ex.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 

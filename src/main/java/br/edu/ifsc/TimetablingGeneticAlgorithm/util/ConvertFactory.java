@@ -13,11 +13,11 @@ import java.util.List;
 public class ConvertFactory {
 
     /**
-     * Converte os dados vindos do XML do IFSC para a modelagem do ITC
+     * Converte os dados vindos do XML do IFSC para a modelagem do ITC.
      *
-     * @param dtoifsc dados do XML do IFSC
-     * @return
-     * @throws ClassNotFoundException
+     * @param dtoifsc dados do XML do IFSC.
+     * @return {@link DTOITC} convertido.
+     * @throws ClassNotFoundException Erro quando um professor, lesson ou lectures number não é encontrado.
      */
     public static DTOITC convertIFSCtoITC(DTOIFSC dtoifsc) throws ClassNotFoundException {
         DTOITC dtoitc = new DTOITC();
@@ -84,12 +84,12 @@ public class ConvertFactory {
     }
 
     /**
-     * Obtém o Id do curso através do Id da lesson
+     * Obtém o Id do curso através do Id da lesson.
      *
-     * @param lessonId Id do curso a ser obtido
-     * @param lessons  lista com as {@link br.edu.ifsc.TimetablingGeneticAlgorithm.domain.ifsc.Lesson}s
-     * @return Id do curso respectivo a lesson
-     * @throws ClassNotFoundException
+     * @param lessonId Id do curso a ser obtido.
+     * @param lessons  lista com as {@link br.edu.ifsc.TimetablingGeneticAlgorithm.domain.ifsc.Lesson}s.
+     * @return Id do curso respectivo a lesson.
+     * @throws ClassNotFoundException Erro quando a {@link br.edu.ifsc.TimetablingGeneticAlgorithm.domain.ifsc.Lesson} não é encontrada.
      */
     private static String retrieveLessonsCourse(int lessonId, List<br.edu.ifsc.TimetablingGeneticAlgorithm.domain.ifsc.Lesson> lessons) throws ClassNotFoundException {
         for (br.edu.ifsc.TimetablingGeneticAlgorithm.domain.ifsc.Lesson iterationLesson : lessons) {
@@ -105,9 +105,9 @@ public class ConvertFactory {
      * @param id       id da disciplina dos professores a serem buscados.
      * @param lessons  {@link List} de {@link br.edu.ifsc.TimetablingGeneticAlgorithm.domain.ifsc.Lesson} de onde será
      *                 verificada as disciplinas.
-     * @param teachers {@link List} de {@link String} que contém os professores a serem obtidos
-     * @return Vetor de {@link String} que contém os professores que lecionam uma disciplina
-     * @throws ClassNotFoundException Erro quando o professor ou a disciplina não é encontrada
+     * @param teachers {@link List} de {@link String} que contém os professores a serem obtidos.
+     * @return Vetor de {@link String} que contém os professores que lecionam uma disciplina.
+     * @throws ClassNotFoundException Erro quando o professor ou a disciplina não é encontrada.
      */
     private static String[] retrieveProfessorsId(int id, List<br.edu.ifsc.TimetablingGeneticAlgorithm.domain.ifsc.Lesson> lessons, List<Teacher> teachers) throws ClassNotFoundException {
         String[] professorsList = new String[0];
@@ -216,31 +216,20 @@ public class ConvertFactory {
         }
         return constraintList;
     }
-
+    
     /**
-     * Obtém o turno (shift) a partir de um timeoff
+     * Obtém o turno (shift) a partir de um timeoff.
      *
-     * @param timeoff {@link String} que representa o valor a ser convertido
-     * @return Turno convertido, podendo ser:
-     * <ul>
-     *      <li>
-     *          0 caso for matutino;
-     *      </li>
-     *      <li>
-     *          1 caso for vespertino;
-     *      </li>
-     *      <li>
-     *          2 caso for noturno;
-     *      </li>
-     * </ul>
+     * @param timeoff {@link String} que representa o valor a ser convertido.
+     * @return {@link Shift} que indica qual o turno.
      */
-    private static byte convertTimeoffToShift(String timeoff) {
+    private static Shift convertTimeoffToShift(String timeoff) {
         String[] days = timeoff.replace(".", "").split(",");
         if (days[0].charAt(0) == '1')
-            return 0;
+            return Shift.MATUTINO;
         else if (days[0].charAt(4) == '1')
-            return 1;
-        return 2;
+            return Shift.VESPERTINO;
+        return Shift.NOTURNO;
 
     }
 }
