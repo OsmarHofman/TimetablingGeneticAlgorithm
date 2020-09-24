@@ -1,6 +1,9 @@
 package br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc;
 
+import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.ifsc.Classes;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.util.Shift;
+
+import java.util.List;
 
 /**
  * Classe que representa um curso
@@ -49,5 +52,9 @@ public class Course {
                 ", coursesNumber=" + coursesNumber +
                 ", shift=" + shift +
                 '}';
+    }
+
+    public boolean joinIntersection(int percentage, List<Classes> classes) {
+        return true;
     }
 }

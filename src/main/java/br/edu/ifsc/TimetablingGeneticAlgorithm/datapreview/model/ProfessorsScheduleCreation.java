@@ -52,51 +52,51 @@ public class ProfessorsScheduleCreation {
     }
 
     private List<CourseGroup> joinCourses(List<Classes> courses) {
-        List<CourseGroup> cg125 = new ArrayList<>();
+        List<CourseGroup> courseGroups = new ArrayList<>();
         for (Classes iterationClasses : courses) {
-            String courseName = iterationClasses.getShortName().substring(0, iterationClasses.getShortName().length() - 1);
-            if (cg125.isEmpty()) {
-                cg125.add(new CourseGroup(courseName, new ArrayList<>(Collections.singletonList(iterationClasses.getId()))));
-                this.coursesList.add(courseName);
+            String courseId = String.valueOf(iterationClasses.getId());
+            if (courseGroups.isEmpty()) {
+                courseGroups.add(new CourseGroup(courseId, new ArrayList<>(Collections.singletonList(iterationClasses.getId()))));
+                this.coursesList.add(courseId);
             } else {
                 boolean hasAdded = false;
-                for (CourseGroup courseGroup : cg125) {
-                    if (courseGroup.getName().equals(courseName)) {
-                        courseGroup.getCoursesIds().add(iterationClasses.getId());
+                for (CourseGroup courseGroup : courseGroups) {
+                    if (courseGroup.getId().equals(courseId)) {
+                        courseGroup.getBlacklist().add(iterationClasses.getId());
                         hasAdded = true;
                     }
                 }
                 if (!hasAdded) {
-                    cg125.add(new CourseGroup(courseName, new ArrayList<>(Collections.singletonList(iterationClasses.getId()))));
-                    this.coursesList.add(courseName);
+                    courseGroups.add(new CourseGroup(courseId, new ArrayList<>(Collections.singletonList(iterationClasses.getId()))));
+                    this.coursesList.add(courseId);
                 }
             }
         }
-        return cg125;
+        return courseGroups;
     }
 
     private void getProfessors(DTOIFSC dtoifsc, List<CourseGroup> courseGroups) {
         for (CourseGroup cg : courseGroups) {
-            for (int ids : cg.getCoursesIds()) {
+            for (int ids : cg.getBlacklist()) {
                 for (Lesson iterationLesson : dtoifsc.getLessons()) {
                     if (iterationLesson.getClassesId() == ids) {
                         for (Teacher iterationTeacher : dtoifsc.getProfessors()) {
                             for (int i = 0; i < iterationLesson.getTeacherId().length; i++) {
                                 if (iterationTeacher.getId() == iterationLesson.getTeacherId()[i]) {
                                     if (this.professorsList.isEmpty()) {
-                                        this.professorsList.add(new Professor_Course(iterationTeacher.getName(), new ArrayList<>(Collections.singletonList(cg.getName()))));
+                                        this.professorsList.add(new Professor_Course(String.valueOf(iterationTeacher.getId()), new ArrayList<>(Collections.singletonList(cg.getId()))));
                                     } else {
                                         boolean hasAdded = false;
                                         for (Professor_Course iterationPC : professorsList) {
-                                            if (iterationPC.getProfessor().equals(iterationTeacher.getName())) {
-                                                if (!iterationPC.getCourse().contains(cg.getName())) {
-                                                    iterationPC.getCourse().add(cg.getName());
+                                            if (iterationPC.getProfessor().equals(String.valueOf(iterationTeacher.getId()))) {
+                                                if (!iterationPC.getCourse().contains(cg.getId())) {
+                                                    iterationPC.getCourse().add(cg.getId());
                                                 }
                                                 hasAdded = true;
                                             }
                                         }
                                         if (!hasAdded) {
-                                            this.professorsList.add(new Professor_Course(iterationTeacher.getName(), new ArrayList<>(Collections.singletonList(cg.getName()))));
+                                            this.professorsList.add(new Professor_Course(String.valueOf(iterationTeacher.getId()), new ArrayList<>(Collections.singletonList(cg.getId()))));
                                         }
                                     }
                                 }
@@ -134,11 +134,11 @@ public class ProfessorsScheduleCreation {
                 for (Professor_Course professor_course : professorsList) {
                     int relatedCourseNumber = 0;
                     for (String iterationCourse : professor_course.getCourse()) {
-                        if (iterationCourse.equals(courseRelation.getName()) || iterationCourse.equals(intersection.getIntersectionCourse())) {
+                        if (iterationCourse.equals(courseRelation.getId()) || iterationCourse.equals(intersection.getIntersectionCourse())) {
                             relatedCourseNumber++;
                         }
                         if (relatedCourseNumber == 2) {
-                            intersection.getProfessorsNameList().add(professor_course.getProfessor());
+                            intersection.getProfessorsList().add(professor_course.getProfessor());
                             break;
                         }
                     }
@@ -149,29 +149,29 @@ public class ProfessorsScheduleCreation {
     }
 
     private static class CourseGroup {
-        private String name;
-        private List<Integer> coursesIds;
+        private String id;
+        private List<Integer> blacklist;
 
 
-        public CourseGroup(String name, List<Integer> coursesIds) {
-            this.name = name;
-            this.coursesIds = coursesIds;
+        public CourseGroup(String id, List<Integer> coursesIds) {
+            this.id = id;
+            this.blacklist = coursesIds;
         }
 
-        public String getName() {
-            return name;
+        public String getId() {
+            return id;
         }
 
-        public void setName(String name) {
-            this.name = name;
+        public void setId(String id) {
+            this.id = id;
         }
 
-        public List<Integer> getCoursesIds() {
-            return coursesIds;
+        public List<Integer> getBlacklist() {
+            return blacklist;
         }
 
-        public void setCoursesIds(List<Integer> coursesIds) {
-            this.coursesIds = coursesIds;
+        public void setBlacklist(List<Integer> blacklist) {
+            this.blacklist = blacklist;
         }
     }
 

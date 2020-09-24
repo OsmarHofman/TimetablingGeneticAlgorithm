@@ -10,19 +10,20 @@ import java.util.List;
  * Classe que representa a intersecção de um curso com outros cursos que estão relacionados
  */
 public class Intersection implements Serializable {
+    //TODO REFAZER CLASSE
     private int intersectionProfessorsCount;
     private String intersectionCourse;
-    private List<String> professorsNameList;
+    private List<String> professorsList;
 
     public Intersection() {
         intersectionProfessorsCount = 0;
-        professorsNameList = new ArrayList<>();
+        professorsList = new ArrayList<>();
     }
 
     public Intersection(int intersectionProfessorsCount, String intersectionCourse) {
         this.intersectionProfessorsCount = intersectionProfessorsCount;
         this.intersectionCourse = intersectionCourse;
-        this.professorsNameList = new ArrayList<>();
+        this.professorsList = new ArrayList<>();
     }
 
     public int getIntersectionProfessorsCount() {
@@ -41,12 +42,12 @@ public class Intersection implements Serializable {
         this.intersectionCourse = intersectionCourse;
     }
 
-    public List<String> getProfessorsNameList() {
-        return professorsNameList;
+    public List<String> getProfessorsList() {
+        return professorsList;
     }
 
-    public void setProfessorsNameList(List<String> professorsNameList) {
-        this.professorsNameList = professorsNameList;
+    public void setProfessorsList(List<String> professorsList) {
+        this.professorsList = professorsList;
     }
 
     /**
@@ -57,23 +58,23 @@ public class Intersection implements Serializable {
     public void addProfessorsToIntersection(List<String> professorsList) {
         List<String> newProfessorsList = new ArrayList<>();
         for (String professorName : professorsList) {
-            //se o professor já não estiver na intersecção 
-            if (ListOperationUtil.itemIsNotInList(professorName, this.professorsNameList) && !newProfessorsList.contains(professorName)) {
+            //se o professor já não estiver na intersecção
+            if (ListOperationUtil.itemIsNotInList(professorName, this.professorsList) && !newProfessorsList.contains(professorName)) {
                 newProfessorsList.add(professorName);
             }
         }
-        this.professorsNameList.addAll(newProfessorsList);
+        this.professorsList.addAll(newProfessorsList);
     }
 
     public void adjustProfessorsCount() {
-        this.intersectionProfessorsCount = this.professorsNameList.size();
+        this.intersectionProfessorsCount = this.professorsList.size();
     }
 
     @Override
     public String toString() {
         return "\n\n\t\tCurso relacionado: " + intersectionCourse +
                 "\n\t\tNúmero de professores compartilhados: " + intersectionProfessorsCount +
-                "\n\t\tProfessores: " + professorsNameList;
+                "\n\t\tProfessores: " + professorsList;
 
 
     }

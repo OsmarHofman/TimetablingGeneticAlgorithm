@@ -34,13 +34,13 @@ public class EntitySchedule {
 
                 if (hasJoined) {
                     lastCourse = this.courseRelationList.get(this.courseRelationList.size() - 1);
-                    splitSetName = this.adjustSetName(lastCourse.getName(), splitSetName);
+                    splitSetName = this.adjustSetName(lastCourse.getId(), splitSetName);
                     break;
                 }
             }
             if (splitSetName.size() != 0) {
-                lastCourse.setName(lastCourse.getName().replace("--", "-"));
-                setName = lastCourse.getName();
+                lastCourse.setId(lastCourse.getId().replace("--", "-"));
+                setName = lastCourse.getId();
 
                 List<Integer> toRemoveIndexes = new ArrayList<>();
                 List<Intersection> intersectionList = new ArrayList<>();
@@ -48,7 +48,7 @@ public class EntitySchedule {
                 List<Intersection> innerIntersections = this.selectCoursesToRemove(splitSetName, intersectionList, toRemoveIndexes);
 
                 //renomea o nome dos cursos de cada professor, para substituirem pelo conjunto formado
-                this.renameProfessorsCourses(splitSetName, lastCourse.getName());
+                this.renameProfessorsCourses(splitSetName, lastCourse.getId());
 
                 //agora passa o setName, que é o nome inteiro do conjunto sem split, ja que foi substituido antes
                 this.verifyExclusiveProfessor(innerIntersections, setName);
@@ -107,7 +107,7 @@ public class EntitySchedule {
         for (int i = 0; i < this.courseRelationList.size(); i++) {
             CourseRelation iterationCourse = this.courseRelationList.get(i);
             for (int j = 0; j < splitname.size(); j++) {
-                if (iterationCourse.getName().equals(splitname.get(j))) {
+                if (iterationCourse.getId().equals(splitname.get(j))) {
                     if (intersectionList.isEmpty())
                         intersectionList.addAll(iterationCourse.getIntersection());
                     else
@@ -131,7 +131,7 @@ public class EntitySchedule {
             for (Intersection firstCourseIntersection : firstCourseIntersections) {
 
                 if (secondCourseIntersection.getIntersectionCourse().equals(firstCourseIntersection.getIntersectionCourse()))
-                    secondCourseIntersection.addProfessorsToIntersection(firstCourseIntersection.getProfessorsNameList());
+                    secondCourseIntersection.addProfessorsToIntersection(firstCourseIntersection.getProfessorsList());
 
                 if (ListOperationUtil.itemIsNotInList(firstCourseIntersection.getIntersectionCourse(), secondCourseIntersections) && !newIntersections.contains(firstCourseIntersection))
                     newIntersections.add(firstCourseIntersection);
@@ -174,7 +174,7 @@ public class EntitySchedule {
         CourseRelation lastCourse = this.courseRelationList.get(this.courseRelationList.size() - 1);
         List<String> professorBlackList = new ArrayList<>();
         for (Intersection iterationIntersection : innerIntersections) {
-            for (String iterationProfessor : iterationIntersection.getProfessorsNameList()) {
+            for (String iterationProfessor : iterationIntersection.getProfessorsList()) {
                 Professor_Course professor_course = ListOperationUtil.getProfessorByName(iterationProfessor, this.professorRelation);
                 if (!professorBlackList.contains(professor_course.getProfessor()) && professor_course.checkExclusivity(setName)) {
                     lastCourse.incrementExclusiveProfessorCount();
@@ -206,11 +206,11 @@ public class EntitySchedule {
 
                 if (iterationIntersec.getIntersectionCourse().equals(setName)) {
 
-                    if (listSameName.getProfessorsNameList().isEmpty()) {
+                    if (listSameName.getProfessorsList().isEmpty()) {
                         listSameName = iterationIntersec;
                         intersecProfessorIndex = iterationCourseRelation.getIntersection().indexOf(iterationIntersec);
                     } else {
-                        iterationCourseRelation.getIntersection().get(intersecProfessorIndex).addProfessorsToIntersection(iterationIntersec.getProfessorsNameList());
+                        iterationCourseRelation.getIntersection().get(intersecProfessorIndex).addProfessorsToIntersection(iterationIntersec.getProfessorsList());
                         indexes.add(iterationCourseRelation.getIntersection().indexOf(iterationIntersec));
                     }
                 }

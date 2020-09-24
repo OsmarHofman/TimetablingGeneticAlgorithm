@@ -6,13 +6,13 @@ import java.util.Collections;
 import java.util.List;
 
 public class CourseRelation implements Serializable {
-    private String name;
+    private String id;
     private int totalProfessors;
     private int exclusiveProfessorCount;
     private List<Intersection> intersection;
 
-    public CourseRelation(String name) {
-        this.name = name;
+    public CourseRelation(String id) {
+        this.id = id;
         totalProfessors = 0;
         exclusiveProfessorCount = 0;
         intersection = new ArrayList<>();
@@ -23,12 +23,12 @@ public class CourseRelation implements Serializable {
         intersection = new ArrayList<>();
     }
 
-    public String getName() {
-        return name;
+    public String getId() {
+        return id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public int getExclusiveProfessorCount() {
@@ -57,7 +57,7 @@ public class CourseRelation implements Serializable {
 
     @Override
     public String toString() {
-        return name;
+        return id;
     }
 
     public void checkListIntersection(String course, List<String> professorCourses) {
@@ -94,8 +94,8 @@ public class CourseRelation implements Serializable {
     }
 
     public boolean joinIntersections(int percentage, List<CourseRelation> cs) throws ClassNotFoundException {
-        List<String> listIntersection = new ArrayList<>(Collections.singletonList(this.name));
-        StringBuilder nomeCurso = new StringBuilder(this.name);
+        List<String> listIntersection = new ArrayList<>(Collections.singletonList(this.id));
+        StringBuilder nomeCurso = new StringBuilder(this.id);
         CourseRelation newCourse = new CourseRelation();
         int exclusiveProfessors = this.exclusiveProfessorCount;
         int proportion = this.totalProfessors * percentage / 100;
@@ -112,7 +112,7 @@ public class CourseRelation implements Serializable {
             }
         }
         if (listIntersection.size() > 1) {
-            newCourse.setName(nomeCurso.toString());
+            newCourse.setId(nomeCurso.toString());
             newCourse.setExclusiveProfessorCount(exclusiveProfessors);
             cs.add(newCourse);
             return true;
@@ -122,7 +122,7 @@ public class CourseRelation implements Serializable {
 
     public CourseRelation getCourseByName(List<CourseRelation> cs, String course) throws ClassNotFoundException {
         for (CourseRelation iterationCS : cs) {
-            if (iterationCS.getName().equals(course)) {
+            if (iterationCS.getId().equals(course)) {
                 return iterationCS;
             }
         }
@@ -137,13 +137,14 @@ public class CourseRelation implements Serializable {
         this.totalProfessors++;
     }
 
+    //TODO refazer metodo
     public void sumTotalProfessors() {
         List<String> professors = new ArrayList<>();
         for (Intersection iteratorIntersection : this.getIntersection()) {
             if (professors.isEmpty()) {
-                professors.addAll(iteratorIntersection.getProfessorsNameList());
+                professors.addAll(iteratorIntersection.getProfessorsList());
             } else {
-                for (String iteratorProfessors : iteratorIntersection.getProfessorsNameList()) {
+                for (String iteratorProfessors : iteratorIntersection.getProfessorsList()) {
                     if (!professors.contains(iteratorProfessors)) {
                         professors.add(iteratorProfessors);
                     }

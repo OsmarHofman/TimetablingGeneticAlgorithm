@@ -36,7 +36,7 @@ public class ListOperationUtil {
                     itemPattern = ((Intersection) listItem).getIntersectionCourse();
 
                 if (listItem instanceof CourseRelation)
-                    itemPattern = ((CourseRelation) listItem).getName();
+                    itemPattern = ((CourseRelation) listItem).getId();
 
                 if (itemPattern.equals(pattern))
                     return false;
