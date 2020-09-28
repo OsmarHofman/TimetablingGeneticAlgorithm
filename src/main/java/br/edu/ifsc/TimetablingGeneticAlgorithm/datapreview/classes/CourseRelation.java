@@ -107,7 +107,7 @@ public class CourseRelation implements Serializable {
                 } else {
                     nomeCurso.append("-").append(iteratorIntersection.getIntersectionCourse());
                 }
-                CourseRelation course = this.getCourseByName(cs, iteratorIntersection.getIntersectionCourse());
+                CourseRelation course = this.getCourseById(cs, iteratorIntersection.getIntersectionCourse());
                 exclusiveProfessors += course.getExclusiveProfessorCount();
             }
         }
@@ -120,7 +120,7 @@ public class CourseRelation implements Serializable {
         return false;
     }
 
-    public CourseRelation getCourseByName(List<CourseRelation> cs, String course) throws ClassNotFoundException {
+    public CourseRelation getCourseById(List<CourseRelation> cs, String course) throws ClassNotFoundException {
         for (CourseRelation iterationCS : cs) {
             if (iterationCS.getId().equals(course)) {
                 return iterationCS;

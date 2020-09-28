@@ -175,7 +175,7 @@ public class EntitySchedule {
         List<String> professorBlackList = new ArrayList<>();
         for (Intersection iterationIntersection : innerIntersections) {
             for (String iterationProfessor : iterationIntersection.getProfessorsList()) {
-                Professor_Course professor_course = ListOperationUtil.getProfessorByName(iterationProfessor, this.professorRelation);
+                Professor_Course professor_course = ListOperationUtil.getProfessorById(iterationProfessor, this.professorRelation);
                 if (!professorBlackList.contains(professor_course.getProfessor()) && professor_course.checkExclusivity(setName)) {
                     lastCourse.incrementExclusiveProfessorCount();
                     professorBlackList.add(professor_course.getProfessor());

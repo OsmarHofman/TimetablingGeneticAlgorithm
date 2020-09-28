@@ -9,6 +9,7 @@ import br.edu.ifsc.TimetablingGeneticAlgorithm.genetics.Crossover;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.genetics.Mutation;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.genetics.Selection;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.dataaccess.RetrieveIFSCData;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.PreProcessing;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.util.*;
 
 import java.io.IOException;
@@ -42,15 +43,19 @@ public class GeneticAlgorithm {
        ProfessorsScheduleCreation psc = new ProfessorsScheduleCreation(dtoifsc);
 
         //slaves(dtoifsc);
-        EntitySchedule entitySchedule = new EntitySchedule(psc);
+       // EntitySchedule entitySchedule = new EntitySchedule(psc);
+
+        PreProcessing preProcessing = new PreProcessing(psc);
 
         //Lista que cada posição é uma lista de cursos
-        List[] coursesSet = entitySchedule.createSet(joinSetPercentage);
         // IFileHandler fileHandler = new FileHandler();
         // fileHandler.createReport(coursesSet, joinSetPercentage + "%");
 
 
         DTOITC fromIfSC = ConvertFactory.convertIFSCtoITC(dtoifsc);
+
+        preProcessing.preProcess(fromIfSC,dtoifsc,joinSetPercentage);
+
 
         /*Matriz de relação dos horarios
         Sendo que 30 é o número de períodos no dia * dias na semana, ou seja, 6 * 5 = 30

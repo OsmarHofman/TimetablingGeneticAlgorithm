@@ -48,14 +48,14 @@ public class ListOperationUtil {
     /**
      * Obtém um professor através do seu nome.
      *
-     * @param professorName {@link String} com o nome do professor a ser buscado.
+     * @param professorId {@link String} com o id do professor a ser buscado.
      * @param professors    {@link List} de {@link Professor_Course} de onde será buscado.
      * @return O {@link Professor_Course} presente na lista.
-     * @throws ClassNotFoundException caso o {@code professorName} não esteja na lista.
+     * @throws ClassNotFoundException caso o {@code professorId} não esteja na lista.
      */
-    public static Professor_Course getProfessorByName(String professorName, List<Professor_Course> professors) throws ClassNotFoundException {
+    public static Professor_Course getProfessorById(String professorId, List<Professor_Course> professors) throws ClassNotFoundException {
         for (Professor_Course iteratorProfessor : professors) {
-            if (iteratorProfessor.getProfessor().equals(professorName)) {
+            if (iteratorProfessor.getProfessor().equals(professorId)) {
                 return iteratorProfessor;
             }
         }

@@ -10,7 +10,6 @@ import java.util.List;
  * Classe que representa a intersecção de um curso com outros cursos que estão relacionados
  */
 public class Intersection implements Serializable {
-    //TODO REFAZER CLASSE
     private int intersectionProfessorsCount;
     private String intersectionCourse;
     private List<String> professorsList;
