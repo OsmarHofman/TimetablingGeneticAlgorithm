@@ -42,8 +42,6 @@ public class GeneticAlgorithm {
 
        ProfessorsScheduleCreation psc = new ProfessorsScheduleCreation(dtoifsc);
 
-        //slaves(dtoifsc);
-       // EntitySchedule entitySchedule = new EntitySchedule(psc);
 
         PreProcessing preProcessing = new PreProcessing(psc);
 

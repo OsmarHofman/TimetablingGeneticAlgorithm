@@ -1,11 +1,13 @@
 package br.edu.ifsc.TimetablingGeneticAlgorithm.util;
 
-import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.Chromosome;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.datapreview.classes.CourseRelation;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.datapreview.classes.ProfessorCourse;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Course;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Lesson;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Room;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.UnavailabilityConstraint;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -145,6 +147,42 @@ public class DTOITC {
                 ", rooms=" + Arrays.toString(rooms) +
                 ", constraints=" + Arrays.toString(constraints) +
                 '}';
+    }
+
+    public void convertCourseRelationToITC(List<CourseRelation> courseRelations) {
+        String[] names;
+        List<Integer> indexes = new ArrayList<>();
+        for (CourseRelation courseRelation : courseRelations) {
+            int position = -1;
+            if (courseRelation.getId().contains("-")) {
+                names = courseRelation.getId().split("-");
+                for (int i = 0; i < names.length; i++) {
+                    for (int j = 0; j < courses.length; j++) {
+                        if (names[i].equals(courses[j].getCourseId())) {
+                            if (position == -1) {
+                                position = i;
+                                courses[j].setCourseId(courseRelation.getId());
+                            } else {
+                                indexes.add(j);
+                            }
+                        }
+                    }
+                    int totalLessonsNumber = 0;
+                    for (Lesson lesson : lessons) {
+                        if (lesson.getCourseId().equals(names[i])) {
+                            lesson.setCourseId(courseRelation.getId());
+                            totalLessonsNumber++;
+                        }
+                    }
+                    courses[position].setLessonsNumber(totalLessonsNumber);
+                }
+            }
+        }
+        indexes.sort(null);
+        List<Course> courseArrayList = new ArrayList<>(Arrays.asList(courses));
+        ListOperationUtil.removeItemsOnIndexes(indexes,courseArrayList);
+        courses = new Course[courseArrayList.size()];
+        courses = courseArrayList.toArray(courses);
     }
 
 

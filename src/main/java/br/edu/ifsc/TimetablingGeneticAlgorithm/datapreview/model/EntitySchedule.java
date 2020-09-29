@@ -2,7 +2,8 @@ package br.edu.ifsc.TimetablingGeneticAlgorithm.datapreview.model;
 
 import br.edu.ifsc.TimetablingGeneticAlgorithm.datapreview.classes.CourseRelation;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.datapreview.classes.Intersection;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.datapreview.classes.Professor_Course;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.datapreview.classes.ProfessorCourse;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.util.ListOperationUtil;
 
 import java.util.*;
 
@@ -12,7 +13,7 @@ import java.util.*;
 public class EntitySchedule {
 
     private List<CourseRelation> courseRelationList;
-    private List<Professor_Course> professorRelation;
+    private List<ProfessorCourse> professorRelation;
 
 
     public EntitySchedule(ProfessorsScheduleCreation professorsScheduleCreation) {
@@ -155,7 +156,7 @@ public class EntitySchedule {
     }
 
     private void renameProfessorsCourses(List<String> splitSetName, String courseRelation) {
-        for (Professor_Course iterationPC : this.professorRelation) {
+        for (ProfessorCourse iterationPC : this.professorRelation) {
             List<Integer> indexes = new ArrayList<>();
             for (String iterationCourse : iterationPC.getCourse()) {
                 for (String iterationCourseName : splitSetName) {
@@ -175,7 +176,7 @@ public class EntitySchedule {
         List<String> professorBlackList = new ArrayList<>();
         for (Intersection iterationIntersection : innerIntersections) {
             for (String iterationProfessor : iterationIntersection.getProfessorsList()) {
-                Professor_Course professor_course = ListOperationUtil.getProfessorById(iterationProfessor, this.professorRelation);
+                ProfessorCourse professor_course = ListOperationUtil.getProfessorById(iterationProfessor, this.professorRelation);
                 if (!professorBlackList.contains(professor_course.getProfessor()) && professor_course.checkExclusivity(setName)) {
                     lastCourse.incrementExclusiveProfessorCount();
                     professorBlackList.add(professor_course.getProfessor());

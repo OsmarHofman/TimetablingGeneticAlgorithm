@@ -6,7 +6,7 @@ import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.ifsc.Teacher;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.datapreview.classes.CourseRelation;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.datapreview.classes.Intersection;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.datapreview.classes.ProfessorCourseStatus;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.datapreview.classes.Professor_Course;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.datapreview.classes.ProfessorCourse;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.util.DTOIFSC;
 
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ import java.util.List;
 public class ProfessorsScheduleCreation {
 
     private List<String> coursesList;
-    private List<Professor_Course> professorsList;
+    private List<ProfessorCourse> professorsList;
     private List<CourseRelation> courseRelationList;
 
     public ProfessorsScheduleCreation(DTOIFSC dtoifsc) {
@@ -35,7 +35,7 @@ public class ProfessorsScheduleCreation {
         return coursesList;
     }
 
-    public List<Professor_Course> getProfessorsList() {
+    public List<ProfessorCourse> getProfessorsList() {
         return professorsList;
     }
 
@@ -84,10 +84,10 @@ public class ProfessorsScheduleCreation {
                             for (int i = 0; i < iterationLesson.getTeacherId().length; i++) {
                                 if (iterationTeacher.getId() == iterationLesson.getTeacherId()[i]) {
                                     if (this.professorsList.isEmpty()) {
-                                        this.professorsList.add(new Professor_Course(String.valueOf(iterationTeacher.getId()), new ArrayList<>(Collections.singletonList(cg.getId()))));
+                                        this.professorsList.add(new ProfessorCourse(String.valueOf(iterationTeacher.getId()), new ArrayList<>(Collections.singletonList(cg.getId()))));
                                     } else {
                                         boolean hasAdded = false;
-                                        for (Professor_Course iterationPC : professorsList) {
+                                        for (ProfessorCourse iterationPC : professorsList) {
                                             if (iterationPC.getProfessor().equals(String.valueOf(iterationTeacher.getId()))) {
                                                 if (!iterationPC.getCourse().contains(cg.getId())) {
                                                     iterationPC.getCourse().add(cg.getId());
@@ -96,7 +96,7 @@ public class ProfessorsScheduleCreation {
                                             }
                                         }
                                         if (!hasAdded) {
-                                            this.professorsList.add(new Professor_Course(String.valueOf(iterationTeacher.getId()), new ArrayList<>(Collections.singletonList(cg.getId()))));
+                                            this.professorsList.add(new ProfessorCourse(String.valueOf(iterationTeacher.getId()), new ArrayList<>(Collections.singletonList(cg.getId()))));
                                         }
                                     }
                                 }
@@ -115,7 +115,7 @@ public class ProfessorsScheduleCreation {
         System.out.println("Criando a relação entre os professores e os cursos...\n");
         for (String courseName : this.coursesList) {
             CourseRelation iterationCourseRelation = new CourseRelation(courseName);
-            for (Professor_Course professor : this.professorsList) {
+            for (ProfessorCourse professor : this.professorsList) {
                 String[] result = professor.verifyCourse(courseName);
                 if (result[0].equals(ProfessorCourseStatus.EXCLUSIVE.toString())) {
                     iterationCourseRelation.incrementExclusiveProfessorCount();
@@ -131,7 +131,7 @@ public class ProfessorsScheduleCreation {
         //link professors
         for (CourseRelation courseRelation : this.courseRelationList) {
             for (Intersection intersection : courseRelation.getIntersection()) {
-                for (Professor_Course professor_course : professorsList) {
+                for (ProfessorCourse professor_course : professorsList) {
                     int relatedCourseNumber = 0;
                     for (String iterationCourse : professor_course.getCourse()) {
                         if (iterationCourse.equals(courseRelation.getId()) || iterationCourse.equals(intersection.getIntersectionCourse())) {

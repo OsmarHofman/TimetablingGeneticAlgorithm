@@ -74,7 +74,7 @@ public class ConvertFactory {
             int size = lessonList.size();
             courses[i] = new Course();
             courses[i].setCourseId(String.valueOf(dtoifsc.getClasses().get(i).getId()));
-            courses[i].setCoursesNumber(size);
+            courses[i].setLessonsNumber(size);
             courses[i].setShift(convertTimeoffToShift(String.valueOf(dtoifsc.getClasses().get(i).getTimeoff())));
         }
 

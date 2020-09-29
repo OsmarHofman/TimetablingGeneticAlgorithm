@@ -6,15 +6,15 @@ import java.util.List;
 /**
  * Representação do professor e em que cursos leciona
  */
-public class Professor_Course {
+public class ProfessorCourse {
     private String professor;
     private List<String> course;
 
-    public Professor_Course() {
+    public ProfessorCourse() {
         this.course = new ArrayList<>();
     }
 
-    public Professor_Course(String professor, List<String> curso) {
+    public ProfessorCourse(String professor, List<String> curso) {
         this.professor = professor;
         this.course = curso;
     }

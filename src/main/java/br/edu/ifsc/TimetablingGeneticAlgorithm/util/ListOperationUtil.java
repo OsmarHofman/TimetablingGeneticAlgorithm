@@ -1,9 +1,11 @@
-package br.edu.ifsc.TimetablingGeneticAlgorithm.datapreview.model;
+package br.edu.ifsc.TimetablingGeneticAlgorithm.util;
 
 import br.edu.ifsc.TimetablingGeneticAlgorithm.datapreview.classes.CourseRelation;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.datapreview.classes.Intersection;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.datapreview.classes.Professor_Course;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.datapreview.classes.ProfessorCourse;
 
+import java.lang.reflect.GenericArrayType;
+import java.util.Collections;
 import java.util.List;
 
 public class ListOperationUtil {
@@ -49,16 +51,24 @@ public class ListOperationUtil {
      * Obtém um professor através do seu nome.
      *
      * @param professorId {@link String} com o id do professor a ser buscado.
-     * @param professors    {@link List} de {@link Professor_Course} de onde será buscado.
-     * @return O {@link Professor_Course} presente na lista.
+     * @param professors  {@link List} de {@link ProfessorCourse} de onde será buscado.
+     * @return O {@link ProfessorCourse} presente na lista.
      * @throws ClassNotFoundException caso o {@code professorId} não esteja na lista.
      */
-    public static Professor_Course getProfessorById(String professorId, List<Professor_Course> professors) throws ClassNotFoundException {
-        for (Professor_Course iteratorProfessor : professors) {
+    public static ProfessorCourse getProfessorById(String professorId, List<ProfessorCourse> professors) throws ClassNotFoundException {
+        for (ProfessorCourse iteratorProfessor : professors) {
             if (iteratorProfessor.getProfessor().equals(professorId)) {
                 return iteratorProfessor;
             }
         }
-        throw new ClassNotFoundException(Professor_Course.class.toString() + " não encontrado");
+        throw new ClassNotFoundException(ProfessorCourse.class.toString() + " não encontrado");
+    }
+
+    //TODO INSIRA AQUI DOCUMENTACAO
+    public static void removeItemsOnIndexes(List<Integer> indexes, List<?> list) {
+        Collections.reverse(indexes);
+        for (int index : indexes) {
+            list.remove(index);
+        }
     }
 }

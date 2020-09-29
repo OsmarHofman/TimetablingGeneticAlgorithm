@@ -66,7 +66,7 @@ public class Chromosome {
     private void generateRandom(Lesson[] lessons, Course[] courses, int classSize, DTOIFSC dtoifsc) {
         Random random = new Random();
         for (int i = 0; i < courses.length; i++) {
-            Lesson[] coursesLesson = new Lesson[courses[i].getCoursesNumber()];
+            Lesson[] coursesLesson = new Lesson[courses[i].getLessonsNumber()];
 
             //contador que representa a posição em que será inserida. É necessário pois é feito um foreach, então serve
             //como o índice

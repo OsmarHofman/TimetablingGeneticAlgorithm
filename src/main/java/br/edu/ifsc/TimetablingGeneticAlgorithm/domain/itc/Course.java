@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class Course {
     private String courseId;
-    private int coursesNumber;
+    private int lessonsNumber;
     private Shift shift;
 
     public Course() {
@@ -18,7 +18,7 @@ public class Course {
 
     public Course(String[] parameters) {
         this.courseId = parameters[0];
-        this.coursesNumber = Integer.parseInt(parameters[1]);
+        this.lessonsNumber = Integer.parseInt(parameters[1]);
     }
 
     public String getCourseId() {
@@ -29,12 +29,12 @@ public class Course {
         this.courseId = courseId;
     }
 
-    public int getCoursesNumber() {
-        return coursesNumber;
+    public int getLessonsNumber() {
+        return lessonsNumber;
     }
 
-    public void setCoursesNumber(int coursesNumber) {
-        this.coursesNumber = coursesNumber;
+    public void setLessonsNumber(int lessonsNumber) {
+        this.lessonsNumber = lessonsNumber;
     }
 
     public Shift getShift() {
@@ -49,7 +49,7 @@ public class Course {
     public String toString() {
         return "Course{" +
                 "courseId='" + courseId + '\'' +
-                ", coursesNumber=" + coursesNumber +
+                ", coursesNumber=" + lessonsNumber +
                 ", shift=" + shift +
                 '}';
     }

@@ -2,10 +2,9 @@ package br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing;
 
 import br.edu.ifsc.TimetablingGeneticAlgorithm.datapreview.classes.CourseRelation;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.datapreview.classes.Intersection;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.datapreview.classes.Professor_Course;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.datapreview.model.ListOperationUtil;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.datapreview.classes.ProfessorCourse;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.util.ListOperationUtil;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.datapreview.model.ProfessorsScheduleCreation;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Course;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.util.DTOIFSC;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.util.DTOITC;
 
@@ -17,7 +16,7 @@ import java.util.List;
 public class PreProcessing {
 
         private List<CourseRelation> courseRelationList;
-        private List<Professor_Course> professorRelation;
+        private List<ProfessorCourse> professorRelation;
 
     public PreProcessing(ProfessorsScheduleCreation professorsScheduleCreation) {
         this.professorRelation = professorsScheduleCreation.getProfessorsList();
@@ -60,7 +59,7 @@ public class PreProcessing {
                 this.verifyExclusiveProfessor(innerIntersections, setName);
 
                 //efetivamente retira os cursos que compoem um conjunto
-                this.removeItemsOnIndexes(toRemoveIndexes, this.courseRelationList);
+                ListOperationUtil.removeItemsOnIndexes(toRemoveIndexes, this.courseRelationList);
 
                 //renomeia todos os cursos que tenham uma intersecção com o conjunto criado
                 this.renameIntersection(splitSetName, setName);
@@ -73,8 +72,8 @@ public class PreProcessing {
 
             }
         }
-
-        System.out.println("oi");
+        dtoitc.convertCourseRelationToITC(courseRelationList);
+        //TODO Fazer conversão do DTOIFSC para dados do preProcessamento
     }
 
     private List<String> adjustSetName(String setName, List<String> splitSetName) {
@@ -90,7 +89,7 @@ public class PreProcessing {
                     }
                 }
             }
-            this.removeItemsOnIndexes(indexes, splitSetName);
+            ListOperationUtil.removeItemsOnIndexes(indexes, splitSetName);
             splitSetName.addAll(nameCourses);
 
         } else {
@@ -141,7 +140,7 @@ public class PreProcessing {
     }
 
     private void renameProfessorsCourses(List<String> splitSetName, String courseRelation) {
-        for (Professor_Course iterationPC : this.professorRelation) {
+        for (ProfessorCourse iterationPC : this.professorRelation) {
             List<Integer> indexes = new ArrayList<>();
             for (String iterationCourse : iterationPC.getCourse()) {
                 for (String iterationCourseName : splitSetName) {
@@ -149,7 +148,7 @@ public class PreProcessing {
                         indexes.add(iterationPC.getCourse().indexOf(iterationCourse));
                 }
             }
-            this.removeItemsOnIndexes(indexes, iterationPC.getCourse());
+            ListOperationUtil.removeItemsOnIndexes(indexes, iterationPC.getCourse());
             if (!indexes.isEmpty()) {
                 iterationPC.getCourse().add(courseRelation);
             }
@@ -161,7 +160,7 @@ public class PreProcessing {
         List<String> professorBlackList = new ArrayList<>();
         for (Intersection iterationIntersection : innerIntersections) {
             for (String iterationProfessor : iterationIntersection.getProfessorsList()) {
-                Professor_Course professor_course = ListOperationUtil.getProfessorById(iterationProfessor, this.professorRelation);
+                ProfessorCourse professor_course = ListOperationUtil.getProfessorById(iterationProfessor, this.professorRelation);
                 if (!professorBlackList.contains(professor_course.getProfessor()) && professor_course.checkExclusivity(setName)) {
                     lastCourse.incrementExclusiveProfessorCount();
                     professorBlackList.add(professor_course.getProfessor());
@@ -203,7 +202,7 @@ public class PreProcessing {
                 iterationIntersec.adjustProfessorsCount();
             }
             listSameName.adjustProfessorsCount();
-            this.removeItemsOnIndexes(indexes, iterationCourseRelation.getIntersection());
+            ListOperationUtil.removeItemsOnIndexes(indexes, iterationCourseRelation.getIntersection());
         }
     }
 
@@ -218,12 +217,5 @@ public class PreProcessing {
             }
         }
         return removedInnerIntersection;
-    }
-
-    private void removeItemsOnIndexes(List<Integer> indexes, List<?> list) {
-        Collections.reverse(indexes);
-        for (int index : indexes) {
-            list.remove(index);
-        }
     }
 }
