@@ -49,8 +49,10 @@ public class Avaliation {
                 //obtém o vetor dos professores
                 String[] currentProfessors = dtoitc.getProfessorByLessonId(chromosome.getGenes()[i]);
 
-                //vai de 10 em 10 posições, ou seja, de turma em turma
-                for (int j = i + 10; j < chromosome.getGenes().length; j += 10) {
+                int classSize = chromosome.geneIsPartOfGroup(chromosome.getGenes()[i],dtoitc);
+                //Itera pelo tamanho da classe ou pelo tamanho do grupo, se existir
+
+                for (int j = i + classSize; j < chromosome.getGenes().length; j += classSize) {
                     for (String currentProfessor : currentProfessors) {
 
                         //Caso possa ser dado aula nesse dia. Dias não disponíveis tem valor 0.
@@ -95,9 +97,12 @@ public class Avaliation {
         byte weekOffset = 0;
 
         for (int i = 0; i < chromosome.getGenes().length; i++) {
-            if (periodOffset > 1)
+
+           int classSize = chromosome.geneIsPartOfGroup(chromosome.getGenes()[i],dtoitc);
+
+            if (periodOffset == 2)
                 periodOffset = 0;
-            if (weekOffset > 9)
+            if (weekOffset == classSize)
                 weekOffset = 0;
 
             //Caso possa ser dado aula nesse dia. Dias não disponíveis tem valor 0.

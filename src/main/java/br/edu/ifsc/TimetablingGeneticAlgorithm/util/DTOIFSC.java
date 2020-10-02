@@ -1,5 +1,6 @@
 package br.edu.ifsc.TimetablingGeneticAlgorithm.util;
 
+import br.edu.ifsc.TimetablingGeneticAlgorithm.datapreview.classes.CourseRelation;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.ifsc.*;
 
 
@@ -148,6 +149,49 @@ public class DTOIFSC {
                 subjects.equals(that.subjects) &&
                 professors.equals(that.professors) &&
                 rooms.equals(that.rooms);
+    }
+
+    public void convertCourseRelationToDTOIFSC(List<CourseRelation> courseRelationList){
+        for (CourseRelation courseRelation:courseRelationList) {
+            if (courseRelation.getId().contains("-")){
+                String[] splitName = courseRelation.getId().split("-");
+                int position = -1;
+                for (String courseName :splitName) {
+                    for (Classes classe:classes) {
+                        if (courseName.equals(String.valueOf(classe.getId()))){
+                            if (position == -1){
+                                position = classes.indexOf(classe);
+                                classe.setName(this.getClassNameById(splitName));
+                                break;
+                            }
+                        }
+                    }
+                }
+                int classId = classes.get(position).getId();
+                for (Lesson lesson:lessons) {
+                    for (String courseName:splitName) {
+                        if (courseName.equals(String.valueOf(lesson.getClassesId()))){
+                            lesson.setClassesId(classId);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private String getClassNameById(String[] splitName){
+        StringBuilder name = new StringBuilder();
+        for (String courseName:splitName) {
+            for (Classes classe: classes) {
+                if (courseName.equals(String.valueOf(classe.getId()))){
+                    if (name.toString().equals(""))
+                        name.append(classe.getName());
+                    else
+                        name.append(" - ").append(classe.getName());
+                }
+            }
+        }
+        return name.toString();
     }
 
     @Override

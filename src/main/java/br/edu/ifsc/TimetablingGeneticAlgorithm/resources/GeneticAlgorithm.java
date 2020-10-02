@@ -50,18 +50,18 @@ public class GeneticAlgorithm {
         // fileHandler.createReport(coursesSet, joinSetPercentage + "%");
 
 
-        DTOITC fromIfSC = ConvertFactory.convertIFSCtoITC(dtoifsc);
+        DTOITC dtoitc = ConvertFactory.convertIFSCtoITC(dtoifsc);
 
-        preProcessing.preProcess(fromIfSC,dtoifsc,joinSetPercentage);
+        preProcessing.preProcess(dtoitc,dtoifsc,joinSetPercentage);
 
 
         /*Matriz de relação dos horarios
         Sendo que 30 é o número de períodos no dia * dias na semana, ou seja, 6 * 5 = 30
         */
 
-        boolean[][] scheduleRelation = new boolean[fromIfSC.getLessons().length][30];
-        for (int i = 0; i < fromIfSC.getLessons().length; i++) {
-            for (UnavailabilityConstraint iterationConstraints : fromIfSC.getLessons()[i].getConstraints()) {
+        boolean[][] scheduleRelation = new boolean[dtoitc.getLessons().length][30];
+        for (int i = 0; i < dtoitc.getLessons().length; i++) {
+            for (UnavailabilityConstraint iterationConstraints : dtoitc.getLessons()[i].getConstraints()) {
                 scheduleRelation[i][6 * iterationConstraints.getDay() + iterationConstraints.getDayPeriod()] = true;
             }
         }
@@ -71,11 +71,11 @@ public class GeneticAlgorithm {
 
         Chromosome[] population = new Chromosome[populationSize];
         //Inicializando população
-        Arrays.setAll(population, i -> new Chromosome(fromIfSC.getCourses().length, classSize, fromIfSC.getLessons(), fromIfSC.getCourses(), dtoifsc));
+        Arrays.setAll(population, i -> new Chromosome(dtoitc.getCourses().length, classSize, dtoitc.getLessons(), dtoitc.getCourses(), dtoifsc));
 
         for (Chromosome chromosome : population) {
             chromosome.setHasViolatedHardConstraint(false);
-            chromosome.setAvaliation(Avaliation.rate(chromosome, fromIfSC, scheduleRelation));
+            chromosome.setAvaliation(Avaliation.rate(chromosome, dtoitc, scheduleRelation));
         }
 
         // checkCourses(dtoifsc);
@@ -83,7 +83,8 @@ public class GeneticAlgorithm {
         Chromosome globalBestChromosome = localBest;
         long startTime = System.currentTimeMillis();
 
-        while (iterationLimit < 300 && ((localBest.getAvaliation() < 4700) || localBest.isHasViolatedHardConstraint())) { // fazer verificação baseado no BOOLEAN do cromossomo, além das outras condições
+        //TODO verificar avaliação, mutação e crossover
+        while (iterationLimit < geracoes && ((localBest.getAvaliation() < 4700) || localBest.isHasViolatedHardConstraint())) { // fazer verificação baseado no BOOLEAN do cromossomo, além das outras condições
 
 
             //Seleção por elitismo
@@ -102,7 +103,7 @@ public class GeneticAlgorithm {
             Chromosome[] newCouples = Selection.rouletteWheel(population, ratingHandler, faA, proportion);
 
             //Crossover
-            Chromosome[] crossedChromosomes = Crossover.cross(newCouples, classSize, crossPercentage);
+            Chromosome[] crossedChromosomes = Crossover.cross(newCouples, classSize, crossPercentage,dtoitc);
 
             //Unindo as Subpopulações geradas por elitismo e roleta
             Chromosome[] newGeneration = new Chromosome[populationSize];
@@ -119,7 +120,7 @@ public class GeneticAlgorithm {
 
             for (Chromosome chromosome : population) {
                 chromosome.setHasViolatedHardConstraint(false);
-                chromosome.setAvaliation(Avaliation.rate(chromosome, fromIfSC, scheduleRelation));
+                chromosome.setAvaliation(Avaliation.rate(chromosome, dtoitc, scheduleRelation));
             }
 
             localBest = Chromosome.getBestChromosome(population);
@@ -135,7 +136,7 @@ public class GeneticAlgorithm {
         System.out.println(globalBestChromosome.toString());
         System.out.println("tempo Final: " + (endTime - startTime));
         System.out.println("iteração: " + iterationLimit);
-        return DTOSchedule.convertChromosome(globalBestChromosome, dtoifsc, fromIfSC);
+        return DTOSchedule.convertChromosome(globalBestChromosome, dtoifsc, dtoitc);
     }
 
 }

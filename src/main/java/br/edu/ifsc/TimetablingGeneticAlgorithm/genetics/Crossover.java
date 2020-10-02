@@ -1,6 +1,7 @@
 package br.edu.ifsc.TimetablingGeneticAlgorithm.genetics;
 
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.Chromosome;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.util.DTOITC;
 
 import java.util.Random;
 
@@ -14,7 +15,7 @@ public class Crossover {
      * @param crossPercentage porcentagem de cruzamento, ou seja, 10%, 20%, etc.
      * @return nova população de {@link Chromosome}.
      */
-    public static Chromosome[] cross(Chromosome[] chromosomes, int classSize, int crossPercentage) {
+    public static Chromosome[] cross(Chromosome[] chromosomes, int classSize, int crossPercentage, DTOITC dtoitc) throws ClassNotFoundException {
         Random random = new Random();
         Chromosome[] newGeneration = new Chromosome[chromosomes.length];
         int size = chromosomes[0].getGenes().length;
@@ -29,13 +30,21 @@ public class Crossover {
                 int group = random.nextInt(size - classSize) / classSize;
                 //variável que indica a metade inferior do número de matérias. Isso para garantir que o primeiro
                 //valor aleatório para ponte de corte, será menor que o segundo.
-                int cutPoint1 = group * classSize;
-                int cutPoint2 = (random.nextInt(size-cutPoint1)+10)/classSize * classSize + cutPoint1;
+                int cutPoint1;
+                int cutPoint2;
+                //TODO alterar método para validar os cutpoints para que não seja cortado no meio o conjunto;
+                do {
+                    cutPoint1 = group * classSize;
 
-                if(cutPoint1 == 0 && cutPoint2 == 300){
+                } while (chromosomes[i].geneIsPartOfGroup(dtoitc, cutPoint1));
+                do {
+                    cutPoint2 = (random.nextInt(size - cutPoint1) + 10) / classSize * classSize + cutPoint1;
+                } while (chromosomes[i].geneIsPartOfGroup(dtoitc, cutPoint2));
+
+                if (cutPoint1 == 0 && cutPoint2 == 300) {
                     newGeneration[i] = p1;
                     newGeneration[i + 1] = p2;
-                }else {
+                } else {
 
                     Chromosome c1 = new Chromosome(size);
                     Chromosome c2 = new Chromosome(size);
@@ -74,18 +83,18 @@ public class Crossover {
         for (int j = 0; j < size; j++) {
             if (parentIterator == size)
                 parentIterator = 0;
-                if (isNotRepeated(p1, cutPoint1, cutPoint2, p2[parentIterator])) {
-                    if (j < cutPoint1 || j >= cutPoint2) {
-                        for (int i = j; i < j+10; i++) {
-                            child.getGenes()[i] = p2[parentIterator];
-                            parentIterator++;
-                        }
-                        j+=9;
+            if (isNotRepeated(p1, cutPoint1, cutPoint2, p2[parentIterator])) {
+                if (j < cutPoint1 || j >= cutPoint2) {
+                    for (int i = j; i < j + 10; i++) {
+                        child.getGenes()[i] = p2[parentIterator];
+                        parentIterator++;
                     }
-                } else {
-                    parentIterator+=10;
-                    j--;
+                    j += 9;
                 }
+            } else {
+                parentIterator += 10;
+                j--;
+            }
         }
     }
 

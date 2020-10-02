@@ -156,26 +156,26 @@ public class DTOITC {
             int position = -1;
             if (courseRelation.getId().contains("-")) {
                 names = courseRelation.getId().split("-");
-                for (int i = 0; i < names.length; i++) {
+                int totalLessonsNumber = 0;
+                for (String name : names) {
                     for (int j = 0; j < courses.length; j++) {
-                        if (names[i].equals(courses[j].getCourseId())) {
+                        if (name.equals(courses[j].getCourseId())) {
                             if (position == -1) {
-                                position = i;
+                                position = j;
                                 courses[j].setCourseId(courseRelation.getId());
                             } else {
                                 indexes.add(j);
                             }
                         }
                     }
-                    int totalLessonsNumber = 0;
                     for (Lesson lesson : lessons) {
-                        if (lesson.getCourseId().equals(names[i])) {
+                        if (lesson.getCourseId().equals(name)) {
                             lesson.setCourseId(courseRelation.getId());
                             totalLessonsNumber++;
                         }
                     }
-                    courses[position].setLessonsNumber(totalLessonsNumber);
                 }
+                courses[position].setLessonsNumber(totalLessonsNumber);
             }
         }
         indexes.sort(null);

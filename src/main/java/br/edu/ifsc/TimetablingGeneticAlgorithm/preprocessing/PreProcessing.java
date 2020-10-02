@@ -73,7 +73,7 @@ public class PreProcessing {
             }
         }
         dtoitc.convertCourseRelationToITC(courseRelationList);
-        //TODO Fazer conversão do DTOIFSC para dados do preProcessamento
+        dtoifsc.convertCourseRelationToDTOIFSC(courseRelationList);
     }
 
     private List<String> adjustSetName(String setName, List<String> splitSetName) {
