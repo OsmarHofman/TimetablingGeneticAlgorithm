@@ -5,6 +5,8 @@ import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Lesson;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.util.DTOITC;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.util.Shift;
 
+import java.util.Arrays;
+
 public class Avaliation {
 
 
@@ -49,10 +51,8 @@ public class Avaliation {
                 //obtém o vetor dos professores
                 String[] currentProfessors = dtoitc.getProfessorByLessonId(chromosome.getGenes()[i]);
 
-                int classSize = chromosome.geneIsPartOfGroup(chromosome.getGenes()[i],dtoitc);
-                //Itera pelo tamanho da classe ou pelo tamanho do grupo, se existir
-
-                for (int j = i + classSize; j < chromosome.getGenes().length; j += classSize) {
+                //vai de 10 em 10 posições, ou seja, de turma em turma
+                for (int j = i + 10; j < chromosome.getGenes().length; j += 10) {
                     for (String currentProfessor : currentProfessors) {
 
                         //Caso possa ser dado aula nesse dia. Dias não disponíveis tem valor 0.
@@ -98,11 +98,9 @@ public class Avaliation {
 
         for (int i = 0; i < chromosome.getGenes().length; i++) {
 
-           int classSize = chromosome.geneIsPartOfGroup(chromosome.getGenes()[i],dtoitc);
-
-            if (periodOffset == 2)
+            if (periodOffset > 1)
                 periodOffset = 0;
-            if (weekOffset == classSize)
+            if (weekOffset > 9)
                 weekOffset = 0;
 
             //Caso possa ser dado aula nesse dia. Dias não disponíveis tem valor 0.
@@ -113,13 +111,14 @@ public class Avaliation {
                 int lessonPosition = dtoitc.getLessonPosition(lesson.getLessonId());
 
                 //obtém o turno do Lesson
-                Shift shift = dtoitc.getShiftByCourseId(lesson.getCourseId());
-
-                //cálculo para obter o boolean que representa a disponibilidade do professor na matriz. Sendo que
-                // os valores "2" representam o número de aulas por dia, e o "6", as aulas com seus turnos.
-
-                if (relationMatrix[lessonPosition][((shift.ordinal() * 2 + periodOffset) + (6 * Math.floorDiv(weekOffset, 2)))]) {
-                    avaliation += 5;
+                String shifts = dtoitc.getShiftByCourseId(lesson.getCourseId());
+                String[] splitShift = shifts.split("-");
+                for (String shift : splitShift) {
+                    //cálculo para obter o boolean que representa a disponibilidade do professor na matriz. Sendo que
+                    // os valores "2" representam o número de aulas por dia, e o "6", as aulas com seus turnos.
+                    if (relationMatrix[lessonPosition][((Integer.parseInt(shift) * 2 + periodOffset) + (6 * Math.floorDiv(weekOffset, 2)))]) {
+                        avaliation += 5;
+                    }
                 }
                 periodOffset++;
                 weekOffset++;

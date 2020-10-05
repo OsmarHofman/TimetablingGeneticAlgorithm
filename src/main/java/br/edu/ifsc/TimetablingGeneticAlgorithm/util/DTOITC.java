@@ -115,7 +115,7 @@ public class DTOITC {
      * @return {@link Lesson} com o Id correspondente.
      * @throws ClassNotFoundException Erro quando a matéria não é encontrado
      */
-    public Shift getShiftByCourseId(String courseId) throws ClassNotFoundException {
+    public String getShiftByCourseId(String courseId) throws ClassNotFoundException {
         for (Course course : this.courses) {
             if (course.getCourseId().equals(courseId)) {
                 return course.getShift();
@@ -165,6 +165,8 @@ public class DTOITC {
                                 courses[j].setCourseId(courseRelation.getId());
                             } else {
                                 indexes.add(j);
+                                if (!courses[position].getShift().contains(courses[j].getShift()))
+                                    courses[position].setShift(courses[position].getShift() + "-" + courses[j].getShift());
                             }
                         }
                     }

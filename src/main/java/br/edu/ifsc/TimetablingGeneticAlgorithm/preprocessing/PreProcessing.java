@@ -52,7 +52,7 @@ public class PreProcessing {
                 //seleciona os cursos iguais e junta suas intersecções
                 List<Intersection> innerIntersections = this.selectCoursesToRemove(splitSetName, intersectionList, toRemoveIndexes);
 
-                //renomea o nome dos cursos de cada professor, para substituirem pelo conjunto formado
+                //renomeia o nome dos cursos de cada professor, para substituirem pelo conjunto formado
                 this.renameProfessorsCourses(splitSetName, lastCourse.getId());
 
                 //agora passa o setName, que é o nome inteiro do conjunto sem split, ja que foi substituido antes

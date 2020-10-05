@@ -215,7 +215,7 @@ public class Chromosome {
         return best;
     }
 
-    public int geneIsPartOfGroup(int gene, DTOITC dtoitc) throws ClassNotFoundException {
+    public int getCourseSizeByGene(int gene, DTOITC dtoitc) throws ClassNotFoundException {
         String id = dtoitc.getLessonById(gene).getCourseId();
         if (id.contains("-")){
             return id.split("-").length * 10;
@@ -223,11 +223,17 @@ public class Chromosome {
         return 10;
     }
 
-    public boolean geneIsPartOfGroup(DTOITC dtoitc, int position) throws ClassNotFoundException {
+    public boolean isGenePartOfGroup(DTOITC dtoitc, int position) throws ClassNotFoundException {
         int gene = getGenes()[position];
         String id = dtoitc.getLessonById(gene).getCourseId();
-        return id.contains("-");
+        if (id.contains("-")){
+            gene = getGenes()[position-1];
+            id = dtoitc.getLessonById(gene).getCourseId();
+            return !id.contains("-");
+        }
+        return true;
     }
+
 
     @Override
     public String toString() {

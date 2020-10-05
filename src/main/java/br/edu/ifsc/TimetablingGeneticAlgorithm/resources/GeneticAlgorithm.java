@@ -83,7 +83,7 @@ public class GeneticAlgorithm {
         Chromosome globalBestChromosome = localBest;
         long startTime = System.currentTimeMillis();
 
-        //TODO verificar avaliação, mutação e crossover
+        //TODO verificar mutação
         while (iterationLimit < geracoes && ((localBest.getAvaliation() < 4700) || localBest.isHasViolatedHardConstraint())) { // fazer verificação baseado no BOOLEAN do cromossomo, além das outras condições
 
 
@@ -112,7 +112,7 @@ public class GeneticAlgorithm {
             System.arraycopy(eliteChromosomes, 0, newGeneration, crossedChromosomes.length, eliteChromosomes.length);
 
             //Mutação
-             Mutation.swapMutation(newGeneration, classSize, mutationPercentage);
+             Mutation.swapMutation(newGeneration, classSize, mutationPercentage,dtoitc);
 
             iterationLimit++;
 

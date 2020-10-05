@@ -32,14 +32,13 @@ public class Crossover {
                 //valor aleatório para ponte de corte, será menor que o segundo.
                 int cutPoint1;
                 int cutPoint2;
-                //TODO alterar método para validar os cutpoints para que não seja cortado no meio o conjunto;
                 do {
                     cutPoint1 = group * classSize;
+                } while (chromosomes[i].isGenePartOfGroup(dtoitc, cutPoint1));
 
-                } while (chromosomes[i].geneIsPartOfGroup(dtoitc, cutPoint1));
                 do {
                     cutPoint2 = (random.nextInt(size - cutPoint1) + 10) / classSize * classSize + cutPoint1;
-                } while (chromosomes[i].geneIsPartOfGroup(dtoitc, cutPoint2));
+                } while (chromosomes[i].isGenePartOfGroup(dtoitc, cutPoint2));
 
                 if (cutPoint1 == 0 && cutPoint2 == 300) {
                     newGeneration[i] = p1;
