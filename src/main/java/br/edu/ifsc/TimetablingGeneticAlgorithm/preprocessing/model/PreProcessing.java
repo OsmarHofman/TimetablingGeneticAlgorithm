@@ -1,8 +1,8 @@
 package br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.model;
 
-import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.classes.CourseRelation;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.classes.Intersection;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.classes.ProfessorCourse;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.entities.CourseRelation;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.entities.Intersection;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.entities.ProfessorCourse;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.util.ListOperationUtil;
 
 import java.util.*;
@@ -10,13 +10,13 @@ import java.util.*;
 /**
  * Classe que representa as relações entre os cursos e os professores
  */
-public class EntitySchedule {
+public class PreProcessing {
 
     private List<CourseRelation> courseRelationList;
     private List<ProfessorCourse> professorRelation;
 
 
-    public EntitySchedule(ProfessorsScheduleCreation professorsScheduleCreation) {
+    public PreProcessing(ProfessorsScheduleCreation professorsScheduleCreation) {
         this.professorRelation = professorsScheduleCreation.getProfessorsList();
         this.courseRelationList = professorsScheduleCreation.getCourseRelationList();
     }
@@ -55,7 +55,7 @@ public class EntitySchedule {
                 this.verifyExclusiveProfessor(innerIntersections, setName);
 
                 //efetivamente retira os cursos que compoem um conjunto
-                this.removeItemsOnIndexes(toRemoveIndexes, this.courseRelationList);
+                ListOperationUtil.removeItemsOnIndexes(toRemoveIndexes, this.courseRelationList);
 
                 //renomeia todos os cursos que tenham uma intersecção com o conjunto criado
                 this.renameIntersection(splitSetName, setName);
@@ -75,7 +75,6 @@ public class EntitySchedule {
         for (int i = 0; i < formattedDataList.length; i++)
             formattedDataList[i] = new ArrayList<>(Arrays.asList(splitNewReportData[i].split("-")));
 
-
         return formattedDataList;
     }
 
@@ -92,7 +91,7 @@ public class EntitySchedule {
                     }
                 }
             }
-            this.removeItemsOnIndexes(indexes, splitSetName);
+            ListOperationUtil.removeItemsOnIndexes(indexes, splitSetName);
             splitSetName.addAll(nameCourses);
 
         } else {
@@ -164,7 +163,7 @@ public class EntitySchedule {
                         indexes.add(iterationPC.getCourse().indexOf(iterationCourse));
                 }
             }
-            this.removeItemsOnIndexes(indexes, iterationPC.getCourse());
+            ListOperationUtil.removeItemsOnIndexes(indexes, iterationPC.getCourse());
             if (!indexes.isEmpty()) {
                 iterationPC.getCourse().add(courseRelation);
             }
@@ -218,14 +217,7 @@ public class EntitySchedule {
                 iterationIntersec.adjustProfessorsCount();
             }
             listSameName.adjustProfessorsCount();
-            this.removeItemsOnIndexes(indexes, iterationCourseRelation.getIntersection());
-        }
-    }
-
-    private void removeItemsOnIndexes(List<Integer> indexes, List<?> list) {
-        Collections.reverse(indexes);
-        for (int index : indexes) {
-            list.remove(index);
+            ListOperationUtil.removeItemsOnIndexes(indexes, iterationCourseRelation.getIntersection());
         }
     }
 }

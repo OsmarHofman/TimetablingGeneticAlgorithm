@@ -13,7 +13,7 @@ public class Lesson {
     private String courseId;
     private String[] professorId;
     private int lecturesNumber; //lecturesNumber = durationPeriods do IFSC
-    private int minWorkingDays; //minWorkingDays = calculo (periodPerWeek / durationPeriod) do IFSC
+    private int minWorkingDays; //minWorkingDays = cálculo (periodPerWeek / durationPeriod) do IFSC
     private int studentsNumber;
     private UnavailabilityConstraint[] constraints;
     private Room room;
@@ -90,36 +90,6 @@ public class Lesson {
         this.room = room;
     }
 
-    public void mergeCourseLessonConstraints(List<UnavailabilityConstraint> newConstraints) {
-        newConstraints.addAll(Arrays.asList(this.constraints));
-        this.constraints = new UnavailabilityConstraint[newConstraints.size()];
-        this.constraints = newConstraints.toArray(this.constraints);
-    }
-
-    @Override
-    public String toString() {
-        return "Lesson{" +
-                "lessonId='" + lessonId + '\'' +
-                ", courseId='" + courseId + '\'' +
-                ", professorId=" + Arrays.toString(professorId) +
-                ", lecturesNumber=" + lecturesNumber +
-                ", minWorkingDays=" + minWorkingDays +
-                ", studentsNumber=" + studentsNumber +
-                ", constraints=" + Arrays.toString(constraints) +
-                ", room=" + room +
-                '}';
-    }
-
-    public static Lesson getLessonById(List<Lesson> allLessons, String id) throws ClassNotFoundException {
-        for (Lesson iteratorLesson : allLessons) {
-            if (iteratorLesson.getLessonId().equals(id)) {
-                return iteratorLesson;
-            }
-        }
-        throw new ClassNotFoundException("Lesson não encontrada");
-    }
-
-
     /**
      * Associa as constraints a lesson.
      *
@@ -134,6 +104,20 @@ public class Lesson {
         }
         this.constraints = new UnavailabilityConstraint[constraintList.size()];
         this.constraints = constraintList.toArray(this.constraints);
+    }
 
+
+    @Override
+    public String toString() {
+        return "Lesson{" +
+                "lessonId='" + lessonId + '\'' +
+                ", courseId='" + courseId + '\'' +
+                ", professorId=" + Arrays.toString(professorId) +
+                ", lecturesNumber=" + lecturesNumber +
+                ", minWorkingDays=" + minWorkingDays +
+                ", studentsNumber=" + studentsNumber +
+                ", constraints=" + Arrays.toString(constraints) +
+                ", room=" + room +
+                '}';
     }
 }

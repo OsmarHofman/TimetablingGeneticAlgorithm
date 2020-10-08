@@ -1,6 +1,9 @@
-package br.edu.ifsc.TimetablingGeneticAlgorithm.resources;
+package br.edu.ifsc.TimetablingGeneticAlgorithm.geneticalgorithm;
 
-import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.model.EntitySchedule;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOIFSC;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOITC;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOSchedule;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.model.PreProcessing;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.model.ProfessorsScheduleCreation;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.Chromosome;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.UnavailabilityConstraint;
@@ -41,9 +44,9 @@ public class GeneticAlgorithm {
 
         ProfessorsScheduleCreation psc = new ProfessorsScheduleCreation(dtoifsc);
 
-        EntitySchedule entitySchedule = new EntitySchedule(psc);
+        PreProcessing preProcessing = new PreProcessing(psc);
         //Lista que cada posição é uma lista de cursos
-        List[] coursesSet = entitySchedule.createSet(joinSetPercentage);
+        List[] coursesSet = preProcessing.createSet(joinSetPercentage);
         // IFileHandler fileHandler = new FileHandler();
         // fileHandler.createReport(coursesSet, joinSetPercentage + "%");
 
@@ -77,7 +80,7 @@ public class GeneticAlgorithm {
         Chromosome globalBestChromosome = localBest;
         long startTime = System.currentTimeMillis();
 
-        while (iterationLimit < geracoes && ((localBest.getAvaliation() < 4700) || localBest.isHasViolatedHardConstraint())) { // fazer verificação baseado no BOOLEAN do cromossomo, além das outras condições
+        while (iterationLimit < geracoes && ((localBest.getAvaliation() < 4700) || localBest.isHasViolatedHardConstraint())) {
 
 
             //Seleção por elitismo
@@ -106,9 +109,7 @@ public class GeneticAlgorithm {
 
             //Mutação
             Mutation.swapMutation(newGeneration, classSize, mutationPercentage);
-
-            iterationLimit++;
-
+            
             population = newGeneration;
 
             for (Chromosome chromosome : population) {
@@ -120,6 +121,7 @@ public class GeneticAlgorithm {
             if (globalBestChromosome.getAvaliation() < localBest.getAvaliation())
                 globalBestChromosome = localBest;
 
+            iterationLimit++;
 
             System.out.println("\nIteração: " + iterationLimit);
 //            System.out.println("Avaliação: " + localBest.getAvaliation());

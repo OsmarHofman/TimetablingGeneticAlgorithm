@@ -1,6 +1,7 @@
-package br.edu.ifsc.TimetablingGeneticAlgorithm.util;
+package br.edu.ifsc.TimetablingGeneticAlgorithm.dtos;
 
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.ifsc.*;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Shift;
 
 
 import java.util.ArrayList;
@@ -74,6 +75,22 @@ public class DTOIFSC {
         this.rooms = rooms;
     }
 
+
+    /**
+     * Converte um timeoff (formato do XMl do IFSC) para um turno.
+     *
+     * @param timeoff {@link String} que representa o timeoff a ser convertido.
+     * @return {@link Shift} com o turno correspondente.
+     */
+    private Shift convertTimeoffToShift(String timeoff) {
+        String[] days = timeoff.replace(".", "").split(",");
+        if (days[0].charAt(0) == '1')
+            return Shift.MATUTINO;
+        else if (days[0].charAt(4) == '1')
+            return Shift.VESPERTINO;
+        return Shift.NOTURNO;
+    }
+
     /**
      * Verifica se há algum dado inconsistente (somente para verificação).
      */
@@ -100,21 +117,6 @@ public class DTOIFSC {
         System.out.println("manha: " + morningCourses.toString());
         System.out.println("tarde: " + afternoonCourses.toString());
         System.out.println("noite: " + nightCourses.toString());
-    }
-
-    /**
-     * Converte um timeoff (formato do XMl do IFSC) para um turno.
-     *
-     * @param timeoff {@link String} que representa o timeoff a ser convertido.
-     * @return {@link Shift} com o turno correspondente.
-     */
-    private Shift convertTimeoffToShift(String timeoff) {
-        String[] days = timeoff.replace(".", "").split(",");
-        if (days[0].charAt(0) == '1')
-            return Shift.MATUTINO;
-        else if (days[0].charAt(4) == '1')
-            return Shift.VESPERTINO;
-        return Shift.NOTURNO;
     }
 
     /**

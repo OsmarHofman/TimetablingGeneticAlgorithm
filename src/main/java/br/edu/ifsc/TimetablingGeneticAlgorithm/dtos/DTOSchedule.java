@@ -1,4 +1,4 @@
-package br.edu.ifsc.TimetablingGeneticAlgorithm.util;
+package br.edu.ifsc.TimetablingGeneticAlgorithm.dtos;
 
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.Chromosome;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.ifsc.Classes;
@@ -130,7 +130,7 @@ public class DTOSchedule implements Serializable {
                                 }
                             }
                         }
-                        
+
                         //Identifica qual o dia da semana que está sendo lecionada a matéria
                         int weekDay = weekOffset / 2;
                         subjects.add(new ScheduleSubject(lessonName, professorName.toString(), weekDay, periodOffset));
@@ -154,10 +154,6 @@ public class DTOSchedule implements Serializable {
         private String professorsName;
         private int weekDay;
         private int subjectPeriod;
-
-        public ScheduleSubject() {
-        }
-
 
         public ScheduleSubject(String subjectName, String professorsName, int weekDay, int subjectPeriod) {
             this.subjectName = subjectName;

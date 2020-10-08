@@ -1,4 +1,4 @@
-package br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.classes;
+package br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.entities;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,10 +9,6 @@ import java.util.List;
 public class ProfessorCourse {
     private String professor;
     private List<String> course;
-
-    public ProfessorCourse() {
-        this.course = new ArrayList<>();
-    }
 
     public ProfessorCourse(String professor, List<String> curso) {
         this.professor = professor;

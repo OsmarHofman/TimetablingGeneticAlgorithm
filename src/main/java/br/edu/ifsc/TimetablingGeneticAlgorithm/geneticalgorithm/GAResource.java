@@ -1,7 +1,7 @@
-package br.edu.ifsc.TimetablingGeneticAlgorithm.resources;
+package br.edu.ifsc.TimetablingGeneticAlgorithm.geneticalgorithm;
 
 
-import br.edu.ifsc.TimetablingGeneticAlgorithm.util.DTOSchedule;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOSchedule;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

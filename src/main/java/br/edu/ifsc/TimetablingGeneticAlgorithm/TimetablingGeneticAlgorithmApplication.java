@@ -1,7 +1,6 @@
 package br.edu.ifsc.TimetablingGeneticAlgorithm;
 
-import br.edu.ifsc.TimetablingGeneticAlgorithm.resources.GeneticAlgorithm;
-import org.springframework.boot.SpringApplication;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.geneticalgorithm.GeneticAlgorithm;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.IOException;

@@ -5,7 +5,7 @@ import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Course;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Lesson;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Room;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.UnavailabilityConstraint;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.util.DTOITC;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOITC;
 
 import java.io.File;
 import java.io.FileNotFoundException;

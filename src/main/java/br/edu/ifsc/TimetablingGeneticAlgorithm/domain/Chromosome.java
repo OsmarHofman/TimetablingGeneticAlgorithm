@@ -3,7 +3,7 @@ package br.edu.ifsc.TimetablingGeneticAlgorithm.domain;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.ifsc.Subject;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Course;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Lesson;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.util.DTOIFSC;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOIFSC;
 
 import java.util.*;
 

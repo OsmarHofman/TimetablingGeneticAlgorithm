@@ -12,7 +12,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.util.DTOIFSC;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOIFSC;
 
 /**
  * Classe que obtém os dados diretamente do XML gerado pelo IFSC

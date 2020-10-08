@@ -30,15 +30,17 @@ public class Mutation {
                 //obtém-se os dois pontos de troca, isso é necessário para manter o chromossomo sem valores repetidos.
                 //Então ao invés de ser atribuído um valor aleatório, serão trocados dois valores em posições aleatórias
 
-                int swapPoint1 = random.nextInt(classSize / 2) + infLimit;
-                while(chromosome.getGenes()[swapPoint1] == 0){
+                int swapPoint1;
+                do {
                     swapPoint1 = random.nextInt(classSize / 2) + infLimit;
-                }
+                } while (chromosome.getGenes()[swapPoint1] == 0);
 
-                int swapPoint2 = random.nextInt(classSize / 2) + infLimit + (classSize / 2);
-                while(chromosome.getGenes()[swapPoint2] == 0){
+                int swapPoint2;
+                do {
                     swapPoint2 = random.nextInt(classSize / 2) + infLimit + (classSize / 2);
-                }
+                } while (chromosome.getGenes()[swapPoint2] == 0);
+
+
                 int aux = chromosome.getGenes()[swapPoint1];
 
                 //faz a troca dos dois genes

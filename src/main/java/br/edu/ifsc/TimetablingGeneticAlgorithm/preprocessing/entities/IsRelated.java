@@ -1,4 +1,4 @@
-package br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.classes;
+package br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.entities;
 
 public class IsRelated {
 

@@ -1,8 +1,9 @@
 package br.edu.ifsc.TimetablingGeneticAlgorithm.genetics;
 
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.Chromosome;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.util.DTOITC;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Crossover {
@@ -28,6 +29,8 @@ public class Crossover {
             //se cruzar
             if (crossChance < crossPercentage) {
                 int group = random.nextInt(size) / classSize;
+                //TODO refazer para fazer o cruzamento intraturma a partir de um arraylist
+
                 //variável que indica a metade inferior do número de matérias. Isso para garantir que o primeiro
                 //valor aleatório para ponte de corte, será menor que o segundo.
                 int infLimit = group * classSize;

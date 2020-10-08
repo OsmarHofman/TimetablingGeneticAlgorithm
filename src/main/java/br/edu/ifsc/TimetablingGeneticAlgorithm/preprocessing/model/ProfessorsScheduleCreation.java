@@ -3,11 +3,11 @@ package br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.model;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.ifsc.Classes;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.ifsc.Lesson;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.ifsc.Teacher;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.classes.CourseRelation;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.classes.Intersection;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.classes.ProfessorCourseStatus;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.classes.ProfessorCourse;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.util.DTOIFSC;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.entities.CourseRelation;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.entities.Intersection;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.entities.ProfessorCourseStatus;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.entities.ProfessorCourse;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOIFSC;
 
 import java.util.ArrayList;
 import java.util.Collections;

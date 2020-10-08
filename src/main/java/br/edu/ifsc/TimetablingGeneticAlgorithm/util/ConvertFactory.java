@@ -1,10 +1,9 @@
 package br.edu.ifsc.TimetablingGeneticAlgorithm.util;
 
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.ifsc.Teacher;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Course;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Lesson;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Room;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.UnavailabilityConstraint;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.*;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOIFSC;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOITC;
 
 import java.util.ArrayList;
 import java.util.List;

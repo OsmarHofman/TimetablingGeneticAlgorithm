@@ -2,8 +2,8 @@ package br.edu.ifsc.TimetablingGeneticAlgorithm.genetics;
 
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.Chromosome;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Lesson;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.util.DTOITC;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.util.Shift;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOITC;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Shift;
 
 public class Avaliation {
 

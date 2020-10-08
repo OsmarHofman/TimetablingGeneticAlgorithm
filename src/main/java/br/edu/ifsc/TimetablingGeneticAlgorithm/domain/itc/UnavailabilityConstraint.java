@@ -8,9 +8,6 @@ public class UnavailabilityConstraint {
     private int day;
     private int dayPeriod;
 
-    public UnavailabilityConstraint() {
-    }
-
     public UnavailabilityConstraint(String id, int day, int dayPeriod) {
         this.id = id;
         this.day = day;

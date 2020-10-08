@@ -1,4 +1,4 @@
-package br.edu.ifsc.TimetablingGeneticAlgorithm.util;
+package br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc;
 
 public enum Shift {
     MATUTINO,
