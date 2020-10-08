@@ -223,13 +223,13 @@ public class ConvertFactory {
      * @param timeoff {@link String} que representa o valor a ser convertido.
      * @return {@link Shift} que indica qual o turno.
      */
-    private static String convertTimeoffToShift(String timeoff) {
+    private static Shift convertTimeoffToShift(String timeoff) {
         String[] days = timeoff.replace(".", "").split(",");
         if (days[0].charAt(0) == '1')
-            return "0";
+            return Shift.MATUTINO;
         else if (days[0].charAt(4) == '1')
-            return "1";
-        return "2";
+            return Shift.VESPERTINO;
+        return Shift.NOTURNO;
 
     }
 }

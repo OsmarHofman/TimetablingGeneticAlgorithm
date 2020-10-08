@@ -1,7 +1,6 @@
 package br.edu.ifsc.TimetablingGeneticAlgorithm.genetics;
 
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.Chromosome;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.util.DTOITC;
 
 import java.util.Random;
 
@@ -14,9 +13,7 @@ public class Mutation {
      * @param classSize          {@link Integer} que representa quantas posições cada turma ocupa no {@link Chromosome}.
      * @param mutationPercentage {@link Integer} que representa a chance dessa etapa ocorrer.
      */
-
-    //TODO Testar metodo
-    public static void swapMutation(Chromosome[] chromosomes, int classSize, int mutationPercentage, DTOITC dtoitc) throws ClassNotFoundException {
+    public static void swapMutation(Chromosome[] chromosomes, int classSize, int mutationPercentage) {
         Random random = new Random();
 
         for (Chromosome chromosome : chromosomes) {
@@ -24,30 +21,24 @@ public class Mutation {
 
             //Verifica se o cromossomo atual será mutado
             if (mutationChance < mutationPercentage) {
-                //identifica qual o limite inferior (a primeira posição) da turma atual
-                int courseFirstPosition;
-                do {
-                    courseFirstPosition = random.nextInt(chromosomes[0].getGenes().length) / classSize;
-                } while (chromosome.isGenePartOfGroup(dtoitc, courseFirstPosition));
-
-                classSize = chromosome.getCourseSizeByGene(chromosome.getGenes()[courseFirstPosition], dtoitc);
+                //identifica o "grupo", ou seja, qual o limite inferior (a primeira posição) da turma atual
+                int group = random.nextInt(chromosomes[0].getGenes().length) / classSize;
 
                 //limite superior (última posição) da turma
-                int courseLastPosition = courseFirstPosition * classSize;
+                int infLimit = group * classSize;
 
                 //obtém-se os dois pontos de troca, isso é necessário para manter o chromossomo sem valores repetidos.
                 //Então ao invés de ser atribuído um valor aleatório, serão trocados dois valores em posições aleatórias
 
-                int swapPoint1;
-                do{
-                    swapPoint1 = random.nextInt(classSize / 2) + courseLastPosition;
-                } while(chromosome.getGenes()[swapPoint1] == 0);
+                int swapPoint1 = random.nextInt(classSize / 2) + infLimit;
+                while(chromosome.getGenes()[swapPoint1] == 0){
+                    swapPoint1 = random.nextInt(classSize / 2) + infLimit;
+                }
 
-                int swapPoint2;
-                do{
-                    swapPoint2 = random.nextInt(classSize / 2) + courseLastPosition + (classSize / 2);
-                }while(chromosome.getGenes()[swapPoint2] == 0);
-
+                int swapPoint2 = random.nextInt(classSize / 2) + infLimit + (classSize / 2);
+                while(chromosome.getGenes()[swapPoint2] == 0){
+                    swapPoint2 = random.nextInt(classSize / 2) + infLimit + (classSize / 2);
+                }
                 int aux = chromosome.getGenes()[swapPoint1];
 
                 //faz a troca dos dois genes

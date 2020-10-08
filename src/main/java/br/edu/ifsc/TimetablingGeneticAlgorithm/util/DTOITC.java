@@ -1,13 +1,10 @@
 package br.edu.ifsc.TimetablingGeneticAlgorithm.util;
 
-import br.edu.ifsc.TimetablingGeneticAlgorithm.datapreview.classes.CourseRelation;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.datapreview.classes.ProfessorCourse;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Course;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Lesson;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Room;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.UnavailabilityConstraint;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -115,7 +112,7 @@ public class DTOITC {
      * @return {@link Lesson} com o Id correspondente.
      * @throws ClassNotFoundException Erro quando a matéria não é encontrado
      */
-    public String getShiftByCourseId(String courseId) throws ClassNotFoundException {
+    public Shift getShiftByCourseId(String courseId) throws ClassNotFoundException {
         for (Course course : this.courses) {
             if (course.getCourseId().equals(courseId)) {
                 return course.getShift();
@@ -147,44 +144,6 @@ public class DTOITC {
                 ", rooms=" + Arrays.toString(rooms) +
                 ", constraints=" + Arrays.toString(constraints) +
                 '}';
-    }
-
-    public void convertCourseRelationToITC(List<CourseRelation> courseRelations) {
-        String[] names;
-        List<Integer> indexes = new ArrayList<>();
-        for (CourseRelation courseRelation : courseRelations) {
-            int position = -1;
-            if (courseRelation.getId().contains("-")) {
-                names = courseRelation.getId().split("-");
-                int totalLessonsNumber = 0;
-                for (String name : names) {
-                    for (int j = 0; j < courses.length; j++) {
-                        if (name.equals(courses[j].getCourseId())) {
-                            if (position == -1) {
-                                position = j;
-                                courses[j].setCourseId(courseRelation.getId());
-                            } else {
-                                indexes.add(j);
-                                if (!courses[position].getShift().contains(courses[j].getShift()))
-                                    courses[position].setShift(courses[position].getShift() + "-" + courses[j].getShift());
-                            }
-                        }
-                    }
-                    for (Lesson lesson : lessons) {
-                        if (lesson.getCourseId().equals(name)) {
-                            lesson.setCourseId(courseRelation.getId());
-                            totalLessonsNumber++;
-                        }
-                    }
-                }
-                courses[position].setLessonsNumber(totalLessonsNumber);
-            }
-        }
-        indexes.sort(null);
-        List<Course> courseArrayList = new ArrayList<>(Arrays.asList(courses));
-        ListOperationUtil.removeItemsOnIndexes(indexes,courseArrayList);
-        courses = new Course[courseArrayList.size()];
-        courses = courseArrayList.toArray(courses);
     }
 
 

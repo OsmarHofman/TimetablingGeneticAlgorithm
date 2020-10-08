@@ -3,7 +3,6 @@ package br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.ifsc.Classes;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.util.Shift;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -12,7 +11,7 @@ import java.util.List;
 public class Course {
     private String courseId;
     private int lessonsNumber;
-    private String shift;
+    private Shift shift;
 
     public Course() {
     }
@@ -38,11 +37,11 @@ public class Course {
         this.lessonsNumber = lessonsNumber;
     }
 
-    public String getShift() {
+    public Shift getShift() {
         return shift;
     }
 
-    public void setShift(String shift) {
+    public void setShift(Shift shift) {
         this.shift = shift;
     }
 
@@ -50,8 +49,12 @@ public class Course {
     public String toString() {
         return "Course{" +
                 "courseId='" + courseId + '\'' +
-                ", lessonsNumber=" + lessonsNumber +
-                ", shift='" + shift + '\'' +
+                ", coursesNumber=" + lessonsNumber +
+                ", shift=" + shift +
                 '}';
+    }
+
+    public boolean joinIntersection(int percentage, List<Classes> classes) {
+        return true;
     }
 }

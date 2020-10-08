@@ -1,4 +1,4 @@
-package br.edu.ifsc.TimetablingGeneticAlgorithm.datapreview.classes;
+package br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.classes;
 
 import br.edu.ifsc.TimetablingGeneticAlgorithm.util.ListOperationUtil;
 

@@ -1,7 +1,7 @@
 package br.edu.ifsc.TimetablingGeneticAlgorithm.resources;
 
-import br.edu.ifsc.TimetablingGeneticAlgorithm.datapreview.model.EntitySchedule;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.datapreview.model.ProfessorsScheduleCreation;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.model.EntitySchedule;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.model.ProfessorsScheduleCreation;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.Chromosome;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.UnavailabilityConstraint;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.genetics.Avaliation;
@@ -9,7 +9,6 @@ import br.edu.ifsc.TimetablingGeneticAlgorithm.genetics.Crossover;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.genetics.Mutation;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.genetics.Selection;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.dataaccess.RetrieveIFSCData;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.PreProcessing;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.util.*;
 
 import java.io.IOException;
@@ -40,21 +39,16 @@ public class GeneticAlgorithm {
         RetrieveIFSCData retrieveIFSCData = new RetrieveIFSCData();
         DTOIFSC dtoifsc = retrieveIFSCData.getAllData();
 
-       ProfessorsScheduleCreation psc = new ProfessorsScheduleCreation(dtoifsc);
+        ProfessorsScheduleCreation psc = new ProfessorsScheduleCreation(dtoifsc);
 
-
-        PreProcessing preProcessing = new PreProcessing(psc);
-
+        EntitySchedule entitySchedule = new EntitySchedule(psc);
         //Lista que cada posição é uma lista de cursos
+        List[] coursesSet = entitySchedule.createSet(joinSetPercentage);
         // IFileHandler fileHandler = new FileHandler();
         // fileHandler.createReport(coursesSet, joinSetPercentage + "%");
 
 
         DTOITC dtoitc = ConvertFactory.convertIFSCtoITC(dtoifsc);
-
-        preProcessing.preProcess(dtoitc,dtoifsc,joinSetPercentage);
-
-
         /*Matriz de relação dos horarios
         Sendo que 30 é o número de períodos no dia * dias na semana, ou seja, 6 * 5 = 30
         */
@@ -83,7 +77,6 @@ public class GeneticAlgorithm {
         Chromosome globalBestChromosome = localBest;
         long startTime = System.currentTimeMillis();
 
-        //TODO verificar mutação
         while (iterationLimit < geracoes && ((localBest.getAvaliation() < 4700) || localBest.isHasViolatedHardConstraint())) { // fazer verificação baseado no BOOLEAN do cromossomo, além das outras condições
 
 
@@ -103,7 +96,7 @@ public class GeneticAlgorithm {
             Chromosome[] newCouples = Selection.rouletteWheel(population, ratingHandler, faA, proportion);
 
             //Crossover
-            Chromosome[] crossedChromosomes = Crossover.cross(newCouples, classSize, crossPercentage,dtoitc);
+            Chromosome[] crossedChromosomes = Crossover.cross(newCouples, classSize, crossPercentage);
 
             //Unindo as Subpopulações geradas por elitismo e roleta
             Chromosome[] newGeneration = new Chromosome[populationSize];
@@ -112,7 +105,7 @@ public class GeneticAlgorithm {
             System.arraycopy(eliteChromosomes, 0, newGeneration, crossedChromosomes.length, eliteChromosomes.length);
 
             //Mutação
-             Mutation.swapMutation(newGeneration, classSize, mutationPercentage,dtoitc);
+            Mutation.swapMutation(newGeneration, classSize, mutationPercentage);
 
             iterationLimit++;
 

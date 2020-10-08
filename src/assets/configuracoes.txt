@@ -3,5 +3,5 @@ tamanhoTurma=10
 porcentagemElitismo=10
 porcentagemCruzamento=60
 porcentagemMutacao=10
-porcentagemJuncaoCurso=75
+porcentagemJuncaoCurso=60
 geracoes=1000

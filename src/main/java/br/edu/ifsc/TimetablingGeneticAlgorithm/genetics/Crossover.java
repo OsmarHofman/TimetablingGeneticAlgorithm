@@ -15,7 +15,7 @@ public class Crossover {
      * @param crossPercentage porcentagem de cruzamento, ou seja, 10%, 20%, etc.
      * @return nova população de {@link Chromosome}.
      */
-    public static Chromosome[] cross(Chromosome[] chromosomes, int classSize, int crossPercentage, DTOITC dtoitc) throws ClassNotFoundException {
+    public static Chromosome[] cross(Chromosome[] chromosomes, int classSize, int crossPercentage){
         Random random = new Random();
         Chromosome[] newGeneration = new Chromosome[chromosomes.length];
         int size = chromosomes[0].getGenes().length;
@@ -27,38 +27,25 @@ public class Crossover {
 
             //se cruzar
             if (crossChance < crossPercentage) {
-                int group = random.nextInt(size - classSize) / classSize;
+                int group = random.nextInt(size) / classSize;
                 //variável que indica a metade inferior do número de matérias. Isso para garantir que o primeiro
                 //valor aleatório para ponte de corte, será menor que o segundo.
-                int cutPoint1;
-                int cutPoint2;
-                do {
-                    cutPoint1 = group * classSize;
-                } while (chromosomes[i].isGenePartOfGroup(dtoitc, cutPoint1));
-
-                do {
-                    cutPoint2 = (random.nextInt(size - cutPoint1) + 10) / classSize * classSize + cutPoint1;
-                } while (chromosomes[i].isGenePartOfGroup(dtoitc, cutPoint2));
-
-                if (cutPoint1 == 0 && cutPoint2 == 300) {
-                    newGeneration[i] = p1;
-                    newGeneration[i + 1] = p2;
-                } else {
-
-                    Chromosome c1 = new Chromosome(size);
-                    Chromosome c2 = new Chromosome(size);
-                    for (int j = cutPoint1; j < cutPoint2; j++) {
-                        c1.getGenes()[j] = p1.getGenes()[j];
-                        c2.getGenes()[j] = p2.getGenes()[j];
-                    }
-
-                    //passa os gênes dos pais para seus dois filhos
-                    transfer(c1, cutPoint1, cutPoint2, p1.getGenes(), p2.getGenes(), size);
-                    transfer(c2, cutPoint1, cutPoint2, p2.getGenes(), p1.getGenes(), size);
-
-                    newGeneration[i] = c1;
-                    newGeneration[i + 1] = c2;
+                int infLimit = group * classSize;
+                int cutPoint1 = random.nextInt(classSize / 2) + infLimit;
+                int cutPoint2 = random.nextInt(classSize / 2) + infLimit + (classSize / 2);
+                Chromosome c1 = new Chromosome(size);
+                Chromosome c2 = new Chromosome(size);
+                for (int j = cutPoint1 + 1; j <= cutPoint2; j++) {
+                    c1.getGenes()[j] = p1.getGenes()[j];
+                    c2.getGenes()[j] = p2.getGenes()[j];
                 }
+
+                //passa os gênes dos pais para seus dois filhos
+                transfer(c1, cutPoint1, cutPoint2, p1.getGenes(), p2.getGenes(), size);
+                transfer(c2, cutPoint1, cutPoint2, p2.getGenes(), p1.getGenes(), size);
+
+                newGeneration[i] = c1;
+                newGeneration[i + 1] = c2;
             } else {
                 newGeneration[i] = p1;
                 newGeneration[i + 1] = p2;

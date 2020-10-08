@@ -4,7 +4,6 @@ import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.ifsc.Subject;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Course;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Lesson;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.util.DTOIFSC;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.util.DTOITC;
 
 import java.util.*;
 
@@ -214,26 +213,6 @@ public class Chromosome {
 
         return best;
     }
-
-    public int getCourseSizeByGene(int gene, DTOITC dtoitc) throws ClassNotFoundException {
-        String id = dtoitc.getLessonById(gene).getCourseId();
-        if (id.contains("-")){
-            return id.split("-").length * 10;
-        }
-        return 10;
-    }
-
-    public boolean isGenePartOfGroup(DTOITC dtoitc, int position) throws ClassNotFoundException {
-        int gene = getGenes()[position];
-        String id = dtoitc.getLessonById(gene).getCourseId();
-        if (id.contains("-")){
-            gene = getGenes()[position-1];
-            id = dtoitc.getLessonById(gene).getCourseId();
-            return !id.contains("-");
-        }
-        return true;
-    }
-
 
     @Override
     public String toString() {

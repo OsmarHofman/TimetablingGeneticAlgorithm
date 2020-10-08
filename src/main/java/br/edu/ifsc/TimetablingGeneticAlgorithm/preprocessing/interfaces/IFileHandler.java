@@ -1,4 +1,4 @@
-package br.edu.ifsc.TimetablingGeneticAlgorithm.datapreview.interfaces;
+package br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.interfaces;
 
 import java.io.IOException;
 

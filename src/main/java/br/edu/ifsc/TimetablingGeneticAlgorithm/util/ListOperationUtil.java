@@ -1,10 +1,9 @@
 package br.edu.ifsc.TimetablingGeneticAlgorithm.util;
 
-import br.edu.ifsc.TimetablingGeneticAlgorithm.datapreview.classes.CourseRelation;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.datapreview.classes.Intersection;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.datapreview.classes.ProfessorCourse;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.classes.CourseRelation;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.classes.Intersection;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.classes.ProfessorCourse;
 
-import java.lang.reflect.GenericArrayType;
 import java.util.Collections;
 import java.util.List;
 
@@ -38,7 +37,7 @@ public class ListOperationUtil {
                     itemPattern = ((Intersection) listItem).getIntersectionCourse();
 
                 if (listItem instanceof CourseRelation)
-                    itemPattern = ((CourseRelation) listItem).getId();
+                    itemPattern = ((CourseRelation) listItem).getName();
 
                 if (itemPattern.equals(pattern))
                     return false;

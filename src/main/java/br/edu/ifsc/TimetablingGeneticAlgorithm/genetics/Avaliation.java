@@ -5,8 +5,6 @@ import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Lesson;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.util.DTOITC;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.util.Shift;
 
-import java.util.Arrays;
-
 public class Avaliation {
 
 
@@ -97,7 +95,6 @@ public class Avaliation {
         byte weekOffset = 0;
 
         for (int i = 0; i < chromosome.getGenes().length; i++) {
-
             if (periodOffset > 1)
                 periodOffset = 0;
             if (weekOffset > 9)
@@ -111,14 +108,13 @@ public class Avaliation {
                 int lessonPosition = dtoitc.getLessonPosition(lesson.getLessonId());
 
                 //obtém o turno do Lesson
-                String shifts = dtoitc.getShiftByCourseId(lesson.getCourseId());
-                String[] splitShift = shifts.split("-");
-                for (String shift : splitShift) {
-                    //cálculo para obter o boolean que representa a disponibilidade do professor na matriz. Sendo que
-                    // os valores "2" representam o número de aulas por dia, e o "6", as aulas com seus turnos.
-                    if (relationMatrix[lessonPosition][((Integer.parseInt(shift) * 2 + periodOffset) + (6 * Math.floorDiv(weekOffset, 2)))]) {
-                        avaliation += 5;
-                    }
+                Shift shift = dtoitc.getShiftByCourseId(lesson.getCourseId());
+
+                //cálculo para obter o boolean que representa a disponibilidade do professor na matriz. Sendo que
+                // os valores "2" representam o número de aulas por dia, e o "6", as aulas com seus turnos.
+
+                if (relationMatrix[lessonPosition][((shift.ordinal() * 2 + periodOffset) + (6 * Math.floorDiv(weekOffset, 2)))]) {
+                    avaliation += 5;
                 }
                 periodOffset++;
                 weekOffset++;

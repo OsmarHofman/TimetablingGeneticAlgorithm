@@ -1,65 +1,61 @@
-package br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing;
+package br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.model;
 
-import br.edu.ifsc.TimetablingGeneticAlgorithm.datapreview.classes.CourseRelation;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.datapreview.classes.Intersection;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.datapreview.classes.ProfessorCourse;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.classes.CourseRelation;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.classes.Intersection;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.classes.ProfessorCourse;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.util.ListOperationUtil;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.datapreview.model.ProfessorsScheduleCreation;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.util.DTOIFSC;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.util.DTOITC;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
-public class PreProcessing {
+/**
+ * Classe que representa as relações entre os cursos e os professores
+ */
+public class EntitySchedule {
 
-        private List<CourseRelation> courseRelationList;
-        private List<ProfessorCourse> professorRelation;
+    private List<CourseRelation> courseRelationList;
+    private List<ProfessorCourse> professorRelation;
 
-    public PreProcessing(ProfessorsScheduleCreation professorsScheduleCreation) {
+
+    public EntitySchedule(ProfessorsScheduleCreation professorsScheduleCreation) {
         this.professorRelation = professorsScheduleCreation.getProfessorsList();
         this.courseRelationList = professorsScheduleCreation.getCourseRelationList();
     }
 
-    public void preProcess(DTOITC dtoitc, DTOIFSC dtoifsc, int percentage) throws ClassNotFoundException {
+    public List[] createSet(int percentage) throws ClassNotFoundException {
+        String reportData = this.courseRelationList.toString();
         List<String> splitSetName;
+        String setName;
 
         boolean hasJoined = true;
-        while (hasJoined){
-            CourseRelation lastCourse = null , newCourse = null;
+        while (hasJoined) {
+            CourseRelation lastCourse = null;
             splitSetName = new ArrayList<>();
-            String setName;
-
-            for (CourseRelation iterationCourse: courseRelationList) {
-                hasJoined = iterationCourse.joinIntersections(percentage,courseRelationList);
+            for (CourseRelation iterationCS : this.courseRelationList) {
+                hasJoined = iterationCS.joinIntersections(percentage, this.courseRelationList);
 
                 if (hasJoined) {
                     lastCourse = this.courseRelationList.get(this.courseRelationList.size() - 1);
-                    splitSetName = this.adjustSetName(lastCourse.getId(), splitSetName);
+                    splitSetName = this.adjustSetName(lastCourse.getName(), splitSetName);
                     break;
                 }
-
             }
-
             if (splitSetName.size() != 0) {
-                lastCourse.setId(lastCourse.getId().replace("--", "-"));
-                setName = lastCourse.getId();
+                lastCourse.setName(lastCourse.getName().replace("--", "-"));
+                setName = lastCourse.getName();
 
                 List<Integer> toRemoveIndexes = new ArrayList<>();
                 List<Intersection> intersectionList = new ArrayList<>();
                 //seleciona os cursos iguais e junta suas intersecções
                 List<Intersection> innerIntersections = this.selectCoursesToRemove(splitSetName, intersectionList, toRemoveIndexes);
 
-                //renomeia o nome dos cursos de cada professor, para substituirem pelo conjunto formado
-                this.renameProfessorsCourses(splitSetName, lastCourse.getId());
+                //renomea o nome dos cursos de cada professor, para substituirem pelo conjunto formado
+                this.renameProfessorsCourses(splitSetName, lastCourse.getName());
 
                 //agora passa o setName, que é o nome inteiro do conjunto sem split, ja que foi substituido antes
                 this.verifyExclusiveProfessor(innerIntersections, setName);
 
                 //efetivamente retira os cursos que compoem um conjunto
-                ListOperationUtil.removeItemsOnIndexes(toRemoveIndexes, this.courseRelationList);
+                this.removeItemsOnIndexes(toRemoveIndexes, this.courseRelationList);
 
                 //renomeia todos os cursos que tenham uma intersecção com o conjunto criado
                 this.renameIntersection(splitSetName, setName);
@@ -70,10 +66,17 @@ public class PreProcessing {
                 //recalcula o total de professores do conjunto
                 lastCourse.sumTotalProfessors();
 
+                reportData = this.courseRelationList.toString();
             }
         }
-        dtoitc.convertCourseRelationToITC(courseRelationList);
-        dtoifsc.convertCourseRelationToDTOIFSC(courseRelationList);
+        String newReportData = reportData.replace("[", "").replace("]", "");
+        String[] splitNewReportData = newReportData.split(",");
+        List[] formattedDataList = new ArrayList[splitNewReportData.length];
+        for (int i = 0; i < formattedDataList.length; i++)
+            formattedDataList[i] = new ArrayList<>(Arrays.asList(splitNewReportData[i].split("-")));
+
+
+        return formattedDataList;
     }
 
     private List<String> adjustSetName(String setName, List<String> splitSetName) {
@@ -89,7 +92,7 @@ public class PreProcessing {
                     }
                 }
             }
-            ListOperationUtil.removeItemsOnIndexes(indexes, splitSetName);
+            this.removeItemsOnIndexes(indexes, splitSetName);
             splitSetName.addAll(nameCourses);
 
         } else {
@@ -105,7 +108,7 @@ public class PreProcessing {
         for (int i = 0; i < this.courseRelationList.size(); i++) {
             CourseRelation iterationCourse = this.courseRelationList.get(i);
             for (int j = 0; j < splitname.size(); j++) {
-                if (iterationCourse.getId().equals(splitname.get(j))) {
+                if (iterationCourse.getName().equals(splitname.get(j))) {
                     if (intersectionList.isEmpty())
                         intersectionList.addAll(iterationCourse.getIntersection());
                     else
@@ -139,6 +142,19 @@ public class PreProcessing {
         secondCourseIntersections.addAll(newIntersections);
     }
 
+    private List<Intersection> removeInnerDuplicatedCourses(List<String> splitName, List<Intersection> intersectionList, List<Intersection> removedInnerIntersection) {
+        for (int i = 0; i < intersectionList.size(); i++) {
+            for (int j = 0; j < splitName.size(); j++) {
+                if (intersectionList.get(i).getIntersectionCourse().equals(splitName.get(j))) {
+                    //essa lista é onde vai ser colocada as intersections removidas
+                    removedInnerIntersection.add(intersectionList.remove(i));
+                    return removeInnerDuplicatedCourses(splitName, intersectionList, removedInnerIntersection);
+                }
+            }
+        }
+        return removedInnerIntersection;
+    }
+
     private void renameProfessorsCourses(List<String> splitSetName, String courseRelation) {
         for (ProfessorCourse iterationPC : this.professorRelation) {
             List<Integer> indexes = new ArrayList<>();
@@ -148,7 +164,7 @@ public class PreProcessing {
                         indexes.add(iterationPC.getCourse().indexOf(iterationCourse));
                 }
             }
-            ListOperationUtil.removeItemsOnIndexes(indexes, iterationPC.getCourse());
+            this.removeItemsOnIndexes(indexes, iterationPC.getCourse());
             if (!indexes.isEmpty()) {
                 iterationPC.getCourse().add(courseRelation);
             }
@@ -202,20 +218,14 @@ public class PreProcessing {
                 iterationIntersec.adjustProfessorsCount();
             }
             listSameName.adjustProfessorsCount();
-            ListOperationUtil.removeItemsOnIndexes(indexes, iterationCourseRelation.getIntersection());
+            this.removeItemsOnIndexes(indexes, iterationCourseRelation.getIntersection());
         }
     }
 
-    private List<Intersection> removeInnerDuplicatedCourses(List<String> splitName, List<Intersection> intersectionList, List<Intersection> removedInnerIntersection) {
-        for (int i = 0; i < intersectionList.size(); i++) {
-            for (int j = 0; j < splitName.size(); j++) {
-                if (intersectionList.get(i).getIntersectionCourse().equals(splitName.get(j))) {
-                    //essa lista é onde vai ser colocada as intersections removidas
-                    removedInnerIntersection.add(intersectionList.remove(i));
-                    return removeInnerDuplicatedCourses(splitName, intersectionList, removedInnerIntersection);
-                }
-            }
+    private void removeItemsOnIndexes(List<Integer> indexes, List<?> list) {
+        Collections.reverse(indexes);
+        for (int index : indexes) {
+            list.remove(index);
         }
-        return removedInnerIntersection;
     }
 }
