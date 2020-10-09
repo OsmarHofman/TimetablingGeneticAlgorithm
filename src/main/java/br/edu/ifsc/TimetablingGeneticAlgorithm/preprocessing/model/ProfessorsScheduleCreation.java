@@ -3,10 +3,8 @@ package br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.model;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.ifsc.Classes;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.ifsc.Lesson;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.ifsc.Teacher;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.entities.CourseRelation;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.entities.Intersection;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.entities.ProfessorCourseStatus;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.entities.ProfessorCourse;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Course;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.entities.*;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOIFSC;
 
 import java.util.ArrayList;
@@ -18,7 +16,7 @@ import java.util.List;
  */
 public class ProfessorsScheduleCreation {
 
-    private List<String> coursesList;
+    private List<CourseGroup> coursesList;
     private List<ProfessorCourse> professorsList;
     private List<CourseRelation> courseRelationList;
 
@@ -31,7 +29,7 @@ public class ProfessorsScheduleCreation {
         }
     }
 
-    public List<String> getCoursesList() {
+    public List<CourseGroup> getCoursesList() {
         return coursesList;
     }
 
@@ -46,57 +44,55 @@ public class ProfessorsScheduleCreation {
     private void getCoursesAndProfessorsByFile(DTOIFSC dtoifsc) {
         this.coursesList = new ArrayList<>();
         this.professorsList = new ArrayList<>();
-        List<CourseGroup> courseGroupList = this.joinCourses(dtoifsc.getClasses());
-        getProfessors(dtoifsc, courseGroupList);
+        this.joinCourses(dtoifsc.getClasses());
+        this.getProfessors(dtoifsc);
 
     }
 
-    private List<CourseGroup> joinCourses(List<Classes> courses) {
-        List<CourseGroup> courseGroups = new ArrayList<>();
-        for (Classes iterationClasses : courses) {
-            String courseName = iterationClasses.getShortName().substring(0, iterationClasses.getShortName().length() - 1);
-            if (courseGroups.isEmpty()) {
-                courseGroups.add(new CourseGroup(courseName, new ArrayList<>(Collections.singletonList(iterationClasses.getId()))));
-                this.coursesList.add(courseName);
+    private void joinCourses(List<Classes> courses) {
+        for (Classes course : courses) {
+            String courseName = course.getShortName().substring(0, course.getShortName().length() - 1);
+            if (this.coursesList.isEmpty()) {
+                this.coursesList.add(new CourseGroup(courseName, new ArrayList<>(Collections.singletonList(course.getId()))));
             } else {
                 boolean hasAdded = false;
-                for (CourseGroup courseGroup : courseGroups) {
-                    if (courseGroup.getName().equals(courseName)) {
-                        courseGroup.getBlacklist().add(iterationClasses.getId());
-                        hasAdded = true;
+                for (CourseGroup courseGroup : this.coursesList) {
+                    if (courseGroup.getGroupName().equals(courseName)) {
+                        if (!courseGroup.getCourses().contains(course.getId())) {
+                            courseGroup.getCourses().add(course.getId());
+                            hasAdded = true;
+                        }
                     }
                 }
                 if (!hasAdded) {
-                    courseGroups.add(new CourseGroup(courseName, new ArrayList<>(Collections.singletonList(iterationClasses.getId()))));
-                    this.coursesList.add(courseName);
+                    this.coursesList.add(new CourseGroup(courseName, new ArrayList<>(Collections.singletonList(course.getId()))));
                 }
             }
         }
-        return courseGroups;
     }
 
-    private void getProfessors(DTOIFSC dtoifsc, List<CourseGroup> courseGroups) {
-        for (CourseGroup cg : courseGroups) {
-            for (int ids : cg.getBlacklist()) {
+    private void getProfessors(DTOIFSC dtoifsc) {
+        for (CourseGroup cg : this.coursesList) {
+            for (int ids : cg.getCourses())
                 for (Lesson iterationLesson : dtoifsc.getLessons()) {
                     if (iterationLesson.getClassesId() == ids) {
                         for (Teacher iterationTeacher : dtoifsc.getProfessors()) {
                             for (int i = 0; i < iterationLesson.getTeacherId().length; i++) {
                                 if (iterationTeacher.getId() == iterationLesson.getTeacherId()[i]) {
                                     if (this.professorsList.isEmpty()) {
-                                        this.professorsList.add(new ProfessorCourse(iterationTeacher.getName(), new ArrayList<>(Collections.singletonList(cg.getName()))));
+                                        this.professorsList.add(new ProfessorCourse(iterationTeacher.getName(), new ArrayList<>(Collections.singletonList(cg.getGroupName()))));
                                     } else {
                                         boolean hasAdded = false;
                                         for (ProfessorCourse iterationPC : professorsList) {
                                             if (iterationPC.getProfessor().equals(iterationTeacher.getName())) {
-                                                if (!iterationPC.getCourse().contains(cg.getName())) {
-                                                    iterationPC.getCourse().add(cg.getName());
+                                                if (!iterationPC.getCourse().contains(cg.getGroupName())) {
+                                                    iterationPC.getCourse().add(cg.getGroupName());
                                                 }
                                                 hasAdded = true;
                                             }
                                         }
                                         if (!hasAdded) {
-                                            this.professorsList.add(new ProfessorCourse(iterationTeacher.getName(), new ArrayList<>(Collections.singletonList(cg.getName()))));
+                                            this.professorsList.add(new ProfessorCourse(iterationTeacher.getName(), new ArrayList<>(Collections.singletonList(cg.getGroupName()))));
                                         }
                                     }
                                 }
@@ -104,7 +100,7 @@ public class ProfessorsScheduleCreation {
                         }
                     }
                 }
-            }
+
         }
     }
 
@@ -113,7 +109,8 @@ public class ProfessorsScheduleCreation {
         courseRelationList = new ArrayList<>();
 
         System.out.println("Criando a relação entre os professores e os cursos...\n");
-        for (String courseName : this.coursesList) {
+        for (CourseGroup course : this.coursesList) {
+            String courseName = course.getGroupName();
             CourseRelation iterationCourseRelation = new CourseRelation(courseName);
             for (ProfessorCourse professor : this.professorsList) {
                 String[] result = professor.verifyCourse(courseName);
@@ -147,33 +144,4 @@ public class ProfessorsScheduleCreation {
         }
         System.out.println("Relação entre professores e cursos criada!\n");
     }
-
-    private static class CourseGroup {
-        private String name;
-        private List<Integer> blacklist;
-
-
-        public CourseGroup(String name, List<Integer> coursesIds) {
-            this.name = name;
-            this.blacklist = coursesIds;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public List<Integer> getBlacklist() {
-            return blacklist;
-        }
-
-        public void setBlacklist(List<Integer> blacklist) {
-            this.blacklist = blacklist;
-        }
-    }
-
-
 }

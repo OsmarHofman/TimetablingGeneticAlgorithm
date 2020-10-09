@@ -1,5 +1,11 @@
 package br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.model;
 
+import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.Chromosome;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Course;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Lesson;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOIFSC;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOITC;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.entities.CourseGroup;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.entities.CourseRelation;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.entities.Intersection;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.entities.ProfessorCourse;
@@ -12,17 +18,19 @@ import java.util.*;
  */
 public class PreProcessing {
 
-    private List<CourseRelation> courseRelationList;
-    private List<ProfessorCourse> professorRelation;
+    private final List<CourseRelation> courseRelationList;
+    private final List<ProfessorCourse> professorRelation;
+    private final List<CourseGroup> courseGroupList;
 
 
     public PreProcessing(ProfessorsScheduleCreation professorsScheduleCreation) {
+        this.courseGroupList = professorsScheduleCreation.getCoursesList();
         this.professorRelation = professorsScheduleCreation.getProfessorsList();
         this.courseRelationList = professorsScheduleCreation.getCourseRelationList();
     }
 
-    public List[] createSet(int percentage) throws ClassNotFoundException {
-        String reportData = this.courseRelationList.toString();
+    //<editor-fold desc="Create Set">
+    public void createSet(int percentage) throws ClassNotFoundException {
         List<String> splitSetName;
         String setName;
 
@@ -65,17 +73,8 @@ public class PreProcessing {
 
                 //recalcula o total de professores do conjunto
                 lastCourse.sumTotalProfessors();
-
-                reportData = this.courseRelationList.toString();
             }
         }
-        String newReportData = reportData.replace("[", "").replace("]", "");
-        String[] splitNewReportData = newReportData.split(",");
-        List[] formattedDataList = new ArrayList[splitNewReportData.length];
-        for (int i = 0; i < formattedDataList.length; i++)
-            formattedDataList[i] = new ArrayList<>(Arrays.asList(splitNewReportData[i].split("-")));
-
-        return formattedDataList;
     }
 
     private List<String> adjustSetName(String setName, List<String> splitSetName) {
@@ -219,5 +218,47 @@ public class PreProcessing {
             listSameName.adjustProfessorsCount();
             ListOperationUtil.removeItemsOnIndexes(indexes, iterationCourseRelation.getIntersection());
         }
+    }
+
+    //</editor-fold>
+
+    public DTOITC[] splitSet(DTOITC originalDTOITC) {
+        DTOITC[] dtoitcs = new DTOITC[courseRelationList.size()];
+        int i = 0;
+        List<Course> courseList;
+        List<Lesson> lessonList;
+        for (CourseRelation courseRelation : this.courseRelationList) {
+            courseList = new ArrayList<>();
+            lessonList = new ArrayList<>();
+            String[] splitSetNames = courseRelation.getName().split("-");
+            for (String setName : splitSetNames) {
+                for (CourseGroup courseGroup : courseGroupList) {
+                    if (setName.equals(courseGroup.getGroupName())) {
+                        for (int courseId : courseGroup.getCourses()) {
+                            for (Course course : originalDTOITC.getCourses()) {
+                                if (courseId == Integer.parseInt(course.getCourseId())) {
+                                    courseList.add(course);
+                                }
+                            }
+                            for (Lesson lesson : originalDTOITC.getLessons()) {
+                                if (courseId == Integer.parseInt(lesson.getCourseId())) {
+                                    lessonList.add(lesson);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            Course[] courseArray = new Course[courseList.size()];
+            courseArray = courseList.toArray(courseArray);
+
+            Lesson[] lessonArray = new Lesson[lessonList.size()];
+            lessonArray = lessonList.toArray(lessonArray);
+
+            dtoitcs[i] = new DTOITC(courseArray, lessonArray);
+
+            i++;
+        }
+        return dtoitcs;
     }
 }

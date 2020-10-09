@@ -46,22 +46,24 @@ public class GeneticAlgorithm {
 
         PreProcessing preProcessing = new PreProcessing(psc);
         //Lista que cada posição é uma lista de cursos
-        List[] coursesSet = preProcessing.createSet(joinSetPercentage);
-        // IFileHandler fileHandler = new FileHandler();
-        // fileHandler.createReport(coursesSet, joinSetPercentage + "%");
+        preProcessing.createSet(joinSetPercentage);
 
-
+        //Criando Modelagem do ITC
         DTOITC dtoitc = ConvertFactory.convertIFSCtoITC(dtoifsc);
+
+        DTOITC[] sets = preProcessing.splitSet(dtoitc);
+
         /*Matriz de relação dos horarios
         Sendo que 30 é o número de períodos no dia * dias na semana, ou seja, 6 * 5 = 30
         */
-
         boolean[][] scheduleRelation = new boolean[dtoitc.getLessons().length][30];
         for (int i = 0; i < dtoitc.getLessons().length; i++) {
             for (UnavailabilityConstraint iterationConstraints : dtoitc.getLessons()[i].getConstraints()) {
                 scheduleRelation[i][6 * iterationConstraints.getDay() + iterationConstraints.getDayPeriod()] = true;
             }
         }
+
+
         int iterationLimit = 0;
 
         // A partir daqui realizar processamento pensando em objetos distribuidos
@@ -109,7 +111,7 @@ public class GeneticAlgorithm {
 
             //Mutação
             Mutation.swapMutation(newGeneration, classSize, mutationPercentage);
-            
+
             population = newGeneration;
 
             for (Chromosome chromosome : population) {

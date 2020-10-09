@@ -18,6 +18,11 @@ public class DTOITC {
     public DTOITC() {
     }
 
+    public DTOITC(Course[] courses, Lesson[] lessons) {
+        this.courses = courses;
+        this.lessons = lessons;
+    }
+
     public DTOITC(List<Course> courses, List<Lesson> lessons, List<Room> rooms, List<UnavailabilityConstraint> constraints) {
         this.courses = new Course[courses.size()];
         this.lessons = new Lesson[lessons.size()];
