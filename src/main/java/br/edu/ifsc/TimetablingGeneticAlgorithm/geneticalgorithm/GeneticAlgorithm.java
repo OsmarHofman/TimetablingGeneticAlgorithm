@@ -29,6 +29,7 @@ public class GeneticAlgorithm {
      */
     public List<DTOSchedule> process(String path) throws IOException, ClassNotFoundException {
 
+        //Obtém as configurações do arquivo
         int[] config = ConfigReader.readConfiguration(path);
         final int populationSize = config[0];
         final int classSize = config[1];
@@ -39,18 +40,19 @@ public class GeneticAlgorithm {
         final int geracoes = config[6];
 
 
+        //Obtem os dados do arquivo XML
         RetrieveIFSCData retrieveIFSCData = new RetrieveIFSCData();
         DTOIFSC dtoifsc = retrieveIFSCData.getAllData();
 
+        //Cria os conjuntos do pré-processamento
         ProfessorsScheduleCreation psc = new ProfessorsScheduleCreation(dtoifsc);
-
         PreProcessing preProcessing = new PreProcessing(psc);
-        //Lista que cada posição é uma lista de cursos
         preProcessing.createSet(joinSetPercentage);
 
         //Criando Modelagem do ITC
         DTOITC dtoitc = ConvertFactory.convertIFSCtoITC(dtoifsc);
 
+        //Ajusta os cursos que foram pré-processados para a modelagem do DTOITC
         DTOITC[] sets = preProcessing.splitSet(dtoitc);
 
         /*Matriz de relação dos horarios
@@ -63,23 +65,25 @@ public class GeneticAlgorithm {
             }
         }
 
-
+        //Limite de execuções do AG
         int iterationLimit = 0;
 
-        // A partir daqui realizar processamento pensando em objetos distribuidos
+        //A partir daqui realizar processamento pensando em objetos distribuidos
 
-        Chromosome[] population = new Chromosome[populationSize];
         //Inicializando população
+        Chromosome[] population = new Chromosome[populationSize];
         Arrays.setAll(population, i -> new Chromosome(dtoitc.getCourses().length, classSize, dtoitc.getLessons(), dtoitc.getCourses(), dtoifsc));
 
+        //Avaliando a primeira geração
         for (Chromosome chromosome : population) {
             chromosome.setHasViolatedHardConstraint(false);
             chromosome.setAvaliation(Avaliation.rate(chromosome, dtoitc, scheduleRelation));
         }
 
-        // checkCourses(dtoifsc);
+        //Obtendo o melhor cromossomo da primeira geração
         Chromosome localBest = Chromosome.getBestChromosome(population);
         Chromosome globalBestChromosome = localBest;
+
         long startTime = System.currentTimeMillis();
 
         while (iterationLimit < geracoes && ((localBest.getAvaliation() < 4700) || localBest.isHasViolatedHardConstraint())) {
@@ -89,7 +93,7 @@ public class GeneticAlgorithm {
             byte proportion = (byte) (populationSize / elitismPercentage);
             Chromosome[] eliteChromosomes = Selection.elitism(population, proportion);
 
-            //função de avaliacao acumulada
+            //Função de avaliacao acumulada
             int[] ratingHandler = new int[populationSize];
             int faA = 0;
             for (int i = 0; i < population.length; i++) {
@@ -114,11 +118,13 @@ public class GeneticAlgorithm {
 
             population = newGeneration;
 
+            //Avaliando a nova geração
             for (Chromosome chromosome : population) {
                 chromosome.setHasViolatedHardConstraint(false);
                 chromosome.setAvaliation(Avaliation.rate(chromosome, dtoitc, scheduleRelation));
             }
 
+            //Obtendo o melhor cromossomo da geração atual
             localBest = Chromosome.getBestChromosome(population);
             if (globalBestChromosome.getAvaliation() < localBest.getAvaliation())
                 globalBestChromosome = localBest;
@@ -130,9 +136,11 @@ public class GeneticAlgorithm {
 //            System.out.println("Violou: " + localBest.isHasViolatedHardConstraint());
         }
         long endTime = System.currentTimeMillis();
+
         System.out.println(globalBestChromosome.toString());
         System.out.println("tempo Final: " + (endTime - startTime));
         System.out.println("iteração: " + iterationLimit);
+
         return DTOSchedule.convertChromosome(globalBestChromosome, dtoifsc, dtoitc);
     }
 

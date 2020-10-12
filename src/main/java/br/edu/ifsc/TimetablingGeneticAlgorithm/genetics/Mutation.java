@@ -21,11 +21,11 @@ public class Mutation {
 
             //Verifica se o cromossomo atual será mutado
             if (mutationChance < mutationPercentage) {
-                //identifica o "grupo", ou seja, qual o limite inferior (a primeira posição) da turma atual
-                int group = random.nextInt(chromosomes[0].getGenes().length) / classSize;
+                //identifica qual o limite inferior (a primeira posição) da turma atual
+                int courseFirstPosition = random.nextInt(chromosomes[0].getGenes().length) / classSize;
 
                 //limite superior (última posição) da turma
-                int infLimit = group * classSize;
+                int infLimit = courseFirstPosition * classSize;
 
                 //obtém-se os dois pontos de troca, isso é necessário para manter o chromossomo sem valores repetidos.
                 //Então ao invés de ser atribuído um valor aleatório, serão trocados dois valores em posições aleatórias
@@ -39,8 +39,7 @@ public class Mutation {
                 do {
                     swapPoint2 = random.nextInt(classSize / 2) + infLimit + (classSize / 2);
                 } while (chromosome.getGenes()[swapPoint2] == 0);
-
-
+                
                 int aux = chromosome.getGenes()[swapPoint1];
 
                 //faz a troca dos dois genes

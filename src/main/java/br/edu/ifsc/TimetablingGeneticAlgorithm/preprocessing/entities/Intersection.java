@@ -65,6 +65,9 @@ public class Intersection implements Serializable {
         this.professorsList.addAll(newProfessorsList);
     }
 
+    /**
+     * Ajusta o número de professores
+     */
     public void adjustProfessorsCount() {
         this.intersectionProfessorsCount = this.professorsList.size();
     }

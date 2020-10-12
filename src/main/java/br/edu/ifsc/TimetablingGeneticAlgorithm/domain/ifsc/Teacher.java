@@ -1,5 +1,8 @@
 package br.edu.ifsc.TimetablingGeneticAlgorithm.domain.ifsc;
 
+/**
+ * Classe que representa um professor do IFSC
+ */
 public class Teacher {
     private int id;
     private String name;

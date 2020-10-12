@@ -1,5 +1,8 @@
 package br.edu.ifsc.TimetablingGeneticAlgorithm.domain.ifsc;
 
+/**
+ * Classe que representa uma turma do IFSC
+ */
 public class Classes {
     private int id;
     private String name;

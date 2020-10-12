@@ -7,6 +7,9 @@ import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOIFSC;
 
 import java.util.*;
 
+/**
+ * Classe que representa um Cromossomo, ou seja, uma estrutura com a possível solução do problema
+ */
 public class Chromosome {
     private int[] genes;
     private int avaliation;
@@ -85,7 +88,7 @@ public class Chromosome {
             count = 0;
 
             //transforma as matérias com aulas impares (1 ou 3 créditos) em pares (2 ou 4 créditos)
-            joinOddLessons(coursesLesson, dtoifsc.getSubjects());
+            this.joinOddLessons(coursesLesson, dtoifsc.getSubjects());
 
             for (Lesson lesson : coursesLesson) {
                 //esse cálculo representa quantas vezes por semana uma matéria deve estar em um curso
@@ -119,7 +122,7 @@ public class Chromosome {
      *         ainda a inicial;
      *         <ul>
      *             <li>
-     *             Ex.: M1 com 3 créditos, M2 com 1 crédito --> M1 com 2 créditos, M1 - M2 com 2 créditos.
+     *             Ex.: 'M1' com 3 créditos, 'M2' com 1 crédito --> 'M1' com 2 créditos, 'M1 - M2' com 2 créditos.
      *             </li>
      *         </ul>
      *     </li>
@@ -128,7 +131,7 @@ public class Chromosome {
      *         mantendo a inicial.
      *         <ul>
      *             <li>
-     *             Ex.: M1 com 1 crédito, M2 com 1 crédito --> M1 - M2 com 2 créditos.
+     *             Ex.: 'M1' com 1 crédito, 'M2' com 1 crédito --> 'M1 - M2' com 2 créditos.
      *             </li>
      *         </ul>
      *     </li>

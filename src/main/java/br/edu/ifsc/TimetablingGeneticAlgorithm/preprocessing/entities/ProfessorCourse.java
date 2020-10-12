@@ -1,6 +1,5 @@
 package br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.entities;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

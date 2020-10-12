@@ -2,6 +2,10 @@ package br.edu.ifsc.TimetablingGeneticAlgorithm.domain.ifsc;
 
 import java.util.Arrays;
 
+/**
+ * Classe que representa a tabela de relação entre as classes: {@link Subject}, {@link Classes},{@link Teacher} e
+ * {@link Classroom}
+ */
 public class Lesson {
     private int id;
     private int subjectId;

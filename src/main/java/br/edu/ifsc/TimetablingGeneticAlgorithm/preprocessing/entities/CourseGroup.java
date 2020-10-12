@@ -2,6 +2,9 @@ package br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.entities;
 
 import java.util.List;
 
+/**
+ * Classe que representa um curso e os ids das turmas pertencentes a ele
+ */
 public class CourseGroup {
     private String groupName;
     private List<Integer> courses;

@@ -1,5 +1,8 @@
 package br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.entities;
 
+/**
+ * Classe que representa se um Curso já está relacionado a outro
+ */
 public class IsRelated {
 
     private String name;

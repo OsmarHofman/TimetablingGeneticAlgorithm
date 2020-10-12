@@ -95,8 +95,12 @@ public class Avaliation {
         byte weekOffset = 0;
 
         for (int i = 0; i < chromosome.getGenes().length; i++) {
+
+            //Maior que 1 pois há duas aulas por dia
             if (periodOffset > 1)
                 periodOffset = 0;
+
+            //Maior que 9 pois uma turma está contida em dez posições
             if (weekOffset > 9)
                 weekOffset = 0;
 

@@ -128,7 +128,7 @@ public class RetrieveIFSCData {
                         dtoifsc.getProfessors()
                                 .add(new Teacher(Integer.parseInt(idTeacher), nameTeacher, timeoffTeacher));
                     } else if (column == 4) {
-                        // Room
+                        // Classroom
                         String idRoom = eElement.getAttribute("id");
                         String nameRoom = eElement.getAttribute("name");
                         dtoifsc.getRooms()

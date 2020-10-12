@@ -1,5 +1,8 @@
 package br.edu.ifsc.TimetablingGeneticAlgorithm.domain.ifsc;
 
+/**
+ * Classe que representa uma sala ou laboratório do IFSC
+ */
 public class Classroom {
     private int roomId;
     private String name;
@@ -7,7 +10,7 @@ public class Classroom {
     public Classroom() {
     }
 
-    public Classroom(int roomId,String name) {
+    public Classroom(int roomId, String name) {
         this.roomId = roomId;
         this.name = name;
     }

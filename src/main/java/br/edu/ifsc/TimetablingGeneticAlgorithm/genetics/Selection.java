@@ -72,9 +72,9 @@ public class Selection {
 
         //Faz a ordenação ascendente da população a partir da avaliação
         Arrays.sort(eliteChromosomes, Comparator.comparing(Chromosome::getAvaliation).reversed());
-        for (int i = 0; i < proportion; i++) {
-            chosenChromosomes[i] = eliteChromosomes[i];
-        }
+
+        //Copia os cromossomos do eliteChromosomes para o chosenChromosomes
+        if (proportion >= 0) System.arraycopy(eliteChromosomes, 0, chosenChromosomes, 0, proportion);
         return chosenChromosomes;
     }
 }
