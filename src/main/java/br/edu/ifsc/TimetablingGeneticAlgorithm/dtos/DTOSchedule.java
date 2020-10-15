@@ -79,10 +79,10 @@ public class DTOSchedule implements Serializable {
     /**
      * Obtém uma lista de matérias a partir de todos os dados.
      *
-     * @param lessons    Vetor de {@link Lesson} de onde serão obtidos os ids dos dados.
-     * @param dtoifsc    {@link DTOIFSC} de onde serão obtidos os {@link String} (nomes) de todos os dados.
+     * @param lessons     Vetor de {@link Lesson} de onde serão obtidos os ids dos dados.
+     * @param dtoifsc     {@link DTOIFSC} de onde serão obtidos os {@link String} (nomes) de todos os dados.
      * @param chromosomes {@link Chromosome} que será analisado e convertido.
-     * @param courseId   {@link Integer} que representa o Id do curso a ser convertido.
+     * @param courseId    {@link Integer} que representa o Id do curso a ser convertido.
      * @return {@link List} de {@link ScheduleSubject} convertido de todos os dados presentes no {@link Chromosome}.
      */
     private static List<ScheduleSubject> retrieveScheduleSubjects(Lesson[] lessons, DTOIFSC dtoifsc, Chromosome[] chromosomes, String courseId) {
@@ -128,7 +128,7 @@ public class DTOSchedule implements Serializable {
                                         if (professorName.toString().isEmpty()) {
                                             professorName = new StringBuilder(teacher.getName());
                                         } else {
-                                            professorName.append(",").append(teacher.getName());
+                                            professorName.append(", ").append(teacher.getName());
                                         }
                                     }
                                 }

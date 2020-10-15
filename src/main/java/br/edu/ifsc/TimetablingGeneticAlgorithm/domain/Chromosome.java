@@ -168,6 +168,13 @@ public class Chromosome {
                     if (innerCourseLesson.getLecturesNumber() == 1 && !innerCourseLesson.equals(courseLesson)) {
                         innerCourseLesson.setLecturesNumber(2);
 
+                        //Junta os professores das duas matérias
+                        String[] newProfessor = new String[innerCourseLesson.getProfessorId().length + courseLesson.getProfessorId().length];
+                        System.arraycopy(innerCourseLesson.getProfessorId(), 0, newProfessor, 0, innerCourseLesson.getProfessorId().length);
+                        System.arraycopy(courseLesson.getProfessorId(), 0, newProfessor, innerCourseLesson.getProfessorId().length, courseLesson.getProfessorId().length);
+
+                        innerCourseLesson.setProfessorId(newProfessor);
+
                         //obtém qual o índice da primeira matéria para retirá-la
                         int index = this.joinName(ifscSubjects, courseLesson.getLessonId(), innerCourseLesson.getLessonId());
                         ifscSubjects.remove(index);

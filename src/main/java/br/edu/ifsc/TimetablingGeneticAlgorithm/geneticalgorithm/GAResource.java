@@ -21,7 +21,7 @@ public class GAResource {
     public ResponseEntity<List<DTOSchedule>> getGA() {
         try {
             GeneticAlgorithm geneticAlgorithm = new GeneticAlgorithm();
-            return new ResponseEntity<>(geneticAlgorithm.process("src\\assets\\configuracoes.txt"), HttpStatus.OK);
+            return new ResponseEntity<>(geneticAlgorithm.process("src//assets//configuracoes.txt"), HttpStatus.OK);
         } catch (IOException iEx) {
             System.err.println("Erro de IO");
             iEx.printStackTrace();
