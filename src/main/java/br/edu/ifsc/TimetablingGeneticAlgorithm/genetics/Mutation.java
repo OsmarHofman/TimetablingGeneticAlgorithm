@@ -21,28 +21,29 @@ public class Mutation {
 
             //Verifica se o cromossomo atual será mutado
             if (mutationChance < mutationPercentage) {
-                //identifica qual o limite inferior (a primeira posição) da turma atual
-                int courseFirstPosition = random.nextInt(chromosomes[0].getGenes().length) / classSize;
-
-                //limite superior (última posição) da turma
-                int infLimit = courseFirstPosition * classSize;
 
                 //obtém-se os dois pontos de troca, isso é necessário para manter o chromossomo sem valores repetidos.
                 //Então ao invés de ser atribuído um valor aleatório, serão trocados dois valores em posições aleatórias
 
                 int swapPoint1;
                 do {
-                    swapPoint1 = random.nextInt(classSize / 2) + infLimit;
+                    //O cutpoint1 é totalmente aleatório, e o cutpoint2 será na mesma turma do cutpoint1
+                    swapPoint1 = random.nextInt(chromosome.getGenes().length);
                 } while (chromosome.getGenes()[swapPoint1] == 0);
+
+                //Limite inferior, ou seja, a primeira posição da turma
+                int infLimit = Math.floorDiv(swapPoint1, classSize) * 10;
+
+                //Limite superior, ou seja, a última posição da turma
+                int supLimit = infLimit + classSize;
 
                 int swapPoint2;
                 do {
-                    swapPoint2 = random.nextInt(classSize / 2) + infLimit + (classSize / 2);
+                    swapPoint2 = random.nextInt(classSize) + infLimit;
                 } while (chromosome.getGenes()[swapPoint2] == 0);
-                
-                int aux = chromosome.getGenes()[swapPoint1];
 
                 //faz a troca dos dois genes
+                int aux = chromosome.getGenes()[swapPoint1];
                 chromosome.getGenes()[swapPoint1] = chromosome.getGenes()[swapPoint2];
                 chromosome.getGenes()[swapPoint2] = aux;
                 chromosome.setAvaliation(0);

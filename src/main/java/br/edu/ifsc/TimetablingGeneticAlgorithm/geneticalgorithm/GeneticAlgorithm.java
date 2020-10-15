@@ -19,6 +19,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public class GeneticAlgorithm {
+
+    private Chromosome globalBestChromosome;
+
     /**
      * Execução do Algoritmo Genetico
      *
@@ -55,93 +58,111 @@ public class GeneticAlgorithm {
         //Ajusta os cursos que foram pré-processados para a modelagem do DTOITC
         DTOITC[] sets = preProcessing.splitSet(dtoitc);
 
-        /*Matriz de relação dos horarios
-        Sendo que 30 é o número de períodos no dia * dias na semana, ou seja, 6 * 5 = 30
-        */
-        boolean[][] scheduleRelation = new boolean[dtoitc.getLessons().length][30];
-        for (int i = 0; i < dtoitc.getLessons().length; i++) {
-            for (UnavailabilityConstraint iterationConstraints : dtoitc.getLessons()[i].getConstraints()) {
-                scheduleRelation[i][6 * iterationConstraints.getDay() + iterationConstraints.getDayPeriod()] = true;
-            }
-        }
-
-        //Limite de execuções do AG
-        int iterationLimit = 0;
-
-        //A partir daqui realizar processamento pensando em objetos distribuidos
-
-        //Inicializando população
-        Chromosome[] population = new Chromosome[populationSize];
-        Arrays.setAll(population, i -> new Chromosome(dtoitc.getCourses().length, classSize, dtoitc.getLessons(), dtoitc.getCourses(), dtoifsc));
-
-        //Avaliando a primeira geração
-        for (Chromosome chromosome : population) {
-            chromosome.setHasViolatedHardConstraint(false);
-            chromosome.setAvaliation(Avaliation.rate(chromosome, dtoitc, scheduleRelation));
-        }
-
-        //Obtendo o melhor cromossomo da primeira geração
-        Chromosome localBest = Chromosome.getBestChromosome(population);
-        Chromosome globalBestChromosome = localBest;
+        Chromosome[] globalBests = new Chromosome[sets.length];
 
         long startTime = System.currentTimeMillis();
 
-        while (iterationLimit < geracoes && ((localBest.getAvaliation() < 4700) || localBest.isHasViolatedHardConstraint())) {
+        for (int i = 0; i < sets.length; i++) {
 
+            DTOITC set = sets[i];
 
-            //Seleção por elitismo
-            byte proportion = (byte) (populationSize / elitismPercentage);
-            Chromosome[] eliteChromosomes = Selection.elitism(population, proportion);
-
-            //Função de avaliacao acumulada
-            int[] ratingHandler = new int[populationSize];
-            int faA = 0;
-            for (int i = 0; i < population.length; i++) {
-                faA += population[i].getAvaliation();
-                ratingHandler[i] = faA;
+            /*Matriz de relação dos horarios
+            Sendo que 30 é o número de períodos no dia * dias na semana, ou seja, 6 * 5 = 30
+            */
+            boolean[][] scheduleRelation = new boolean[set.getLessons().length][30];
+            for (int j = 0; j < set.getLessons().length; j++) {
+                for (UnavailabilityConstraint iterationConstraints : set.getLessons()[j].getConstraints()) {
+                    scheduleRelation[j][6 * iterationConstraints.getDay() + iterationConstraints.getDayPeriod()] = true;
+                }
             }
 
-            //Seleção por roleta
-            Chromosome[] newCouples = Selection.rouletteWheel(population, ratingHandler, faA, proportion);
 
-            //Crossover
-            Chromosome[] crossedChromosomes = Crossover.cross(newCouples, classSize, crossPercentage);
+            //A partir daqui realizar processamento pensando em objetos distribuidos
 
-            //Unindo as Subpopulações geradas por elitismo e roleta
-            Chromosome[] newGeneration = new Chromosome[populationSize];
-            System.arraycopy(crossedChromosomes, 0, newGeneration, 0, crossedChromosomes.length);
+            //Inicializando população
+            Chromosome[] population = new Chromosome[populationSize];
+            Arrays.setAll(population, x -> new Chromosome(set.getCourses().length, classSize, set.getLessons(), set.getCourses(), dtoifsc));
 
-            System.arraycopy(eliteChromosomes, 0, newGeneration, crossedChromosomes.length, eliteChromosomes.length);
-
-            //Mutação
-            Mutation.swapMutation(newGeneration, classSize, mutationPercentage);
-
-            population = newGeneration;
-
-            //Avaliando a nova geração
+            //Avaliando a primeira geração
             for (Chromosome chromosome : population) {
                 chromosome.setHasViolatedHardConstraint(false);
-                chromosome.setAvaliation(Avaliation.rate(chromosome, dtoitc, scheduleRelation));
+                chromosome.setAvaliation(Avaliation.rate(chromosome, set, scheduleRelation));
             }
 
-            //Obtendo o melhor cromossomo da geração atual
-            localBest = Chromosome.getBestChromosome(population);
-            if (globalBestChromosome.getAvaliation() < localBest.getAvaliation())
-                globalBestChromosome = localBest;
+            //Obtendo o melhor cromossomo da primeira geração
+            Chromosome localBest = Chromosome.getBestChromosome(population);
+            globalBestChromosome = localBest;
 
-            iterationLimit++;
 
-            System.out.println("\nIteração: " + iterationLimit);
+            //Número de execuções do AG
+            int iteration = 0;
+
+            long startLocalTime = System.currentTimeMillis();
+
+            while (iteration < geracoes && ((localBest.getAvaliation() < 4700) || localBest.isHasViolatedHardConstraint())) {
+
+
+                //Seleção por elitismo
+                byte proportion = (byte) (populationSize / elitismPercentage);
+                Chromosome[] eliteChromosomes = Selection.elitism(population, proportion);
+
+                //Função de avaliacao acumulada
+                int[] ratingHandler = new int[populationSize];
+                int faA = 0;
+                for (int j = 0; j < population.length; j++) {
+                    faA += population[j].getAvaliation();
+                    ratingHandler[j] = faA;
+                }
+
+                //Seleção por roleta
+                Chromosome[] newCouples = Selection.rouletteWheel(population, ratingHandler, faA, proportion);
+
+                //Crossover
+                Chromosome[] crossedChromosomes = Crossover.cross(newCouples, classSize, crossPercentage);
+
+                //Unindo as Subpopulações geradas por elitismo e roleta
+                Chromosome[] newGeneration = new Chromosome[populationSize];
+                System.arraycopy(crossedChromosomes, 0, newGeneration, 0, crossedChromosomes.length);
+
+                System.arraycopy(eliteChromosomes, 0, newGeneration, crossedChromosomes.length, eliteChromosomes.length);
+
+                //Mutação
+                Mutation.swapMutation(newGeneration, classSize, mutationPercentage);
+
+                population = newGeneration;
+
+                //Avaliando a nova geração
+                for (Chromosome chromosome : population) {
+                    chromosome.setHasViolatedHardConstraint(false);
+                    chromosome.setAvaliation(Avaliation.rate(chromosome, set, scheduleRelation));
+                }
+
+                //Obtendo o melhor cromossomo da geração atual
+                localBest = Chromosome.getBestChromosome(population);
+                if (globalBestChromosome.getAvaliation() < localBest.getAvaliation())
+                    globalBestChromosome = localBest;
+
+                iteration++;
+
+                System.out.println("\nIteração: " + iteration);
 //            System.out.println("Avaliação: " + localBest.getAvaliation());
 //            System.out.println("Violou: " + localBest.isHasViolatedHardConstraint());
+            }
+
+            long endLocalTime = System.currentTimeMillis();
+
+            System.out.println(globalBestChromosome.toString());
+            System.out.println("Tempo Local Final: " + (endLocalTime - startLocalTime));
+            System.out.println("Iteração: " + iteration);
+
+            globalBests[i] = globalBestChromosome;
+
         }
         long endTime = System.currentTimeMillis();
 
-        System.out.println(globalBestChromosome.toString());
-        System.out.println("tempo Final: " + (endTime - startTime));
-        System.out.println("iteração: " + iterationLimit);
+        System.out.println("Tempo Total Final: " + (endTime - startTime));
 
-        return DTOSchedule.convertChromosome(globalBestChromosome, dtoifsc, dtoitc);
+        return DTOSchedule.convertChromosome(globalBests, dtoifsc, dtoitc);
     }
 
 }

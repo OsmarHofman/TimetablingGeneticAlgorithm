@@ -43,18 +43,18 @@ public class DTOSchedule implements Serializable {
     /**
      * Converte um {@link Chromosome} em uma {@link List} de {@link DTOSchedule}.
      *
-     * @param chromosome {@link Chromosome} a ser convertido.
-     * @param dtoifsc    {@link DTOIFSC} de onde serão obtidos os {@link String} (nomes) de todos os dados.
-     * @param dtoitc     {@link DTOITC} de onde serão obtidos os {@link Integer} (Ids) de todos os dados.
+     * @param chromosomes {@link Chromosome} a ser convertido.
+     * @param dtoifsc     {@link DTOIFSC} de onde serão obtidos os {@link String} (nomes) de todos os dados.
+     * @param dtoitc      {@link DTOITC} de onde serão obtidos os {@link Integer} (Ids) de todos os dados.
      * @return {@link List} de {@link DTOSchedule} que representa um cromossomo.
      * @throws ClassNotFoundException Erro ao não encontrar o nome de um curso
      */
-    public static List<DTOSchedule> convertChromosome(Chromosome chromosome, DTOIFSC dtoifsc, DTOITC dtoitc) throws ClassNotFoundException {
+    public static List<DTOSchedule> convertChromosome(Chromosome[] chromosomes, DTOIFSC dtoifsc, DTOITC dtoitc) throws ClassNotFoundException {
         List<DTOSchedule> schedules = new ArrayList<>();
         for (int i = 0; i < dtoitc.getCourses().length; i++) {
             String courseId = dtoitc.getCourses()[i].getCourseId();
             String courseName = getCourseName(courseId, dtoifsc.getClasses());
-            schedules.add(new DTOSchedule(courseName, retrieveScheduleSubjects(dtoitc.getLessons(), dtoifsc, chromosome, courseId)));
+            schedules.add(new DTOSchedule(courseName, retrieveScheduleSubjects(dtoitc.getLessons(), dtoifsc, chromosomes, courseId)));
         }
         return schedules;
     }
@@ -81,64 +81,68 @@ public class DTOSchedule implements Serializable {
      *
      * @param lessons    Vetor de {@link Lesson} de onde serão obtidos os ids dos dados.
      * @param dtoifsc    {@link DTOIFSC} de onde serão obtidos os {@link String} (nomes) de todos os dados.
-     * @param chromosome {@link Chromosome} que será analisado e convertido.
+     * @param chromosomes {@link Chromosome} que será analisado e convertido.
      * @param courseId   {@link Integer} que representa o Id do curso a ser convertido.
      * @return {@link List} de {@link ScheduleSubject} convertido de todos os dados presentes no {@link Chromosome}.
      */
-    private static List<ScheduleSubject> retrieveScheduleSubjects(Lesson[] lessons, DTOIFSC dtoifsc, Chromosome chromosome, String courseId) {
+    private static List<ScheduleSubject> retrieveScheduleSubjects(Lesson[] lessons, DTOIFSC dtoifsc, Chromosome[] chromosomes, String courseId) {
         List<ScheduleSubject> subjects = new ArrayList<>();
         byte weekOffset = 0;
         byte periodOffset = 0;
-        for (int i = 0; i < chromosome.getGenes().length; i++) {
-            //Duas matérias por dia (0-1)
-            if (periodOffset > 1)
-                periodOffset = 0;
 
-            //Dez posicoes para uma semana (0-9)
-            if (weekOffset > 9)
-                weekOffset = 0;
+        for (Chromosome chromosome : chromosomes) {
 
-            for (Lesson lesson : lessons) {
-                //Encontra a matéria
-                if (lesson.getCourseId().equals(courseId)) {
+            for (int i = 0; i < chromosome.getGenes().length; i++) {
+                //Duas matérias por dia (0-1)
+                if (periodOffset > 1)
+                    periodOffset = 0;
 
-                    String[] professors = lesson.getProfessorId();
-                    String lessonId = lesson.getLessonId();
+                //Dez posicoes para uma semana (0-9)
+                if (weekOffset > 9)
+                    weekOffset = 0;
 
-                    //Encontra a matéria (id) dentro do cromossomo
-                    if (Integer.parseInt(lessonId) == chromosome.getGenes()[i]) {
-                        String lessonName = "";
+                for (Lesson lesson : lessons) {
+                    //Encontra a matéria
+                    if (lesson.getCourseId().equals(courseId)) {
 
-                        for (Subject subject : dtoifsc.getSubjects()) {
-                            if (lessonId.equals(String.valueOf(subject.getId()))) {
-                                //Obtém o nome da matéria
-                                lessonName = subject.getName();
-                                break;
+                        String[] professors = lesson.getProfessorId();
+                        String lessonId = lesson.getLessonId();
+
+                        //Encontra a matéria (id) dentro do cromossomo
+                        if (Integer.parseInt(lessonId) == chromosome.getGenes()[i]) {
+                            String lessonName = "";
+
+                            for (Subject subject : dtoifsc.getSubjects()) {
+                                if (lessonId.equals(String.valueOf(subject.getId()))) {
+                                    //Obtém o nome da matéria
+                                    lessonName = subject.getName();
+                                    break;
+                                }
                             }
-                        }
 
-                        //Obtém os professores que lecionam essa matéria, separando por virgula
-                        StringBuilder professorName = new StringBuilder();
-                        for (String professor : professors) {
-                            for (Teacher teacher : dtoifsc.getProfessors()) {
-                                if (professor.equals(String.valueOf(teacher.getId()))) {
-                                    if (professorName.toString().isEmpty()) {
-                                        professorName = new StringBuilder(teacher.getName());
-                                    } else {
-                                        professorName.append(",").append(teacher.getName());
+                            //Obtém os professores que lecionam essa matéria, separando por virgula
+                            StringBuilder professorName = new StringBuilder();
+                            for (String professor : professors) {
+                                for (Teacher teacher : dtoifsc.getProfessors()) {
+                                    if (professor.equals(String.valueOf(teacher.getId()))) {
+                                        if (professorName.toString().isEmpty()) {
+                                            professorName = new StringBuilder(teacher.getName());
+                                        } else {
+                                            professorName.append(",").append(teacher.getName());
+                                        }
                                     }
                                 }
                             }
-                        }
 
-                        //Identifica qual o dia da semana que está sendo lecionada a matéria
-                        int weekDay = weekOffset / 2;
-                        subjects.add(new ScheduleSubject(lessonName, professorName.toString(), weekDay, periodOffset));
+                            //Identifica qual o dia da semana que está sendo lecionada a matéria
+                            int weekDay = weekOffset / 2;
+                            subjects.add(new ScheduleSubject(lessonName, professorName.toString(), weekDay, periodOffset));
+                        }
                     }
                 }
+                periodOffset++;
+                weekOffset++;
             }
-            periodOffset++;
-            weekOffset++;
         }
         return subjects;
     }

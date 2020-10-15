@@ -72,10 +72,10 @@ public class Crossover {
                 //Passa os gênes dos pais para seus dois filhos
                 insertChangeListGenes(c1, cutPoint1, cutPoint2, changeListC1, infLimit, supLimit);
                 insertChangeListGenes(c2, cutPoint1, cutPoint2, changeListC2, infLimit, supLimit);
-            } else {
-                newGeneration[i] = c1;
-                newGeneration[i + 1] = c2;
+
             }
+            newGeneration[i] = c1;
+            newGeneration[i + 1] = c2;
         }
         return newGeneration;
     }
@@ -102,9 +102,11 @@ public class Crossover {
                 parentIterator = infLimit;
 
             //Coloca do changeList para o child
-            if (j < cutPoint1 || j >= cutPoint2) {
-                child.getGenes()[j] = changeList.get(changeListIndex);
-                changeListIndex++;
+            if (child.getGenes()[j] != 0) {
+                if (j < cutPoint1 || j >= cutPoint2) {
+                    child.getGenes()[j] = changeList.get(changeListIndex);
+                    changeListIndex++;
+                }
             }
         }
     }

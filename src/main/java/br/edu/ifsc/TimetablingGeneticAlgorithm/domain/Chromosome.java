@@ -4,6 +4,8 @@ import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.ifsc.Subject;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Course;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Lesson;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOIFSC;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.util.ListOperationUtil;
+import org.apache.commons.math3.stat.inference.BinomialTest;
 
 import java.util.*;
 
@@ -88,7 +90,7 @@ public class Chromosome {
             count = 0;
 
             //transforma as matérias com aulas impares (1 ou 3 créditos) em pares (2 ou 4 créditos)
-            this.joinOddLessons(coursesLesson, dtoifsc.getSubjects());
+            coursesLesson = this.joinOddLessons(coursesLesson, dtoifsc.getSubjects());
 
             for (Lesson lesson : coursesLesson) {
                 //esse cálculo representa quantas vezes por semana uma matéria deve estar em um curso
@@ -139,8 +141,9 @@ public class Chromosome {
      *
      * @param coursesLesson Lista de {@link Lesson} que contém as matérias de uma turma.
      * @param ifscSubjects  {@link List} de {@link Subject} que contém os nomes das matérias.
+     * @return nova {@code coursesLesson} com as {@link Lesson}s atualizadas.
      */
-    private void joinOddLessons(Lesson[] coursesLesson, List<Subject> ifscSubjects) {
+    private Lesson[] joinOddLessons(Lesson[] coursesLesson, List<Subject> ifscSubjects) {
         for (Lesson courseLesson : coursesLesson) {
             if (courseLesson.getLecturesNumber() == 3) {
                 for (Lesson innerCourseLesson : coursesLesson) {
@@ -155,22 +158,31 @@ public class Chromosome {
             }
         }
 
-        for (Lesson courseLesson : coursesLesson) {
+        List<Integer> indexes = new ArrayList<>();
+        for (int i = 0; i < coursesLesson.length; i++) {
+            Lesson courseLesson = coursesLesson[i];
             if (courseLesson.getLecturesNumber() == 1) {
                 for (Lesson innerCourseLesson : coursesLesson) {
 
                     //caso encontrar uma matéria com 1, deve haver outra com 1 que não seja ela mesma
                     if (innerCourseLesson.getLecturesNumber() == 1 && !innerCourseLesson.equals(courseLesson)) {
-                        courseLesson.setLecturesNumber(2);
+                        innerCourseLesson.setLecturesNumber(2);
 
-                        //obtém qual o índice da segunda matéria para retirá-la
+                        //obtém qual o índice da primeira matéria para retirá-la
                         int index = this.joinName(ifscSubjects, courseLesson.getLessonId(), innerCourseLesson.getLessonId());
                         ifscSubjects.remove(index);
+
+                        indexes.add(i);
                     }
                 }
             }
         }
 
+        //Remove os itens do Array
+        if (indexes.size() > 0) {
+            return removeItensOnArray(coursesLesson, indexes);
+        }
+        return coursesLesson;
     }
 
 
@@ -215,6 +227,29 @@ public class Chromosome {
         }
 
         return best;
+    }
+
+    /**
+     * Remove os itens de um Array de {@link Lesson} e reajusta o seu tamanho.
+     *
+     * @param coursesLesson Array de {@link Lesson} com os itens a serem removidos.
+     * @param indexes       {@link List} de {@link Integer} com os índices a serem removidos do Array.
+     * @return nova {@code coursesLesson} com os itens removidos e reajustados.
+     */
+    private Lesson[] removeItensOnArray(Lesson[] coursesLesson, List<Integer> indexes) {
+        for (Integer index : indexes) {
+            coursesLesson[index] = null;
+        }
+
+        List<Lesson> lessonList = new ArrayList<>();
+
+        for (Lesson lesson : coursesLesson) {
+            if (lesson != null) {
+                lessonList.add(lesson);
+            }
+        }
+
+        return lessonList.toArray(new Lesson[0]);
     }
 
     @Override
