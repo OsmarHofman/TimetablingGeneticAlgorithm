@@ -118,7 +118,7 @@ public class Avaliation {
                 // os valores "2" representam o número de aulas por dia, e o "6", as aulas com seus turnos.
 
                 if (relationMatrix[lessonPosition][((shift.ordinal() * 2 + periodOffset) + (6 * Math.floorDiv(weekOffset, 2)))]) {
-                    avaliation += 5;
+                    avaliation += 3;
                 }
                 periodOffset++;
                 weekOffset++;
