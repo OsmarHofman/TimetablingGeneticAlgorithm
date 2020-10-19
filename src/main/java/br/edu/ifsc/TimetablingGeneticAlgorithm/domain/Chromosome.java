@@ -237,6 +237,26 @@ public class Chromosome {
     }
 
     /**
+     * Obtém o cromossomo com a pior avaliação a partir da população.
+     *
+     * @param chromosomes vetor de {@link Chromosome} que representa a população de cromossomos.
+     * @return o {@link Chromosome} com a menor avaliação de toda população.
+     */
+    public static Chromosome getWorstChromosome(Chromosome[] chromosomes) {
+        Chromosome worst = null;
+        for (int i = 0; i < chromosomes.length; i++) {
+            if (i == 0) {
+                worst = chromosomes[0];
+            } else {
+                if (chromosomes[i].getAvaliation() < worst.getAvaliation())
+                    worst = chromosomes[i];
+            }
+        }
+
+        return worst;
+    }
+
+    /**
      * Remove os itens de um Array de {@link Lesson} e reajusta o seu tamanho.
      *
      * @param coursesLesson Array de {@link Lesson} com os itens a serem removidos.

@@ -11,9 +11,9 @@ public class TimetablingGeneticAlgorithmApplication {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
 
-        SpringApplication.run(TimetablingGeneticAlgorithmApplication.class, args);
-//		GeneticAlgorithm ga = new GeneticAlgorithm();
-//		ga.process("src//assets//configuracoes.txt");
+        //SpringApplication.run(TimetablingGeneticAlgorithmApplication.class, args);
+		GeneticAlgorithm ga = new GeneticAlgorithm();
+		ga.process("src//assets//configuracoes.txt");
     }
 
 }
