@@ -17,7 +17,6 @@ import br.edu.ifsc.TimetablingGeneticAlgorithm.util.*;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.Callable;
 
 public class GeneticAlgorithm {
 
@@ -59,7 +58,6 @@ public class GeneticAlgorithm {
         DTOITC[] sets = preProcessing.splitSet(dtoitc);
 
         Chromosome[] globalBests = new Chromosome[sets.length];
-        Chromosome[] globalWorsts = new Chromosome[sets.length];
 
         long startTime = System.currentTimeMillis();
 
@@ -92,10 +90,8 @@ public class GeneticAlgorithm {
 
             //Obtendo o melhor cromossomo da primeira geração
             Chromosome localBest = Chromosome.getBestChromosome(population);
-            Chromosome localWorst = Chromosome.getWorstChromosome(population);
 
             Chromosome globalBestChromosome = localBest;
-            Chromosome globalWorstChromosome = localWorst;
 
 
             //Número de execuções do AG
@@ -143,13 +139,10 @@ public class GeneticAlgorithm {
 
                 //Obtendo o melhor cromossomo da geração atual
                 localBest = Chromosome.getBestChromosome(population);
-                localWorst = Chromosome.getWorstChromosome(population);
 
                 if (globalBestChromosome.getAvaliation() < localBest.getAvaliation())
                     globalBestChromosome = localBest;
 
-                if (globalWorstChromosome.getAvaliation() > localWorst.getAvaliation())
-                    globalWorstChromosome = localWorst;
 
                 iteration++;
 
@@ -164,15 +157,17 @@ public class GeneticAlgorithm {
             System.out.println("Iteração: " + iteration);
 
             globalBests[i] = globalBestChromosome;
-            globalWorsts[i] = globalWorstChromosome;
+
+            System.out.println("Avaliação=" + globalBests[i].getAvaliation() + ", ViolouHardConstraint=" + globalBests[i].isHasViolatedHardConstraint());
+            System.out.println("Conflitos de Horário:\n");
+            globalBests[i].checkScheduleConflicts(dtoitc, dtoifsc);
+            System.out.println("Indisponibilidade dos Professores:\n");
+            globalBests[i].checkProfessorsUnavailabilities(set, dtoifsc, scheduleRelation);
+
+            System.out.println("a");
 
         }
         long endTime = System.currentTimeMillis();
-
-        for (int i = 0; i < globalBests.length; i++) {
-            System.out.println(globalBests[i].toString());
-            System.out.println(globalWorsts[i].toString());
-        }
 
         System.out.println("Tempo Total Final: " + (endTime - startTime));
 

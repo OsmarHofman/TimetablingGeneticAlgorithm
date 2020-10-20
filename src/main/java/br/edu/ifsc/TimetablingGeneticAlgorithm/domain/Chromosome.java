@@ -3,9 +3,10 @@ package br.edu.ifsc.TimetablingGeneticAlgorithm.domain;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.ifsc.Subject;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Course;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Lesson;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Shift;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.UnavailabilityConstraint;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOIFSC;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.util.ListOperationUtil;
-import org.apache.commons.math3.stat.inference.BinomialTest;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOITC;
 
 import java.util.*;
 
@@ -279,6 +280,111 @@ public class Chromosome {
         return lessonList.toArray(new Lesson[0]);
     }
 
+    public void checkScheduleConflicts(DTOITC dtoitc, DTOIFSC dtoifsc) throws ClassNotFoundException {
+        for (int i = 0; i < this.getGenes().length; i++) {
+            if (this.getGenes()[i] != 0) {
+                //obtém o vetor dos professores
+                String[] currentProfessors = dtoitc.getProfessorByLessonId(this.getGenes()[i]);
+
+                //vai de 10 em 10 posições, ou seja, de turma em turma
+                for (int j = i + 10; j < this.getGenes().length; j += 10) {
+                    for (String currentProfessor : currentProfessors) {
+
+                        //Caso possa ser dado aula nesse dia. Dias não disponíveis tem valor 0.
+                        if (this.getGenes()[j] != 0) {
+
+                            //obtém o vetor dos professores a serem comparados
+                            String[] iterationProfessors = dtoitc.getProfessorByLessonId(this.getGenes()[j]);
+
+                            for (String iterationProfessor : iterationProfessors) {
+
+                                //caso o mesmo professor esteja dando aula em duas turmas ao mesmo tempo
+                                if (currentProfessor.equals(iterationProfessor)) {
+                                    String courseId = dtoitc.getCourseByLessonId(this.getGenes()[i]);
+                                    String courseName = dtoifsc.getCourseNameById(courseId);
+
+                                    String conflictCourseId = dtoitc.getCourseByLessonId(this.getGenes()[j]);
+                                    String conflictCourseName = dtoifsc.getCourseNameById(conflictCourseId);
+
+                                    String professorName = dtoifsc.getProfessorNameById(currentProfessor);
+
+                                    Optional<Horario> horario = Horario.valueOf(i % 10);
+
+                                    System.out.println("\nProfessor:" + professorName + "\nTurmas conflitantes:" +
+                                            courseName + ", " + conflictCourseName + "\nDia da semana:" +
+                                            horario.get() + "\n\n");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+    public void checkProfessorsUnavailabilities(DTOITC dtoitc, DTOIFSC dtoifsc, boolean[][] relationMatrix) throws ClassNotFoundException {
+        //valor que representa o deslocamento do dia, ou seja, são duas aulas por dia, então varia entre 0 e 1.
+        byte periodOffset = 0;
+
+        //valor que representa o deslocamento da semana, ou seja, são dez aulas por semana, então varia entre 0 e 9.
+        byte weekOffset = 0;
+
+        for (int i = 0; i < this.getGenes().length; i++) {
+
+            //Maior que 1 pois há duas aulas por dia
+            if (periodOffset > 1)
+                periodOffset = 0;
+
+            //Maior que 9 pois uma turma está contida em dez posições
+            if (weekOffset > 9)
+                weekOffset = 0;
+
+            //Caso possa ser dado aula nesse dia. Dias não disponíveis tem valor 0.
+            if (this.getGenes()[i] != 0) {
+                Lesson lesson = dtoitc.getLessonById(this.getGenes()[i]);
+
+                //por conta da matriz de relação, é preciso obter qual a posição do Lesson atual
+                int lessonPosition = dtoitc.getLessonPosition(lesson.getLessonId());
+
+                //obtém o turno do Lesson
+                Shift shift = dtoitc.getShiftByCourseId(lesson.getCourseId());
+
+                //cálculo para obter o boolean que representa a disponibilidade do professor na matriz. Sendo que
+                // os valores "2" representam o número de aulas por dia, e o "6", as aulas com seus turnos.
+
+
+                if (relationMatrix[lessonPosition][((shift.ordinal() * 2 + periodOffset) + (6 * Math.floorDiv(weekOffset, 2)))]) {
+
+                    //FIXME verificar porque está printando duas vezes o prof André
+                    for (String professor : lesson.getProfessorId()) {
+                        for (UnavailabilityConstraint constraint : lesson.getConstraints()) {
+                            if (constraint.getId().equals(professor)) {
+                                int professorPosition = constraint.getDay() * 2 + constraint.getDayPeriod();
+                                if (professorPosition == weekOffset) {
+                                    String lessonName = dtoifsc.getLessonById(lesson.getLessonId());
+
+                                    String courseName = dtoifsc.getCourseNameById(lesson.getCourseId());
+
+                                    Optional<Horario> horario = Horario.valueOf(weekOffset);
+
+                                    String professorName = dtoifsc.getProfessorNameById(professor);
+
+                                    System.out.println("Professor:" + professorName + "\nCurso:" +
+                                            courseName + "\nMatéria: " + lessonName + "\nDia da semana:" +
+                                            horario.get() + " " + shift + "\n\n");
+                                }
+                            }
+                        }
+                    }
+
+                }
+                periodOffset++;
+                weekOffset++;
+            }
+        }
+    }
+
     @Override
     public String toString() {
         return "Chromosome{" +
@@ -288,4 +394,30 @@ public class Chromosome {
                 '}';
     }
 
+
+    private enum Horario {
+        SEGUNDA_FEIRA_PRIMEIRO_HORARIO(0),
+        SEGUNDA_FEIRA_SEGUNDO_HORARIO(1),
+        TERCA_FEIRA_PRIMEIRO_HORARIO(2),
+        TERCA_FEIRA_SEGUNDO_HORARIO(3),
+        QUARTA_FEIRA_PRIMEIRO_HORARIO(4),
+        QUARTA_FEIRA_SEGUNDO_HORARIO(5),
+        QUINTA_FEIRA_PRIMEIRO_HORARIO(6),
+        QUINTA_FEIRA_SEGUNDO_HORARIO(7),
+        SEXTA_FEIRA_PRIMEIRO_HORARIO(8),
+        SEXTA_FEIRA_SEGUNDO_HORARIO(9);
+
+
+        private final int value;
+
+        Horario(int value) {
+            this.value = value;
+        }
+
+        public static Optional<Horario> valueOf(int value) {
+            return Arrays.stream(values())
+                    .filter(horario -> horario.value == value)
+                    .findFirst();
+        }
+    }
 }

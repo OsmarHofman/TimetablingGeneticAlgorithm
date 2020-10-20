@@ -138,6 +138,16 @@ public class DTOITC {
         throw new ClassNotFoundException("Lesson não encontrada");
     }
 
+
+    public String getCourseByLessonId(int index) throws ClassNotFoundException {
+        for (Lesson lesson : this.lessons) {
+            if (lesson.getLessonId().equals(String.valueOf(index))) {
+                return lesson.getCourseId();
+            }
+        }
+        throw new ClassNotFoundException("Professor não encontrado");
+    }
+
     @Override
     public String toString() {
         return "DTOITC{" +

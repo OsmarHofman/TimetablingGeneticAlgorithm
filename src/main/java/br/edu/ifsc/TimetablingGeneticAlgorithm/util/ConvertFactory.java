@@ -53,16 +53,18 @@ public class ConvertFactory {
         //CONSTRAINTS
         for (Lesson lesson : lessons) {
             String[] professorIds = lesson.getProfessorId();
+            List<UnavailabilityConstraint> constraintList = new ArrayList<>();
             for (String professorId : professorIds) {
                 for (Teacher iterationTeacher : dtoifsc.getProfessors()) {
                     if (String.valueOf(iterationTeacher.getId()).equals(professorId)) {
                         //Adiciona as constraits as lessons
-                        List<UnavailabilityConstraint> constraintList = convertTimeoffToUnavailability(iterationTeacher.getTimeoff(), String.valueOf(iterationTeacher.getId()));
-                        lesson.setConstraints(new UnavailabilityConstraint[constraintList.size()]);
-                        lesson.setConstraints(constraintList.toArray(lesson.getConstraints()));
+                        constraintList.addAll(convertTimeoffToUnavailability(iterationTeacher.getTimeoff(), String.valueOf(iterationTeacher.getId())));
+
                     }
                 }
             }
+            lesson.setConstraints(new UnavailabilityConstraint[constraintList.size()]);
+            lesson.setConstraints(constraintList.toArray(lesson.getConstraints()));
         }
 
         //COURSES
@@ -215,7 +217,7 @@ public class ConvertFactory {
         }
         return constraintList;
     }
-    
+
     /**
      * Obtém o turno (shift) a partir de um timeoff.
      *
