@@ -373,6 +373,7 @@ public class Chromosome {
                                     System.out.println("Professor:" + professorName + "\nCurso:" +
                                             courseName + "\nMatéria: " + lessonName + "\nDia da semana:" +
                                             horario.get() + " " + shift + "\n\n");
+                                    break;
                                 }
                             }
                         }

@@ -27,6 +27,10 @@ public class PreProcessing {
         this.courseRelationList = professorsScheduleCreation.getCourseRelationList();
     }
 
+    public List<CourseRelation> getCourseRelationList() {
+        return courseRelationList;
+    }
+
     //<editor-fold desc="Create Set">
 
     /**

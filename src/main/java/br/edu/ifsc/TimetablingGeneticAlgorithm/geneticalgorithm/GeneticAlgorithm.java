@@ -65,6 +65,10 @@ public class GeneticAlgorithm {
 
             DTOITC set = sets[i];
 
+            int coursesSize = preProcessing.getCourseRelationList().get(i).getName().split("-").length;
+
+            int initialAvaliation = Avaliation.getInitialAvaliation(coursesSize);
+
             /*Matriz de relação dos horarios
             Sendo que 30 é o número de períodos no dia * dias na semana, ou seja, 6 * 5 = 30
             */
@@ -85,7 +89,7 @@ public class GeneticAlgorithm {
             //Avaliando a primeira geração
             for (Chromosome chromosome : population) {
                 chromosome.setHasViolatedHardConstraint(false);
-                chromosome.setAvaliation(Avaliation.rate(chromosome, set, scheduleRelation));
+                chromosome.setAvaliation(Avaliation.rate(chromosome, set, scheduleRelation, initialAvaliation));
             }
 
             //Obtendo o melhor cromossomo da primeira geração
@@ -99,8 +103,7 @@ public class GeneticAlgorithm {
 
             long startLocalTime = System.currentTimeMillis();
 
-            while (iteration < geracoes && ((localBest.getAvaliation() < 5000) || localBest.isHasViolatedHardConstraint())) {
-
+            while (iteration < geracoes && ((localBest.getAvaliation() < initialAvaliation) || localBest.isHasViolatedHardConstraint())) {
 
                 //Seleção por elitismo
                 byte proportion = (byte) (populationSize / elitismPercentage);
@@ -134,7 +137,7 @@ public class GeneticAlgorithm {
                 //Avaliando a nova geração
                 for (Chromosome chromosome : population) {
                     chromosome.setHasViolatedHardConstraint(false);
-                    chromosome.setAvaliation(Avaliation.rate(chromosome, set, scheduleRelation));
+                    chromosome.setAvaliation(Avaliation.rate(chromosome, set, scheduleRelation, initialAvaliation));
                 }
 
                 //Obtendo o melhor cromossomo da geração atual
@@ -163,8 +166,6 @@ public class GeneticAlgorithm {
             globalBests[i].checkScheduleConflicts(dtoitc, dtoifsc);
             System.out.println("Indisponibilidade dos Professores:\n");
             globalBests[i].checkProfessorsUnavailabilities(set, dtoifsc, scheduleRelation);
-
-            System.out.println("a");
 
         }
         long endTime = System.currentTimeMillis();
