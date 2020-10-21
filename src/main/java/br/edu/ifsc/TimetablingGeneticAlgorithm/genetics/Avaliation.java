@@ -53,12 +53,14 @@ public class Avaliation {
                 //vai de 10 em 10 posições, ou seja, de turma em turma
                 for (int j = i + 10; j < chromosome.getGenes().length; j += 10) {
 
-                    Shift iterationShift = dtoitc.getShiftByLessonId(chromosome.getGenes()[j]);
-                    if (currentShift.equals(iterationShift)) {
-                        for (String currentProfessor : currentProfessors) {
+                    //Caso possa ser dado aula nesse dia. Dias não disponíveis tem valor 0.
+                    if (chromosome.getGenes()[j] != 0) {
 
-                            //Caso possa ser dado aula nesse dia. Dias não disponíveis tem valor 0.
-                            if (chromosome.getGenes()[j] != 0) {
+                        Shift iterationShift = dtoitc.getShiftByLessonId(chromosome.getGenes()[j]);
+                        if (currentShift.equals(iterationShift)) {
+
+                            for (String currentProfessor : currentProfessors) {
+
 
                                 //obtém o vetor dos professores a serem comparados
                                 String[] iterationProfessors = dtoitc.getProfessorByLessonId(chromosome.getGenes()[j]);
