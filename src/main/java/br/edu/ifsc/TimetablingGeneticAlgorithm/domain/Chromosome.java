@@ -283,36 +283,44 @@ public class Chromosome {
     public void checkScheduleConflicts(DTOITC dtoitc, DTOIFSC dtoifsc) throws ClassNotFoundException {
         for (int i = 0; i < this.getGenes().length; i++) {
             if (this.getGenes()[i] != 0) {
+
+                Shift currentShift = dtoitc.getShiftByLessonId(this.getGenes()[i]);
+
                 //obtém o vetor dos professores
                 String[] currentProfessors = dtoitc.getProfessorByLessonId(this.getGenes()[i]);
 
                 //vai de 10 em 10 posições, ou seja, de turma em turma
                 for (int j = i + 10; j < this.getGenes().length; j += 10) {
-                    for (String currentProfessor : currentProfessors) {
 
-                        //Caso possa ser dado aula nesse dia. Dias não disponíveis tem valor 0.
-                        if (this.getGenes()[j] != 0) {
+                    Shift iterationShift = dtoitc.getShiftByLessonId(this.getGenes()[j]);
+                    if (currentShift.equals(iterationShift)) {
 
-                            //obtém o vetor dos professores a serem comparados
-                            String[] iterationProfessors = dtoitc.getProfessorByLessonId(this.getGenes()[j]);
+                        for (String currentProfessor : currentProfessors) {
 
-                            for (String iterationProfessor : iterationProfessors) {
+                            //Caso possa ser dado aula nesse dia. Dias não disponíveis tem valor 0.
+                            if (this.getGenes()[j] != 0) {
 
-                                //caso o mesmo professor esteja dando aula em duas turmas ao mesmo tempo
-                                if (currentProfessor.equals(iterationProfessor)) {
-                                    String courseId = dtoitc.getCourseByLessonId(this.getGenes()[i]);
-                                    String courseName = dtoifsc.getCourseNameById(courseId);
+                                //obtém o vetor dos professores a serem comparados
+                                String[] iterationProfessors = dtoitc.getProfessorByLessonId(this.getGenes()[j]);
 
-                                    String conflictCourseId = dtoitc.getCourseByLessonId(this.getGenes()[j]);
-                                    String conflictCourseName = dtoifsc.getCourseNameById(conflictCourseId);
+                                for (String iterationProfessor : iterationProfessors) {
 
-                                    String professorName = dtoifsc.getProfessorNameById(currentProfessor);
+                                    //caso o mesmo professor esteja dando aula em duas turmas ao mesmo tempo
+                                    if (currentProfessor.equals(iterationProfessor)) {
+                                        String courseId = dtoitc.getCourseByLessonId(this.getGenes()[i]);
+                                        String courseName = dtoifsc.getCourseNameById(courseId);
 
-                                    Optional<Horario> horario = Horario.valueOf(i % 10);
+                                        String conflictCourseId = dtoitc.getCourseByLessonId(this.getGenes()[j]);
+                                        String conflictCourseName = dtoifsc.getCourseNameById(conflictCourseId);
 
-                                    System.out.println("\nProfessor:" + professorName + "\nTurmas conflitantes:" +
-                                            courseName + ", " + conflictCourseName + "\nDia da semana:" +
-                                            horario.get() + "\n\n");
+                                        String professorName = dtoifsc.getProfessorNameById(currentProfessor);
+
+                                        Optional<Horario> horario = Horario.valueOf(i % 10);
+
+                                        System.out.println("\nProfessor:" + professorName + "\nTurmas conflitantes:" +
+                                                courseName + ", " + conflictCourseName + "\nDia da semana:" +
+                                                horario.get() + " " + iterationShift + "\n\n");
+                                    }
                                 }
                             }
                         }
@@ -323,7 +331,8 @@ public class Chromosome {
     }
 
 
-    public void checkProfessorsUnavailabilities(DTOITC dtoitc, DTOIFSC dtoifsc, boolean[][] relationMatrix) throws ClassNotFoundException {
+    public void checkProfessorsUnavailabilities(DTOITC dtoitc, DTOIFSC dtoifsc, boolean[][] relationMatrix) throws
+            ClassNotFoundException {
         //valor que representa o deslocamento do dia, ou seja, são duas aulas por dia, então varia entre 0 e 1.
         byte periodOffset = 0;
 

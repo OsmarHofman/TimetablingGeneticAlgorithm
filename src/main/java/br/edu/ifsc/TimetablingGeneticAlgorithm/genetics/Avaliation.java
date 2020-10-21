@@ -44,25 +44,32 @@ public class Avaliation {
         int avaliation = 0;
         for (int i = 0; i < chromosome.getGenes().length; i++) {
             if (chromosome.getGenes()[i] != 0) {
+
+                Shift currentShift = dtoitc.getShiftByLessonId(chromosome.getGenes()[i]);
+
                 //obtém o vetor dos professores
                 String[] currentProfessors = dtoitc.getProfessorByLessonId(chromosome.getGenes()[i]);
 
                 //vai de 10 em 10 posições, ou seja, de turma em turma
                 for (int j = i + 10; j < chromosome.getGenes().length; j += 10) {
-                    for (String currentProfessor : currentProfessors) {
 
-                        //Caso possa ser dado aula nesse dia. Dias não disponíveis tem valor 0.
-                        if (chromosome.getGenes()[j] != 0) {
+                    Shift iterationShift = dtoitc.getShiftByLessonId(chromosome.getGenes()[j]);
+                    if (currentShift.equals(iterationShift)) {
+                        for (String currentProfessor : currentProfessors) {
 
-                            //obtém o vetor dos professores a serem comparados
-                            String[] iterationProfessors = dtoitc.getProfessorByLessonId(chromosome.getGenes()[j]);
+                            //Caso possa ser dado aula nesse dia. Dias não disponíveis tem valor 0.
+                            if (chromosome.getGenes()[j] != 0) {
 
-                            for (String iterationProfessor : iterationProfessors) {
+                                //obtém o vetor dos professores a serem comparados
+                                String[] iterationProfessors = dtoitc.getProfessorByLessonId(chromosome.getGenes()[j]);
 
-                                //caso o mesmo professor esteja dando aula em duas turmas ao mesmo tempo
-                                if (currentProfessor.equals(iterationProfessor)) {
-                                    avaliation += 10;
-                                    chromosome.setHasViolatedHardConstraint(true);
+                                for (String iterationProfessor : iterationProfessors) {
+
+                                    //caso o mesmo professor esteja dando aula em duas turmas ao mesmo tempo
+                                    if (currentProfessor.equals(iterationProfessor)) {
+                                        avaliation += 10;
+                                        chromosome.setHasViolatedHardConstraint(true);
+                                    }
                                 }
                             }
                         }

@@ -123,6 +123,16 @@ public class DTOITC {
         throw new ClassNotFoundException("Curso não encontrado");
     }
 
+    public Shift getShiftByLessonId(int id) throws ClassNotFoundException {
+        for (Lesson lesson : this.lessons) {
+            if (lesson.getLessonId().equals(String.valueOf(id))) {
+                return this.getShiftByCourseId(lesson.getCourseId());
+            }
+        }
+        throw new ClassNotFoundException("Lesson não encontrado");
+    }
+
+
     /**
      * Obtém o índice que está um item da {@link Lesson}.
      *
