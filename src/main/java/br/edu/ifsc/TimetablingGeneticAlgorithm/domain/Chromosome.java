@@ -292,13 +292,13 @@ public class Chromosome {
                 //vai de 10 em 10 posições, ou seja, de turma em turma
                 for (int j = i + 10; j < this.getGenes().length; j += 10) {
 
-                    Shift iterationShift = dtoitc.getShiftByLessonId(this.getGenes()[j]);
-                    if (currentShift.equals(iterationShift)) {
+                    //Caso possa ser dado aula nesse dia. Dias não disponíveis tem valor 0.
+                    if (this.getGenes()[j] != 0) {
 
-                        for (String currentProfessor : currentProfessors) {
+                        Shift iterationShift = dtoitc.getShiftByLessonId(this.getGenes()[j]);
+                        if (currentShift.equals(iterationShift)) {
 
-                            //Caso possa ser dado aula nesse dia. Dias não disponíveis tem valor 0.
-                            if (this.getGenes()[j] != 0) {
+                            for (String currentProfessor : currentProfessors) {
 
                                 //obtém o vetor dos professores a serem comparados
                                 String[] iterationProfessors = dtoitc.getProfessorByLessonId(this.getGenes()[j]);

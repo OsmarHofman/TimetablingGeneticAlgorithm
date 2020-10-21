@@ -61,7 +61,6 @@ public class Avaliation {
 
                             for (String currentProfessor : currentProfessors) {
 
-
                                 //obtém o vetor dos professores a serem comparados
                                 String[] iterationProfessors = dtoitc.getProfessorByLessonId(chromosome.getGenes()[j]);
 
