@@ -2,6 +2,7 @@ package br.edu.ifsc.TimetablingGeneticAlgorithm.genetics;
 
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.Chromosome;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Lesson;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOIFSC;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOITC;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Shift;
 
@@ -18,7 +19,29 @@ public class Avaliation {
      * @return int que representa a avaliação do cromossomo.
      * @throws ClassNotFoundException quando não acha um professor ou matéria dentro do {@code dtoitc}.
      */
-    public static int rate(Chromosome chromosome, DTOITC dtoitc, boolean[][] relationMatrix, int avaliation) throws ClassNotFoundException {
+    public static int rate(Chromosome chromosome, DTOITC dtoitc, boolean[][] relationMatrix, int avaliation, DTOITC set, DTOIFSC dtoifsc, boolean[][] scheduleRelation) throws ClassNotFoundException {
+
+        avaliation -= scheduleConflicts(chromosome, dtoitc);
+
+        avaliation -= professorsUnavailabilities(chromosome, dtoitc, relationMatrix);
+
+        System.out.println("1a avaliação :" + avaliation);
+
+        System.out.println(chromosome.toString());
+        System.out.println("Avaliação=" + chromosome.getAvaliation() + ", ViolouHardConstraint=" + chromosome.isHasViolatedHardConstraint());
+        System.out.println("\nConflitos de Horário:\n");
+        chromosome.checkScheduleConflicts(set, dtoifsc);
+        System.out.println("Indisponibilidade dos Professores:\n");
+        chromosome.checkProfessorsUnavailabilities(set, dtoifsc, scheduleRelation);
+
+        System.out.println(chromosome.toString());
+        System.out.println("Avaliação=" + chromosome.getAvaliation() + ", ViolouHardConstraint=" + chromosome.isHasViolatedHardConstraint());
+        System.out.println("\nConflitos de Horário:\n");
+        chromosome.checkScheduleConflicts(set, dtoifsc);
+        System.out.println("Indisponibilidade dos Professores:\n");
+        chromosome.checkProfessorsUnavailabilities(set, dtoifsc, scheduleRelation);
+
+        avaliation = 500;
 
         avaliation -= scheduleConflicts(chromosome, dtoitc);
 
@@ -122,6 +145,8 @@ public class Avaliation {
 
                 //cálculo para obter o boolean que representa a disponibilidade do professor na matriz. Sendo que
                 // os valores "2" representam o número de aulas por dia, e o "6", as aulas com seus turnos.
+
+                int relationIndex = (shift.ordinal() * 2 + periodOffset) + (6 * Math.floorDiv(weekOffset, 2));
 
                 if (relationMatrix[lessonPosition][((shift.ordinal() * 2 + periodOffset) + (6 * Math.floorDiv(weekOffset, 2)))]) {
                     avaliation += 3;

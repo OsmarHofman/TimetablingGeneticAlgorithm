@@ -362,30 +362,37 @@ public class Chromosome {
                 //cálculo para obter o boolean que representa a disponibilidade do professor na matriz. Sendo que
                 // os valores "2" representam o número de aulas por dia, e o "6", as aulas com seus turnos.
 
-
+                int matrixPosition = (shift.ordinal() * 2 + periodOffset) + (6 * Math.floorDiv(weekOffset, 2));
                 if (relationMatrix[lessonPosition][((shift.ordinal() * 2 + periodOffset) + (6 * Math.floorDiv(weekOffset, 2)))]) {
 
-                    //FIXME verificar porque está printando duas vezes o prof André
                     for (String professor : lesson.getProfessorId()) {
                         for (UnavailabilityConstraint constraint : lesson.getConstraints()) {
                             if (constraint.getId().equals(professor)) {
-                                int professorPosition = constraint.getDay() * 2 + constraint.getDayPeriod();
-                                if (professorPosition == weekOffset) {
-                                    String lessonName = dtoifsc.getLessonById(lesson.getLessonId());
 
-                                    String courseName = dtoifsc.getCourseNameById(lesson.getCourseId());
+                                //FIXME ainda há algum tipo de erro, verificar o que pode ser
 
-                                    Optional<Horario> horario = Horario.valueOf(weekOffset);
+                                int day = Math.floorDiv(matrixPosition, 6);
+                                if (day == constraint.getDay()) {
 
-                                    String professorName = dtoifsc.getProfessorNameById(professor);
+                                    int dayPeriod = shift.ordinal() * 2 + periodOffset;
+                                    if (dayPeriod == constraint.getDayPeriod()) {
+                                        String lessonName = dtoifsc.getLessonById(lesson.getLessonId());
 
-                                    System.out.println("Professor:" + professorName + "\nCurso:" +
-                                            courseName + "\nMatéria: " + lessonName + "\nDia da semana:" +
-                                            horario.get() + " " + shift + "\n\n");
-                                    break;
+                                        String courseName = dtoifsc.getCourseNameById(lesson.getCourseId());
+
+                                        Optional<Horario> horario = Horario.valueOf(weekOffset);
+
+                                        String professorName = dtoifsc.getProfessorNameById(professor);
+
+                                        System.out.println("Professor:" + professorName + "\nCurso:" +
+                                                courseName + "\nMatéria: " + lessonName + "\nDia da semana:" +
+                                                horario.get() + " " + shift + "\n\n");
+                                    }
+
                                 }
                             }
                         }
+
                     }
 
                 }

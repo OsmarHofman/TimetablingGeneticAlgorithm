@@ -89,7 +89,7 @@ public class GeneticAlgorithm {
             //Avaliando a primeira geração
             for (Chromosome chromosome : population) {
                 chromosome.setHasViolatedHardConstraint(false);
-                chromosome.setAvaliation(Avaliation.rate(chromosome, set, scheduleRelation, initialAvaliation));
+                chromosome.setAvaliation(Avaliation.rate(chromosome, set, scheduleRelation, initialAvaliation,set,dtoifsc,scheduleRelation));
             }
 
             //Obtendo o melhor cromossomo da primeira geração
@@ -135,10 +135,10 @@ public class GeneticAlgorithm {
                 population = newGeneration;
 
                 //Avaliando a nova geração
-                for (Chromosome chromosome : population) {
-                    chromosome.setHasViolatedHardConstraint(false);
-                    chromosome.setAvaliation(Avaliation.rate(chromosome, set, scheduleRelation, initialAvaliation));
-                }
+//                for (Chromosome chromosome : population) {
+//                    chromosome.setHasViolatedHardConstraint(false);
+//                    chromosome.setAvaliation(Avaliation.rate(chromosome, set, scheduleRelation, initialAvaliation));
+//                }
 
                 //Obtendo o melhor cromossomo da geração atual
                 localBest = Chromosome.getBestChromosome(population);
@@ -157,13 +157,13 @@ public class GeneticAlgorithm {
             long endLocalTime = System.currentTimeMillis();
 
             System.out.println("Tempo Local Final: " + (endLocalTime - startLocalTime));
-            System.out.println("Iteração: " + iteration);
 
             globalBests[i] = globalBestChromosome;
 
+            System.out.println("Cromossomo: " + globalBests[i].toString());
             System.out.println("Avaliação=" + globalBests[i].getAvaliation() + ", ViolouHardConstraint=" + globalBests[i].isHasViolatedHardConstraint());
-            System.out.println("Conflitos de Horário:\n");
-            globalBests[i].checkScheduleConflicts(dtoitc, dtoifsc);
+            System.out.println("\nConflitos de Horário:\n");
+            globalBests[i].checkScheduleConflicts(set, dtoifsc);
             System.out.println("Indisponibilidade dos Professores:\n");
             globalBests[i].checkProfessorsUnavailabilities(set, dtoifsc, scheduleRelation);
 
