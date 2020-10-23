@@ -2,9 +2,12 @@ package br.edu.ifsc.TimetablingGeneticAlgorithm.genetics;
 
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.Chromosome;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Lesson;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.UnavailabilityConstraint;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOIFSC;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOITC;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Shift;
+
+import java.util.Arrays;
 
 public class Avaliation {
 
@@ -21,31 +24,29 @@ public class Avaliation {
      */
     public static int rate(Chromosome chromosome, DTOITC dtoitc, boolean[][] relationMatrix, int avaliation, DTOITC set, DTOIFSC dtoifsc, boolean[][] scheduleRelation) throws ClassNotFoundException {
 
-        avaliation -= scheduleConflicts(chromosome, dtoitc);
+//        avaliation -= scheduleConflicts(chromosome, dtoitc);
+
+//        int firstAvaliation = avaliation;
+//
+//        System.out.println("--------------Avaliação normal do scheduleConflicts:" + avaliation);
+
 
         avaliation -= professorsUnavailabilities(chromosome, dtoitc, relationMatrix);
 
-        System.out.println("1a avaliação :" + avaliation);
+//        System.out.println("--------------Avaliação normal do professorsUnavailabilities:" + avaliation);
+//
+//        System.out.println(chromosome.toString());
+//        System.out.println("Avaliação=" + chromosome.getAvaliation() + ", ViolouHardConstraint=" + chromosome.isHasViolatedHardConstraint());
+//        System.out.println("\nConflitos de Horário:\n");
+//
+        int avaliationLogs = 500;
+//        avaliationLogs -= chromosome.checkScheduleConflicts(set, dtoifsc);
+//        System.out.println("--------------Avaliação do checkScheduleConflicts :" + avaliationLogs);
+//        System.out.println("Indisponibilidade dos Professores:\n");
+        avaliationLogs -= chromosome.checkProfessorsUnavailabilities(set, dtoifsc, scheduleRelation);
+//        System.out.println("--------------Avaliação do checkProfessorsUnavailabilities :" + avaliationLogs);
 
-        System.out.println(chromosome.toString());
-        System.out.println("Avaliação=" + chromosome.getAvaliation() + ", ViolouHardConstraint=" + chromosome.isHasViolatedHardConstraint());
-        System.out.println("\nConflitos de Horário:\n");
-        chromosome.checkScheduleConflicts(set, dtoifsc);
-        System.out.println("Indisponibilidade dos Professores:\n");
-        chromosome.checkProfessorsUnavailabilities(set, dtoifsc, scheduleRelation);
 
-        System.out.println(chromosome.toString());
-        System.out.println("Avaliação=" + chromosome.getAvaliation() + ", ViolouHardConstraint=" + chromosome.isHasViolatedHardConstraint());
-        System.out.println("\nConflitos de Horário:\n");
-        chromosome.checkScheduleConflicts(set, dtoifsc);
-        System.out.println("Indisponibilidade dos Professores:\n");
-        chromosome.checkProfessorsUnavailabilities(set, dtoifsc, scheduleRelation);
-
-        avaliation = 500;
-
-        avaliation -= scheduleConflicts(chromosome, dtoitc);
-
-        avaliation -= professorsUnavailabilities(chromosome, dtoitc, relationMatrix);
 
         //avaliation -= curriculumCompactness(chromosome);
 
@@ -148,8 +149,23 @@ public class Avaliation {
 
                 int relationIndex = (shift.ordinal() * 2 + periodOffset) + (6 * Math.floorDiv(weekOffset, 2));
 
-                if (relationMatrix[lessonPosition][((shift.ordinal() * 2 + periodOffset) + (6 * Math.floorDiv(weekOffset, 2)))]) {
-                    avaliation += 3;
+                if (relationMatrix[lessonPosition][relationIndex]) {
+
+                    for (String professor : lesson.getProfessorId()) {
+                        for (UnavailabilityConstraint constraint : lesson.getConstraints()) {
+                            if (constraint.getId().equals(professor)) {
+
+                                int day = Math.floorDiv(relationIndex, 6);
+                                if (day == constraint.getDay()) {
+
+                                    int dayPeriod = shift.ordinal() * 2 + periodOffset;
+                                    if (dayPeriod == constraint.getDayPeriod()) {
+                                        avaliation += 3;
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
                 periodOffset++;
                 weekOffset++;

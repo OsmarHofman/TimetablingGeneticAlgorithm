@@ -18,6 +18,12 @@ public class Chromosome {
     private int avaliation;
     private boolean hasViolatedHardConstraint;
 
+    public List<String> getLogs() {
+        return logs;
+    }
+
+    private List<String> logs = new ArrayList<>();
+
 
     public Chromosome(int size) {
         this.genes = new int[size];
@@ -280,7 +286,8 @@ public class Chromosome {
         return lessonList.toArray(new Lesson[0]);
     }
 
-    public void checkScheduleConflicts(DTOITC dtoitc, DTOIFSC dtoifsc) throws ClassNotFoundException {
+    public int checkScheduleConflicts(DTOITC dtoitc, DTOIFSC dtoifsc) throws ClassNotFoundException {
+        int avaliation = 0;
         for (int i = 0; i < this.getGenes().length; i++) {
             if (this.getGenes()[i] != 0) {
 
@@ -320,6 +327,8 @@ public class Chromosome {
                                         System.out.println("\nProfessor:" + professorName + "\nTurmas conflitantes:" +
                                                 courseName + ", " + conflictCourseName + "\nDia da semana:" +
                                                 horario.get() + " " + iterationShift + "\n\n");
+
+                                        avaliation += 10;
                                     }
                                 }
                             }
@@ -328,11 +337,14 @@ public class Chromosome {
                 }
             }
         }
+        return avaliation;
     }
 
 
-    public void checkProfessorsUnavailabilities(DTOITC dtoitc, DTOIFSC dtoifsc, boolean[][] relationMatrix) throws
+    public int checkProfessorsUnavailabilities(DTOITC dtoitc, DTOIFSC dtoifsc, boolean[][] relationMatrix) throws
             ClassNotFoundException {
+        int avaliation = 0;
+
         //valor que representa o deslocamento do dia, ou seja, são duas aulas por dia, então varia entre 0 e 1.
         byte periodOffset = 0;
 
@@ -369,8 +381,6 @@ public class Chromosome {
                         for (UnavailabilityConstraint constraint : lesson.getConstraints()) {
                             if (constraint.getId().equals(professor)) {
 
-                                //FIXME ainda há algum tipo de erro, verificar o que pode ser
-
                                 int day = Math.floorDiv(matrixPosition, 6);
                                 if (day == constraint.getDay()) {
 
@@ -384,9 +394,16 @@ public class Chromosome {
 
                                         String professorName = dtoifsc.getProfessorNameById(professor);
 
+                                        logs.add("Professor:" + professorName + "\nCurso:" +
+                                                courseName + "\nMatéria: " + lessonName + "\nDia da semana:" +
+                                                horario.get() + " " + shift + "\n\n");
+
+
                                         System.out.println("Professor:" + professorName + "\nCurso:" +
                                                 courseName + "\nMatéria: " + lessonName + "\nDia da semana:" +
                                                 horario.get() + " " + shift + "\n\n");
+
+                                        avaliation += 3;
                                     }
 
                                 }
@@ -400,6 +417,7 @@ public class Chromosome {
                 weekOffset++;
             }
         }
+        return avaliation;
     }
 
     @Override

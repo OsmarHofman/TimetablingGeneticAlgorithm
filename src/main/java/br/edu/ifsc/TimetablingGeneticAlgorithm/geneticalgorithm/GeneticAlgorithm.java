@@ -135,10 +135,10 @@ public class GeneticAlgorithm {
                 population = newGeneration;
 
                 //Avaliando a nova geração
-//                for (Chromosome chromosome : population) {
-//                    chromosome.setHasViolatedHardConstraint(false);
-//                    chromosome.setAvaliation(Avaliation.rate(chromosome, set, scheduleRelation, initialAvaliation));
-//                }
+                for (Chromosome chromosome : population) {
+                    chromosome.setHasViolatedHardConstraint(false);
+                    chromosome.setAvaliation(Avaliation.rate(chromosome, set, scheduleRelation, initialAvaliation,set,dtoifsc,scheduleRelation));
+                }
 
                 //Obtendo o melhor cromossomo da geração atual
                 localBest = Chromosome.getBestChromosome(population);
@@ -162,9 +162,12 @@ public class GeneticAlgorithm {
 
             System.out.println("Cromossomo: " + globalBests[i].toString());
             System.out.println("Avaliação=" + globalBests[i].getAvaliation() + ", ViolouHardConstraint=" + globalBests[i].isHasViolatedHardConstraint());
-            System.out.println("\nConflitos de Horário:\n");
-            globalBests[i].checkScheduleConflicts(set, dtoifsc);
+//            System.out.println("\nConflitos de Horário:\n");
+//            globalBests[i].checkScheduleConflicts(set, dtoifsc);
             System.out.println("Indisponibilidade dos Professores:\n");
+
+            globalBests[i].setAvaliation(Avaliation.rate(globalBests[i], set, scheduleRelation, initialAvaliation,set,dtoifsc,scheduleRelation));
+
             globalBests[i].checkProfessorsUnavailabilities(set, dtoifsc, scheduleRelation);
 
         }
