@@ -89,7 +89,7 @@ public class GeneticAlgorithm {
             //Avaliando a primeira geração
             for (Chromosome chromosome : population) {
                 chromosome.setHasViolatedHardConstraint(false);
-                chromosome.setAvaliation(Avaliation.rate(chromosome, set, scheduleRelation, initialAvaliation,set,dtoifsc,scheduleRelation));
+                chromosome.setAvaliation(Avaliation.rate(chromosome, set, scheduleRelation, initialAvaliation, set, dtoifsc, scheduleRelation));
             }
 
             //Obtendo o melhor cromossomo da primeira geração
@@ -137,22 +137,25 @@ public class GeneticAlgorithm {
                 //Avaliando a nova geração
                 for (Chromosome chromosome : population) {
                     chromosome.setHasViolatedHardConstraint(false);
-                    chromosome.setAvaliation(Avaliation.rate(chromosome, set, scheduleRelation, initialAvaliation,set,dtoifsc,scheduleRelation));
+                    chromosome.setAvaliation(Avaliation.rate(chromosome, set, scheduleRelation, initialAvaliation, set, dtoifsc, scheduleRelation));
                 }
 
                 //Obtendo o melhor cromossomo da geração atual
                 localBest = Chromosome.getBestChromosome(population);
 
                 if (globalBestChromosome.getAvaliation() < localBest.getAvaliation())
-                    globalBestChromosome = localBest;
+                    globalBestChromosome = new Chromosome(localBest.getGenes(), localBest.getAvaliation());
 
 
                 iteration++;
 
-                System.out.println("\nIteração: " + iteration);
 //            System.out.println("Avaliação: " + localBest.getAvaliation());
 //            System.out.println("Violou: " + localBest.isHasViolatedHardConstraint());
             }
+
+            System.out.println("##################NOVO CONJUNTO##################");
+
+            System.out.println("\nNúmero total de iterações: " + iteration);
 
             long endLocalTime = System.currentTimeMillis();
 
@@ -162,12 +165,11 @@ public class GeneticAlgorithm {
 
             System.out.println("Cromossomo: " + globalBests[i].toString());
             System.out.println("Avaliação=" + globalBests[i].getAvaliation() + ", ViolouHardConstraint=" + globalBests[i].isHasViolatedHardConstraint());
-//            System.out.println("\nConflitos de Horário:\n");
-//            globalBests[i].checkScheduleConflicts(set, dtoifsc);
+
+            System.out.println("\n -------------- \nConflitos de Horário:\n");
+            globalBests[i].checkScheduleConflicts(set, dtoifsc);
+
             System.out.println("Indisponibilidade dos Professores:\n");
-
-            globalBests[i].setAvaliation(Avaliation.rate(globalBests[i], set, scheduleRelation, initialAvaliation,set,dtoifsc,scheduleRelation));
-
             globalBests[i].checkProfessorsUnavailabilities(set, dtoifsc, scheduleRelation);
 
         }

@@ -67,7 +67,9 @@ public class Selection {
 
         //Faz a cópia da população original
         for (int i = 0; i < chromosomes.length; i++) {
-            eliteChromosomes[i] = new Chromosome(chromosomes[i].getGenes(), chromosomes[i].getAvaliation());
+            int[] newGenes = new int[chromosomes[i].getGenes().length];
+            System.arraycopy(chromosomes[i].getGenes(),0,newGenes,0,newGenes.length);
+            eliteChromosomes[i] = new Chromosome(newGenes, chromosomes[i].getAvaliation());
         }
 
         //Faz a ordenação ascendente da população a partir da avaliação

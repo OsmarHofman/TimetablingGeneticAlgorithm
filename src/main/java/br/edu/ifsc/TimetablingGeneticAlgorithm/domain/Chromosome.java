@@ -18,12 +18,6 @@ public class Chromosome {
     private int avaliation;
     private boolean hasViolatedHardConstraint;
 
-    public List<String> getLogs() {
-        return logs;
-    }
-
-    private List<String> logs = new ArrayList<>();
-
 
     public Chromosome(int size) {
         this.genes = new int[size];
@@ -39,7 +33,8 @@ public class Chromosome {
     }
 
     public Chromosome(int[] genes, int avaliation) {
-        this.genes = genes;
+        this.genes = new int[genes.length];
+        System.arraycopy(genes, 0, this.genes, 0, genes.length);
         this.avaliation = avaliation;
         this.hasViolatedHardConstraint = false;
     }
@@ -354,11 +349,12 @@ public class Chromosome {
         for (int i = 0; i < this.getGenes().length; i++) {
 
             //Maior que 1 pois há duas aulas por dia
-            if (periodOffset > 1)
+            if (periodOffset > 1) {
                 periodOffset = 0;
-
+                weekOffset++;
+            }
             //Maior que 9 pois uma turma está contida em dez posições
-            if (weekOffset > 9)
+            if (weekOffset > 4)
                 weekOffset = 0;
 
             //Caso possa ser dado aula nesse dia. Dias não disponíveis tem valor 0.
@@ -374,8 +370,9 @@ public class Chromosome {
                 //cálculo para obter o boolean que representa a disponibilidade do professor na matriz. Sendo que
                 // os valores "2" representam o número de aulas por dia, e o "6", as aulas com seus turnos.
 
-                int matrixPosition = (shift.ordinal() * 2 + periodOffset) + (6 * Math.floorDiv(weekOffset, 2));
-                if (relationMatrix[lessonPosition][((shift.ordinal() * 2 + periodOffset) + (6 * Math.floorDiv(weekOffset, 2)))]) {
+                int matrixPosition = (shift.ordinal() * 2 + periodOffset) + (6 * weekOffset);
+
+                if (relationMatrix[lessonPosition][matrixPosition]) {
 
                     for (String professor : lesson.getProfessorId()) {
                         for (UnavailabilityConstraint constraint : lesson.getConstraints()) {
@@ -394,11 +391,6 @@ public class Chromosome {
 
                                         String professorName = dtoifsc.getProfessorNameById(professor);
 
-                                        logs.add("Professor:" + professorName + "\nCurso:" +
-                                                courseName + "\nMatéria: " + lessonName + "\nDia da semana:" +
-                                                horario.get() + " " + shift + "\n\n");
-
-
                                         System.out.println("Professor:" + professorName + "\nCurso:" +
                                                 courseName + "\nMatéria: " + lessonName + "\nDia da semana:" +
                                                 horario.get() + " " + shift + "\n\n");
@@ -411,11 +403,9 @@ public class Chromosome {
                         }
 
                     }
-
                 }
-                periodOffset++;
-                weekOffset++;
             }
+            periodOffset++;
         }
         return avaliation;
     }

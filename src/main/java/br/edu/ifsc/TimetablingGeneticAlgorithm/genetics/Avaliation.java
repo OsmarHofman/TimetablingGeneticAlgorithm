@@ -7,6 +7,7 @@ import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOIFSC;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOITC;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Shift;
 
+import javax.security.auth.callback.CallbackHandler;
 import java.util.Arrays;
 
 public class Avaliation {
@@ -24,29 +25,9 @@ public class Avaliation {
      */
     public static int rate(Chromosome chromosome, DTOITC dtoitc, boolean[][] relationMatrix, int avaliation, DTOITC set, DTOIFSC dtoifsc, boolean[][] scheduleRelation) throws ClassNotFoundException {
 
-//        avaliation -= scheduleConflicts(chromosome, dtoitc);
-
-//        int firstAvaliation = avaliation;
-//
-//        System.out.println("--------------Avaliação normal do scheduleConflicts:" + avaliation);
-
+        avaliation -= scheduleConflicts(chromosome, dtoitc);
 
         avaliation -= professorsUnavailabilities(chromosome, dtoitc, relationMatrix);
-
-//        System.out.println("--------------Avaliação normal do professorsUnavailabilities:" + avaliation);
-//
-//        System.out.println(chromosome.toString());
-//        System.out.println("Avaliação=" + chromosome.getAvaliation() + ", ViolouHardConstraint=" + chromosome.isHasViolatedHardConstraint());
-//        System.out.println("\nConflitos de Horário:\n");
-//
-        int avaliationLogs = 500;
-//        avaliationLogs -= chromosome.checkScheduleConflicts(set, dtoifsc);
-//        System.out.println("--------------Avaliação do checkScheduleConflicts :" + avaliationLogs);
-//        System.out.println("Indisponibilidade dos Professores:\n");
-        avaliationLogs -= chromosome.checkProfessorsUnavailabilities(set, dtoifsc, scheduleRelation);
-//        System.out.println("--------------Avaliação do checkProfessorsUnavailabilities :" + avaliationLogs);
-
-
 
         //avaliation -= curriculumCompactness(chromosome);
 
@@ -127,11 +108,12 @@ public class Avaliation {
         for (int i = 0; i < chromosome.getGenes().length; i++) {
 
             //Maior que 1 pois há duas aulas por dia
-            if (periodOffset > 1)
+            if (periodOffset > 1) {
                 periodOffset = 0;
-
+                weekOffset++;
+            }
             //Maior que 9 pois uma turma está contida em dez posições
-            if (weekOffset > 9)
+            if (weekOffset > 4)
                 weekOffset = 0;
 
             //Caso possa ser dado aula nesse dia. Dias não disponíveis tem valor 0.
@@ -147,7 +129,7 @@ public class Avaliation {
                 //cálculo para obter o boolean que representa a disponibilidade do professor na matriz. Sendo que
                 // os valores "2" representam o número de aulas por dia, e o "6", as aulas com seus turnos.
 
-                int relationIndex = (shift.ordinal() * 2 + periodOffset) + (6 * Math.floorDiv(weekOffset, 2));
+                int relationIndex = (shift.ordinal() * 2 + periodOffset) + (6 * weekOffset);
 
                 if (relationMatrix[lessonPosition][relationIndex]) {
 
@@ -167,9 +149,8 @@ public class Avaliation {
                         }
                     }
                 }
-                periodOffset++;
-                weekOffset++;
             }
+            periodOffset++;
         }
         return avaliation;
     }
