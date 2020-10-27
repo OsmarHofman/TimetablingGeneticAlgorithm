@@ -387,13 +387,16 @@ public class Chromosome {
 
                                         String courseName = dtoifsc.getCourseNameById(lesson.getCourseId());
 
-                                        Optional<Horario> horario = Horario.valueOf(weekOffset);
+                                        Optional<Horario> horario = Horario.valueOf(periodOffset);
+
+
+                                        Optional<Dia> dia = Dia.valueOf(weekOffset);
 
                                         String professorName = dtoifsc.getProfessorNameById(professor);
 
                                         System.out.println("Professor:" + professorName + "\nCurso:" +
                                                 courseName + "\nMatéria: " + lessonName + "\nDia da semana:" +
-                                                horario.get() + " " + shift + "\n\n");
+                                                dia.get() + " " + horario.get() + " " + shift + "\n\n");
 
                                         avaliation += 3;
                                     }
@@ -420,17 +423,30 @@ public class Chromosome {
     }
 
 
+    private enum Dia {
+        SEGUNDA_FEIRA(0),
+        TERCA_FEIRA(1),
+        QUARTA_FEIRA(2),
+        QUINTA_FEIRA(3),
+        SEXTA_FEIRA(4);
+
+
+        private final int value;
+
+        Dia(int value) {
+            this.value = value;
+        }
+
+        public static Optional<Dia> valueOf(int value) {
+            return Arrays.stream(values())
+                    .filter(horario -> horario.value == value)
+                    .findFirst();
+        }
+    }
+
     private enum Horario {
-        SEGUNDA_FEIRA_PRIMEIRO_HORARIO(0),
-        SEGUNDA_FEIRA_SEGUNDO_HORARIO(1),
-        TERCA_FEIRA_PRIMEIRO_HORARIO(2),
-        TERCA_FEIRA_SEGUNDO_HORARIO(3),
-        QUARTA_FEIRA_PRIMEIRO_HORARIO(4),
-        QUARTA_FEIRA_SEGUNDO_HORARIO(5),
-        QUINTA_FEIRA_PRIMEIRO_HORARIO(6),
-        QUINTA_FEIRA_SEGUNDO_HORARIO(7),
-        SEXTA_FEIRA_PRIMEIRO_HORARIO(8),
-        SEXTA_FEIRA_SEGUNDO_HORARIO(9);
+        PRIMEIRO_HORARIO(0),
+        SEGUNDO_HORARIO(1);
 
 
         private final int value;
