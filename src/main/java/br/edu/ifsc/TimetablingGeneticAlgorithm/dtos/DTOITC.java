@@ -82,9 +82,9 @@ public class DTOITC {
      * @return Vetor de {@link String} com os Ids dos professores.
      * @throws ClassNotFoundException Erro quando o professor não é encontrado
      */
-    public String[] getProfessorByLessonId(int index) throws ClassNotFoundException {
+    public int[] getProfessorByLessonId(int index) throws ClassNotFoundException {
         for (Lesson lesson : this.lessons) {
-            if (lesson.getLessonId().equals(String.valueOf(index))) {
+            if (lesson.getLessonId() == index) {
                 return lesson.getProfessorId();
             }
         }
@@ -100,7 +100,7 @@ public class DTOITC {
      */
     public Lesson getLessonById(int index) throws ClassNotFoundException {
         for (Lesson lesson : this.lessons) {
-            if (lesson.getLessonId().equals(String.valueOf(index))) {
+            if (lesson.getLessonId() == index) {
                 return lesson;
             }
         }
@@ -114,9 +114,9 @@ public class DTOITC {
      * @return {@link Lesson} com o Id correspondente.
      * @throws ClassNotFoundException Erro quando a matéria não é encontrado
      */
-    public Shift getShiftByCourseId(String courseId) throws ClassNotFoundException {
+    public Shift getShiftByCourseId(int courseId) throws ClassNotFoundException {
         for (Course course : this.courses) {
-            if (course.getCourseId().equals(courseId)) {
+            if (course.getCourseId() == courseId) {
                 return course.getShift();
             }
         }
@@ -125,7 +125,7 @@ public class DTOITC {
 
     public Shift getShiftByLessonId(int id) throws ClassNotFoundException {
         for (Lesson lesson : this.lessons) {
-            if (lesson.getLessonId().equals(String.valueOf(id))) {
+            if (lesson.getLessonId() == id) {
                 return this.getShiftByCourseId(lesson.getCourseId());
             }
         }
@@ -140,18 +140,18 @@ public class DTOITC {
      * @return {@link Integer} do índice do {@code lessonId}.
      * @throws ClassNotFoundException Erro quando a Lesson não é encontrada.
      */
-    public int getLessonPosition(String lessonId) throws ClassNotFoundException {
+    public int getLessonPosition(int lessonId) throws ClassNotFoundException {
         for (int i = 0; i < lessons.length; i++) {
-            if (lessons[i].getLessonId().equals(lessonId))
+            if (lessons[i].getLessonId() == lessonId)
                 return i;
         }
         throw new ClassNotFoundException("Lesson não encontrada");
     }
 
 
-    public String getCourseByLessonId(int index) throws ClassNotFoundException {
+    public int getCourseByLessonId(int index) throws ClassNotFoundException {
         for (Lesson lesson : this.lessons) {
-            if (lesson.getLessonId().equals(String.valueOf(index))) {
+            if (lesson.getLessonId() == index) {
                 return lesson.getCourseId();
             }
         }

@@ -4,27 +4,27 @@ package br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc;
  * Classe que representa as restrições de horário dos professores
  */
 public class UnavailabilityConstraint {
-    private String id;
+    private int id;
     private int day;
     private int dayPeriod;
 
-    public UnavailabilityConstraint(String id, int day, int dayPeriod) {
+    public UnavailabilityConstraint(int id, int day, int dayPeriod) {
         this.id = id;
         this.day = day;
         this.dayPeriod = dayPeriod;
     }
 
     public UnavailabilityConstraint(String[] parameters) {
-        this.id = parameters[0];
+        this.id = Integer.parseInt(parameters[0]);
         this.day = Integer.parseInt(parameters[1]);
         this.dayPeriod = Integer.parseInt(parameters[2]);
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

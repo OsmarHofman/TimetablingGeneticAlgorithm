@@ -52,7 +52,7 @@ public class DTOSchedule implements Serializable {
     public static List<DTOSchedule> convertChromosome(Chromosome[] chromosomes, DTOIFSC dtoifsc, DTOITC dtoitc) throws ClassNotFoundException {
         List<DTOSchedule> schedules = new ArrayList<>();
         for (int i = 0; i < dtoitc.getCourses().length; i++) {
-            String courseId = dtoitc.getCourses()[i].getCourseId();
+            int courseId = dtoitc.getCourses()[i].getCourseId();
             String courseName = getCourseName(courseId, dtoifsc.getClasses());
             schedules.add(new DTOSchedule(courseName, retrieveScheduleSubjects(dtoitc.getLessons(), dtoifsc, chromosomes, courseId)));
         }
@@ -67,10 +67,10 @@ public class DTOSchedule implements Serializable {
      * @return {@link String} que representa o nome do curso.
      * @throws ClassNotFoundException Erro ao não encontrar o nome do curso.
      */
-    private static String getCourseName(String id, List<Classes> classes) throws ClassNotFoundException {
+    private static String getCourseName(int id, List<Classes> classes) throws ClassNotFoundException {
         for (Classes classe : classes) {
-            String courseId = String.valueOf(classe.getId());
-            if (courseId.equals(id))
+            int courseId = classe.getId();
+            if (courseId == id)
                 return classe.getName();
         }
         throw new ClassNotFoundException("Erro ao encontrar nome do curso");
@@ -85,7 +85,7 @@ public class DTOSchedule implements Serializable {
      * @param courseId    {@link Integer} que representa o Id do curso a ser convertido.
      * @return {@link List} de {@link ScheduleSubject} convertido de todos os dados presentes no {@link Chromosome}.
      */
-    private static List<ScheduleSubject> retrieveScheduleSubjects(Lesson[] lessons, DTOIFSC dtoifsc, Chromosome[] chromosomes, String courseId) {
+    private static List<ScheduleSubject> retrieveScheduleSubjects(Lesson[] lessons, DTOIFSC dtoifsc, Chromosome[] chromosomes, int courseId) {
         List<ScheduleSubject> subjects = new ArrayList<>();
         byte weekOffset = 0;
         byte periodOffset = 0;
@@ -103,17 +103,17 @@ public class DTOSchedule implements Serializable {
 
                 for (Lesson lesson : lessons) {
                     //Encontra a matéria
-                    if (lesson.getCourseId().equals(courseId)) {
+                    if (lesson.getCourseId() == courseId) {
 
-                        String[] professors = lesson.getProfessorId();
-                        String lessonId = lesson.getLessonId();
+                        int[] professors = lesson.getProfessorId();
+                        int lessonId = lesson.getLessonId();
 
                         //Encontra a matéria (id) dentro do cromossomo
-                        if (Integer.parseInt(lessonId) == chromosome.getGenes()[i]) {
+                        if (lessonId == chromosome.getGenes()[i]) {
                             String lessonName = "";
 
                             for (Subject subject : dtoifsc.getSubjects()) {
-                                if (lessonId.equals(String.valueOf(subject.getId()))) {
+                                if (lessonId == subject.getId()) {
                                     //Obtém o nome da matéria
                                     lessonName = subject.getName();
                                     break;
@@ -122,9 +122,9 @@ public class DTOSchedule implements Serializable {
 
                             //Obtém os professores que lecionam essa matéria, separando por virgula
                             StringBuilder professorName = new StringBuilder();
-                            for (String professor : professors) {
+                            for (int professor : professors) {
                                 for (Teacher teacher : dtoifsc.getProfessors()) {
-                                    if (professor.equals(String.valueOf(teacher.getId()))) {
+                                    if (professor == teacher.getId()) {
                                         if (professorName.toString().isEmpty()) {
                                             professorName = new StringBuilder(teacher.getName());
                                         } else {

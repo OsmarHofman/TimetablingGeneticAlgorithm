@@ -9,9 +9,9 @@ import java.util.List;
  */
 public class Lesson {
 
-    private String lessonId;
-    private String courseId;
-    private String[] professorId;
+    private int lessonId;
+    private int courseId;
+    private int[] professorId;
     private int lecturesNumber; //lecturesNumber = durationPeriods do IFSC
     private int minWorkingDays; //minWorkingDays = cálculo (periodPerWeek / durationPeriod) do IFSC
     private int studentsNumber;
@@ -26,27 +26,27 @@ public class Lesson {
     }
 
 
-    public String getCourseId() {
-        return courseId;
-    }
-
-    public void setCourseId(String courseId) {
-        this.courseId = courseId;
-    }
-
-    public String getLessonId() {
+    public int getLessonId() {
         return lessonId;
     }
 
-    public void setLessonId(String lessonId) {
+    public void setLessonId(int lessonId) {
         this.lessonId = lessonId;
     }
 
-    public String[] getProfessorId() {
+    public int getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(int courseId) {
+        this.courseId = courseId;
+    }
+
+    public int[] getProfessorId() {
         return professorId;
     }
 
-    public void setProfessorId(String[] professorId) {
+    public void setProfessorId(int[] professorId) {
         this.professorId = professorId;
     }
 
@@ -98,7 +98,7 @@ public class Lesson {
     public void retrieveConstraints(List<UnavailabilityConstraint> constraints) {
         List<UnavailabilityConstraint> constraintList = new ArrayList<>();
         for (UnavailabilityConstraint iterationConstraints : constraints) {
-            if (iterationConstraints.getId().equals(this.lessonId)) {
+            if (iterationConstraints.getId() == this.lessonId) {
                 constraintList.add(iterationConstraints);
             }
         }

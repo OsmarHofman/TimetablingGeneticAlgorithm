@@ -53,7 +53,7 @@ public class Avaliation {
                 Shift currentShift = dtoitc.getShiftByLessonId(chromosome.getGenes()[i]);
 
                 //obtém o vetor dos professores
-                String[] currentProfessors = dtoitc.getProfessorByLessonId(chromosome.getGenes()[i]);
+                int[] currentProfessors = dtoitc.getProfessorByLessonId(chromosome.getGenes()[i]);
 
                 //vai de 10 em 10 posições, ou seja, de turma em turma
                 for (int j = i + 10; j < chromosome.getGenes().length; j += 10) {
@@ -61,18 +61,18 @@ public class Avaliation {
                     //Caso possa ser dado aula nesse dia. Dias não disponíveis tem valor 0.
                     if (chromosome.getGenes()[j] != 0) {
 
-                        Shift iterationShift = dtoitc.getShiftByLessonId(chromosome.getGenes()[j]);
-                        if (currentShift.equals(iterationShift)) {
+                        Shift innerShift = dtoitc.getShiftByLessonId(chromosome.getGenes()[j]);
+                        if (currentShift.equals(innerShift)) {
 
-                            for (String currentProfessor : currentProfessors) {
+                            for (int currentProfessor : currentProfessors) {
 
                                 //obtém o vetor dos professores a serem comparados
-                                String[] iterationProfessors = dtoitc.getProfessorByLessonId(chromosome.getGenes()[j]);
+                                int[] innerProfessors = dtoitc.getProfessorByLessonId(chromosome.getGenes()[j]);
 
-                                for (String iterationProfessor : iterationProfessors) {
+                                for (int innerProfessor : innerProfessors) {
 
                                     //caso o mesmo professor esteja dando aula em duas turmas ao mesmo tempo
-                                    if (currentProfessor.equals(iterationProfessor)) {
+                                    if (currentProfessor == innerProfessor) {
                                         avaliation += 10;
                                         chromosome.setHasViolatedHardConstraint(true);
                                     }
@@ -133,9 +133,9 @@ public class Avaliation {
 
                 if (relationMatrix[lessonPosition][relationIndex]) {
 
-                    for (String professor : lesson.getProfessorId()) {
+                    for (int professor : lesson.getProfessorId()) {
                         for (UnavailabilityConstraint constraint : lesson.getConstraints()) {
-                            if (constraint.getId().equals(professor)) {
+                            if (constraint.getId() == professor) {
 
                                 int day = Math.floorDiv(relationIndex, 6);
                                 if (day == constraint.getDay()) {

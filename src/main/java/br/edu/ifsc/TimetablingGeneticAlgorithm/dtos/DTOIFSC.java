@@ -91,25 +91,25 @@ public class DTOIFSC {
         return Shift.NOTURNO;
     }
 
-    public String getCourseNameById(String id) {
+    public String getCourseNameById(int id) {
         for (Classes classe : this.classes) {
-            if (classe.getId() == Integer.parseInt(id))
+            if (classe.getId() == id)
                 return classe.getName();
         }
         return null;
     }
 
-    public String getProfessorNameById(String id) {
+    public String getProfessorNameById(int id) {
         for (Teacher teacher : this.professors) {
-            if (teacher.getId() == Integer.parseInt(id))
+            if (teacher.getId() == id)
                 return teacher.getName();
         }
         return null;
     }
 
-    public String getLessonById(String id) {
+    public String getLessonNameById(int id) {
         for (Subject subject : this.subjects) {
-            if (subject.getId() == Integer.parseInt(id))
+            if (subject.getId() == id)
                 return subject.getName();
         }
         return null;

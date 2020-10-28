@@ -346,14 +346,14 @@ public class PreProcessing {
 
                             //Pega todas as turmas do conjunto
                             for (Course course : originalDTOITC.getCourses()) {
-                                if (courseId == Integer.parseInt(course.getCourseId())) {
+                                if (courseId == course.getCourseId()) {
                                     courseList.add(course);
                                 }
                             }
 
                             //Pega todas as matérias do conjunto
                             for (Lesson lesson : originalDTOITC.getLessons()) {
-                                if (courseId == Integer.parseInt(lesson.getCourseId())) {
+                                if (courseId == lesson.getCourseId()) {
                                     lessonList.add(lesson);
                                 }
                             }

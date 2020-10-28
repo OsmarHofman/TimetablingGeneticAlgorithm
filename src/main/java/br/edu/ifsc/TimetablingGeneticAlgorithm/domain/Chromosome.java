@@ -81,7 +81,7 @@ public class Chromosome {
 
             //obtém todas as matérias de dado curso
             for (Lesson lesson : lessons) {
-                if (lesson.getCourseId().equals(String.valueOf(courses[i].getCourseId()))) {
+                if (lesson.getCourseId() == courses[i].getCourseId()) {
                     coursesLesson[count] = lesson;
                     count++;
                 }
@@ -97,7 +97,7 @@ public class Chromosome {
             for (Lesson lesson : coursesLesson) {
                 //esse cálculo representa quantas vezes por semana uma matéria deve estar em um curso
                 for (int k = 0; k < lesson.getMinWorkingDays() * (lesson.getLecturesNumber() / 2); k++) {
-                    genes[count + courseIndex] = Integer.parseInt(lesson.getLessonId());
+                    genes[count + courseIndex] = lesson.getLessonId();
                     count++;
                 }
             }
@@ -171,7 +171,7 @@ public class Chromosome {
                         innerCourseLesson.setLecturesNumber(2);
 
                         //Junta os professores das duas matérias
-                        String[] newProfessor = new String[innerCourseLesson.getProfessorId().length + courseLesson.getProfessorId().length];
+                        int[] newProfessor = new int[innerCourseLesson.getProfessorId().length + courseLesson.getProfessorId().length];
                         System.arraycopy(innerCourseLesson.getProfessorId(), 0, newProfessor, 0, innerCourseLesson.getProfessorId().length);
                         System.arraycopy(courseLesson.getProfessorId(), 0, newProfessor, innerCourseLesson.getProfessorId().length, courseLesson.getProfessorId().length);
 
@@ -203,11 +203,11 @@ public class Chromosome {
      * @param innerCourseId Identificador do segundo {@link Course}.
      * @return o índice do {@code innerCourseId}.
      */
-    private int joinName(List<Subject> ifscSubjects, String courseId, String innerCourseId) {
+    private int joinName(List<Subject> ifscSubjects, int courseId, int innerCourseId) {
         for (Subject subject : ifscSubjects) {
-            if (subject.getId() == Integer.parseInt(innerCourseId)) {
+            if (subject.getId() == innerCourseId) {
                 for (Subject innerSubject : ifscSubjects) {
-                    if (innerSubject.getId() == Integer.parseInt(courseId)) {
+                    if (innerSubject.getId() == courseId) {
                         subject.setName(subject.getName() + " - " + innerSubject.getName());
                         return ifscSubjects.indexOf(innerSubject);
                     }
@@ -289,7 +289,7 @@ public class Chromosome {
                 Shift currentShift = dtoitc.getShiftByLessonId(this.getGenes()[i]);
 
                 //obtém o vetor dos professores
-                String[] currentProfessors = dtoitc.getProfessorByLessonId(this.getGenes()[i]);
+                int[] currentProfessors = dtoitc.getProfessorByLessonId(this.getGenes()[i]);
 
                 //vai de 10 em 10 posições, ou seja, de turma em turma
                 for (int j = i + 10; j < this.getGenes().length; j += 10) {
@@ -297,22 +297,22 @@ public class Chromosome {
                     //Caso possa ser dado aula nesse dia. Dias não disponíveis tem valor 0.
                     if (this.getGenes()[j] != 0) {
 
-                        Shift iterationShift = dtoitc.getShiftByLessonId(this.getGenes()[j]);
-                        if (currentShift.equals(iterationShift)) {
+                        Shift innerShift = dtoitc.getShiftByLessonId(this.getGenes()[j]);
+                        if (currentShift.equals(innerShift)) {
 
-                            for (String currentProfessor : currentProfessors) {
+                            for (int currentProfessor : currentProfessors) {
 
                                 //obtém o vetor dos professores a serem comparados
-                                String[] iterationProfessors = dtoitc.getProfessorByLessonId(this.getGenes()[j]);
+                                int[] innerProfessors = dtoitc.getProfessorByLessonId(this.getGenes()[j]);
 
-                                for (String iterationProfessor : iterationProfessors) {
+                                for (int innerProfessor : innerProfessors) {
 
                                     //caso o mesmo professor esteja dando aula em duas turmas ao mesmo tempo
-                                    if (currentProfessor.equals(iterationProfessor)) {
-                                        String courseId = dtoitc.getCourseByLessonId(this.getGenes()[i]);
+                                    if (currentProfessor == innerProfessor) {
+                                        int courseId = dtoitc.getCourseByLessonId(this.getGenes()[i]);
                                         String courseName = dtoifsc.getCourseNameById(courseId);
 
-                                        String conflictCourseId = dtoitc.getCourseByLessonId(this.getGenes()[j]);
+                                        int conflictCourseId = dtoitc.getCourseByLessonId(this.getGenes()[j]);
                                         String conflictCourseName = dtoifsc.getCourseNameById(conflictCourseId);
 
                                         String professorName = dtoifsc.getProfessorNameById(currentProfessor);
@@ -380,16 +380,16 @@ public class Chromosome {
 
                 if (relationMatrix[lessonPosition][matrixPosition]) {
 
-                    for (String professor : lesson.getProfessorId()) {
+                    for (int professor : lesson.getProfessorId()) {
                         for (UnavailabilityConstraint constraint : lesson.getConstraints()) {
-                            if (constraint.getId().equals(professor)) {
+                            if (constraint.getId() == professor) {
 
                                 int day = Math.floorDiv(matrixPosition, 6);
                                 if (day == constraint.getDay()) {
 
                                     int dayPeriod = shift.ordinal() * 2 + periodOffset;
                                     if (dayPeriod == constraint.getDayPeriod()) {
-                                        String lessonName = dtoifsc.getLessonById(lesson.getLessonId());
+                                        String lessonName = dtoifsc.getLessonNameById(lesson.getLessonId());
 
                                         String courseName = dtoifsc.getCourseNameById(lesson.getCourseId());
 

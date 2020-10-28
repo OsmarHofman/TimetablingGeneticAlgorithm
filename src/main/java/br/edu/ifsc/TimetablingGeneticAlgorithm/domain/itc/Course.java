@@ -8,7 +8,7 @@ import java.util.List;
  * Classe que representa um curso
  */
 public class Course {
-    private String courseId;
+    private int courseId;
     private int lessonsNumber;
     private Shift shift;
 
@@ -16,15 +16,15 @@ public class Course {
     }
 
     public Course(String[] parameters) {
-        this.courseId = parameters[0];
+        this.courseId = Integer.parseInt(parameters[0]);
         this.lessonsNumber = Integer.parseInt(parameters[1]);
     }
 
-    public String getCourseId() {
+    public int getCourseId() {
         return courseId;
     }
 
-    public void setCourseId(String courseId) {
+    public void setCourseId(int courseId) {
         this.courseId = courseId;
     }
 
