@@ -317,11 +317,17 @@ public class Chromosome {
 
                                         String professorName = dtoifsc.getProfessorNameById(currentProfessor);
 
-                                        Optional<Horario> horario = Horario.valueOf(i % 10);
+                                        Shift shift = dtoitc.getShiftByCourseId(courseId);
+
+                                        int normalizedIndex = i % 10;
+
+                                        Optional<Dia> dia = Dia.valueOf(normalizedIndex / 2);
+
+                                        Optional<Horario> horario = Horario.valueOf((normalizedIndex % 2 == 0) ? 0 : 1);
 
                                         System.out.println("\nProfessor:" + professorName + "\nTurmas conflitantes:" +
                                                 courseName + ", " + conflictCourseName + "\nDia da semana:" +
-                                                horario.get() + " " + iterationShift + "\n\n");
+                                                dia.get() + " " + horario.get() + " " + shift + "\n\n");
 
                                         avaliation += 10;
                                     }
