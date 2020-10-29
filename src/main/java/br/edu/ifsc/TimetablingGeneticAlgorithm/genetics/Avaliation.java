@@ -23,7 +23,7 @@ public class Avaliation {
      * @return int que representa a avaliação do cromossomo.
      * @throws ClassNotFoundException quando não acha um professor ou matéria dentro do {@code dtoitc}.
      */
-    public static int rate(Chromosome chromosome, DTOITC dtoitc, boolean[][] relationMatrix, int avaliation, DTOITC set, DTOIFSC dtoifsc, boolean[][] scheduleRelation) throws ClassNotFoundException {
+    public static int rate(Chromosome chromosome, DTOITC dtoitc, boolean[][] relationMatrix, int avaliation) throws ClassNotFoundException {
 
         avaliation -= scheduleConflicts(chromosome, dtoitc);
 
