@@ -17,6 +17,7 @@ import br.edu.ifsc.TimetablingGeneticAlgorithm.util.*;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 public class GeneticAlgorithm {
 
@@ -29,7 +30,7 @@ public class GeneticAlgorithm {
      * @throws IOException            Erro ao tentar obter os dados do arquivo de configuração
      * @throws ClassNotFoundException Erro ao obter alguma informação de alguma das classes
      */
-    public List<DTOSchedule> process(String path) throws IOException, ClassNotFoundException {
+    public List<DTOSchedule> process(String path) throws IOException, ClassNotFoundException, InterruptedException {
 
         //Obtém as configurações do arquivo
         int[] config = ConfigReader.readConfiguration(path);
@@ -40,7 +41,7 @@ public class GeneticAlgorithm {
         final int mutationPercentage = config[4];
         final int joinSetPercentage = config[5];
         final int geracoes = config[6];
-
+        int coresNumber = Runtime.getRuntime().availableProcessors();
 
         //Obtem os dados do arquivo XML
         RetrieveIFSCData retrieveIFSCData = new RetrieveIFSCData();
@@ -86,11 +87,9 @@ public class GeneticAlgorithm {
             Chromosome[] population = new Chromosome[populationSize];
             Arrays.setAll(population, x -> new Chromosome(set.getCourses().length, classSize, set.getLessons(), set.getCourses(), dtoifsc));
 
-            //Avaliando a primeira geração
-            for (Chromosome chromosome : population) {
-                chromosome.setHasViolatedHardConstraint(false);
-                chromosome.setAvaliation(Avaliation.rate(chromosome, set, scheduleRelation, initialAvaliation));
-            }
+
+            Avaliation.threadRate(populationSize, coresNumber, population, set, scheduleRelation, initialAvaliation);
+
 
             //Obtendo o melhor cromossomo da primeira geração
             Chromosome localBest = Chromosome.getBestChromosome(population);
@@ -145,11 +144,7 @@ public class GeneticAlgorithm {
 
                     population = newGeneration;
 
-                    //Avaliando a nova geração
-                    for (Chromosome chromosome : population) {
-                        chromosome.setHasViolatedHardConstraint(false);
-                        chromosome.setAvaliation(Avaliation.rate(chromosome, set, scheduleRelation, initialAvaliation));
-                    }
+                    Avaliation.threadRate(populationSize, coresNumber, population, set, scheduleRelation, initialAvaliation);
 
                     //Obtendo o melhor cromossomo da geração atual
                     localBest = Chromosome.getBestChromosome(population);
@@ -159,6 +154,9 @@ public class GeneticAlgorithm {
 
                     innerIterator++;
 
+
+//                    System.out.println("Iteração " + (iterator * geracoes + innerIterator));
+
 //            System.out.println("Avaliação: " + localBest.getAvaliation());
 //            System.out.println("Violou: " + localBest.isHasViolatedHardConstraint());
                 }
@@ -166,7 +164,6 @@ public class GeneticAlgorithm {
                 if (globalBestChromosome.getAvaliation() > avaliation)
                     avaliation = globalBestChromosome.getAvaliation();
                 else {
-                    System.out.println("Caiu no break");
                     break;
                 }
 
@@ -179,7 +176,9 @@ public class GeneticAlgorithm {
 
             long endLocalTime = System.currentTimeMillis();
 
-            System.out.println("Tempo Local Final: " + (endLocalTime - startLocalTime));
+            long localFinalTime = (endLocalTime - startLocalTime);
+
+            System.out.println("Tempo Local Final: " + localFinalTime / 1000 + "." + localFinalTime % 1000 + " segundos");
 
             globalBests[i] = globalBestChromosome;
 
@@ -195,7 +194,9 @@ public class GeneticAlgorithm {
         }
         long endTime = System.currentTimeMillis();
 
-        System.out.println("Tempo Total Final: " + (endTime - startTime));
+        long totalFinalTime = (endTime - startTime);
+
+        System.out.println("Tempo Total Final: " + totalFinalTime / 1000 + "." + totalFinalTime % 1000 + " segundos");
 
         return DTOSchedule.convertChromosome(globalBests, dtoifsc, dtoitc);
     }

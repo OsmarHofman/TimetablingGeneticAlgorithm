@@ -9,7 +9,7 @@ import java.io.IOException;
 @SpringBootApplication
 public class TimetablingGeneticAlgorithmApplication {
 
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
+    public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
 
         //SpringApplication.run(TimetablingGeneticAlgorithmApplication.class, args);
 		GeneticAlgorithm ga = new GeneticAlgorithm();

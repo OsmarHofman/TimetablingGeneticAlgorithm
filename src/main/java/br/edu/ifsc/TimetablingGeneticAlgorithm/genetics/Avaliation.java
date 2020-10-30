@@ -9,30 +9,77 @@ import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Shift;
 
 import javax.security.auth.callback.CallbackHandler;
 import java.util.Arrays;
+import java.util.concurrent.CountDownLatch;
 
 public class Avaliation {
+
+
+    public static void threadRate(int populationSize, int coresNumber, Chromosome[] population, DTOITC set, boolean[][] relationMatrix, int initialAvaliation) throws InterruptedException {
+        int range = (int) Math.ceil(populationSize / (double) coresNumber);
+
+        int lastCoreRange = populationSize - (range * (coresNumber - 1));
+
+        CountDownLatch latch = new CountDownLatch(coresNumber);
+
+        for (int j = 0; j < coresNumber; j++) {
+
+            int innerRange = (j == coresNumber - 1) ? lastCoreRange : range;
+
+            int infLimit = j * range;
+
+            Chromosome[] populationSlice = new Chromosome[innerRange];
+
+            System.arraycopy(population, infLimit, populationSlice, 0, populationSlice.length);
+
+            //Avaliando a primeira geração
+            Avaliation.rate(populationSlice, set, relationMatrix, initialAvaliation, latch);
+
+        }
+        latch.await();
+    }
 
 
     /**
      * Realiza a avaliação de um cromossomo.
      *
-     * @param chromosome     {@link Chromosome} que será avaliado.
+     * @param population     População de {@link Chromosome}s que será avaliado.
      * @param dtoitc         {@link DTOITC} que contém todas informações relativas a matérias, cursos, salas,
      *                       professores e restrições.
      * @param relationMatrix matriz que representa as indisponibilidades dos professores.
      * @return int que representa a avaliação do cromossomo.
      * @throws ClassNotFoundException quando não acha um professor ou matéria dentro do {@code dtoitc}.
      */
-    public static int rate(Chromosome chromosome, DTOITC dtoitc, boolean[][] relationMatrix, int avaliation) throws ClassNotFoundException {
+    private static void rate(Chromosome[] population, DTOITC dtoitc, boolean[][] relationMatrix, int initialAvaliation, CountDownLatch latch) {
+        new Thread(() -> {
+            //System.out.println(Thread.currentThread() + " ativa");
+            int avaliation;
+            for (Chromosome chromosome : population) {
+                avaliation = initialAvaliation;
 
-        avaliation -= scheduleConflicts(chromosome, dtoitc);
+                chromosome.setHasViolatedHardConstraint(false);
 
-        avaliation -= professorsUnavailabilities(chromosome, dtoitc, relationMatrix);
+                try {
+                    avaliation -= scheduleConflicts(chromosome, dtoitc);
+                } catch (ClassNotFoundException e) {
+                    System.err.println("Erro na avaliação de choque de horários!");
+                    e.printStackTrace();
+                }
 
-        //avaliation -= curriculumCompactness(chromosome);
+                try {
+                    avaliation -= professorsUnavailabilities(chromosome, dtoitc, relationMatrix);
+                } catch (ClassNotFoundException e) {
+                    System.err.println("Erro na avaliação de indisponibilidade de professores!");
+                    e.printStackTrace();
+                }
 
-        return avaliation;
+                //avaliation -= curriculumCompactness(chromosome);
 
+                chromosome.setAvaliation(avaliation);
+
+            }
+            //System.out.println("Terminou a avaliação");
+            latch.countDown();
+        }).start();
     }
 
     /**
