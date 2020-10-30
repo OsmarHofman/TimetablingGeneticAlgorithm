@@ -39,6 +39,13 @@ public class Chromosome {
         this.hasViolatedHardConstraint = false;
     }
 
+    public Chromosome(int[] genes, int avaliation, boolean hasViolatedHardConstraint) {
+        this.genes = new int[genes.length];
+        System.arraycopy(genes, 0, this.genes, 0, genes.length);
+        this.avaliation = avaliation;
+        this.hasViolatedHardConstraint = hasViolatedHardConstraint;
+    }
+
     public int[] getGenes() {
         return genes;
     }

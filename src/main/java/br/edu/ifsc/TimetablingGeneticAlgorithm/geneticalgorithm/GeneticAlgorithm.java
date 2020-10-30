@@ -150,7 +150,7 @@ public class GeneticAlgorithm {
                     localBest = Chromosome.getBestChromosome(population);
 
                     if (globalBestChromosome.getAvaliation() < localBest.getAvaliation())
-                        globalBestChromosome = new Chromosome(localBest.getGenes(), localBest.getAvaliation());
+                        globalBestChromosome = new Chromosome(localBest.getGenes(), localBest.getAvaliation(), localBest.isHasViolatedHardConstraint());
 
                     innerIterator++;
 
@@ -183,6 +183,7 @@ public class GeneticAlgorithm {
             globalBests[i] = globalBestChromosome;
 
             System.out.println("Cromossomo: " + globalBests[i].toString());
+
             System.out.println("Avaliação=" + globalBests[i].getAvaliation() + ", ViolouHardConstraint=" + globalBests[i].isHasViolatedHardConstraint());
 
             System.out.println("\n -------------- \nConflitos de Horário:\n");
