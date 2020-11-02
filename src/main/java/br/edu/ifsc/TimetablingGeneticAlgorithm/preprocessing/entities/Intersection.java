@@ -57,7 +57,8 @@ public class Intersection implements Serializable {
     public void addProfessorsToIntersection(List<String> professorsList) {
         List<String> newProfessorsList = new ArrayList<>();
         for (String professorName : professorsList) {
-            //se o professor já não estiver na intersecção
+
+            //Se o professor já não estiver na intersecção
             if (ListOperationUtil.itemIsNotInList(professorName, this.professorsList) && !newProfessorsList.contains(professorName)) {
                 newProfessorsList.add(professorName);
             }

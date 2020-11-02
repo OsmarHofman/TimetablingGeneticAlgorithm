@@ -1,6 +1,7 @@
 package br.edu.ifsc.TimetablingGeneticAlgorithm.dtos;
 
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.ifsc.*;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Course;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Shift;
 
 
@@ -91,6 +92,12 @@ public class DTOIFSC {
         return Shift.NOTURNO;
     }
 
+    /**
+     * Obtém o nome do curso pelo seu identificador
+     *
+     * @param id índice que será verificado com os valores das {@link Classes}.
+     * @return {@link String} com o nome do curso pelo Id correspondente.
+     */
     public String getCourseNameById(int id) {
         for (Classes classe : this.classes) {
             if (classe.getId() == id)
@@ -99,6 +106,12 @@ public class DTOIFSC {
         return null;
     }
 
+    /**
+     * Obtém o nome do professor pelo seu identificador
+     *
+     * @param id índice que será verificado com os valores dos {@link Teacher}s.
+     * @return {@link String} com o nome do professor pelo Id correspondente.
+     */
     public String getProfessorNameById(int id) {
         for (Teacher teacher : this.professors) {
             if (teacher.getId() == id)
@@ -107,6 +120,12 @@ public class DTOIFSC {
         return null;
     }
 
+    /**
+     * Obtém o nome da matéria pelo seu identificador
+     *
+     * @param id índice que será verificado com os valores doa {@link Lesson}s.
+     * @return {@link String} com o nome da matéria pelo Id correspondente.
+     */
     public String getLessonNameById(int id) {
         for (Subject subject : this.subjects) {
             if (subject.getId() == id)

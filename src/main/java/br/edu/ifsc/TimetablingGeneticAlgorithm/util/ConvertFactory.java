@@ -57,6 +57,7 @@ public class ConvertFactory {
             for (int professorId : professorIds) {
                 for (Teacher iterationTeacher : dtoifsc.getProfessors()) {
                     if (iterationTeacher.getId() == professorId) {
+
                         //Adiciona as constraits as lessons
                         constraintList.addAll(convertTimeoffToUnavailability(iterationTeacher.getTimeoff(), iterationTeacher.getId()));
 

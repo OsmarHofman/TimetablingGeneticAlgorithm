@@ -82,34 +82,34 @@ public class Chromosome {
         for (int i = 0; i < courses.length; i++) {
             Lesson[] coursesLesson = new Lesson[courses[i].getLessonsNumber()];
 
-            //contador que representa a posição em que será inserida. É necessário pois é feito um foreach, então serve
-            //como o índice
+            /*Contador que representa a posição em que será inserida. É necessário pois é feito um foreach, então serve
+             * como o índice*/
             int count = 0;
 
-            //obtém todas as matérias de dado curso
+            //Obtém todas as matérias de dado curso
             for (Lesson lesson : lessons) {
                 if (lesson.getCourseId() == courses[i].getCourseId()) {
                     coursesLesson[count] = lesson;
                     count++;
                 }
             }
-            //indica a posição do primeiro horário de um curso dentro do cromossomo
+            //Indica a posição do primeiro horário de um curso dentro do cromossomo
             int courseIndex = i * classSize;
 
             count = 0;
 
-            //transforma as matérias com aulas impares (1 ou 3 créditos) em pares (2 ou 4 créditos)
+            //Transforma as matérias com aulas impares (1 ou 3 créditos) em pares (2 ou 4 créditos)
             coursesLesson = this.joinOddLessons(coursesLesson, dtoifsc.getSubjects());
 
             for (Lesson lesson : coursesLesson) {
-                //esse cálculo representa quantas vezes por semana uma matéria deve estar em um curso
+                //Esse cálculo representa quantas vezes por semana uma matéria deve estar em um curso
                 for (int k = 0; k < lesson.getMinWorkingDays() * (lesson.getLecturesNumber() / 2); k++) {
                     genes[count + courseIndex] = lesson.getLessonId();
                     count++;
                 }
             }
 
-            //para randomizar as matérias, obtém-se duas materias aleatórias, e elas são trocadas entre si
+            //Para randomizar as matérias, obtém-se duas materias aleatórias, e elas são trocadas entre si
             for (int k = 0; k < count / 2; k++) {
                 int p1 = random.nextInt(count) + courseIndex;
                 int p2 = random.nextInt(count) + courseIndex;
@@ -157,7 +157,7 @@ public class Chromosome {
             if (courseLesson.getLecturesNumber() == 3) {
                 for (Lesson innerCourseLesson : coursesLesson) {
 
-                    //caso encontrar uma matéria com 3, deve haver outra com 1
+                    //Caso encontrar uma matéria com 3, deve haver outra com 1
                     if (innerCourseLesson.getLecturesNumber() == 1) {
                         courseLesson.setLecturesNumber(2);
                         this.joinName(ifscSubjects, courseLesson.getLessonId(), innerCourseLesson.getLessonId());
@@ -173,7 +173,7 @@ public class Chromosome {
             if (courseLesson.getLecturesNumber() == 1) {
                 for (Lesson innerCourseLesson : coursesLesson) {
 
-                    //caso encontrar uma matéria com 1, deve haver outra com 1 que não seja ela mesma
+                    //Caso encontrar uma matéria com 1, deve haver outra com 1 que não seja ela mesma
                     if (innerCourseLesson.getLecturesNumber() == 1 && !innerCourseLesson.equals(courseLesson)) {
                         innerCourseLesson.setLecturesNumber(2);
 
@@ -184,7 +184,7 @@ public class Chromosome {
 
                         innerCourseLesson.setProfessorId(newProfessor);
 
-                        //obtém qual o índice da primeira matéria para retirá-la
+                        //Obtém qual o índice da primeira matéria para retirá-la
                         int index = this.joinName(ifscSubjects, courseLesson.getLessonId(), innerCourseLesson.getLessonId());
                         ifscSubjects.remove(index);
 
@@ -303,10 +303,10 @@ public class Chromosome {
 
                 Shift currentShift = dtoitc.getShiftByLessonId(this.getGenes()[i]);
 
-                //obtém o vetor dos professores
+                //Obtém o vetor dos professores
                 int[] currentProfessors = dtoitc.getProfessorByLessonId(this.getGenes()[i]);
 
-                //vai de 10 em 10 posições, ou seja, de turma em turma
+                //Vai de 10 em 10 posições, ou seja, de turma em turma
                 for (int j = i + 10; j < this.getGenes().length; j += 10) {
 
                     //Caso possa ser dado aula nesse dia. Dias não disponíveis tem valor 0.
@@ -317,12 +317,12 @@ public class Chromosome {
 
                             for (int currentProfessor : currentProfessors) {
 
-                                //obtém o vetor dos professores a serem comparados
+                                //Obtém o vetor dos professores a serem comparados
                                 int[] innerProfessors = dtoitc.getProfessorByLessonId(this.getGenes()[j]);
 
                                 for (int innerProfessor : innerProfessors) {
 
-                                    //caso o mesmo professor esteja dando aula em duas turmas ao mesmo tempo
+                                    //Caso o mesmo professor esteja dando aula em duas turmas ao mesmo tempo
                                     if (currentProfessor == innerProfessor) {
 
                                         //Obtém a primeira turma relacionada a violação
@@ -356,7 +356,7 @@ public class Chromosome {
                                         System.out.print("\nProfessor:" + professorName + "\nTurmas conflitantes:" +
                                                 courseName + ", " + conflictCourseName + "\nDia da semana:");
 
-                                        //caso o valor passado no valueOf esteja dentro de uma das possibilidades do enum
+                                        //Caso o valor passado no valueOf esteja dentro de uma das possibilidades do enum
                                         if (dia.isPresent() && horario.isPresent())
                                             System.out.print(dia.get() + " " + horario.get() + " ");
 
@@ -384,10 +384,10 @@ public class Chromosome {
     public void checkProfessorsUnavailabilities(DTOITC dtoitc, DTOIFSC dtoifsc, boolean[][] relationMatrix) throws
             ClassNotFoundException {
 
-        //valor que representa o deslocamento do dia, ou seja, são duas aulas por dia, então varia entre 0 e 1.
+        //Valor que representa o deslocamento do dia, ou seja, são duas aulas por dia, então varia entre 0 e 1.
         byte periodOffset = 0;
 
-        //valor que representa o deslocamento da semana, ou seja, são dez aulas por semana, então varia entre 0 e 9.
+        //Valor que representa o deslocamento da semana, ou seja, são dez aulas por semana, então varia entre 0 e 9.
         byte weekOffset = 0;
 
         for (int i = 0; i < this.getGenes().length; i++) {
@@ -405,14 +405,14 @@ public class Chromosome {
             if (this.getGenes()[i] != 0) {
                 Lesson lesson = dtoitc.getLessonById(this.getGenes()[i]);
 
-                //por conta da matriz de relação, é preciso obter qual a posição do Lesson atual
+                //Por conta da matriz de relação, é preciso obter qual a posição do Lesson atual
                 int lessonPosition = dtoitc.getLessonPosition(lesson.getLessonId());
 
-                //obtém o turno do Lesson
+                //Obtém o turno do Lesson
                 Shift shift = dtoitc.getShiftByCourseId(lesson.getCourseId());
 
-                //cálculo para obter o boolean que representa a disponibilidade do professor na matriz. Sendo que
-                // os valores "2" representam o número de aulas por dia, e o "6", as aulas com seus turnos.
+                /*Cálculo para obter o boolean que representa a disponibilidade do professor na matriz. Sendo que
+                 * os valores "2" representam o número de aulas por dia, e o "6", as aulas com seus turnos.*/
 
                 int matrixPosition = (shift.ordinal() * 2 + periodOffset) + (6 * weekOffset);
 
@@ -421,16 +421,16 @@ public class Chromosome {
                     for (int professor : lesson.getProfessorId()) {
                         for (UnavailabilityConstraint constraint : lesson.getConstraints()) {
 
-                            //caso o professor atual seja o que violou
+                            //Caso o professor atual seja o que violou
                             if (constraint.getId() == professor) {
 
-                                //é dividido por 6 para poder obter o dia que aconteceu a violação
+                                //É dividido por 6 para poder obter o dia que aconteceu a violação
                                 int day = Math.floorDiv(matrixPosition, 6);
 
-                                //se o dia que aconteceu a violação é o mesmo que o professor tem indisponibilidade
+                                //Se o dia que aconteceu a violação é o mesmo que o professor tem indisponibilidade
                                 if (day == constraint.getDay()) {
 
-                                    /*cálculo para poder obter o período do dia, que será de 0-9, onde os valores
+                                    /*Cálculo para poder obter o período do dia, que será de 0-9, onde os valores
                                      * pares são do primeiro período e os ímpares do segundo*/
                                     int dayPeriod = shift.ordinal() * 2 + periodOffset;
                                     if (dayPeriod == constraint.getDayPeriod()) {
@@ -456,7 +456,7 @@ public class Chromosome {
                                         System.out.print("Professor:" + professorName + "\nCurso:" +
                                                 courseName + "\nMatéria: " + lessonName + "\nDia da semana:");
 
-                                        //caso o valor passado no valueOf esteja dentro de uma das possibilidades do enum
+                                        //Caso o valor passado no valueOf esteja dentro de uma das possibilidades do enum
                                         if (dia.isPresent() && horario.isPresent())
                                             System.out.print(dia.get() + " " + horario.get() + " ");
 

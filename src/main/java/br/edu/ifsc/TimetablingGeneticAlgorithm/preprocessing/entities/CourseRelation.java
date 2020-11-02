@@ -70,7 +70,7 @@ public class CourseRelation implements Serializable {
      * @param professorCourses {@link List} de todos os cursos que um professor leciona.
      */
     public void checkListIntersection(String course, List<String> professorCourses) {
-        //lista onde serão incluidos os cursos relacionados
+        //Lista onde serão incluidos os cursos relacionados
         List<IsRelated> relateds = new ArrayList<>();
         IsRelated isRelated;
         for (String profCourse : professorCourses) {
@@ -135,15 +135,18 @@ public class CourseRelation implements Serializable {
 
         //Olha todas as intersecções do Curso atual, para ver se cria um conjunto
         for (Intersection iteratorIntersection : intersection) {
-            //cria um conjunto
+
+            //Cria um conjunto
             if (iteratorIntersection.getIntersectionProfessorsCount() >= proportion) {
                 listIntersection.add(iteratorIntersection.getIntersectionCourse());
-                //caso for a junção de um conjunto com outro curso ou conjunto
+
+                //Caso for a junção de um conjunto com outro curso ou conjunto
                 if (iteratorIntersection.getIntersectionCourse().contains("-")) {
-                    //insere um novo nome do tipo "Curso1-Curso2--Curso 3", sendo o Curso1-Curso2 um conjunto
+
+                    //Insere um novo nome do tipo "Curso1-Curso2--Curso 3", sendo o Curso1-Curso2 um conjunto
                     nomeCurso.insert(0, iteratorIntersection.getIntersectionCourse() + "--");
                 } else {
-                    //cria o nome do tipo "Curso1-Curso2"
+                    //Cria o nome do tipo "Curso1-Curso2"
                     nomeCurso.append("-").append(iteratorIntersection.getIntersectionCourse());
                 }
                 //Cria um novo CourseRelation para o conjunto
@@ -156,7 +159,8 @@ public class CourseRelation implements Serializable {
 
         //Se formou um conjunto
         if (listIntersection.size() > 1) {
-            //troca o nome e adiciona na lista
+
+            //Troca o nome e adiciona na lista
             newCourse.setName(nomeCurso.toString());
             newCourse.setExclusiveProfessorCount(exclusiveProfessors);
             cs.add(newCourse);

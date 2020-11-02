@@ -22,20 +22,19 @@ public class Mutation {
             //Verifica se o cromossomo atual será mutado
             if (mutationChance < mutationPercentage) {
 
-                //obtém-se os dois pontos de troca, isso é necessário para manter o chromossomo sem valores repetidos.
-                //Então ao invés de ser atribuído um valor aleatório, serão trocados dois valores em posições aleatórias
+                /*Obtém-se os dois pontos de troca, isso é necessário para manter o chromossomo sem valores repetidos.
+                 * Então ao invés de ser atribuído um valor aleatório, serão trocados dois valores em posições aleatórias*/
 
                 int swapPoint1;
                 do {
+
                     //O cutpoint1 é totalmente aleatório, e o cutpoint2 será na mesma turma do cutpoint1
                     swapPoint1 = random.nextInt(chromosome.getGenes().length);
+
                 } while (chromosome.getGenes()[swapPoint1] == 0);
 
                 //Limite inferior, ou seja, a primeira posição da turma
                 int infLimit = Math.floorDiv(swapPoint1, classSize) * 10;
-
-                //Limite superior, ou seja, a última posição da turma
-                int supLimit = infLimit + classSize;
 
                 int swapPoint2;
                 do {

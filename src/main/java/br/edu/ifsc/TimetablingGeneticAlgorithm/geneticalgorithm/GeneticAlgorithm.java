@@ -43,7 +43,7 @@ public class GeneticAlgorithm {
         final int geracoes = config[6];
         int coresNumber = Runtime.getRuntime().availableProcessors();
 
-        //Obtem os dados do arquivo XML
+        //Obtém os dados do arquivo XML
         RetrieveIFSCData retrieveIFSCData = new RetrieveIFSCData();
         DTOIFSC dtoifsc = retrieveIFSCData.getAllData();
 
@@ -58,16 +58,20 @@ public class GeneticAlgorithm {
         //Ajusta os cursos que foram pré-processados para a modelagem do DTOITC
         DTOITC[] sets = preProcessing.splitSet(dtoitc);
 
+        //Armazena os melhores cromossomos e todas as gerações
         Chromosome[] globalBests = new Chromosome[sets.length];
 
         long startTime = System.currentTimeMillis();
 
         for (int i = 0; i < sets.length; i++) {
 
+            //Obtém o DTOITC respectivo ao conjunto que será processado
             DTOITC set = sets[i];
 
+            //Obtém o número de cursos dentro de um conjunto
             int coursesSize = preProcessing.getCourseRelationList().get(i).getName().split("-").length;
 
+            //Obtém a avaliação inicial, ou seja, a que será usada para a função de avaliação desse conjunto
             int initialAvaliation = Avaliation.getInitialAvaliation(coursesSize);
 
             /*Matriz de relação dos horarios
@@ -87,15 +91,14 @@ public class GeneticAlgorithm {
             Chromosome[] population = new Chromosome[populationSize];
             Arrays.setAll(population, x -> new Chromosome(set.getCourses().length, classSize, set.getLessons(), set.getCourses(), dtoifsc));
 
-
+            //Avaliando a primeira geração com threads
             Avaliation.threadRate(populationSize, coresNumber, population, set, scheduleRelation, initialAvaliation);
-
 
             //Obtendo o melhor cromossomo da primeira geração
             Chromosome localBest = Chromosome.getBestChromosome(population);
 
+            //Inicializando o melhor cromossomo global
             Chromosome globalBestChromosome = localBest;
-
 
             //Número de execuções do While de fora
             int iterator = -1;
@@ -107,11 +110,14 @@ public class GeneticAlgorithm {
             int avaliation = 0;
             long startLocalTime = System.currentTimeMillis();
 
+            //Laço que controla se as gerações estão melhorando
             while (iterator < geracoes &&
                     ((localBest.getAvaliation() < initialAvaliation) || localBest.isHasViolatedHardConstraint())) {
 
                 iterator++;
                 innerIterator = 0;
+
+                //Laço do processamento das gerações
                 while (innerIterator < geracoes &&
                         ((localBest.getAvaliation() < initialAvaliation) || localBest.isHasViolatedHardConstraint())) {
 
@@ -119,7 +125,7 @@ public class GeneticAlgorithm {
                     byte proportion = (byte) (populationSize / elitismPercentage);
                     Chromosome[] eliteChromosomes = Selection.elitism(population, proportion);
 
-                    //Função de avaliacao acumulada
+                    //Função de avaliação acumulada
                     int[] ratingHandler = new int[populationSize];
                     int faA = 0;
                     for (int j = 0; j < population.length; j++) {
@@ -130,7 +136,7 @@ public class GeneticAlgorithm {
                     //Seleção por roleta
                     Chromosome[] newCouples = Selection.rouletteWheel(population, ratingHandler, faA, proportion);
 
-                    //Crossover
+                    //Cruzamento
                     Chromosome[] crossedChromosomes = Crossover.cross(newCouples, classSize, crossPercentage);
 
                     //Unindo as Subpopulações geradas por elitismo e roleta
@@ -142,13 +148,16 @@ public class GeneticAlgorithm {
                     //Mutação
                     Mutation.swapMutation(newGeneration, classSize, mutationPercentage);
 
+                    //Atribuindo a nova geração
                     population = newGeneration;
 
+                    //Avaliando a nova geraação com threads
                     Avaliation.threadRate(populationSize, coresNumber, population, set, scheduleRelation, initialAvaliation);
 
                     //Obtendo o melhor cromossomo da geração atual
                     localBest = Chromosome.getBestChromosome(population);
 
+                    //Caso o melhor cromossomo dessa geração seja melhor que o melhor global
                     if (globalBestChromosome.getAvaliation() < localBest.getAvaliation())
                         globalBestChromosome = new Chromosome(localBest.getGenes(), localBest.getAvaliation(), localBest.isHasViolatedHardConstraint());
 
@@ -161,38 +170,45 @@ public class GeneticAlgorithm {
 //            System.out.println("Violou: " + localBest.isHasViolatedHardConstraint());
                 }
 
+                //Caso as gerações melhoraram, continua, senão sai dos laços
                 if (globalBestChromosome.getAvaliation() > avaliation)
                     avaliation = globalBestChromosome.getAvaliation();
                 else {
                     break;
                 }
 
-
             }
 
+            //Apresenta os valores relativos as iterações
             System.out.println("################## CONJUNTO " + psc.getCourseRelationList().get(i).getName() + " ##################");
 
             System.out.println("\nNúmero total de iterações: " + (iterator * geracoes + innerIterator));
 
+            //Apresenta os valores relativos ao tempo de execução
             long endLocalTime = System.currentTimeMillis();
 
             long localFinalTime = (endLocalTime - startLocalTime);
 
             System.out.println("Tempo Local Final: " + localFinalTime / 1000 + "." + localFinalTime % 1000 + " segundos");
 
+            //Apresenta os valores relativos ao resultado final obtido
             globalBests[i] = globalBestChromosome;
 
             System.out.println("Cromossomo: " + globalBests[i].toString());
 
             System.out.println("Avaliação=" + globalBests[i].getAvaliation() + ", ViolouHardConstraint=" + globalBests[i].isHasViolatedHardConstraint());
 
+            //Checa os conflitos de horários
             System.out.println("\n -------------- \nConflitos de Horário:\n");
             globalBests[i].checkScheduleConflicts(set, dtoifsc);
 
+            //Checa as indisponibilidades dos professores
             System.out.println("Indisponibilidade dos Professores:\n");
             globalBests[i].checkProfessorsUnavailabilities(set, dtoifsc, scheduleRelation);
 
         }
+
+        //Apresenta os valores relativos ao tempo de execução total
         long endTime = System.currentTimeMillis();
 
         long totalFinalTime = (endTime - startTime);

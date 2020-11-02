@@ -37,7 +37,8 @@ public class ProfessorCourse {
      * @return {@code true} se ele é exclusivo, e {@code false} caso contrário.
      */
     public boolean checkExclusivity(String courseName) {
-        //verifica se só tem um item, e esse item é o conjunto
+
+        //Verifica se só tem um item, e esse item é o conjunto
         return this.course.size() == 1 && this.course.get(0).equals(courseName);
     }
 

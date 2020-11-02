@@ -86,6 +86,7 @@ public class RetrieveIFSCData {
                         // Classes
                         int idClass = Integer.parseInt(eElement.getAttribute("id"));
                         String shortNameClass = eElement.getAttribute("short");
+
                         //Se começar com "G" ou "T" significa que é uma turma de graduação ou técnico
                         if (shortNameClass.toUpperCase().startsWith("G") || shortNameClass.toUpperCase().startsWith("T")) {
                             String nameClass = eElement.getAttribute("name");
@@ -111,6 +112,7 @@ public class RetrieveIFSCData {
                                     .add(new Lesson(idLesson, subjectId, classesId, teacherIdLesson, periodsPerWeek, durationPeriods));
                         }
                     } else if (column == 2) {
+
                         // Subject
                         int idSubject = Integer.parseInt(eElement.getAttribute("id"));
                         for (Lesson iteratorLesson : dtoifsc.getLessons()) {
@@ -121,6 +123,7 @@ public class RetrieveIFSCData {
                             }
                         }
                     } else if (column == 3) {
+
                         // Teacher
                         String idTeacher = eElement.getAttribute("id");
                         String nameTeacher = eElement.getAttribute("name");
@@ -128,6 +131,7 @@ public class RetrieveIFSCData {
                         dtoifsc.getProfessors()
                                 .add(new Teacher(Integer.parseInt(idTeacher), nameTeacher, timeoffTeacher));
                     } else if (column == 4) {
+
                         // Classroom
                         String idRoom = eElement.getAttribute("id");
                         String nameRoom = eElement.getAttribute("name");
@@ -156,6 +160,7 @@ public class RetrieveIFSCData {
             return null;
         }
         String newElement = element;
+
         /*No XML os professores que lecionam uma matéria são divididos por virgula, mas como não há um padrão onde essa
          * virgula aparece, é necessário fazer uma verificação*/
         if (newElement.startsWith(","))

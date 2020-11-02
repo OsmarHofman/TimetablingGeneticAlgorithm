@@ -78,13 +78,13 @@ public class DTOITC {
     /**
      * Obtém o professor pelo identificador da {@link Lesson}.
      *
-     * @param index índice que será verificado com os valores das {@link Lesson}s.
+     * @param id índice que será verificado com os valores das {@link Lesson}s.
      * @return Vetor de {@link String} com os Ids dos professores.
      * @throws ClassNotFoundException Erro quando o professor não é encontrado
      */
-    public int[] getProfessorByLessonId(int index) throws ClassNotFoundException {
+    public int[] getProfessorByLessonId(int id) throws ClassNotFoundException {
         for (Lesson lesson : this.lessons) {
-            if (lesson.getLessonId() == index) {
+            if (lesson.getLessonId() == id) {
                 return lesson.getProfessorId();
             }
         }
@@ -94,13 +94,13 @@ public class DTOITC {
     /**
      * Obtém a matéria pelo identificador da {@link Lesson}.
      *
-     * @param index índice que será verificado com os valores das {@link Lesson}s.
+     * @param id índice que será verificado com os valores das {@link Lesson}s.
      * @return {@link Lesson} com o Id correspondente.
      * @throws ClassNotFoundException Erro quando a matéria não é encontrado
      */
-    public Lesson getLessonById(int index) throws ClassNotFoundException {
+    public Lesson getLessonById(int id) throws ClassNotFoundException {
         for (Lesson lesson : this.lessons) {
-            if (lesson.getLessonId() == index) {
+            if (lesson.getLessonId() == id) {
                 return lesson;
             }
         }
@@ -110,19 +110,26 @@ public class DTOITC {
     /**
      * Obtém o turno de uma turma pelo identificador do {@link Course}.
      *
-     * @param courseId índice que será verificado com os valores das {@link Course}s.
+     * @param id índice que será verificado com os valores das {@link Course}s.
      * @return {@link Lesson} com o Id correspondente.
      * @throws ClassNotFoundException Erro quando a matéria não é encontrado
      */
-    public Shift getShiftByCourseId(int courseId) throws ClassNotFoundException {
+    public Shift getShiftByCourseId(int id) throws ClassNotFoundException {
         for (Course course : this.courses) {
-            if (course.getCourseId() == courseId) {
+            if (course.getCourseId() == id) {
                 return course.getShift();
             }
         }
         throw new ClassNotFoundException("Curso não encontrado");
     }
 
+    /**
+     * Obtém o turno de uma turma pelo identificador do {@link Lesson}.
+     *
+     * @param id índice que será verificado com os valores das {@link Lesson}s.
+     * @return {@link Shift} com o Id correspondente.
+     * @throws ClassNotFoundException Erro quando a matéria não é encontrado
+     */
     public Shift getShiftByLessonId(int id) throws ClassNotFoundException {
         for (Lesson lesson : this.lessons) {
             if (lesson.getLessonId() == id) {
@@ -136,26 +143,32 @@ public class DTOITC {
     /**
      * Obtém o índice que está um item da {@link Lesson}.
      *
-     * @param lessonId valor que será verificado para obter o índice.
+     * @param id valor que será verificado para obter o índice.
      * @return {@link Integer} do índice do {@code lessonId}.
      * @throws ClassNotFoundException Erro quando a Lesson não é encontrada.
      */
-    public int getLessonPosition(int lessonId) throws ClassNotFoundException {
+    public int getLessonPosition(int id) throws ClassNotFoundException {
         for (int i = 0; i < lessons.length; i++) {
-            if (lessons[i].getLessonId() == lessonId)
+            if (lessons[i].getLessonId() == id)
                 return i;
         }
         throw new ClassNotFoundException("Lesson não encontrada");
     }
 
-
-    public int getCourseByLessonId(int index) throws ClassNotFoundException {
+    /**
+     * Obtém o curso pelo identificador do {@link Lesson}.
+     *
+     * @param id índice que será verificado com os valores das {@link Lesson}s.
+     * @return {@link Course} com o Id correspondente.
+     * @throws ClassNotFoundException Erro quando a matéria não é encontrado
+     */
+    public int getCourseByLessonId(int id) throws ClassNotFoundException {
         for (Lesson lesson : this.lessons) {
-            if (lesson.getLessonId() == index) {
+            if (lesson.getLessonId() == id) {
                 return lesson.getCourseId();
             }
         }
-        throw new ClassNotFoundException("Professor não encontrado");
+        throw new ClassNotFoundException("Lesson não encontrado");
     }
 
     @Override

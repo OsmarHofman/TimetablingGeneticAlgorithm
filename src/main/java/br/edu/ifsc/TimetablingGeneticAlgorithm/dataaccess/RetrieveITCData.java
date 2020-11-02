@@ -90,7 +90,8 @@ public class RetrieveITCData {
                 myReader.nextLine();
             }
             myReader.close();
-            //coloca as constraints a suas respectivas lessons
+
+            //Coloca as constraints a suas respectivas lessons
             for (Lesson iterationLesson : lessons) {
                 iterationLesson.retrieveConstraints(constraints);
             }

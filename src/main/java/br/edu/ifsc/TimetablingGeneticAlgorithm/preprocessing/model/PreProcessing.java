@@ -72,25 +72,25 @@ public class PreProcessing {
 
                 List<Integer> toRemoveIndexes = new ArrayList<>();
                 List<Intersection> intersectionList = new ArrayList<>();
-                //seleciona os cursos iguais e junta suas intersecções
+                //Seleciona os cursos iguais e junta suas intersecções
                 List<Intersection> innerIntersections = this.selectCoursesToRemove(splitSetName, intersectionList, toRemoveIndexes);
 
-                //renomea o nome dos cursos de cada professor, para substituirem pelo conjunto formado
+                //Renomea o nome dos cursos de cada professor, para substituirem pelo conjunto formado
                 this.renameProfessorsCourses(splitSetName, lastCourse.getName());
 
-                //agora passa o setName, que é o nome inteiro do conjunto sem split, ja que foi substituido antes
+                //Agora passa o setName, que é o nome inteiro do conjunto sem split, ja que foi substituido antes
                 this.verifyExclusiveProfessor(innerIntersections, setName);
 
-                //efetivamente retira os cursos que compoem um conjunto
+                //Efetivamente retira os cursos que compoem um conjunto
                 ListOperationUtil.removeItemsOnIndexes(toRemoveIndexes, this.courseRelationList);
 
-                //renomeia todos os cursos que tenham uma intersecção com o conjunto criado
+                //Renomeia todos os cursos que tenham uma intersecção com o conjunto criado
                 this.renameIntersection(splitSetName, setName);
 
-                //junta as intersecções do conjunto que tem nome igual aos cursos foram usados para formá-lo
+                //Junta as intersecções do conjunto que tem nome igual aos cursos foram usados para formá-lo
                 this.mergeIntersections(setName);
 
-                //recalcula o total de professores do conjunto
+                //Recalcula o total de professores do conjunto
                 lastCourse.sumTotalProfessors();
             }
         }
@@ -115,7 +115,8 @@ public class PreProcessing {
             //Lista com os índices dos cursos que serão retirados da lista
             List<Integer> indexes = new ArrayList<>();
             for (String iteratorSplitName : splitSetName) {
-                //conjunto interno, ou seja, "Curso1-Curso2"
+
+                //Conjunto interno, ou seja, "Curso1-Curso2"
                 if (iteratorSplitName.contains("-")) {
                     if (ListOperationUtil.itemIsNotInList(iteratorSplitName, this.courseRelationList)) {
                         nameCourses.addAll(Arrays.asList(iteratorSplitName.split("-")));
@@ -123,6 +124,7 @@ public class PreProcessing {
                     }
                 }
             }
+
             //Remove os cursos desnecessários e coloca os nomes corretos
             ListOperationUtil.removeItemsOnIndexes(indexes, splitSetName);
             splitSetName.addAll(nameCourses);
@@ -156,10 +158,10 @@ public class PreProcessing {
                         this.joinIntersections(iterationCourse.getIntersection(), intersectionList);
 
                     this.courseRelationList.get(this.courseRelationList.size() - 1).setIntersection(intersectionList);
-                    //remove as intersections e as retorna, como explicado acima
+                    //Remove as intersections e as retorna, como explicado acima
                     removedInnerIntersection = removeInnerDuplicatedCourses(splitname, this.courseRelationList.get(this.courseRelationList.size() - 1).getIntersection(), removedInnerIntersection);
 
-                    //não efetivamente tira os cursos da lista, mas guarda seus indices em uma lista, para remove-los depois
+                    //Não efetivamente tira os cursos da lista, mas guarda seus indices em uma lista, para remove-los depois
                     toRemoveIndexes.add(i);
                 }
             }
@@ -185,7 +187,7 @@ public class PreProcessing {
                     newIntersections.add(firstCourseIntersection);
             }
         }
-        //nessa lista que estará as interseções corretas
+        //Nessa lista que estará as interseções corretas
         secondCourseIntersections.addAll(newIntersections);
     }
 
@@ -201,7 +203,8 @@ public class PreProcessing {
         for (int i = 0; i < intersectionList.size(); i++) {
             for (int j = 0; j < splitName.size(); j++) {
                 if (intersectionList.get(i).getIntersectionCourse().equals(splitName.get(j))) {
-                    //essa lista é onde vai ser colocada as intersections removidas
+
+                    //Essa lista é onde vai ser colocada as intersections removidas
                     removedInnerIntersection.add(intersectionList.remove(i));
                     return removeInnerDuplicatedCourses(splitName, intersectionList, removedInnerIntersection);
                 }
@@ -219,6 +222,7 @@ public class PreProcessing {
     private void renameProfessorsCourses(List<String> splitSetName, String courseRelation) {
         for (ProfessorCourse iterationPC : this.professorRelation) {
             List<Integer> indexes = new ArrayList<>();
+
             //Obtém os cursos com o nome antigo
             for (String iterationCourse : iterationPC.getCourse()) {
                 for (String iterationCourseName : splitSetName) {
@@ -245,8 +249,10 @@ public class PreProcessing {
      * @throws ClassNotFoundException Erro caso não encontre o professor na lista.
      */
     private void verifyExclusiveProfessor(List<Intersection> innerIntersections, String name) throws ClassNotFoundException {
+
         //Obtém o conjunto
         CourseRelation lastCourse = this.courseRelationList.get(this.courseRelationList.size() - 1);
+
         //Lista que estará os professores já analisados
         List<String> professorBlackList = new ArrayList<>();
         for (Intersection iterationIntersection : innerIntersections) {
@@ -270,6 +276,7 @@ public class PreProcessing {
      * @param setName   {@link String} que representa o nome do conjunto.
      */
     private void renameIntersection(List<String> splitName, String setName) {
+
         //Verifica todos os cursos de todas as intersecções, e se tiver um curso que pertence ao conjunto, renomeia
         for (CourseRelation iterationCourse : this.courseRelationList) {
             for (Intersection iterationIntersec : iterationCourse.getIntersection()) {
@@ -289,6 +296,7 @@ public class PreProcessing {
      */
     private void mergeIntersections(String setName) {
         for (CourseRelation iterationCourseRelation : this.courseRelationList) {
+
             //Lista de indices das intersecções que serão retiradas
             List<Integer> indexes = new ArrayList<>();
 

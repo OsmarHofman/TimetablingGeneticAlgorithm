@@ -27,30 +27,30 @@ public class Avaliation {
      */
     public static void threadRate(int populationSize, int coresNumber, Chromosome[] population, DTOITC set, boolean[][] relationMatrix, int initialAvaliation) throws InterruptedException {
 
-        //valor que representa quantos cromossomos cada thread irá processar
+        //Valor que representa quantos cromossomos cada thread irá processar
         int range = (int) Math.ceil(populationSize / (double) coresNumber);
 
-        /*a última thread irá ter um número de cromossomos diferentes para caso a divisão de cromossomos entre
+        /*A última thread irá ter um número de cromossomos diferentes para caso a divisão de cromossomos entre
          * as threads não seja igual. Ex.: população de 100 cromossomos para 6 threads - ficaria 17 cromossomos para
          * as 5 primeiras threads, ou seja, um total de 85 cromossomos, então a última thread ficaria com 15 ao invés
          * de 17 */
         int lastCoreRange = populationSize - (range * (coresNumber - 1));
 
-        //classe que controla o término das threads
+        //Classe que controla o término das threads
         CountDownLatch latch = new CountDownLatch(coresNumber);
 
         for (int j = 0; j < coresNumber; j++) {
 
-            //verificação da execução da última thread
+            //Verificação da execução da última thread
             int innerRange = (j == coresNumber - 1) ? lastCoreRange : range;
 
-            //variável para poder obter o limite inferior, ou seja, a partir de qual cromossomo irá começar a processar
+            //Variável para poder obter o limite inferior, ou seja, a partir de qual cromossomo irá começar a processar
             int infLimit = j * range;
 
-            //porção da população que a thread irá processar, com seu tamanho correto
+            //Porção da população que a thread irá processar, com seu tamanho correto
             Chromosome[] populationSlice = new Chromosome[innerRange];
 
-            //copia os cromossomos da população original para a porção que será processada
+            //Copia os cromossomos da população original para a porção que será processada
             System.arraycopy(population, infLimit, populationSlice, 0, populationSlice.length);
 
             //Avaliando a porção de cromossomos
@@ -58,7 +58,7 @@ public class Avaliation {
 
         }
 
-        //aguarda todas as threads concluírem para continuar o programa
+        //Aguarda todas as threads concluírem para continuar o programa
         latch.await();
     }
 
@@ -101,7 +101,7 @@ public class Avaliation {
 
             }
 
-            //contador interno para identificar se a thread já foi concluída
+            //Contador interno para identificar se a thread já foi concluída
             latch.countDown();
         }).start();
     }
@@ -123,10 +123,10 @@ public class Avaliation {
 
                 Shift currentShift = dtoitc.getShiftByLessonId(chromosome.getGenes()[i]);
 
-                //obtém o vetor dos professores
+                //Obtém o vetor dos professores
                 int[] currentProfessors = dtoitc.getProfessorByLessonId(chromosome.getGenes()[i]);
 
-                //vai de 10 em 10 posições, ou seja, de turma em turma
+                //Vai de 10 em 10 posições, ou seja, de turma em turma
                 for (int j = i + 10; j < chromosome.getGenes().length; j += 10) {
 
                     //Caso possa ser dado aula nesse dia. Dias não disponíveis tem valor 0.
@@ -137,12 +137,12 @@ public class Avaliation {
 
                             for (int currentProfessor : currentProfessors) {
 
-                                //obtém o vetor dos professores a serem comparados
+                                //Obtém o vetor dos professores a serem comparados
                                 int[] innerProfessors = dtoitc.getProfessorByLessonId(chromosome.getGenes()[j]);
 
                                 for (int innerProfessor : innerProfessors) {
 
-                                    //caso o mesmo professor esteja dando aula em duas turmas ao mesmo tempo
+                                    //Caso o mesmo professor esteja dando aula em duas turmas ao mesmo tempo
                                     if (currentProfessor == innerProfessor) {
                                         avaliation += 10;
                                         chromosome.setHasViolatedHardConstraint(true);
@@ -170,10 +170,10 @@ public class Avaliation {
      */
     private static int professorsUnavailabilities(Chromosome chromosome, DTOITC dtoitc, boolean[][] relationMatrix) throws ClassNotFoundException {
         int avaliation = 0;
-        //valor que representa o deslocamento do dia, ou seja, são duas aulas por dia, então varia entre 0 e 1.
+        //Valor que representa o deslocamento do dia, ou seja, são duas aulas por dia, então varia entre 0 e 1.
         byte periodOffset = 0;
 
-        //valor que representa o deslocamento da semana, ou seja, são dez aulas por semana, então varia entre 0 e 9.
+        //Valor que representa o deslocamento da semana, ou seja, são dez aulas por semana, então varia entre 0 e 9.
         byte weekOffset = 0;
 
         for (int i = 0; i < chromosome.getGenes().length; i++) {
@@ -191,14 +191,14 @@ public class Avaliation {
             if (chromosome.getGenes()[i] != 0) {
                 Lesson lesson = dtoitc.getLessonById(chromosome.getGenes()[i]);
 
-                //por conta da matriz de relação, é preciso obter qual a posição do Lesson atual
+                //Por conta da matriz de relação, é preciso obter qual a posição do Lesson atual
                 int lessonPosition = dtoitc.getLessonPosition(lesson.getLessonId());
 
-                //obtém o turno do Lesson
+                //Obtém o turno do Lesson
                 Shift shift = dtoitc.getShiftByCourseId(lesson.getCourseId());
 
-                //cálculo para obter o boolean que representa a disponibilidade do professor na matriz. Sendo que
-                // os valores "2" representam o número de aulas por dia, e o "6", as aulas com seus turnos.
+                /*Cálculo para obter o boolean que representa a disponibilidade do professor na matriz. Sendo que
+                 * os valores "2" representam o número de aulas por dia, e o "6", as aulas com seus turnos.*/
 
                 int relationIndex = (shift.ordinal() * 2 + periodOffset) + (6 * weekOffset);
 
@@ -234,17 +234,21 @@ public class Avaliation {
      * restrição foi violada, multiplicado pelo peso da violação. Cada violação dessa restrição tem peso 2.
      */
     private static int curriculumCompactness(Chromosome chromosome) {
+
         //Esse método foi feito quando a modelagem tinha 4 aulas por dia.
         int avaliation = 0;
 
-        //só até quatro pois verifica só de um dia.
+        //Só até quatro pois verifica só de um dia.
         for (int i = 0; i < chromosome.getGenes().length; i += 4) {
-            //só é necessário fazer três comparações, não é preciso verificar a última aula para ver se tem alguma
-            //em sequência a ela.
+
+            /*Só é necessário fazer três comparações, não é preciso verificar a última aula para ver se tem alguma
+             * em sequência a ela.*/
             for (int j = i; j < i + 3; j++) {
                 if (chromosome.getGenes()[j] != 0) {
-                    //pega as aulas seguintes
+
+                    //Obtém as aulas seguintes
                     for (int k = j + 1; k < i + 4; k++) {
+
                         //Se tiver alguma igual e que não está em sequência
                         if (chromosome.getGenes()[j] == chromosome.getGenes()[k] && k - j > 1) {
                             avaliation += 2;
@@ -266,6 +270,8 @@ public class Avaliation {
      * @return inteiro que representa a avaliação inicial utilizada para a função de avaliação.
      */
     public static int getInitialAvaliation(int coursesSize) {
+
+        //Valores definidos pelo professor
         if (coursesSize <= 3) return 500;
         else if (coursesSize <= 6) return 1000;
         else if (coursesSize <= 10) return 1500;
