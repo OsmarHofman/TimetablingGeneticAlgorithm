@@ -14,27 +14,51 @@ import java.util.concurrent.CountDownLatch;
 public class Avaliation {
 
 
+    /**
+     * Avaliação de uma população feita com {@link Thread}.
+     *
+     * @param populationSize    inteiro que representa o tamanho da população.
+     * @param coresNumber       inteiro que representa o quanto núcleos do computador disponíveis.
+     * @param population        array de {@link Chromosome} que representa a população de cromossomos.
+     * @param set               {@link DTOITC} que contém os dados dos cromossomos.
+     * @param relationMatrix    array de booleanos que contém a matriz com todas as restrições dos professores.
+     * @param initialAvaliation inteiro que representa a avaliação inicial para a função de avaliação.
+     * @throws InterruptedException Erro quando alguma thread é interrompida de alguma forma.
+     */
     public static void threadRate(int populationSize, int coresNumber, Chromosome[] population, DTOITC set, boolean[][] relationMatrix, int initialAvaliation) throws InterruptedException {
+
+        //valor que representa quantos cromossomos cada thread irá processar
         int range = (int) Math.ceil(populationSize / (double) coresNumber);
 
+        /*a última thread irá ter um número de cromossomos diferentes para caso a divisão de cromossomos entre
+         * as threads não seja igual. Ex.: população de 100 cromossomos para 6 threads - ficaria 17 cromossomos para
+         * as 5 primeiras threads, ou seja, um total de 85 cromossomos, então a última thread ficaria com 15 ao invés
+         * de 17 */
         int lastCoreRange = populationSize - (range * (coresNumber - 1));
 
+        //classe que controla o término das threads
         CountDownLatch latch = new CountDownLatch(coresNumber);
 
         for (int j = 0; j < coresNumber; j++) {
 
+            //verificação da execução da última thread
             int innerRange = (j == coresNumber - 1) ? lastCoreRange : range;
 
+            //variável para poder obter o limite inferior, ou seja, a partir de qual cromossomo irá começar a processar
             int infLimit = j * range;
 
+            //porção da população que a thread irá processar, com seu tamanho correto
             Chromosome[] populationSlice = new Chromosome[innerRange];
 
+            //copia os cromossomos da população original para a porção que será processada
             System.arraycopy(population, infLimit, populationSlice, 0, populationSlice.length);
 
-            //Avaliando a primeira geração
+            //Avaliando a porção de cromossomos
             Avaliation.rate(populationSlice, set, relationMatrix, initialAvaliation, latch);
 
         }
+
+        //aguarda todas as threads concluírem para continuar o programa
         latch.await();
     }
 
@@ -46,13 +70,12 @@ public class Avaliation {
      * @param dtoitc         {@link DTOITC} que contém todas informações relativas a matérias, cursos, salas,
      *                       professores e restrições.
      * @param relationMatrix matriz que representa as indisponibilidades dos professores.
-     * @return int que representa a avaliação do cromossomo.
-     * @throws ClassNotFoundException quando não acha um professor ou matéria dentro do {@code dtoitc}.
      */
     private static void rate(Chromosome[] population, DTOITC dtoitc, boolean[][] relationMatrix, int initialAvaliation, CountDownLatch latch) {
         new Thread(() -> {
             //System.out.println(Thread.currentThread() + " ativa");
             int avaliation;
+
             for (Chromosome chromosome : population) {
                 avaliation = initialAvaliation;
 
@@ -77,7 +100,8 @@ public class Avaliation {
                 chromosome.setAvaliation(avaliation);
 
             }
-            //System.out.println("Terminou a avaliação");
+
+            //contador interno para identificar se a thread já foi concluída
             latch.countDown();
         }).start();
     }
@@ -235,6 +259,12 @@ public class Avaliation {
         return avaliation;
     }
 
+    /**
+     * Obtém o valor inicial da avaliação de acordo com o número de cursos do conjunto.
+     *
+     * @param coursesSize inteiro que representa o número de cursos presentes em um conjunto.
+     * @return inteiro que representa a avaliação inicial utilizada para a função de avaliação.
+     */
     public static int getInitialAvaliation(int coursesSize) {
         if (coursesSize <= 3) return 500;
         else if (coursesSize <= 6) return 1000;
