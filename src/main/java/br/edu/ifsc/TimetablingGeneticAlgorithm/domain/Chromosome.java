@@ -288,8 +288,16 @@ public class Chromosome {
         return lessonList.toArray(new Lesson[0]);
     }
 
-    public int checkScheduleConflicts(DTOITC dtoitc, DTOIFSC dtoifsc) throws ClassNotFoundException {
-        int avaliation = 0;
+    /**
+     * Checa a avaliação de conflito de horários, para identificar exatamente qual os professores, turmas,
+     * e o dia que aconteceu a violação.
+     *
+     * @param dtoitc  {@link DTOITC} que contém os dados presentes no cromossomo para identificar a violação.
+     * @param dtoifsc {@link DTOIFSC} que contém os dados dos nomes dos professores e turmas.
+     * @throws ClassNotFoundException Erro caso não seja encontrado o {@link Lesson}, o professor da {@link Lesson},
+     *                                ou o {@link Course}.
+     */
+    public void checkScheduleConflicts(DTOITC dtoitc, DTOIFSC dtoifsc) throws ClassNotFoundException {
         for (int i = 0; i < this.getGenes().length; i++) {
             if (this.getGenes()[i] != 0) {
 
@@ -316,27 +324,44 @@ public class Chromosome {
 
                                     //caso o mesmo professor esteja dando aula em duas turmas ao mesmo tempo
                                     if (currentProfessor == innerProfessor) {
+
+                                        //Obtém a primeira turma relacionada a violação
                                         int courseId = dtoitc.getCourseByLessonId(this.getGenes()[i]);
                                         String courseName = dtoifsc.getCourseNameById(courseId);
 
+                                        //Obtém a segunda turma relacionada a violação
                                         int conflictCourseId = dtoitc.getCourseByLessonId(this.getGenes()[j]);
                                         String conflictCourseName = dtoifsc.getCourseNameById(conflictCourseId);
 
+
+                                        //Obtém o professor relacionado a violação
                                         String professorName = dtoifsc.getProfessorNameById(currentProfessor);
 
+                                        //Obtém o turno que aconteceu a violação
                                         Shift shift = dtoitc.getShiftByCourseId(courseId);
 
+                                        /*Essa operação é feita para obter somente a parte de unidade do número ,
+                                         * ou seja um valor de 0 a 9. Isso é necessário para saber exatamente qual
+                                         * o dia e horário da violação */
                                         int normalizedIndex = i % 10;
 
+                                        /*Obtém o dia da violação a partir do índice de 0-9 no qual é dividido por 2
+                                         * para poder identificar o dia da semana (segunda-feira, terça-feira, etc.)*/
                                         Optional<Dia> dia = Dia.valueOf(normalizedIndex / 2);
 
+                                        /*Obtém o horário da violação, no qual se for um valor par é uma violação no
+                                         * primeiro horário, e se for ímpar é no segundo horário*/
                                         Optional<Horario> horario = Horario.valueOf((normalizedIndex % 2 == 0) ? 0 : 1);
 
-                                        System.out.println("\nProfessor:" + professorName + "\nTurmas conflitantes:" +
-                                                courseName + ", " + conflictCourseName + "\nDia da semana:" +
-                                                dia.get() + " " + horario.get() + " " + shift + "\n\n");
+                                        System.out.print("\nProfessor:" + professorName + "\nTurmas conflitantes:" +
+                                                courseName + ", " + conflictCourseName + "\nDia da semana:");
 
-                                        avaliation += 10;
+                                        //caso o valor passado no valueOf esteja dentro de uma das possibilidades do enum
+                                        if (dia.isPresent() && horario.isPresent())
+                                            System.out.print(dia.get() + " " + horario.get() + " ");
+
+                                        System.out.println(shift + "\n\n");
+
                                     }
                                 }
                             }
@@ -345,13 +370,19 @@ public class Chromosome {
                 }
             }
         }
-        return avaliation;
     }
 
 
-    public int checkProfessorsUnavailabilities(DTOITC dtoitc, DTOIFSC dtoifsc, boolean[][] relationMatrix) throws
+    /**
+     * Checa a avaliação de indisponibilidade de professores, para identificar exatamente qual o professor, curso,
+     * matéria e o dia que aconteceu a violação.
+     *
+     * @param dtoitc  {@link DTOITC} que contém os dados presentes no cromossomo para identificar a violação.
+     * @param dtoifsc {@link DTOIFSC} que contém os dados dos nomes dos professores e turmas.
+     * @throws ClassNotFoundException Erro caso não seja encontrado o {@link Lesson}.
+     */
+    public void checkProfessorsUnavailabilities(DTOITC dtoitc, DTOIFSC dtoifsc, boolean[][] relationMatrix) throws
             ClassNotFoundException {
-        int avaliation = 0;
 
         //valor que representa o deslocamento do dia, ou seja, são duas aulas por dia, então varia entre 0 e 1.
         byte periodOffset = 0;
@@ -389,29 +420,47 @@ public class Chromosome {
 
                     for (int professor : lesson.getProfessorId()) {
                         for (UnavailabilityConstraint constraint : lesson.getConstraints()) {
+
+                            //caso o professor atual seja o que violou
                             if (constraint.getId() == professor) {
 
+                                //é dividido por 6 para poder obter o dia que aconteceu a violação
                                 int day = Math.floorDiv(matrixPosition, 6);
+
+                                //se o dia que aconteceu a violação é o mesmo que o professor tem indisponibilidade
                                 if (day == constraint.getDay()) {
 
+                                    /*cálculo para poder obter o período do dia, que será de 0-9, onde os valores
+                                     * pares são do primeiro período e os ímpares do segundo*/
                                     int dayPeriod = shift.ordinal() * 2 + periodOffset;
                                     if (dayPeriod == constraint.getDayPeriod()) {
+
+                                        //Obtém o nome da matéria que aconteceu a violação
                                         String lessonName = dtoifsc.getLessonNameById(lesson.getLessonId());
 
+                                        //Obtém o nome do curso que aconteceu a violação
                                         String courseName = dtoifsc.getCourseNameById(lesson.getCourseId());
 
+                                        /*Obtém o dia da semana (segunda-feira, terça-feira, etc.) da violação a partir
+                                         * do índice de 0-9 */
                                         Optional<Horario> horario = Horario.valueOf(periodOffset);
 
-
+                                        /*Obtém o horário da violação, no qual se for um valor par é uma violação no
+                                         * primeiro horário, e se for ímpar é no segundo horário*/
                                         Optional<Dia> dia = Dia.valueOf(weekOffset);
 
+
+                                        //Obtém o nome do professor envolvido na violação
                                         String professorName = dtoifsc.getProfessorNameById(professor);
 
-                                        System.out.println("Professor:" + professorName + "\nCurso:" +
-                                                courseName + "\nMatéria: " + lessonName + "\nDia da semana:" +
-                                                dia.get() + " " + horario.get() + " " + shift + "\n\n");
+                                        System.out.print("Professor:" + professorName + "\nCurso:" +
+                                                courseName + "\nMatéria: " + lessonName + "\nDia da semana:");
 
-                                        avaliation += 3;
+                                        //caso o valor passado no valueOf esteja dentro de uma das possibilidades do enum
+                                        if (dia.isPresent() && horario.isPresent())
+                                            System.out.print(dia.get() + " " + horario.get() + " ");
+
+                                        System.out.println(shift + "\n\n");
                                     }
 
                                 }
@@ -423,7 +472,6 @@ public class Chromosome {
             }
             periodOffset++;
         }
-        return avaliation;
     }
 
     @Override
@@ -436,6 +484,16 @@ public class Chromosome {
     }
 
 
+    /**
+     * Representação dos dias da semana, sendo eles:
+     * <ul>
+     *     <li>Segunda-feira</li>
+     *     <li>Terça-feira</li>
+     *     <li>Quarta-feira</li>
+     *     <li>Quinta-feira</li>
+     *     <li>Sexta-feira</li>
+     * </ul>
+     */
     private enum Dia {
         SEGUNDA_FEIRA(0),
         TERCA_FEIRA(1),
@@ -450,6 +508,12 @@ public class Chromosome {
             this.value = value;
         }
 
+        /**
+         * Obtém qual a representação em {@link String} de um Enum a partir do seu valor.
+         *
+         * @param value inteiro que representa o valor da representação.
+         * @return {@link String} que contém a representação do {@code value}.
+         */
         public static Optional<Dia> valueOf(int value) {
             return Arrays.stream(values())
                     .filter(horario -> horario.value == value)
@@ -457,6 +521,13 @@ public class Chromosome {
         }
     }
 
+    /**
+     * Representação dos horários que uma turma pode ter, sendo eles:
+     * <ul>
+     *     <li>Primeiro Horário</li>
+     *     <li>Segundo Horário</li>
+     * </ul>
+     */
     private enum Horario {
         PRIMEIRO_HORARIO(0),
         SEGUNDO_HORARIO(1);
@@ -468,6 +539,12 @@ public class Chromosome {
             this.value = value;
         }
 
+        /**
+         * Obtém qual a representação em {@link String} de um Enum a partir do seu valor.
+         *
+         * @param value inteiro que representa o valor da representação.
+         * @return {@link String} que contém a representação do {@code value}.
+         */
         public static Optional<Horario> valueOf(int value) {
             return Arrays.stream(values())
                     .filter(horario -> horario.value == value)
