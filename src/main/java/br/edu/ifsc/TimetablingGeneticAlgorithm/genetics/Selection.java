@@ -2,11 +2,12 @@ package br.edu.ifsc.TimetablingGeneticAlgorithm.genetics;
 
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.Chromosome;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Random;
 
-public class Selection {
+public class Selection implements Serializable {
 
     /**
      * Seleção por método da Roleta.
@@ -68,7 +69,7 @@ public class Selection {
         //Faz a cópia da população original
         for (int i = 0; i < chromosomes.length; i++) {
             int[] newGenes = new int[chromosomes[i].getGenes().length];
-            System.arraycopy(chromosomes[i].getGenes(),0,newGenes,0,newGenes.length);
+            System.arraycopy(chromosomes[i].getGenes(), 0, newGenes, 0, newGenes.length);
             eliteChromosomes[i] = new Chromosome(newGenes, chromosomes[i].getAvaliation());
         }
 

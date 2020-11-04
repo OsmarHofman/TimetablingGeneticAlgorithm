@@ -8,10 +8,11 @@ import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOITC;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Shift;
 
 import javax.security.auth.callback.CallbackHandler;
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.concurrent.CountDownLatch;
 
-public class Avaliation {
+public class Avaliation implements Serializable {
 
 
     /**

@@ -8,12 +8,13 @@ import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.UnavailabilityConstrai
 import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOIFSC;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOITC;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
  * Classe que representa um Cromossomo, ou seja, uma estrutura com a possível solução do problema
  */
-public class Chromosome {
+public class Chromosome implements Serializable {
     private int[] genes;
     private int avaliation;
     private boolean hasViolatedHardConstraint;
@@ -25,11 +26,11 @@ public class Chromosome {
         this.hasViolatedHardConstraint = false;
     }
 
-    public Chromosome(int size, int classSize, Lesson[] lessons, Course[] courses, DTOIFSC dtoIfsc) {
+    public Chromosome(int size, int classSize, Lesson[] lessons, Course[] courses, List<Subject> dtoIfscSubjects) {
         this.genes = new int[size * classSize];
         this.avaliation = 0;
         this.hasViolatedHardConstraint = false;
-        this.generateRandom(lessons, courses, classSize, dtoIfsc);
+        this.generateRandom(lessons, courses, classSize, dtoIfscSubjects);
     }
 
     public Chromosome(int[] genes, int avaliation) {
@@ -77,7 +78,7 @@ public class Chromosome {
      * @param courses   vetor de {@link Course} que representa todos os cursos.
      * @param classSize valor que representa a quantidade de aulas semanais de todos os cursos.
      */
-    private void generateRandom(Lesson[] lessons, Course[] courses, int classSize, DTOIFSC dtoifsc) {
+    private void generateRandom(Lesson[] lessons, Course[] courses, int classSize, List<Subject> dtoIfscSubjects) {
         Random random = new Random();
         for (int i = 0; i < courses.length; i++) {
             Lesson[] coursesLesson = new Lesson[courses[i].getLessonsNumber()];
@@ -99,7 +100,7 @@ public class Chromosome {
             count = 0;
 
             //Transforma as matérias com aulas impares (1 ou 3 créditos) em pares (2 ou 4 créditos)
-            coursesLesson = this.joinOddLessons(coursesLesson, dtoifsc.getSubjects());
+            coursesLesson = this.joinOddLessons(coursesLesson, dtoIfscSubjects);
 
             for (Lesson lesson : coursesLesson) {
                 //Esse cálculo representa quantas vezes por semana uma matéria deve estar em um curso

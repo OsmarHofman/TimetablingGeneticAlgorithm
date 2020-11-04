@@ -1,11 +1,12 @@
 package br.edu.ifsc.TimetablingGeneticAlgorithm.domain.ifsc;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * Classe que representa as disciplinas lecionadas no IFSC
  */
-public class Subject {
+public class Subject implements Serializable {
     private int id;
     private String name;
     private String shortName;

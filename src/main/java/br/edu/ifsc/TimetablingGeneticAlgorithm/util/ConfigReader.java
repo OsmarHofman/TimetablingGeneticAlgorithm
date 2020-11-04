@@ -10,12 +10,13 @@ public class ConfigReader {
     /**
      * A partir de um arquivo, lê as parâmetros necessários para o AG executar.
      *
-     * @param path caminho do arquivo com as configurações.
+     * @param path        caminho do arquivo com as configurações.
+     * @param itemsNumber número de itens que serão lidos do arquivo.
      * @return Vetor com cada um dos parâmetros em cada posição.
      * @throws IOException Erro ao tentar ler o arquivo.
      */
-    public static int[] readConfiguration(String path) throws IOException {
-        int[] config = new int[7];
+    public static int[] readConfiguration(String path, int itemsNumber) throws IOException {
+        int[] config = new int[itemsNumber];
         File myObj = new File(path);
         Scanner myReader;
 
@@ -31,6 +32,6 @@ public class ConfigReader {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        throw new IOException("Erro ao encontrar configurações gerais do AG");
+        throw new IOException("Erro ao encontrar configurações no arquivo: " + path);
     }
 }

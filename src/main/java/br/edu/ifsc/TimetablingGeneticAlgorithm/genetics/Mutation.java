@@ -2,9 +2,10 @@ package br.edu.ifsc.TimetablingGeneticAlgorithm.genetics;
 
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.Chromosome;
 
+import java.io.Serializable;
 import java.util.Random;
 
-public class Mutation {
+public class Mutation implements Serializable {
 
     /**
      * Realiza a mutação de dois genes dos {@link Chromosome}s da população.

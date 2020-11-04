@@ -2,12 +2,13 @@ package br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc;
 
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.ifsc.Classes;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Classe que representa um curso
  */
-public class Course {
+public class Course implements Serializable {
     private int courseId;
     private int lessonsNumber;
     private Shift shift;

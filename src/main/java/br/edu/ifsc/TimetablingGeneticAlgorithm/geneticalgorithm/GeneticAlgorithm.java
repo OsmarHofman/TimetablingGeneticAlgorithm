@@ -33,7 +33,7 @@ public class GeneticAlgorithm {
     public List<DTOSchedule> process(String path) throws IOException, ClassNotFoundException, InterruptedException {
 
         //Obtém as configurações do arquivo
-        int[] config = ConfigReader.readConfiguration(path);
+        int[] config = ConfigReader.readConfiguration(path, 7);
         final int populationSize = config[0];
         final int classSize = config[1];
         final int elitismPercentage = config[2];
@@ -63,150 +63,34 @@ public class GeneticAlgorithm {
 
         long startTime = System.currentTimeMillis();
 
+        int availablePCs = 3;
+        if (sets.length < availablePCs)
+            availablePCs = sets.length;
+
+        int[] PCsIPs = ConfigReader.readConfiguration("src//assets//ips.txt", availablePCs);
+
+        int[] numberSetsForPCs = new int[availablePCs];
+
+        int numberIndex = 0;
         for (int i = 0; i < sets.length; i++) {
+            numberSetsForPCs[numberIndex]++;
+            numberIndex++;
+            if (numberIndex == availablePCs)
+                numberIndex = 0;
+        }
 
-            //Obtém o DTOITC respectivo ao conjunto que será processado
-            DTOITC set = sets[i];
-
-            //Obtém o número de cursos dentro de um conjunto
-            int coursesSize = preProcessing.getCourseRelationList().get(i).getName().split("-").length;
-
-            //Obtém a avaliação inicial, ou seja, a que será usada para a função de avaliação desse conjunto
-            int initialAvaliation = Avaliation.getInitialAvaliation(coursesSize);
-
-            /*Matriz de relação dos horarios
-            Sendo que 30 é o número de períodos no dia * dias na semana, ou seja, 6 * 5 = 30
-            */
-            boolean[][] scheduleRelation = new boolean[set.getLessons().length][30];
-            for (int j = 0; j < set.getLessons().length; j++) {
-                for (UnavailabilityConstraint iterationConstraints : set.getLessons()[j].getConstraints()) {
-                    scheduleRelation[j][6 * iterationConstraints.getDay() + iterationConstraints.getDayPeriod()] = true;
-                }
+        int count = 0;
+        for (int i = 0; i < availablePCs; i++) {
+            DTOITC[] setDTO = new DTOITC[numberSetsForPCs[i]];
+            for (int j = 0; j < numberSetsForPCs[i]; j++) {
+                setDTO[j] = sets[count];
+                count++;
             }
 
-
-            //A partir daqui realizar processamento pensando em objetos distribuidos
-
-            //Inicializando população
-            Chromosome[] population = new Chromosome[populationSize];
-            Arrays.setAll(population, x -> new Chromosome(set.getCourses().length, classSize, set.getLessons(), set.getCourses(), dtoifsc));
-
-            //Avaliando a primeira geração com threads
-            Avaliation.threadRate(populationSize, coresNumber, population, set, scheduleRelation, initialAvaliation);
-
-            //Obtendo o melhor cromossomo da primeira geração
-            Chromosome localBest = Chromosome.getBestChromosome(population);
-
-            //Inicializando o melhor cromossomo global
-            Chromosome globalBestChromosome = localBest;
-
-            //Número de execuções do While de fora
-            int iterator = -1;
-
-            //Número de execuções do While de dentro
-            int innerIterator = 0;
-
-            //Melhor avaliação
-            int avaliation = 0;
-            long startLocalTime = System.currentTimeMillis();
-
-            //Laço que controla se as gerações estão melhorando
-            while (iterator < geracoes &&
-                    ((localBest.getAvaliation() < initialAvaliation) || localBest.isHasViolatedHardConstraint())) {
-
-                iterator++;
-                innerIterator = 0;
-
-                //Laço do processamento das gerações
-                while (innerIterator < geracoes &&
-                        ((localBest.getAvaliation() < initialAvaliation) || localBest.isHasViolatedHardConstraint())) {
-
-                    //Seleção por elitismo
-                    byte proportion = (byte) (populationSize / elitismPercentage);
-                    Chromosome[] eliteChromosomes = Selection.elitism(population, proportion);
-
-                    //Função de avaliação acumulada
-                    int[] ratingHandler = new int[populationSize];
-                    int faA = 0;
-                    for (int j = 0; j < population.length; j++) {
-                        faA += population[j].getAvaliation();
-                        ratingHandler[j] = faA;
-                    }
-
-                    //Seleção por roleta
-                    Chromosome[] newCouples = Selection.rouletteWheel(population, ratingHandler, faA, proportion);
-
-                    //Cruzamento
-                    Chromosome[] crossedChromosomes = Crossover.cross(newCouples, classSize, crossPercentage);
-
-                    //Unindo as Subpopulações geradas por elitismo e roleta
-                    Chromosome[] newGeneration = new Chromosome[populationSize];
-                    System.arraycopy(crossedChromosomes, 0, newGeneration, 0, crossedChromosomes.length);
-
-                    System.arraycopy(eliteChromosomes, 0, newGeneration, crossedChromosomes.length, eliteChromosomes.length);
-
-                    //Mutação
-                    Mutation.swapMutation(newGeneration, classSize, mutationPercentage);
-
-                    //Atribuindo a nova geração
-                    population = newGeneration;
-
-                    //Avaliando a nova geraação com threads
-                    Avaliation.threadRate(populationSize, coresNumber, population, set, scheduleRelation, initialAvaliation);
-
-                    //Obtendo o melhor cromossomo da geração atual
-                    localBest = Chromosome.getBestChromosome(population);
-
-                    //Caso o melhor cromossomo dessa geração seja melhor que o melhor global
-                    if (globalBestChromosome.getAvaliation() < localBest.getAvaliation())
-                        globalBestChromosome = new Chromosome(localBest.getGenes(), localBest.getAvaliation(), localBest.isHasViolatedHardConstraint());
-
-                    innerIterator++;
-
-
-//                    System.out.println("Iteração " + (iterator * geracoes + innerIterator));
-
-//            System.out.println("Avaliação: " + localBest.getAvaliation());
-//            System.out.println("Violou: " + localBest.isHasViolatedHardConstraint());
-                }
-
-                //Caso as gerações melhoraram, continua, senão sai dos laços
-                if (globalBestChromosome.getAvaliation() > avaliation)
-                    avaliation = globalBestChromosome.getAvaliation();
-                else {
-                    break;
-                }
-
-            }
-
-            //Apresenta os valores relativos as iterações
-            System.out.println("################## CONJUNTO " + psc.getCourseRelationList().get(i).getName() + " ##################");
-
-            System.out.println("\nNúmero total de iterações: " + (iterator * geracoes + innerIterator));
-
-            //Apresenta os valores relativos ao tempo de execução
-            long endLocalTime = System.currentTimeMillis();
-
-            long localFinalTime = (endLocalTime - startLocalTime);
-
-            System.out.println("Tempo Local Final: " + localFinalTime / 1000 + "." + localFinalTime % 1000 + " segundos");
-
-            //Apresenta os valores relativos ao resultado final obtido
-            globalBests[i] = globalBestChromosome;
-
-            System.out.println("Cromossomo: " + globalBests[i].toString());
-
-            System.out.println("Avaliação=" + globalBests[i].getAvaliation() + ", ViolouHardConstraint=" + globalBests[i].isHasViolatedHardConstraint());
-
-            //Checa os conflitos de horários
-            System.out.println("\n -------------- \nConflitos de Horário:\n");
-            globalBests[i].checkScheduleConflicts(set, dtoifsc);
-
-            //Checa as indisponibilidades dos professores
-            System.out.println("Indisponibilidade dos Professores:\n");
-            globalBests[i].checkProfessorsUnavailabilities(set, dtoifsc, scheduleRelation);
+            //TODO Configurar RMI para conexão distribuida com os servidores
 
         }
+
 
         //Apresenta os valores relativos ao tempo de execução total
         long endTime = System.currentTimeMillis();

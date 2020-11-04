@@ -1,5 +1,6 @@
 package br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.List;
 /**
  * Classe que representa a matéria de um {@link Course}
  */
-public class Lesson {
+public class Lesson implements Serializable {
 
     private int lessonId;
     private int courseId;

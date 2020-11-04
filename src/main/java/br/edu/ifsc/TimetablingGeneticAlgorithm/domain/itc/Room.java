@@ -1,9 +1,11 @@
 package br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc;
 
+import java.io.Serializable;
+
 /**
  * Classe que representa as salas e laboratórios
  */
-public class Room {
+public class Room implements Serializable {
     private int roomId;
     private int capacity;
 

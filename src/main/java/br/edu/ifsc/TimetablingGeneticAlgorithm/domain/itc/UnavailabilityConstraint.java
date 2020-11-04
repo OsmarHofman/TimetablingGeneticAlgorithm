@@ -1,9 +1,11 @@
 package br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc;
 
+import java.io.Serializable;
+
 /**
  * Classe que representa as restrições de horário dos professores
  */
-public class UnavailabilityConstraint {
+public class UnavailabilityConstraint implements Serializable {
     private int id;
     private int day;
     private int dayPeriod;

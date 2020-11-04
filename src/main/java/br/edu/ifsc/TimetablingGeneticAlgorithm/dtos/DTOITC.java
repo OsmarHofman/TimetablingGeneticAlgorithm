@@ -2,13 +2,14 @@ package br.edu.ifsc.TimetablingGeneticAlgorithm.dtos;
 
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.*;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
 /**
  * Classe DTO((Data Transfer Object) que representa o modelo adaptado (ITC)
  */
-public class DTOITC {
+public class DTOITC implements Serializable {
 
     private Course[] courses;
     private Lesson[] lessons;

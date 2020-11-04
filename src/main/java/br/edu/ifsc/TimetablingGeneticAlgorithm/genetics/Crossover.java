@@ -2,11 +2,12 @@ package br.edu.ifsc.TimetablingGeneticAlgorithm.genetics;
 
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.Chromosome;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Crossover {
+public class Crossover implements Serializable {
 
     /**
      * Realiza o cruzamento por recombinação ordenada.
