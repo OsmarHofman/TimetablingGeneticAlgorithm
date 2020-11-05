@@ -1,0 +1,986 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<timetable options="export:idprefix:%CHRID,import:idprefix:%TEMPID,groupstype1,decimalseparatordot,lessonsincludeclasseswithoutstudents,handlestudentsafterlessons">
+    <periods columns="period,name,short,starttime,endtime">
+        <period name="Primeira Aula" short="M1" period="1" starttime="8:00" endtime="8:55"/>
+        <period name="Segunda Aula" short="M2" period="2" starttime="8:55" endtime="9:50"/>
+        <period name="Terceira Aula" short="M3" period="3" starttime="10:10" endtime="11:05"/>
+        <period name="Quarta Aula" short="M4" period="4" starttime="11:05" endtime="12:00"/>
+        <period name="Primeira Aula" short="V1" period="5" starttime="13:30" endtime="14:25"/>
+        <period name="Segunda Aula" short="V2" period="6" starttime="14:25" endtime="15:20"/>
+        <period name="Terceira Aula" short="V3" period="7" starttime="15:40" endtime="16:35"/>
+        <period name="Quarta Aula" short="V4" period="8" starttime="16:35" endtime="17:30"/>
+        <period name="Primeira Aula" short="N1" period="9" starttime="19:00" endtime="19:45"/>
+        <period name="Segunda Aula" short="N2" period="10" starttime="19:45" endtime="20:30"/>
+        <period name="Terceira Aula" short="N3" period="11" starttime="20:40" endtime="21:25"/>
+        <period name="Quarta Aula" short="N4" period="12" starttime="21:25" endtime="22:10"/>
+    </periods>
+    <subjects columns="id,name,short">
+        <subject id="272" name="Banco de Dados" short="BDD"/>
+        <subject id="273" name="Comunicação e Expressão" short="CEE"/>
+        <subject id="342" name="Metrologia" short=""/>
+        <subject id="343" name="Eletricidade" short=""/>
+        <subject id="344" name="Cálculo Técnico" short=""/>
+        <subject id="345" name="Microcontroladores" short=""/>
+        <subject id="346" name="Linguagem e Comunicação" short=""/>
+        <subject id="347" name="Informática" short=""/>
+        <subject id="415" name="Sistemas de Gerenciamento de Conteúdo" short="SIS"/>
+        <subject id="416" name="Web Design" short="WEB"/>
+        <subject id="417" name="Segurança da Informação" short="SEG"/>
+        <subject id="459" name="Sistemas e Conectividade" short="SEC"/>
+        <subject id="531" name="Cálculo III" short="CAL3"/>
+        <subject id="532" name="Desenho CAD" short=""/>
+        <subject id="533" name="Processos de Fabricação" short=""/>
+        <subject id="535" name="Tecnologia dos Materiais I" short=""/>
+        <subject id="536" name="Elementos de Máquinas" short=""/>
+        <subject id="537" name="Eletrônica" short=""/>
+        <subject id="555" name="Circuitos Elétricos" short=""/>
+        <subject id="563" name="Atividades de Extensão I" short="ATE-I"/>
+        <subject id="564" name="Fundamentos do Agronegócio" short="FAG"/>
+        <subject id="565" name="Cooperativismo e Associativismo Rural" short="CAR"/>
+        <subject id="566" name="Sustentabilidade na Produção Agrícola" short="SPA"/>
+        <subject id="567" name="Cadeias Produtivas de Animais Ruminantes" short="CPAR"/>
+        <subject id="568" name="Cadeias Produtivas de Culturas Anuais" short="CPCA"/>
+        <subject id="569" name="Comunicação e Expressão Empresarial" short="CEP"/>
+        <subject id="570" name="Informática Aplicada ao Agronegócio" short="IAA"/>
+        <subject id="571" name="BOTÂNICA APLICADA" short="BAP015301"/>
+        <subject id="572" name="Fundamentos de Agroecologia" short="FUN015301"/>
+        <subject id="573" name="GÊNESE E FERTILIDADE DOS SOLOS" short="GFS015301"/>
+        <subject id="575" name="Sanidade Vegetal" short="SAV015301"/>
+        <subject id="576" name="INFORMÁTICA" short="INF015301"/>
+        <subject id="578" name="PRODUÇÃO VEGETAL 1" short="PV1015301"/>
+        <subject id="583" name="PROCESSAMENTO DE ALIMENTOS 2" short="PA2015303"/>
+        <subject id="584" name="SISTEMAS AGROFLORESTAIS" short="SIS015303"/>
+        <subject id="586" name="Fundamentos da Administração" short="FDA"/>
+        <subject id="587" name="Português" short="POR"/>
+        <subject id="588" name="Informática Básica" short="INF"/>
+        <subject id="589" name="Matemática aplicada a adm" short="MAA"/>
+        <subject id="590" name="Administração de produção" short="APO"/>
+        <subject id="591" name="Administração de materiais" short="AMA"/>
+        <subject id="592" name="Gestão de Turismo e meio ambiente" short="GTM"/>
+        <subject id="593" name="Redação Oficial" short="ROF"/>
+        <subject id="604" name="História da Ciência e Tecnologia" short="HCT"/>
+        <subject id="615" name="Desenvolvimento de Sistema WEB II" short="DES2"/>
+        <subject id="617" name="Administração e Suporte de Sistemas" short="ADM"/>
+        <subject id="618" name="Inglês" short="IGL"/>
+        <subject id="620" name="Análise e Projeto de Sistemas" short="APS"/>
+        <subject id="621" name="Gestão e Ética em TI" short="GTI"/>
+        <subject id="649" name="Produção Vegetal 3" short="PV3015303"/>
+        <subject id="650" name="TOPOGRAFIA E CARTOGRAFIA" short="TPC015303"/>
+        <subject id="658" name="CONSTRUÇÕES RURAIS" short="CRU015303"/>
+        <subject id="659" name="ZOOTECNIA 1" short="Z01015301"/>
+        <subject id="667" name="Matemática Básica e In" short="MB"/>
+        <subject id="669" name="Elementos de Matemática Aplicada I" short="EMA"/>
+        <subject id="670" name="Física Geral e Experimental" short="FIS"/>
+        <subject id="672" name="Fundamentos de Economia" short="ECN"/>
+        <subject id="673" name="Química Geral e Experimental I" short="QGE"/>
+        <subject id="675" name="Higiene e Segurança do Trabalho" short="HST"/>
+        <subject id="676" name="Estatística" short="EST"/>
+        <subject id="677" name="Físico-química II" short="FSQ2"/>
+        <subject id="680" name="Microbiologia Geral" short="MBG"/>
+        <subject id="681" name="Metodologia Científica" short="MTD"/>
+        <subject id="682" name="Fenômenos de Transporte" short="FNT"/>
+        <subject id="683" name="Gestão da Qualidade" short="GQL"/>
+        <subject id="684" name="Toxicologia" short="TOX"/>
+        <subject id="685" name="Eletiva I" short="ELT1"/>
+        <subject id="687" name="Operações Unitárias II" short="OPU2"/>
+        <subject id="689" name="Tecnologia de Alimentos" short="TAL"/>
+        <subject id="690" name="TCC1" short="TCC1"/>
+        <subject id="691" name="Controle, Processos e Gestão de Laboratórios" short="CPGL"/>
+        <subject id="693" name="Química Orgânica I" short="QOI"/>
+        <subject id="695" name="Química Geral" short="QG"/>
+        <subject id="697" name="Citohistologia Animal" short="CHA"/>
+        <subject id="698" name="Português Instrumental" short="PI"/>
+        <subject id="699" name="Análises de Solos" short="ANS"/>
+        <subject id="702" name="Físico-Química" short="FIQ"/>
+        <subject id="703" name="Química Ambiental" short="QAM"/>
+        <subject id="705" name="Análise Instrumental (laboratório)" short="AIN"/>
+        <subject id="706" name="Trabalho de Conclusão de Curso I" short="TCCI"/>
+        <subject id="713" name="Instalações Elétricas Industriais" short=""/>
+        <subject id="714" name="Hidráulica e Pneumática" short=""/>
+        <subject id="715" name="Processos de Soldagem" short=""/>
+        <subject id="716" name="Tecnologia dos Materiais II" short=""/>
+        <subject id="717" name="Processos de Usinagem I" short=""/>
+        <subject id="718" name="Manutenção I" short=""/>
+        <subject id="724" name="Desenho Técnico II" short="DES-II"/>
+        <subject id="725" name="Física II" short="FIS-II"/>
+        <subject id="726" name="Estática e Dinâmica" short="EDI"/>
+        <subject id="727" name="Programação" short="PGR"/>
+        <subject id="728" name="Cálculo Numérico" short="CNM"/>
+        <subject id="729" name="Mecânica dos Fluidos" short="MFL-I"/>
+        <subject id="730" name="Mecânica dos Sólidos II" short="MSO-II"/>
+        <subject id="731" name="Propriedades Mecânicas dos Materiais" short="PMM"/>
+        <subject id="732" name="Metrologia" short="MTR"/>
+        <subject id="733" name="Projeto Integrador II" short="PI-II"/>
+        <subject id="734" name="Elementos de Máquinas I" short="EMA-I"/>
+        <subject id="735" name="Ventilação, Refrigeração e Cond. de Ar" short="VRA"/>
+        <subject id="736" name="Ciência, Tecnologia e Sociedade" short="CTS"/>
+        <subject id="737" name="Processos de Fabricação II - Conformação e Fundição" short="PFB-II"/>
+        <subject id="738" name="Comando Numérico Computadorizado" short="CNC"/>
+        <subject id="739" name="Projeto Integrador III" short="PI-III"/>
+        <subject id="740" name="Desenho Técnico" short=""/>
+        <subject id="742" name="Processos de Soldagem" short=""/>
+        <subject id="745" name="Processos Químico" short="PQI2"/>
+        <subject id="746" name="Química Analítica I" short="QAN1"/>
+        <subject id="768" name="Técnicas de Leitura" short="TLR"/>
+        <subject id="770" name="Físico-química II" short="FSQ2"/>
+        <subject id="771" name="Microbiologia Geral" short="MBG"/>
+        <subject id="772" name="Química Orgânica II" short="QOR2"/>
+        <subject id="773" name="Operações Unitárias II" short="OPU2"/>
+        <subject id="774" name="Toxicologia" short="TOX"/>
+        <subject id="777" name="Introdução à Programação" short="IPI"/>
+        <subject id="778" name="Gestão e Pessoas" short="GPE"/>
+        <subject id="859" name="Eletrônica" short=""/>
+        <subject id="860" name="Empreendedorismo" short=""/>
+        <subject id="861" name="Máquinas Elétricas" short=""/>
+        <subject id="862" name="Manutenção II" short=""/>
+        <subject id="863" name="Processos de Usinagem II" short=""/>
+        <subject id="864" name="CNC" short=""/>
+        <subject id="865" name="Controle e Automação" short=""/>
+        <subject id="866" name="Controle e Automação" short=""/>
+        <subject id="879" name="Desenvolvimento de Sistema WEB I" short="DES"/>
+        <subject id="880" name="Desenvolvimento de Sistema WEB II" short="DES2"/>
+        <subject id="882" name="Desenvolvimento para Dispositivos Móveis" short="DDM"/>
+        <subject id="883" name="Desenvolvimento para Dispositivos Móveis" short="DDM"/>
+        <subject id="884" name="Empreendedorismo" short="EMP"/>
+        <subject id="885" name="Teste de Software" short="Tes"/>
+        <subject id="886" name="Tópicos em programação" short="TOP"/>
+        <subject id="957" name="Docência EP" short=""/>
+        <subject id="958" name="Gestão Pública EPT" short="GPEPT"/>
+        <subject id="960" name="INGLES.III" short="ING.III"/>
+        <subject id="961" name="INGLES.IV" short="ING.IV"/>
+        <subject id="963" name="Inglês V" short="IING.IV"/>
+        <subject id="967" name="Estudos Fisiológicos Vegetais" short="EFV"/>
+        <subject id="977" name="Atividades de Extensão III" short="ATE-III"/>
+        <subject id="978" name="Cadeias Produtivas de Olerícolas" short="CPO"/>
+        <subject id="979" name="Cadeias Produtivas Florestais II" short="CPF-II"/>
+        <subject id="980" name="Instalações e Construções Rurais" short="ICR"/>
+        <subject id="981" name="Inglês" short="IGL"/>
+        <subject id="982" name="Gestão de Pessoas" short="GEP"/>
+        <subject id="983" name="Marketing no Agronegócio" short="MAG"/>
+        <subject id="984" name="Manejo Fitossanitário de Pragas" short="MFP"/>
+        <subject id="985" name="Pós TPE" short="TPE"/>
+        <subject id="986" name="Pós TPE" short="TPE"/>
+        <subject id="987" name="Cálculo I" short="CAL-I"/>
+        <subject id="988" name="Geometria Analítica" short="GAN"/>
+        <subject id="989" name="Química Geral" short="QGE"/>
+        <subject id="990" name="Saúde e Segurança do Trabalho" short="SST"/>
+        <subject id="992" name="Desenho Técnico I" short="DES-I"/>
+        <subject id="994" name="Engenharia e Sustentabilidade" short="ENS"/>
+        <subject id="996" name="Acion. Hidráulicos e Pneumáticos" short="AHP"/>
+        <subject id="997" name="Projetos Mecânicos" short="PRM"/>
+        <subject id="998" name="Máquinas Térmicas" short="MQT"/>
+        <subject id="999" name="Gestão da Produção" short="GPR"/>
+        <subject id="1001" name="Acion. Elétricos Industriais" short="OPT-II"/>
+        <subject id="1002" name="Trabalho de Conclusão de Curso" short="TCC-I"/>
+        <subject id="1005" name="Introdução à Gestão" short="IGE"/>
+        <subject id="1009" name="Eletricidade A" short=""/>
+        <subject id="1011" name="Calculo Técnico" short=""/>
+        <subject id="1012" name="Desenho Técnico A" short=""/>
+        <subject id="1014" name="Metrologia A" short=""/>
+        <subject id="1016" name="Informática" short=""/>
+        <subject id="1017" name="Linguagem e Comunicação" short=""/>
+        <subject id="1018" name="Eletrônica Industrial" short=""/>
+        <subject id="1019" name="Linguagem e Programação" short=""/>
+        <subject id="1020" name="CNC" short=""/>
+        <subject id="1021" name="Instrumentação" short=""/>
+        <subject id="1022" name="Projeto Integrador I" short=""/>
+        <subject id="1023" name="Motores e Acionamentos" short=""/>
+        <subject id="1024" name="Hidraulica e Pneumatica I" short=""/>
+        <subject id="1025" name="Estatística e probabilidade" short="EPB"/>
+        <subject id="1026" name="Administração para Computação" short="ADM"/>
+        <subject id="1027" name="Eletrônica Digital" short="ELG"/>
+        <subject id="1028" name="Introdução à Computação" short="ICP"/>
+        <subject id="1029" name="Matemática Discreta" short="MTD"/>
+        <subject id="1030" name="Introdução à Programação" short="IPR"/>
+        <subject id="1031" name="Introdução à Programação" short="IPR"/>
+        <subject id="1032" name="Cálculo" short="CLC"/>
+        <subject id="1033" name="Desenvolvimento de aplicações orientadas a objetos" short="DOO"/>
+        <subject id="1034" name="Estruturas de dados" short="EDD"/>
+        <subject id="1035" name="Redes de computadores" short="RCD"/>
+        <subject id="1036" name="Sistemas operacionais" short="SOP"/>
+        <subject id="1037" name="Banco de dados" short="BDD"/>
+        <subject id="1038" name="Compiladores" short="CPL"/>
+        <subject id="1039" name="Engenharia de software" short="ESW"/>
+        <subject id="1041" name="Laboratório de programação" short="LPG"/>
+        <subject id="1042" name="Modelagem e simulação" short="MDS"/>
+        <subject id="1043" name="Empreendedorismo" short="EPM"/>
+        <subject id="1044" name="Trabalho de conclusão de curso I" short="TCA"/>
+        <subject id="1045" name="Eletiva 1" short="ELT1CC7"/>
+        <subject id="1047" name="Análise Instrumental (teórica)" short="AIN"/>
+        <subject id="1049" name="INGLES.VI" short="ING.VI"/>
+        <subject id="1050" name="Programação para Dispositivos Móveis com Android" short="DMA"/>
+        <subject id="1051" name="Novas Economias" short="NE"/>
+        <subject id="1052" name="Introdução ao Marketing " short="IMKT"/>
+        <subject id="1053" name="Mercado, segmentação e posicionamento " short="MSP"/>
+        <subject id="1067" name="Vendedor" short="VEND"/>
+        <subject id="1068" name="Planejamento Estratégico" short="PLE"/>
+    </subjects>
+    <teachers columns="id,name,short,timeoff">
+        <teacher short="adriellen.sousa" name="Adriellen Lima de Sousa" id="48" timeoff=".111100001111,.111111111111,.111111111111,.111111111111,.111111111111,.000000000000"/>
+        <teacher short="ailton.durigon" name="Ailton Durigon" id="27" timeoff=".000000000000,.111111111111,.111111111111,.111111111111,.111111111111,.000000000000"/>
+        <teacher short="alexandre.perin" name="Alexandre Perin de Souza" id="10" timeoff=".111111111111,.111111111111,.111111111111,.111111111111,.000011111111,.000000000000"/>
+        <teacher short="ana.martins" name="Ana Maria Martins Roeber (subst.)" id="25" timeoff=".111111111111,.111111111111,.111111111111,.111111111111,.111111111111,.111111110000"/>
+        <teacher short="ana.veeck" name="Ana Paula de Lima Veeck" id="34" timeoff=".000011111111,.111111111111,.111111111111,.111111111111,.111111111111,.000000000000"/>
+        <teacher short="anderson.correia" name="Anderson Luis Garcia Correia" id="39" timeoff=".111111111111,.111111111111,.111111111111,.111111111111,.111111110000,.000000000000"/>
+        <teacher short="anderson.borges" name="Anderson W. S. Borges" id="56" timeoff=".000000000000,.111111111111,.111100000000,.111111111111,.111111111111,.000000000000"/>
+        <teacher short="andre.salvaro" name="Andre Salvaro Furtado" id="67" timeoff=".000011111111,.111111111111,.111100001111,.000000001111,.000011111111,.000000000000"/>
+        <teacher short="ariton.araldi" name="Ariton Araldi" id="36" timeoff=".111111111111,.111111111111,.111100000000,.111111111111,.111111111111,.000000000000"/>
+        <teacher short="bruno.dalazem" name="Bruno Dalazen Machado" id="97" timeoff=".111111111111,.111111111111,.111111111111,.111111111111,.111111111111,.000000000000"/>
+        <teacher short="andres.ferrero" name="Carlos Andres Ferrero" id="88" timeoff=".000011111111,.111111111111,.111111111111,.111111111111,.111111111111,.000000000000"/>
+        <teacher short="carolina.berger" name="Carolina Berger" id="65" timeoff=".111111111111,.111111111111,.111111111111,.111111111111,.111111111111,.000000000000"/>
+        <teacher short="claudio.schaeffer" name="Claudio Marques Schaeffer" id="52" timeoff=".111100000000,.111111111111,.000000001111,.111111111111,.111111111111,.000000000000"/>
+        <teacher short="cristiano.azevedo" name="Cristiano Azevedo" id="999" timeoff=".111111111111,.111111111111,.111111111111,.111111111111,.111111111111,.000000000000"/>
+        <teacher short="eduardo.fogaca" name="Eduardo Tealdi Fogaça" id="17" timeoff=".111111111111,.111111111111,.111111111111,.111111111111,.111111111111,.111111110000"/>
+        <teacher short="eliana.borragini" name="Eliana Fernandes Borragini" id="53" timeoff=".000011111111,.111111111111,.111100001111,.111111111111,.111111111111,.000000000000"/>
+        <teacher short="eliane.correa" name="Eliane Correa" id="94" timeoff=".111111111111,.111111110000,.111111111111,.111111111111,.111111111111,.000000000000"/>
+        <teacher short="fernando.osorio" name="Fernando da Silva Osório" id="66" timeoff=".111111111111,.111111111111,.111100001111,.000000000000,.000000000000,.000000000000"/>
+        <teacher short="fernando.zinger" name="Fernando Domingos Zinger" id="14" timeoff=".111111110000,.000011111111,.111111111111,.111111111111,.111111111111,.000000000000"/>
+        <teacher short="" name="Fernando Weber Albiero" id="84" timeoff=".111111111111,.111111111111,.111111111111,.111111111111,.111111111111,.000000000000"/>
+        <teacher short="gabriel.madruga" name="Gabriel Granzotto Madruga" id="49" timeoff=".111111111111,.111111111111,.000000001111,.111111111111,.111111110000,.000000000000"/>
+        <teacher short="gustavo.ponce" name="Gustavo Henrique S. F. Ponce" id="58" timeoff=".111111111111,.111111111111,.111100001111,.111100001111,.111111111111,.000000000000"/>
+        <teacher short="jaqueline.suave" name="Jaqueline Suave" id="59" timeoff=".000000001111,.111111111111,.111111111111,.111111111111,.111111111111,.000000000000"/>
+        <teacher short="joao.augusto" name="João Augusto da Silva Bueno" id="99" timeoff=".111111111111,.111111111111,.111100001111,.111111111111,.111111111111,.000000000000"/>
+        <teacher short="joao.provesi" name="João Gustavo Provesi" id="60" timeoff=".111111111111,.111111111111,.111111111111,.111100001111,.111111111111,.000000000000"/>
+        <teacher short="jocleita.ferrareze" name="Jocleita Peruzzo Ferrareze" id="33" timeoff=".111111111111,.111111111111,.111100001111,.111100001111,.111111110000,.000000000000"/>
+        <teacher short="jose.dario" name="José Dario Silva" id="12" timeoff=".111111111111,.111111111111,.111111111111,.111111111111,.111111111111,.000000000000"/>
+        <teacher short="jose.mecabo" name="José Mecabo Junior" id="32" timeoff=".111111111111,.111111111111,.111111111111,.111111111111,.111111111111,.000000000000"/>
+        <teacher short="" name="José Otoni (Novo Prof Mecânica)" id="98" timeoff=".111111111111,.111111111111,.111111111111,.111111111111,.111111111111,.000000000000"/>
+        <teacher short="kelly.magalhães" name="Kelly Magalhães" id="123" timeoff=".111111111111,.111111111111,.111111111111,.111111111111,.111111111111,.000000000000"/>
+        <teacher short="" name="Leonardo Bravo Estacio" id="68" timeoff=".111111111111,.111111111111,.111111111111,.111111111111,.000011111111,.000000000000"/>
+        <teacher short="lucia.martins" name="Lucia Helena Baggio Martins" id="35" timeoff=".111111110000,.111111111111,.111111111111,.111111111111,.111111111111,.000000000000"/>
+        <teacher short="luciane.oliveira" name="Luciane Bittencourt" id="8" timeoff=".111111111111,.111111111111,.111111111111,.111111111111,.111111111111,.111111110000"/>
+        <teacher short="luciane.costa" name="Luciane Costa de Oliveira" id="30" timeoff=".111111110000,.111111111111,.111100001111,.111111111111,.111111111111,.000000000000"/>
+        <teacher short="marcelo.maraschin" name="Marcelo Maraschin" id="92" timeoff=".111111111111,.111111111111,.111111111111,.111111111111,.111111110000,.000000000000"/>
+        <teacher short="marco.aurelio" name="Marco Aurelio Woehl" id="41" timeoff=".111111111111,.111111111111,.111100001111,.111111111111,.111111111111,.111111110000"/>
+        <teacher short="marisa.sanson" name="Marisa Santos Sanson" id="63" timeoff=".111111111111,.111111111111,.111111111111,.111111111111,.111111110000,.000000000000"/>
+        <teacher short="matheus.fontanelle" name="Matheus Fontanelle Pereira" id="54" timeoff=".111111110000,.111111111111,.111100001111,.111111111111,.111111111111,.000000000000"/>
+        <teacher short="michael.nunes" name="Michael Ramos Nunes" id="38" timeoff=".111111111111,.111111111111,.111111111111,.111111111111,.111111110000,.000000000000"/>
+        <teacher short="monia.azevedo" name="Mônia Stremel Azevedo" id="79" timeoff=".111111111111,.111111111111,.000011111111,.111111111111,.111111111111,.000000000000"/>
+        <teacher short="natalia.boelter" name="Natalia M. Boelter" id="89" timeoff=".111111111111,.111111111111,.111111111111,.111111111111,.111111111111,.000000000000"/>
+        <teacher short="nathielle.branco" name="Nathielle Waldrigues Branco" id="55" timeoff=".111111111111,.111111111111,.000000001111,.111111111111,.111111111111,.000000000000"/>
+        <teacher short="" name="NEAD" id="96" timeoff=".111111111111,.111111111111,.111111111111,.111111111111,.111111111111,.000000000000"/>
+        <teacher short="" name="Paola (Novo professor)" id="11" timeoff=".111111111111,.111111111111,.111111111111,.111111111111,.111111111111,.000000000000"/>
+        <teacher short="paula.jesus" name="Paula Clarice S. G. de Jesus" id="80" timeoff=".111111111111,.111111111111,.111111111111,.111111111111,.111111111111,.000000000000"/>
+        <teacher short="paula.iaschitzki" name="Paula Iaschitzki Ferreira Cipriani" id="64" timeoff=".111111111111,.111111111111,.111100001111,.111111111111,.111111111111,.000000000000"/>
+        <teacher short="paulo.henrique" name="Paulo Henrique M. Calixto" id="45" timeoff=".111111111111,.111111111111,.111111111111,.111100001111,.111111111111,.000000000000"/>
+        <teacher short="rafael.grebogi" name="Rafael Grebogi (Subst.)" id="44" timeoff=".111111111111,.111111111111,.111111111111,.111111111111,.111111111111,.000000000000"/>
+        <teacher short="rafael.schreiber" name="Rafael Gustavo Schreiber" id="69" timeoff=".111111111111,.111111111111,.111100001111,.111111111111,.111111110000,.000000000000"/>
+        <teacher short="rafael.pereira" name="Rafael Santiago Floriani Pereira" id="87" timeoff=".111111111111,.111111111111,.111111111111,.111111111111,.111111111111,.000000000000"/>
+        <teacher short="renato.simoes" name="Renato Simões (subst.)" id="19" timeoff=".111111111111,.111111111111,.111111111111,.111111111111,.111111111111,.000000000000"/>
+        <teacher short="ricardo.muhl" name="Ricardo Teran Muhl" id="82" timeoff=".111111111111,.111111111111,.111100001111,.111111111111,.111111111111,.000000000000"/>
+        <teacher short="rita.freitas" name="Rita de Cássia Freitas Santos" id="40" timeoff=".000011111111,.111111111111,.111100001111,.111111111111,.111111111111,.000000000000"/>
+        <teacher short="roberto.komatsu" name="Roberto Akitoshi Komatsu" id="31" timeoff=".111111111111,.111111111111,.111111111111,.111111110000,.111111111111,.000000000000"/>
+        <teacher short="robson.costa" name="Robson Costa" id="20" timeoff=".000011111111,.111111111111,.111111111111,.111111111111,.111111111111,.000000000000"/>
+        <teacher short="rogerio.silva" name="Rogério da Silva" id="71" timeoff=".111111111111,.111111111111,.111111111111,.111111111111,.111111111111,.000000000000"/>
+        <teacher short="rosane.aquino" name="Rosane S. de Aquino" id="46" timeoff=".111111111111,.111100000000,.000000000000,.000000000000,.000000000000,.000000000000"/>
+        <teacher short="samuel.mello" name="Samuel Ferreira De Mello (Subst.)" id="72" timeoff=".111111111111,.111111111111,.111111111111,.111111111111,.111111111111,.111111110000"/>
+        <teacher short="sayonara.varela" name="Sayonara Varela" id="77" timeoff=".111111110000,.111111110000,.111111110000,.111111111111,.111111111111,.111111110000"/>
+        <teacher short="silmar.primieri" name="Silmar Primieri" id="15" timeoff=".111111111111,.111111111111,.111111111111,.111111111111,.111111111111,.000000000000"/>
+        <teacher short="thiago.mombach" name="Thiago Henrique Mombach" id="73" timeoff=".111111111111,.111111111111,.111100000000,.111111111111,.111111111111,.000000000000"/>
+        <teacher short="thiago.meneghel" name="Thiago Meneghel" id="24" timeoff=".000000000000,.111111111111,.111111111111,.111111111111,.111111111111,.000000000000"/>
+        <teacher short="vilma.karsburg" name="Vilma Gisele Karsburg" id="29" timeoff=".111111111111,.111111111111,.111111111111,.111111111111,.111111110000,.000000000000"/>
+        <teacher short="vilson.junior" name="Vilson Heck Junior" id="3" timeoff=".111111111111,.111111111111,.111111111111,.111111111111,.111111111111,.000000000000"/>
+        <teacher short="willian.lunardi" name="Willian Lunardi" id="90" timeoff=".111111111111,.111111111111,.111111111111,.111111111111,.111111111111,.000000000000"/>
+        <teacher short="wilson.castello" name="Wilson Castello Branco Neto" id="18" timeoff=".111111111111,.111111111111,.111111111111,.000011111111,.111111111111,.000000000000"/>
+    </teachers>
+    <classrooms>
+        <classroom short="Auditório" name="Auditório" id="48" partner_id="" capacity="*"/>
+        <classroom short="Lab. - Área Experimental" name="Lab. - Área Experimental" id="77" partner_id="" capacity="*"/>
+        <classroom short="Lab. - Estufa" name="Lab. - Estufa" id="26" partner_id="" capacity="*"/>
+        <classroom short="Lab. Biologia e Microscopia" name="Lab. Biologia e Microscopia" id="70" partner_id="" capacity="*"/>
+        <classroom short="Lab. de Ajustagem e Caldeiraria" name="Lab. de Ajustagem e Caldeiraria" id="12" partner_id="" capacity="*"/>
+        <classroom short="Lab. de Automação Industrial" name="Lab. de Automação Industrial" id="56" partner_id="" capacity="*"/>
+        <classroom short="Lab. de Desenho Técnico" name="Lab. de Desenho Técnico" id="59" partner_id="" capacity="*"/>
+        <classroom short="Lab. de Eletrônica Geral" name="Lab. de Eletrônica Geral" id="60" partner_id="" capacity="*"/>
+        <classroom short="Lab. de Eletrotécnica" name="Lab. de Eletrotécnica" id="61" partner_id="" capacity="*"/>
+        <classroom short="Lab. de Física" name="Lab. de Física" id="62" partner_id="" capacity="*"/>
+        <classroom short="Lab. de Fresagem" name="Lab. de Fresagem" id="17" partner_id="" capacity="*"/>
+        <classroom short="Lab. de Fundição" name="Lab. de Fundição" id="63" partner_id="" capacity="*"/>
+        <classroom short="Lab. de Hidráulica e Pneumática" name="Lab. de Hidráulica e Pneumática" id="64" partner_id="" capacity="*"/>
+        <classroom short="Lab. de Manutenção Mecânica" name="Lab. de Manutenção Mecânica" id="65" partner_id="" capacity="*"/>
+        <classroom short="Lab. de Máquinas Agrícolas" name="Lab. de Máquinas Agrícolas" id="66" partner_id="" capacity="*"/>
+        <classroom short="Lab. Fabricação" name="Lab. Fabricação" id="67" partner_id="" capacity="*"/>
+        <classroom short="Lab. Inf. 112" name="Lab. Inf. 112" id="50" partner_id="" capacity="*"/>
+        <classroom short="Lab. Inf. 113" name="Lab. Inf. 113" id="51" partner_id="" capacity="*"/>
+        <classroom short="Lab. Inf. 114" name="Lab. Inf. 114" id="52" partner_id="" capacity="*"/>
+        <classroom short="Lab. Inf. 115" name="Lab. Inf. 115" id="53" partner_id="" capacity="*"/>
+        <classroom short="Lab. Inf. 116" name="Lab. Inf. 116" id="54" partner_id="" capacity="*"/>
+        <classroom short="Lab. Máquinas Térmicas" name="Lab. Máquinas Térmicas" id="68" partner_id="" capacity="*"/>
+        <classroom short="Lab. Materiais e Ensaios" name="Lab. Materiais e Ensaios" id="21" partner_id="" capacity="*"/>
+        <classroom short="Lab. Metrologia" name="Lab. Metrologia" id="22" partner_id="" capacity="*"/>
+        <classroom short="Lab. Microbiologia" name="Lab. Microbiologia" id="75" partner_id="" capacity="*"/>
+        <classroom short="Lab. Orgânica e Bioquímica" name="Lab. Orgânica e Bioquímica" id="71" partner_id="" capacity="*"/>
+        <classroom short="Lab. Processos Químicos" name="Lab. Processos Químicos" id="73" partner_id="" capacity="*"/>
+        <classroom short="Lab. Química Analítica" name="Lab. Química Analítica" id="72" partner_id="" capacity="*"/>
+        <classroom short="Lab. Química Geral e Inorgânica" name="Lab. Química Geral e Inorgânica" id="74" partner_id="" capacity="*"/>
+        <classroom short="Lab. Soldagem" name="Lab. Soldagem" id="23" partner_id="" capacity="*"/>
+        <classroom short="Lab. Tecnologia de Alimentos" name="Lab. Tecnologia de Alimentos" id="76" partner_id="" capacity="*"/>
+        <classroom short="Lab. Usinagem" name="Lab. Usinagem" id="24" partner_id="" capacity="*"/>
+        <classroom short="Sala 117" name="Sala 117" id="29" partner_id="" capacity="*"/>
+        <classroom short="Sala 118" name="Sala 118" id="30" partner_id="" capacity="*"/>
+        <classroom short="Sala 119" name="Sala 119" id="31" partner_id="" capacity="*"/>
+        <classroom short="Sala 120" name="Sala 120" id="32" partner_id="" capacity="*"/>
+        <classroom short="Sala 121" name="Sala 121" id="33" partner_id="" capacity="*"/>
+        <classroom short="Sala 122" name="Sala 122" id="34" partner_id="" capacity="*"/>
+        <classroom short="Sala 217" name="Sala 217" id="35" partner_id="" capacity="*"/>
+        <classroom short="Sala 218" name="Sala 218" id="36" partner_id="" capacity="*"/>
+        <classroom short="Sala 219" name="Sala 219" id="37" partner_id="" capacity="*"/>
+        <classroom short="Sala 220" name="Sala 220" id="40" partner_id="" capacity="*"/>
+        <classroom short="Sala 221" name="Sala 221" id="38" partner_id="" capacity="*"/>
+        <classroom short="Sala 222" name="Sala 222" id="41" partner_id="" capacity="*"/>
+        <classroom short="Sala 223" name="Sala 223" id="45" partner_id="" capacity="*"/>
+        <classroom short="Sala 224" name="Sala 224" id="46" partner_id="" capacity="*"/>
+        <classroom short="Sala Agro - UDA" name="Sala Agro - UDA" id="81" partner_id="" capacity="*"/>
+        <classroom short="Sala de Reuniões" name="Sala de Reuniões" id="69" partner_id="" capacity="*"/>
+    </classrooms>
+    <classes columns="id,name,short,teacherid,timeoff">
+        <class id="141" name="Grad Ciência da Computação 1" short="GCC1" teacherid="67" timeoff=".111100000000,.111100000000,.111100000000,.111100000000,.111100000000,.000000000000"/>
+        <class id="143" name="Grad Ciência da Computação 3" short="GCC3" teacherid="67" timeoff=".111100000000,.111100000000,.111100000000,.111100000000,.111100000000,.000000000000"/>
+        <class id="145" name="Grad Ciência da Computação 5" short="GCC5" teacherid="67" timeoff=".111100000000,.111100000000,.111100000000,.111100000000,.111100000000,.000000000000"/>
+        <class id="147" name="Grad Ciência da Computação 7" short="GCC7" teacherid="67" timeoff=".111100000000,.111100000000,.111100000000,.111100000000,.111100000000,.000000000000"/>
+        <class id="191" name="Grad Processos Químicos 1" short="GPQ1" teacherid="58" timeoff=".111100000000,.111100000000,.111100000000,.111100000000,.111100000000,.000000000000"/>
+        <class id="193" name="Grad Processos Químicos 3" short="GPQ3" teacherid="58" timeoff=".111100000000,.111100000000,.111100000000,.111100000000,.111100000000,.000000000000"/>
+        <class id="195" name="Grad Processos Químicos 5" short="GPQ5" teacherid="58" timeoff=".111100000000,.111100000000,.111100000000,.111100000000,.111100000000,.000000000000"/>
+        <class id="210" name="FIC - Inglês IV 0" short="FII0" teacherid="99" timeoff=".000011110000,.000011110000,.000011110000,.000011110000,.000011110000,.000000000000"/>
+        <class id="273" name="Grad Eng. Mecânica (NOITE) 3" short="GEM3" teacherid="54" timeoff=".000000001111,.000000001111,.000000001111,.000000001111,.000000001111,.000000000000"/>
+        <class id="275" name="Grad Eng. Mecânica (NOITE) 5" short="GEM5" teacherid="54" timeoff=".000000001111,.000000001111,.000000001111,.000000001111,.000000001111,.000000000000"/>
+        <class id="277" name="Grad Eng. Mecânica (NOITE) 7" short="GEM7" teacherid="54" timeoff=".000000001111,.000000001111,.000000001111,.000000001111,.000000001111,.000000000000"/>
+        <class id="279" name="Grad Eng. Mecânica (NOITE) 9" short="GEM9" teacherid="54" timeoff=".000000001111,.000000001111,.000000001111,.000000001111,.000000001111,.000000000000"/>
+        <class id="321" name="Tec Informática para Internet 1" short="TII1" teacherid="99" timeoff=".000011110000,.000011110000,.000011110000,.000011110000,.000000000000,.000000000000"/>
+        <class id="322" name="Tec Informática para Internet 2" short="TII2" teacherid="99" timeoff=".000011110000,.000011110000,.000011110000,.000011110000,.000000000000,.000000000000"/>
+        <class id="323" name="Tec Informática para Internet 3" short="TII3" teacherid="99" timeoff=".000011110000,.000011110000,.000011110000,.000011110000,.000000000000,.000000000000"/>
+        <class id="324" name="Tec Informática para Internet 4" short="TII4" teacherid="99" timeoff=".000011110000,.000011110000,.000011110000,.000000000000,.000000000000,.000000000000"/>
+        <class id="331" name="Tec Eletromecânica(grade nova) 1" short="T1" teacherid="49" timeoff=".000000001111,.000000001111,.000000001111,.000000001111,.000000000000,.000000000000"/>
+        <class id="332" name="Tec Eletromecânica(grade nova) 2" short="T2" teacherid="49" timeoff=".000000001111,.000000001111,.000000001111,.000000001111,.000000000000,.000000000000"/>
+        <class id="333" name="Tec Eletromecânica(grade nova) 3" short="T3" teacherid="49" timeoff=".000000001111,.000000001111,.000000001111,.000000001111,.000000001100,.000000000000"/>
+        <class id="334" name="Tec Eletromecânica(grade nova) 4" short="T4" teacherid="49" timeoff=".000000001111,.000000001111,.000000001111,.000000001111,.000000001100,.000000000000"/>
+        <class id="341" name="Tec Mecatrônica  1" short="TM1" teacherid="56" timeoff=".000011110000,.000011110000,.000011110000,.000011110000,.000000000000,.000000000000"/>
+        <class id="343" name="Tec Mecatrônica  3" short="TM3" teacherid="56" timeoff=".000011110000,.000011110000,.000011110000,.000011110000,.000011110000,.000000000000"/>
+        <class id="351" name="Tec Agroecologia (grade nova) 1" short="TA1" teacherid="32" timeoff=".000011110000,.000011110000,.000011110000,.000011110000,.000000000000,.000000000000"/>
+        <class id="353" name="Tec Agroecologia (grade nova) 3" short="TA3" teacherid="32" timeoff=".000011110000,.000011110000,.000011110000,.000011110000,.000000000000,.000000000000"/>
+        <class id="361" name="Tec An. Químicas 1" short="TAQ1" teacherid="41" timeoff=".000011110000,.000011110000,.000011110000,.000011110000,.000000000000,.000000000000"/>
+        <class id="363" name="Tec An. Químicas 3" short="TAQ3" teacherid="41" timeoff=".000011110000,.000011110000,.000011110000,.000011110000,.000000000000,.000000000000"/>
+        <class id="371" name="Tec Administração 1" short="TA1" teacherid="29" timeoff=".000011110000,.000011110000,.000011110000,.000011110000,.000011110000,.000000000000"/>
+        <class id="373" name="Tec Administração 3" short="TA3" teacherid="29" timeoff=".000011110000,.000011110000,.000011110000,.000011110000,.000000000000,.000000000000"/>
+        <class id="531" name="Grad Gestão do Agronegócio 1" short="GGA1" teacherid="14" timeoff=".000000001111,.000000001111,.000000001111,.000000001111,.000000001111,.000000000000"/>
+        <class id="533" name="Grad Gestão do Agronegócio 3" short="GGA3" teacherid="14" timeoff=".000000001111,.000000001111,.000000001111,.000000001111,.000000001111,.000000000000"/>
+        <class id="603" name="Pós-Graduação Tecnologias e Pr 3" short="PTP3" teacherid="41" timeoff=".000000000000,.000000000000,.000000000000,.000000000000,.000000001111,.111111110000"/>
+        <class id="610" name="Pós-Graduação Gestão Pública E 0" short="PGPE0" teacherid="40" timeoff=".000000000000,.000000001111,.000000000000,.000000000000,.000000000000,.000000000000"/>
+        <class id="620" name="Pós-Graduação Docência EP EAD  0" short="PDEE0" teacherid="40" timeoff=".000000000000,.000000000000,.000000000000,.000011110000,.000000000000,.000000000000"/>
+        <class id="640" name="FIC - Inglês III 0" short="FII0" teacherid="99" timeoff=".000000001111,.000000001111,.000000001111,.000000001111,.000000001111,.000000000000"/>
+        <class id="681" name="FIC - Gestão de Pessoas 1" short="FGP1" teacherid="29" timeoff=".000011110000,.000000000000,.000011110000,.000000000000,.000000000000,.000000000000"/>
+        <class id="740" name="FIC - Inglês V 0" short="FIV0" teacherid="20" timeoff=".000000000000,.000000000000,.000011110000,.000000000000,.000000000000,.000000000000"/>
+        <class id="751" name="Pós-Graduação em Marketing 1" short="PM1" teacherid="29" timeoff=".000000000000,.000000000000,.000000001111,.000000000000,.000000001111,.000000000000"/>
+        <class id="761" name="Grad. Eng. Mecânica (MANHÃ) 1" short="GEM1" teacherid="54" timeoff=".111100000000,.111100000000,.111100000000,.111100000000,.111100000000,.000000000000"/>
+        <class id="770" name="FIC - Inglês VI 0" short="FIV0" teacherid="99" timeoff=".000011110000,.000011110000,.000011110000,.000011110000,.000011110000,.000000000000"/>
+        <class id="780" name="FIC - Programação para Disposi 0" short="FPD0" teacherid="99" timeoff=".000000001111,.000000001111,.000000001111,.000000001111,.000000001111,.000000000000"/>
+        <class id="791" name="FIC - Comunicação e atendiment 1" short="FC1" teacherid="29" timeoff=".000000000000,.000011100000,.000000000000,.000000000000,.000000000000,.000000000000"/>
+        <class id="801" name="FIC - Vendedor 1" short="FV1" teacherid="29" timeoff=".111100000000,.000000000000,.111100000000,.000000000000,.000000000000,.000000000000"/>
+        <class id="811" name="FIC - Planejamento Estratégico 1" short="FPE1" teacherid="29" timeoff=".000000000000,.000000000000,.000000000000,.111100000000,.000000000000,.000000000000"/>
+    </classes>
+    <groups columns="id,name,classid,entireclass,divisiontag,studentcount">
+        <group id="0" name="Turma Completa" classid="201" entireclass="1" divisiontag="0" studentcount="40"/>
+        <group id="1" name="Turma A" classid="201" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="2" name="Turma B" classid="201" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="3" name="Turma Completa" classid="321" entireclass="1" divisiontag="0" studentcount="40"/>
+        <group id="4" name="Turma A" classid="321" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="5" name="Turma B" classid="321" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="6" name="Turma Completa" classid="202" entireclass="1" divisiontag="0" studentcount="40"/>
+        <group id="7" name="Turma A" classid="202" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="8" name="Turma B" classid="202" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="9" name="Turma Completa" classid="331" entireclass="1" divisiontag="0" studentcount="40"/>
+        <group id="10" name="Turma A" classid="331" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="11" name="Turma B" classid="331" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="12" name="Turma Completa" classid="322" entireclass="1" divisiontag="0" studentcount="40"/>
+        <group id="13" name="Turma A" classid="322" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="14" name="Turma B" classid="322" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="15" name="Turma Completa" classid="203" entireclass="1" divisiontag="0" studentcount="40"/>
+        <group id="16" name="Turma A" classid="203" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="17" name="Turma B" classid="203" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="18" name="Turma Completa" classid="273" entireclass="1" divisiontag="0" studentcount="40"/>
+        <group id="19" name="Turma A" classid="273" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="20" name="Turma B" classid="273" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="21" name="Turma Completa" classid="332" entireclass="1" divisiontag="0" studentcount="40"/>
+        <group id="22" name="Turma A" classid="332" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="23" name="Turma B" classid="332" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="24" name="Turma Completa" classid="531" entireclass="1" divisiontag="0" studentcount="40"/>
+        <group id="25" name="Turma A" classid="531" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="26" name="Turma B" classid="531" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="27" name="Turma Completa" classid="351" entireclass="1" divisiontag="0" studentcount="40"/>
+        <group id="28" name="Turma A" classid="351" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="29" name="Turma B" classid="351" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="30" name="Turma Completa" classid="353" entireclass="1" divisiontag="0" studentcount="40"/>
+        <group id="31" name="Turma A" classid="353" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="32" name="Turma B" classid="353" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="33" name="Turma Completa" classid="371" entireclass="1" divisiontag="0" studentcount="40"/>
+        <group id="34" name="Turma A" classid="371" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="35" name="Turma B" classid="371" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="36" name="Turma Completa" classid="373" entireclass="1" divisiontag="0" studentcount="40"/>
+        <group id="37" name="Turma A" classid="373" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="38" name="Turma B" classid="373" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="39" name="Turma Completa" classid="204" entireclass="1" divisiontag="0" studentcount="40"/>
+        <group id="40" name="Turma A" classid="204" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="41" name="Turma B" classid="204" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="42" name="Turma Completa" classid="323" entireclass="1" divisiontag="0" studentcount="40"/>
+        <group id="43" name="Turma A" classid="323" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="44" name="Turma B" classid="323" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="45" name="Turma Completa" classid="361" entireclass="1" divisiontag="0" studentcount="40"/>
+        <group id="46" name="Turma A" classid="361" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="47" name="Turma B" classid="361" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="48" name="Turma Completa" classid="191" entireclass="1" divisiontag="0" studentcount="40"/>
+        <group id="49" name="Turma A" classid="191" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="50" name="Turma B" classid="191" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="51" name="Turma Completa" classid="193" entireclass="1" divisiontag="0" studentcount="40"/>
+        <group id="52" name="Turma A" classid="193" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="53" name="Turma B" classid="193" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="54" name="Turma Completa" classid="195" entireclass="1" divisiontag="0" studentcount="40"/>
+        <group id="55" name="Turma A" classid="195" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="56" name="Turma B" classid="195" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="57" name="Turma Completa" classid="363" entireclass="1" divisiontag="0" studentcount="40"/>
+        <group id="58" name="Turma A" classid="363" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="59" name="Turma B" classid="363" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="60" name="Turma Completa" classid="333" entireclass="1" divisiontag="0" studentcount="40"/>
+        <group id="61" name="Turma A" classid="333" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="62" name="Turma B" classid="333" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="63" name="Turma Completa" classid="275" entireclass="1" divisiontag="0" studentcount="40"/>
+        <group id="64" name="Turma A" classid="275" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="65" name="Turma B" classid="275" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="66" name="Turma Completa" classid="277" entireclass="1" divisiontag="0" studentcount="40"/>
+        <group id="67" name="Turma A" classid="277" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="68" name="Turma B" classid="277" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="69" name="Turma Completa" classid="681" entireclass="1" divisiontag="0" studentcount="40"/>
+        <group id="70" name="Turma A" classid="681" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="71" name="Turma B" classid="681" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="72" name="Turma Completa" classid="334" entireclass="1" divisiontag="0" studentcount="40"/>
+        <group id="73" name="Turma A" classid="334" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="74" name="Turma B" classid="334" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="75" name="Turma Completa" classid="324" entireclass="1" divisiontag="0" studentcount="40"/>
+        <group id="76" name="Turma A" classid="324" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="77" name="Turma B" classid="324" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="78" name="Turma Completa" classid="272" entireclass="1" divisiontag="0" studentcount="40"/>
+        <group id="79" name="Turma A" classid="272" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="80" name="Turma B" classid="272" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="81" name="Turma Completa" classid="620" entireclass="1" divisiontag="0" studentcount="40"/>
+        <group id="82" name="Turma A" classid="620" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="83" name="Turma B" classid="620" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="84" name="Turma Completa" classid="610" entireclass="1" divisiontag="0" studentcount="40"/>
+        <group id="85" name="Turma A" classid="610" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="86" name="Turma B" classid="610" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="87" name="Turma Completa" classid="640" entireclass="1" divisiontag="0" studentcount="40"/>
+        <group id="88" name="Turma A" classid="640" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="89" name="Turma B" classid="640" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="90" name="Turma Completa" classid="210" entireclass="1" divisiontag="0" studentcount="40"/>
+        <group id="91" name="Turma A" classid="210" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="92" name="Turma B" classid="210" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="93" name="Turma Completa" classid="740" entireclass="1" divisiontag="0" studentcount="40"/>
+        <group id="94" name="Turma A" classid="740" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="95" name="Turma B" classid="740" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="96" name="Turma Completa" classid="533" entireclass="1" divisiontag="0" studentcount="40"/>
+        <group id="97" name="Turma A" classid="533" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="98" name="Turma B" classid="533" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="99" name="Turma Completa" classid="603" entireclass="1" divisiontag="0" studentcount="40"/>
+        <group id="100" name="Turma A" classid="603" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="101" name="Turma B" classid="603" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="102" name="Turma Completa" classid="761" entireclass="1" divisiontag="0" studentcount="40"/>
+        <group id="103" name="Turma A" classid="761" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="104" name="Turma B" classid="761" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="105" name="Turma Completa" classid="279" entireclass="1" divisiontag="0" studentcount="40"/>
+        <group id="106" name="Turma A" classid="279" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="107" name="Turma B" classid="279" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="108" name="Turma Completa" classid="751" entireclass="1" divisiontag="0" studentcount="40"/>
+        <group id="109" name="Turma A" classid="751" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="110" name="Turma B" classid="751" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="111" name="Turma Completa" classid="341" entireclass="1" divisiontag="0" studentcount="40"/>
+        <group id="112" name="Turma A" classid="341" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="113" name="Turma B" classid="341" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="114" name="Turma Completa" classid="343" entireclass="1" divisiontag="0" studentcount="40"/>
+        <group id="115" name="Turma A" classid="343" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="116" name="Turma B" classid="343" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="117" name="Turma Completa" classid="145" entireclass="1" divisiontag="0" studentcount="40"/>
+        <group id="118" name="Turma A" classid="145" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="119" name="Turma B" classid="145" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="120" name="Turma Completa" classid="141" entireclass="1" divisiontag="0" studentcount="40"/>
+        <group id="121" name="Turma A" classid="141" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="122" name="Turma B" classid="141" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="123" name="Turma Completa" classid="143" entireclass="1" divisiontag="0" studentcount="40"/>
+        <group id="124" name="Turma A" classid="143" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="125" name="Turma B" classid="143" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="126" name="Turma Completa" classid="147" entireclass="1" divisiontag="0" studentcount="40"/>
+        <group id="127" name="Turma A" classid="147" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="128" name="Turma B" classid="147" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="129" name="Turma Completa" classid="770" entireclass="1" divisiontag="0" studentcount="40"/>
+        <group id="130" name="Turma A" classid="770" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="131" name="Turma B" classid="770" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="132" name="Turma Completa" classid="780" entireclass="1" divisiontag="0" studentcount="40"/>
+        <group id="133" name="Turma A" classid="780" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="134" name="Turma B" classid="780" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="135" name="Turma Completa" classid="791" entireclass="1" divisiontag="0" studentcount="40"/>
+        <group id="136" name="Turma A" classid="791" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="137" name="Turma B" classid="791" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="138" name="Turma Completa" classid="801" entireclass="1" divisiontag="0" studentcount="40"/>
+        <group id="139" name="Turma A" classid="801" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="140" name="Turma B" classid="801" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="141" name="Turma Completa" classid="811" entireclass="1" divisiontag="0" studentcount="40"/>
+        <group id="142" name="Turma A" classid="811" entireclass="0" divisiontag="1" studentcount=""/>
+        <group id="143" name="Turma B" classid="811" entireclass="0" divisiontag="1" studentcount=""/>
+    </groups>
+    <lessons columns="id,subjectid,groupid,classid,teacherids,classroomids,durationperiods,periodsperweek">
+        <lesson id="5" subjectid="272" groupid="3" classid="321" teacherids="67," classroomids="54" durationperiods="2" periodsperweek="4"/>
+        <lesson id="6" subjectid="273" groupid="3" classid="321" teacherids="8," classroomids="54" durationperiods="2" periodsperweek="2"/>
+        <lesson id="14" subjectid="342" groupid="10" classid="331" teacherids="52," classroomids="22" durationperiods="2" periodsperweek="2"/>
+        <lesson id="15" subjectid="343" groupid="10" classid="331" teacherids="73," classroomids="60" durationperiods="4" periodsperweek="4"/>
+        <lesson id="16" subjectid="344" groupid="9" classid="331" teacherids="55," classroomids="33" durationperiods="4" periodsperweek="4"/>
+        <lesson id="18" subjectid="346" groupid="9" classid="331" teacherids="80," classroomids="33" durationperiods="2" periodsperweek="2"/>
+        <lesson id="19" subjectid="347" groupid="9" classid="331" teacherids="999," classroomids="53" durationperiods="2" periodsperweek="2"/>
+        <lesson id="20" subjectid="415" groupid="12" classid="322" teacherids="99," classroomids="53" durationperiods="2" periodsperweek="4"/>
+        <lesson id="21" subjectid="416" groupid="12" classid="322" teacherids="68," classroomids="53" durationperiods="4" periodsperweek="4"/>
+        <lesson id="22" subjectid="417" groupid="12" classid="322" teacherids="20," classroomids="53" durationperiods="2" periodsperweek="2"/>
+        <lesson id="24" subjectid="459" groupid="3" classid="321" teacherids="99," classroomids="54" durationperiods="2" periodsperweek="4"/>
+        <lesson id="27" subjectid="464" groupid="15" classid="203" teacherids="90," classroomids="38" durationperiods="3" periodsperweek="3"/>
+        <lesson id="28" subjectid="465" groupid="15" classid="203" teacherids="34," classroomids="38" durationperiods="3" periodsperweek="3"/>
+        <lesson id="29" subjectid="466" groupid="15" classid="203" teacherids="25," classroomids="38" durationperiods="1" periodsperweek="2"/>
+        <lesson id="30" subjectid="467" groupid="15" classid="203" teacherids="90,15" classroomids="51" durationperiods="2" periodsperweek="2"/>
+        <lesson id="31" subjectid="468" groupid="15" classid="203" teacherids="15," classroomids="38" durationperiods="3" periodsperweek="3"/>
+        <lesson id="32" subjectid="470" groupid="15" classid="203" teacherids="35," classroomids="38" durationperiods="2" periodsperweek="2"/>
+        <lesson id="33" subjectid="531" groupid="18" classid="273" teacherids="27,29," classroomids="35" durationperiods="2" periodsperweek="4"/>
+        <lesson id="34" subjectid="532" groupid="21" classid="332" teacherids="39," classroomids="53" durationperiods="4" periodsperweek="4"/>
+        <lesson id="35" subjectid="533" groupid="21" classid="332" teacherids="44," classroomids="32" durationperiods="2" periodsperweek="2"/>
+        <lesson id="36" subjectid="535" groupid="21" classid="332" teacherids="52," classroomids="22" durationperiods="2" periodsperweek="2"/>
+        <lesson id="37" subjectid="536" groupid="21" classid="332" teacherids="69," classroomids="32" durationperiods="2" periodsperweek="2"/>
+        <lesson id="38" subjectid="537" groupid="21" classid="332" teacherids="56," classroomids="60" durationperiods="1" periodsperweek="1"/>
+        <lesson id="39" subjectid="555" groupid="21" classid="332" teacherids="49," classroomids="32" durationperiods="3" periodsperweek="3"/>
+        <lesson id="40" subjectid="563" groupid="24" classid="531" teacherids="14," classroomids="81" durationperiods="2" periodsperweek="2"/>
+        <lesson id="41" subjectid="564" groupid="24" classid="531" teacherids="97,123," classroomids="81" durationperiods="2" periodsperweek="2"/>
+        <lesson id="42" subjectid="565" groupid="24" classid="531" teacherids="123," classroomids="81" durationperiods="2" periodsperweek="2"/>
+        <lesson id="43" subjectid="566" groupid="24" classid="531" teacherids="97," classroomids="81" durationperiods="2" periodsperweek="2"/>
+        <lesson id="44" subjectid="567" groupid="24" classid="531" teacherids="32,64," classroomids="81" durationperiods="2" periodsperweek="2"/>
+        <lesson id="45" subjectid="568" groupid="24" classid="531" teacherids="31," classroomids="81" durationperiods="2" periodsperweek="4"/>
+        <lesson id="46" subjectid="569" groupid="24" classid="531" teacherids="80,25" classroomids="81" durationperiods="2" periodsperweek="2"/>
+        <lesson id="47" subjectid="570" groupid="24" classid="531" teacherids="999," classroomids="54" durationperiods="2" periodsperweek="2"/>
+        <lesson id="48" subjectid="571" groupid="28" classid="351" teacherids="64," classroomids="38" durationperiods="2" periodsperweek="2"/>
+        <lesson id="49" subjectid="572" groupid="27" classid="351" teacherids="64," classroomids="81" durationperiods="2" periodsperweek="2"/>
+        <lesson id="50" subjectid="573" groupid="27" classid="351" teacherids="30," classroomids="81" durationperiods="2" periodsperweek="2"/>
+        <lesson id="51" subjectid="575" groupid="27" classid="351" teacherids="14," classroomids="81" durationperiods="2" periodsperweek="2"/>
+        <lesson id="52" subjectid="576" groupid="27" classid="351" teacherids="999," classroomids="50" durationperiods="2" periodsperweek="2"/>
+        <lesson id="53" subjectid="578" groupid="27" classid="351" teacherids="31," classroomids="81" durationperiods="2" periodsperweek="4"/>
+        <lesson id="54" subjectid="583" groupid="30" classid="353" teacherids="34," classroomids="30" durationperiods="2" periodsperweek="4"/>
+        <lesson id="55" subjectid="584" groupid="30" classid="353" teacherids="30," classroomids="30" durationperiods="2" periodsperweek="4"/>
+        <lesson id="56" subjectid="586" groupid="33" classid="371" teacherids="77," classroomids="33" durationperiods="2" periodsperweek="4"/>
+        <lesson id="57" subjectid="587" groupid="33" classid="371" teacherids="80," classroomids="33" durationperiods="2" periodsperweek="4"/>
+        <lesson id="58" subjectid="588" groupid="33" classid="371" teacherids="999," classroomids="52" durationperiods="2" periodsperweek="4"/>
+        <lesson id="59" subjectid="589" groupid="33" classid="371" teacherids="87,49,71," classroomids="33" durationperiods="4" periodsperweek="4"/>
+        <lesson id="60" subjectid="590" groupid="36" classid="373" teacherids="63," classroomids="29" durationperiods="2" periodsperweek="4"/>
+        <lesson id="61" subjectid="591" groupid="36" classid="373" teacherids="77," classroomids="29" durationperiods="2" periodsperweek="4"/>
+        <lesson id="62" subjectid="592" groupid="36" classid="373" teacherids="123," classroomids="29" durationperiods="2" periodsperweek="4"/>
+        <lesson id="63" subjectid="593" groupid="36" classid="373" teacherids="80," classroomids="29" durationperiods="2" periodsperweek="4"/>
+        <lesson id="64" subjectid="604" groupid="24" classid="531" teacherids="14," classroomids="81" durationperiods="2" periodsperweek="2"/>
+        <lesson id="73" subjectid="615" groupid="42" classid="323" teacherids="68," classroomids="51" durationperiods="4" periodsperweek="4"/>
+        <lesson id="74" subjectid="617" groupid="42" classid="323" teacherids="999," classroomids="51" durationperiods="2" periodsperweek="2"/>
+        <lesson id="75" subjectid="618" groupid="42" classid="323" teacherids="8," classroomids="51" durationperiods="2" periodsperweek="2"/>
+        <lesson id="76" subjectid="620" groupid="42" classid="323" teacherids="12," classroomids="51" durationperiods="2" periodsperweek="4"/>
+        <lesson id="77" subjectid="621" groupid="42" classid="323" teacherids="999," classroomids="51" durationperiods="2" periodsperweek="2"/>
+        <lesson id="78" subjectid="649" groupid="30" classid="353" teacherids="33," classroomids="30" durationperiods="2" periodsperweek="4"/>
+        <lesson id="79" subjectid="650" groupid="30" classid="353" teacherids="32," classroomids="30" durationperiods="2" periodsperweek="2"/>
+        <lesson id="82" subjectid="658" groupid="30" classid="353" teacherids="64,32," classroomids="30" durationperiods="2" periodsperweek="2"/>
+        <lesson id="83" subjectid="659" groupid="27" classid="351" teacherids="64,32," classroomids="81" durationperiods="2" periodsperweek="2"/>
+        <lesson id="84" subjectid="667" groupid="45" classid="361" teacherids="59,65,45" classroomids="36" durationperiods="2" periodsperweek="2"/>
+        <lesson id="85" subjectid="669" groupid="48" classid="191" teacherids="27," classroomids="34" durationperiods="2" periodsperweek="4"/>
+        <lesson id="86" subjectid="670" groupid="48" classid="191" teacherids="53," classroomids="34" durationperiods="2" periodsperweek="4"/>
+        <lesson id="87" subjectid="672" groupid="48" classid="191" teacherids=",24," classroomids="34" durationperiods="2" periodsperweek="2"/>
+        <lesson id="88" subjectid="673" groupid="49" classid="191" teacherids="59,65," classroomids="34" durationperiods="2" periodsperweek="6"/>
+        <lesson id="90" subjectid="675" groupid="48" classid="191" teacherids="38," classroomids="34" durationperiods="2" periodsperweek="2"/>
+        <lesson id="91" subjectid="676" groupid="51" classid="193" teacherids="29," classroomids="37" durationperiods="2" periodsperweek="2"/>
+        <lesson id="92" subjectid="677" groupid="51" classid="193" teacherids="41," classroomids="37" durationperiods="2" periodsperweek="2"/>
+        <lesson id="93" subjectid="680" groupid="51" classid="193" teacherids="46," classroomids="37" durationperiods="2" periodsperweek="2"/>
+        <lesson id="94" subjectid="681" groupid="51" classid="193" teacherids="60," classroomids="37" durationperiods="2" periodsperweek="2"/>
+        <lesson id="95" subjectid="682" groupid="51" classid="193" teacherids="58," classroomids="37" durationperiods="3" periodsperweek="3"/>
+        <lesson id="96" subjectid="683" groupid="54" classid="195" teacherids="77," classroomids="40" durationperiods="2" periodsperweek="2"/>
+        <lesson id="97" subjectid="684" groupid="54" classid="195" teacherids="46," classroomids="40" durationperiods="2" periodsperweek="2"/>
+        <lesson id="98" subjectid="685" groupid="54" classid="195" teacherids="97," classroomids="40" durationperiods="2" periodsperweek="2"/>
+        <lesson id="99" subjectid="687" groupid="54" classid="195" teacherids="58," classroomids="40" durationperiods="1" periodsperweek="1"/>
+        <lesson id="100" subjectid="689" groupid="54" classid="195" teacherids="34," classroomids="40" durationperiods="2" periodsperweek="4"/>
+        <lesson id="101" subjectid="690" groupid="54" classid="195" teacherids="38," classroomids="40" durationperiods="2" periodsperweek="2"/>
+        <lesson id="102" subjectid="691" groupid="46" classid="361" teacherids="38," classroomids="40" durationperiods="2" periodsperweek="2"/>
+        <lesson id="104" subjectid="693" groupid="46" classid="361" teacherids="65," classroomids="40" durationperiods="2" periodsperweek="2"/>
+        <lesson id="106" subjectid="695" groupid="46" classid="361" teacherids="60," classroomids="40" durationperiods="2" periodsperweek="4"/>
+        <lesson id="108" subjectid="697" groupid="45" classid="361" teacherids="45," classroomids="36" durationperiods="4" periodsperweek="4"/>
+        <lesson id="109" subjectid="698" groupid="45" classid="361" teacherids="25," classroomids="36" durationperiods="2" periodsperweek="2"/>
+        <lesson id="110" subjectid="699" groupid="57" classid="363" teacherids="30," classroomids="32" durationperiods="2" periodsperweek="2"/>
+        <lesson id="111" subjectid="702" groupid="57" classid="363" teacherids="41," classroomids="32" durationperiods="2" periodsperweek="4"/>
+        <lesson id="112" subjectid="703" groupid="58" classid="363" teacherids="58," classroomids="41" durationperiods="2" periodsperweek="2"/>
+        <lesson id="114" subjectid="705" groupid="58" classid="363" teacherids="79," classroomids="72" durationperiods="2" periodsperweek="2"/>
+        <lesson id="115" subjectid="706" groupid="57" classid="363" teacherids="38," classroomids="32" durationperiods="2" periodsperweek="2"/>
+        <lesson id="116" subjectid="713" groupid="60" classid="333" teacherids="49," classroomids="61" durationperiods="4" periodsperweek="4"/>
+        <lesson id="117" subjectid="714" groupid="60" classid="333" teacherids="52," classroomids="52" durationperiods="3" periodsperweek="3"/>
+        <lesson id="118" subjectid="715" groupid="60" classid="333" teacherids="44," classroomids="37" durationperiods="2" periodsperweek="2"/>
+        <lesson id="119" subjectid="716" groupid="60" classid="333" teacherids="52," classroomids="22" durationperiods="2" periodsperweek="2"/>
+        <lesson id="120" subjectid="717" groupid="60" classid="333" teacherids="36," classroomids="24" durationperiods="4" periodsperweek="4"/>
+        <lesson id="121" subjectid="718" groupid="60" classid="333" teacherids="56," classroomids="61" durationperiods="2" periodsperweek="2"/>
+        <lesson id="122" subjectid="724" groupid="18" classid="273" teacherids="39," classroomids="53" durationperiods="4" periodsperweek="4"/>
+        <lesson id="123" subjectid="725" groupid="18" classid="273" teacherids=",53," classroomids="35" durationperiods="4" periodsperweek="4"/>
+        <lesson id="124" subjectid="726" groupid="18" classid="273" teacherids=",89," classroomids="35" durationperiods="2" periodsperweek="4"/>
+        <lesson id="125" subjectid="727" groupid="18" classid="273" teacherids="20," classroomids="53" durationperiods="4" periodsperweek="4"/>
+        <lesson id="126" subjectid="728" groupid="63" classid="275" teacherids=",71," classroomids="54" durationperiods="4" periodsperweek="4"/>
+        <lesson id="127" subjectid="729" groupid="63" classid="275" teacherids=",54," classroomids="36" durationperiods="4" periodsperweek="4"/>
+        <lesson id="128" subjectid="730" groupid="63" classid="275" teacherids=",39," classroomids="36" durationperiods="4" periodsperweek="4"/>
+        <lesson id="129" subjectid="731" groupid="63" classid="275" teacherids="87," classroomids="36" durationperiods="2" periodsperweek="2"/>
+        <lesson id="130" subjectid="732" groupid="63" classid="275" teacherids="66," classroomids="36" durationperiods="4" periodsperweek="4"/>
+        <lesson id="131" subjectid="733" groupid="63" classid="275" teacherids=",87," classroomids="54" durationperiods="2" periodsperweek="2"/>
+        <lesson id="132" subjectid="734" groupid="66" classid="277" teacherids="69," classroomids="30" durationperiods="4" periodsperweek="4"/>
+        <lesson id="133" subjectid="735" groupid="66" classid="277" teacherids=",66," classroomids="30" durationperiods="4" periodsperweek="4"/>
+        <lesson id="134" subjectid="736" groupid="66" classid="277" teacherids="54," classroomids="30" durationperiods="2" periodsperweek="2"/>
+        <lesson id="135" subjectid="737" groupid="66" classid="277" teacherids=",87," classroomids="30" durationperiods="4" periodsperweek="4"/>
+        <lesson id="136" subjectid="738" groupid="66" classid="277" teacherids=",36," classroomids="52" durationperiods="4" periodsperweek="4"/>
+        <lesson id="137" subjectid="739" groupid="66" classid="277" teacherids="89," classroomids="52" durationperiods="2" periodsperweek="2"/>
+        <lesson id="138" subjectid="740" groupid="10" classid="331" teacherids="87," classroomids="59" durationperiods="2" periodsperweek="2"/>
+        <lesson id="140" subjectid="742" groupid="60" classid="333" teacherids="44," classroomids="37" durationperiods="1" periodsperweek="1"/>
+        <lesson id="141" subjectid="745" groupid="54" classid="195" teacherids="90," classroomids="40" durationperiods="2" periodsperweek="4"/>
+        <lesson id="142" subjectid="746" groupid="51" classid="193" teacherids="79," classroomids="37" durationperiods="2" periodsperweek="4"/>
+        <lesson id="143" subjectid="768" groupid="48" classid="191" teacherids="8," classroomids="34" durationperiods="2" periodsperweek="2"/>
+        <lesson id="144" subjectid="770" groupid="51" classid="193" teacherids="41," classroomids="37" durationperiods="1" periodsperweek="1"/>
+        <lesson id="145" subjectid="771" groupid="51" classid="193" teacherids="46," classroomids="37" durationperiods="1" periodsperweek="1"/>
+        <lesson id="146" subjectid="772" groupid="51" classid="193" teacherids="65," classroomids="37" durationperiods="3" periodsperweek="3"/>
+        <lesson id="147" subjectid="773" groupid="54" classid="195" teacherids="58," classroomids="40" durationperiods="2" periodsperweek="2"/>
+        <lesson id="148" subjectid="774" groupid="54" classid="195" teacherids="46," classroomids="40" durationperiods="1" periodsperweek="1"/>
+        <lesson id="149" subjectid="777" groupid="4" classid="321" teacherids="12,88,999," classroomids="50" durationperiods="2" periodsperweek="6"/>
+        <lesson id="150" subjectid="778" groupid="69" classid="681" teacherids="77," classroomids="32" durationperiods="4" periodsperweek="8"/>
+        <lesson id="151" subjectid="859" groupid="21" classid="332" teacherids="56," classroomids="60" durationperiods="2" periodsperweek="2"/>
+        <lesson id="152" subjectid="860" groupid="72" classid="334" teacherids=",63," classroomids="40" durationperiods="2" periodsperweek="2"/>
+        <lesson id="153" subjectid="861" groupid="72" classid="334" teacherids="49," classroomids="61" durationperiods="4" periodsperweek="4"/>
+        <lesson id="154" subjectid="862" groupid="72" classid="334" teacherids=",44," classroomids="40" durationperiods="4" periodsperweek="4"/>
+        <lesson id="155" subjectid="863" groupid="72" classid="334" teacherids=",36," classroomids="24" durationperiods="3" periodsperweek="3"/>
+        <lesson id="156" subjectid="864" groupid="72" classid="334" teacherids="36," classroomids="67" durationperiods="2" periodsperweek="2"/>
+        <lesson id="157" subjectid="865" groupid="72" classid="334" teacherids="48," classroomids="56" durationperiods="1" periodsperweek="1"/>
+        <lesson id="158" subjectid="866" groupid="72" classid="334" teacherids=",48," classroomids="56" durationperiods="2" periodsperweek="2"/>
+        <lesson id="160" subjectid="879" groupid="12" classid="322" teacherids="88," classroomids="53" durationperiods="2" periodsperweek="6"/>
+        <lesson id="161" subjectid="880" groupid="42" classid="323" teacherids="68," classroomids="51" durationperiods="2" periodsperweek="2"/>
+        <lesson id="162" subjectid="882" groupid="75" classid="324" teacherids="84," classroomids="52" durationperiods="4" periodsperweek="4"/>
+        <lesson id="163" subjectid="883" groupid="75" classid="324" teacherids="84," classroomids="52" durationperiods="2" periodsperweek="2"/>
+        <lesson id="164" subjectid="884" groupid="75" classid="324" teacherids="63," classroomids="52" durationperiods="2" periodsperweek="2"/>
+        <lesson id="165" subjectid="885" groupid="75" classid="324" teacherids="12," classroomids="52" durationperiods="2" periodsperweek="2"/>
+        <lesson id="166" subjectid="886" groupid="75" classid="324" teacherids="999," classroomids="52" durationperiods="2" periodsperweek="2"/>
+        <lesson id="168" subjectid="957" groupid="81" classid="620" teacherids="96," classroomids="50" durationperiods="4" periodsperweek="4"/>
+        <lesson id="169" subjectid="958" groupid="84" classid="610" teacherids="96," classroomids="50" durationperiods="4" periodsperweek="4"/>
+        <lesson id="170" subjectid="960" groupid="87" classid="640" teacherids="25," classroomids="45" durationperiods="3" periodsperweek="3"/>
+        <lesson id="171" subjectid="961" groupid="90" classid="210" teacherids="8," classroomids="45" durationperiods="3" periodsperweek="3"/>
+        <lesson id="172" subjectid="963" groupid="93" classid="740" teacherids="25," classroomids="46" durationperiods="3" periodsperweek="3"/>
+        <lesson id="174" subjectid="967" groupid="57" classid="363" teacherids="33," classroomids="32" durationperiods="2" periodsperweek="2"/>
+        <lesson id="175" subjectid="977" groupid="96" classid="533" teacherids="14,63," classroomids="31" durationperiods="2" periodsperweek="2"/>
+        <lesson id="176" subjectid="978" groupid="96" classid="533" teacherids="14," classroomids="31" durationperiods="2" periodsperweek="2"/>
+        <lesson id="177" subjectid="979" groupid="96" classid="533" teacherids="64," classroomids="31" durationperiods="2" periodsperweek="2"/>
+        <lesson id="178" subjectid="980" groupid="96" classid="533" teacherids="32," classroomids="31" durationperiods="2" periodsperweek="2"/>
+        <lesson id="179" subjectid="981" groupid="96" classid="533" teacherids="8," classroomids="31" durationperiods="2" periodsperweek="2"/>
+        <lesson id="180" subjectid="982" groupid="96" classid="533" teacherids="77," classroomids="31" durationperiods="2" periodsperweek="4"/>
+        <lesson id="181" subjectid="983" groupid="96" classid="533" teacherids="24," classroomids="31" durationperiods="2" periodsperweek="4"/>
+        <lesson id="182" subjectid="984" groupid="96" classid="533" teacherids="97,14," classroomids="31" durationperiods="2" periodsperweek="2"/>
+        <lesson id="183" subjectid="985" groupid="101" classid="603" teacherids="30,25,97,71,53," classroomids="54" durationperiods="4" periodsperweek="12"/>
+        <lesson id="184" subjectid="986" groupid="100" classid="603" teacherids="35,80,53,8,41,63," classroomids="53" durationperiods="4" periodsperweek="12"/>
+        <lesson id="185" subjectid="987" groupid="102" classid="761" teacherids="27," classroomids="33" durationperiods="2" periodsperweek="6"/>
+        <lesson id="186" subjectid="988" groupid="102" classid="761" teacherids="44,39," classroomids="33" durationperiods="2" periodsperweek="4"/>
+        <lesson id="187" subjectid="989" groupid="102" classid="761" teacherids="90," classroomids="33" durationperiods="4" periodsperweek="4"/>
+        <lesson id="188" subjectid="990" groupid="103" classid="761" teacherids="44," classroomids="33" durationperiods="2" periodsperweek="2"/>
+        <lesson id="190" subjectid="992" groupid="103" classid="761" teacherids="82," classroomids="59" durationperiods="2" periodsperweek="2"/>
+        <lesson id="192" subjectid="994" groupid="102" classid="761" teacherids="54,14," classroomids="33" durationperiods="2" periodsperweek="2"/>
+        <lesson id="193" subjectid="996" groupid="105" classid="279" teacherids="71," classroomids="40" durationperiods="4" periodsperweek="4"/>
+        <lesson id="194" subjectid="997" groupid="105" classid="279" teacherids="69," classroomids="40" durationperiods="2" periodsperweek="2"/>
+        <lesson id="195" subjectid="998" groupid="105" classid="279" teacherids="66,54," classroomids="40" durationperiods="4" periodsperweek="4"/>
+        <lesson id="196" subjectid="999" groupid="105" classid="279" teacherids="89,66," classroomids="41" durationperiods="4" periodsperweek="4"/>
+        <lesson id="198" subjectid="1001" groupid="105" classid="279" teacherids="73," classroomids="40" durationperiods="4" periodsperweek="4"/>
+        <lesson id="199" subjectid="1002" groupid="105" classid="279" teacherids="87," classroomids="40" durationperiods="2" periodsperweek="2"/>
+        <lesson id="202" subjectid="1005" groupid="108" classid="751" teacherids="94," classroomids="29" durationperiods="2" periodsperweek="4"/>
+        <lesson id="203" subjectid="1009" groupid="111" classid="341" teacherids="73,49," classroomids="60" durationperiods="4" periodsperweek="4"/>
+        <lesson id="205" subjectid="1011" groupid="111" classid="341" teacherids="55,53," classroomids="35" durationperiods="4" periodsperweek="4"/>
+        <lesson id="206" subjectid="1012" groupid="111" classid="341" teacherids="89," classroomids="59" durationperiods="2" periodsperweek="2"/>
+        <lesson id="208" subjectid="1014" groupid="111" classid="341" teacherids="82," classroomids="59" durationperiods="2" periodsperweek="2"/>
+        <lesson id="210" subjectid="1016" groupid="111" classid="341" teacherids="999," classroomids="54" durationperiods="2" periodsperweek="2"/>
+        <lesson id="211" subjectid="1017" groupid="111" classid="341" teacherids="8," classroomids="35" durationperiods="2" periodsperweek="2"/>
+        <lesson id="212" subjectid="1018" groupid="114" classid="343" teacherids="56," classroomids="60" durationperiods="4" periodsperweek="4"/>
+        <lesson id="213" subjectid="1019" groupid="114" classid="343" teacherids="12," classroomids="50" durationperiods="2" periodsperweek="2"/>
+        <lesson id="214" subjectid="1020" groupid="114" classid="343" teacherids="36," classroomids="36" durationperiods="2" periodsperweek="2"/>
+        <lesson id="215" subjectid="1021" groupid="114" classid="343" teacherids="48," classroomids="56" durationperiods="2" periodsperweek="2"/>
+        <lesson id="216" subjectid="1022" groupid="114" classid="343" teacherids="89," classroomids="56" durationperiods="2" periodsperweek="4"/>
+        <lesson id="217" subjectid="1023" groupid="114" classid="343" teacherids="55," classroomids="61" durationperiods="2" periodsperweek="2"/>
+        <lesson id="218" subjectid="1024" groupid="114" classid="343" teacherids="48," classroomids="56" durationperiods="2" periodsperweek="2"/>
+        <lesson id="219" subjectid="1025" groupid="117" classid="145" teacherids="29," classroomids="31" durationperiods="2" periodsperweek="4"/>
+        <lesson id="220" subjectid="1026" groupid="120" classid="141" teacherids="77," classroomids="29" durationperiods="2" periodsperweek="4"/>
+        <lesson id="221" subjectid="1027" groupid="120" classid="141" teacherids="56," classroomids="54" durationperiods="2" periodsperweek="4"/>
+        <lesson id="222" subjectid="1028" groupid="120" classid="141" teacherids="10," classroomids="29" durationperiods="2" periodsperweek="2"/>
+        <lesson id="223" subjectid="1029" groupid="120" classid="141" teacherids="27,12" classroomids="29" durationperiods="2" periodsperweek="4"/>
+        <lesson id="224" subjectid="1030" groupid="120" classid="141" teacherids="18," classroomids="54" durationperiods="4" periodsperweek="4"/>
+        <lesson id="225" subjectid="1031" groupid="120" classid="141" teacherids="18," classroomids="54" durationperiods="2" periodsperweek="2"/>
+        <lesson id="226" subjectid="1032" groupid="123" classid="143" teacherids="29," classroomids="30" durationperiods="2" periodsperweek="4"/>
+        <lesson id="227" subjectid="1033" groupid="123" classid="143" teacherids="84," classroomids="53" durationperiods="2" periodsperweek="4"/>
+        <lesson id="228" subjectid="1034" groupid="123" classid="143" teacherids="10," classroomids="53" durationperiods="2" periodsperweek="4"/>
+        <lesson id="229" subjectid="1035" groupid="123" classid="143" teacherids="20," classroomids="53" durationperiods="2" periodsperweek="4"/>
+        <lesson id="230" subjectid="1036" groupid="123" classid="143" teacherids="3," classroomids="53" durationperiods="2" periodsperweek="4"/>
+        <lesson id="231" subjectid="1037" groupid="117" classid="145" teacherids="67," classroomids="52" durationperiods="2" periodsperweek="4"/>
+        <lesson id="232" subjectid="1038" groupid="117" classid="145" teacherids="18," classroomids="31" durationperiods="2" periodsperweek="4"/>
+        <lesson id="233" subjectid="1039" groupid="117" classid="145" teacherids="10," classroomids="52" durationperiods="2" periodsperweek="4"/>
+        <lesson id="234" subjectid="1041" groupid="117" classid="145" teacherids="68," classroomids="52" durationperiods="2" periodsperweek="4"/>
+        <lesson id="235" subjectid="1042" groupid="126" classid="147" teacherids="18," classroomids="51" durationperiods="2" periodsperweek="4"/>
+        <lesson id="236" subjectid="1043" groupid="126" classid="147" teacherids="63," classroomids="32" durationperiods="2" periodsperweek="4"/>
+        <lesson id="237" subjectid="1044" groupid="126" classid="147" teacherids="10," classroomids="51" durationperiods="4" periodsperweek="8"/>
+        <lesson id="238" subjectid="1045" groupid="126" classid="147" teacherids="20,88," classroomids="50" durationperiods="2" periodsperweek="4"/>
+        <lesson id="240" subjectid="1047" groupid="57" classid="363" teacherids="79," classroomids="32" durationperiods="2" periodsperweek="2"/>
+        <lesson id="242" subjectid="1049" groupid="129" classid="770" teacherids="25," classroomids="46" durationperiods="3" periodsperweek="3"/>
+        <lesson id="243" subjectid="1050" groupid="132" classid="780" teacherids="84," classroomids="52" durationperiods="4" periodsperweek="4"/>
+        <lesson id="244" subjectid="1051" groupid="108" classid="751" teacherids="63," classroomids="29" durationperiods="2" periodsperweek="4"/>
+        <lesson id="245" subjectid="1052" groupid="108" classid="751" teacherids="24," classroomids="29" durationperiods="2" periodsperweek="4"/>
+        <lesson id="246" subjectid="1053" groupid="108" classid="751" teacherids="24," classroomids="29" durationperiods="2" periodsperweek="4"/>
+        <lesson id="247" subjectid="1067" groupid="138" classid="801" teacherids="72," classroomids="36" durationperiods="4" periodsperweek="8"/>
+        <lesson id="248" subjectid="1068" groupid="141" classid="811" teacherids="72," classroomids="35" durationperiods="4" periodsperweek="4"/>
+        <lesson id="249" subjectid="345" groupid="114" classid="343" teacherids="71," classroomids="61" durationperiods="2" periodsperweek="2"/>
+
+    </lessons>
+    <cards columns="lessonid">
+        <card lessonid="0"/>
+        <card lessonid="1"/>
+        <card lessonid="2"/>
+        <card lessonid="3"/>
+        <card lessonid="4"/>
+        <card lessonid="5"/>
+        <card lessonid="6"/>
+        <card lessonid="7"/>
+        <card lessonid="8"/>
+        <card lessonid="9"/>
+        <card lessonid="10"/>
+        <card lessonid="11"/>
+        <card lessonid="12"/>
+        <card lessonid="13"/>
+        <card lessonid="14"/>
+        <card lessonid="15"/>
+        <card lessonid="16"/>
+        <card lessonid="17"/>
+        <card lessonid="18"/>
+        <card lessonid="19"/>
+        <card lessonid="20"/>
+        <card lessonid="21"/>
+        <card lessonid="22"/>
+        <card lessonid="23"/>
+        <card lessonid="24"/>
+        <card lessonid="25"/>
+        <card lessonid="26"/>
+        <card lessonid="27"/>
+        <card lessonid="28"/>
+        <card lessonid="29"/>
+        <card lessonid="30"/>
+        <card lessonid="31"/>
+        <card lessonid="32"/>
+        <card lessonid="33"/>
+        <card lessonid="34"/>
+        <card lessonid="35"/>
+        <card lessonid="36"/>
+        <card lessonid="37"/>
+        <card lessonid="38"/>
+        <card lessonid="39"/>
+        <card lessonid="40"/>
+        <card lessonid="41"/>
+        <card lessonid="42"/>
+        <card lessonid="43"/>
+        <card lessonid="44"/>
+        <card lessonid="45"/>
+        <card lessonid="46"/>
+        <card lessonid="47"/>
+        <card lessonid="48"/>
+        <card lessonid="49"/>
+        <card lessonid="50"/>
+        <card lessonid="51"/>
+        <card lessonid="52"/>
+        <card lessonid="53"/>
+        <card lessonid="54"/>
+        <card lessonid="55"/>
+        <card lessonid="56"/>
+        <card lessonid="57"/>
+        <card lessonid="58"/>
+        <card lessonid="59"/>
+        <card lessonid="60"/>
+        <card lessonid="61"/>
+        <card lessonid="62"/>
+        <card lessonid="63"/>
+        <card lessonid="64"/>
+        <card lessonid="65"/>
+        <card lessonid="66"/>
+        <card lessonid="67"/>
+        <card lessonid="68"/>
+        <card lessonid="69"/>
+        <card lessonid="70"/>
+        <card lessonid="71"/>
+        <card lessonid="72"/>
+        <card lessonid="73"/>
+        <card lessonid="74"/>
+        <card lessonid="75"/>
+        <card lessonid="76"/>
+        <card lessonid="77"/>
+        <card lessonid="78"/>
+        <card lessonid="79"/>
+        <card lessonid="80"/>
+        <card lessonid="81"/>
+        <card lessonid="82"/>
+        <card lessonid="83"/>
+        <card lessonid="84"/>
+        <card lessonid="85"/>
+        <card lessonid="86"/>
+        <card lessonid="87"/>
+        <card lessonid="88"/>
+        <card lessonid="89"/>
+        <card lessonid="90"/>
+        <card lessonid="91"/>
+        <card lessonid="92"/>
+        <card lessonid="93"/>
+        <card lessonid="94"/>
+        <card lessonid="95"/>
+        <card lessonid="96"/>
+        <card lessonid="97"/>
+        <card lessonid="98"/>
+        <card lessonid="99"/>
+        <card lessonid="100"/>
+        <card lessonid="101"/>
+        <card lessonid="102"/>
+        <card lessonid="103"/>
+        <card lessonid="104"/>
+        <card lessonid="105"/>
+        <card lessonid="106"/>
+        <card lessonid="107"/>
+        <card lessonid="108"/>
+        <card lessonid="109"/>
+        <card lessonid="110"/>
+        <card lessonid="111"/>
+        <card lessonid="112"/>
+        <card lessonid="113"/>
+        <card lessonid="114"/>
+        <card lessonid="115"/>
+        <card lessonid="116"/>
+        <card lessonid="117"/>
+        <card lessonid="118"/>
+        <card lessonid="119"/>
+        <card lessonid="120"/>
+        <card lessonid="121"/>
+        <card lessonid="122"/>
+        <card lessonid="123"/>
+        <card lessonid="124"/>
+        <card lessonid="125"/>
+        <card lessonid="126"/>
+        <card lessonid="127"/>
+        <card lessonid="128"/>
+        <card lessonid="129"/>
+        <card lessonid="130"/>
+        <card lessonid="131"/>
+        <card lessonid="132"/>
+        <card lessonid="133"/>
+        <card lessonid="134"/>
+        <card lessonid="135"/>
+        <card lessonid="136"/>
+        <card lessonid="137"/>
+        <card lessonid="138"/>
+        <card lessonid="139"/>
+        <card lessonid="140"/>
+        <card lessonid="141"/>
+        <card lessonid="142"/>
+        <card lessonid="143"/>
+        <card lessonid="144"/>
+        <card lessonid="145"/>
+        <card lessonid="146"/>
+        <card lessonid="147"/>
+        <card lessonid="148"/>
+        <card lessonid="149"/>
+        <card lessonid="150"/>
+        <card lessonid="151"/>
+        <card lessonid="152"/>
+        <card lessonid="153"/>
+        <card lessonid="154"/>
+        <card lessonid="155"/>
+        <card lessonid="156"/>
+        <card lessonid="157"/>
+        <card lessonid="158"/>
+        <card lessonid="159"/>
+        <card lessonid="160"/>
+        <card lessonid="161"/>
+        <card lessonid="162"/>
+        <card lessonid="163"/>
+        <card lessonid="164"/>
+        <card lessonid="165"/>
+        <card lessonid="166"/>
+        <card lessonid="167"/>
+        <card lessonid="168"/>
+        <card lessonid="169"/>
+        <card lessonid="170"/>
+        <card lessonid="171"/>
+        <card lessonid="172"/>
+        <card lessonid="173"/>
+        <card lessonid="174"/>
+        <card lessonid="175"/>
+        <card lessonid="176"/>
+        <card lessonid="177"/>
+        <card lessonid="178"/>
+        <card lessonid="179"/>
+        <card lessonid="180"/>
+        <card lessonid="181"/>
+        <card lessonid="182"/>
+        <card lessonid="183"/>
+        <card lessonid="184"/>
+        <card lessonid="185"/>
+        <card lessonid="186"/>
+        <card lessonid="187"/>
+        <card lessonid="188"/>
+        <card lessonid="189"/>
+        <card lessonid="190"/>
+        <card lessonid="191"/>
+        <card lessonid="192"/>
+        <card lessonid="193"/>
+        <card lessonid="194"/>
+        <card lessonid="195"/>
+        <card lessonid="196"/>
+        <card lessonid="197"/>
+        <card lessonid="198"/>
+        <card lessonid="199"/>
+        <card lessonid="200"/>
+        <card lessonid="201"/>
+        <card lessonid="202"/>
+        <card lessonid="203"/>
+        <card lessonid="204"/>
+        <card lessonid="205"/>
+        <card lessonid="206"/>
+        <card lessonid="207"/>
+        <card lessonid="208"/>
+        <card lessonid="209"/>
+        <card lessonid="210"/>
+        <card lessonid="211"/>
+        <card lessonid="212"/>
+        <card lessonid="213"/>
+        <card lessonid="214"/>
+        <card lessonid="215"/>
+        <card lessonid="216"/>
+        <card lessonid="217"/>
+        <card lessonid="218"/>
+        <card lessonid="219"/>
+        <card lessonid="220"/>
+        <card lessonid="221"/>
+        <card lessonid="222"/>
+        <card lessonid="223"/>
+        <card lessonid="224"/>
+        <card lessonid="225"/>
+        <card lessonid="226"/>
+        <card lessonid="227"/>
+        <card lessonid="228"/>
+        <card lessonid="229"/>
+        <card lessonid="230"/>
+        <card lessonid="231"/>
+        <card lessonid="232"/>
+        <card lessonid="233"/>
+        <card lessonid="234"/>
+        <card lessonid="235"/>
+        <card lessonid="236"/>
+        <card lessonid="237"/>
+        <card lessonid="238"/>
+        <card lessonid="239"/>
+        <card lessonid="240"/>
+        <card lessonid="241"/>
+        <card lessonid="242"/>
+        <card lessonid="243"/>
+        <card lessonid="244"/>
+        <card lessonid="245"/>
+        <card lessonid="246"/>
+        <card lessonid="247"/>
+        <card lessonid="248"/>
+    </cards>
+</timetable>

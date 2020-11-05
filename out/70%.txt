@@ -1,0 +1,1542 @@
+[
+
+Curso: CC
+	 Total de professores= 14
+	 Número de professores exclusivos=3
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: ENGMEC
+		Número de professores compartilhados: 3
+		Professores: [Ailton Durigon, Marcelo Maraschin, Vilma Gisele], 
+
+		Curso relacionado: ELETROMEC
+		Número de professores compartilhados: 2
+		Professores: [Ailton Durigon, Marcelo Maraschin], 
+
+		Curso relacionado: TECINFO
+		Número de professores compartilhados: 6
+		Professores: [Andre Salvaro, Carlos Andres, José Cé, Leonardo Bravo, Paola de Oliveira, Wilson Castello], 
+
+		Curso relacionado: PQ
+		Número de professores compartilhados: 2
+		Professores: [Carolina Berger, Marcelo Maraschin], 
+
+		Curso relacionado: BIOTEC
+		Número de professores compartilhados: 1
+		Professores: [Carolina Berger], 
+
+		Curso relacionado: AQ
+		Número de professores compartilhados: 1
+		Professores: [Carolina Berger], 
+
+		Curso relacionado: ADM
+		Número de professores compartilhados: 1
+		Professores: [Leonardo Bravo], 
+
+		Curso relacionado: MECAT
+		Número de professores compartilhados: 1
+		Professores: [Rafael Grebogi], 
+
+		Curso relacionado: GEST AGRON 
+		Número de professores compartilhados: 1
+		Professores: [Vilma Gisele]]}, 
+
+Curso: PQ
+	 Total de professores= 16
+	 Número de professores exclusivos=1
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: BIOTEC
+		Número de professores compartilhados: 9
+		Professores: [Ana Paula de Lima, Carolina Berger, Fernando Domingos, Jaqueline Suave, João Gustavo Provesi, Michael Ramos, Monia Stremel, Rita de Cássia, Willian Lunardi], 
+
+		Curso relacionado: CC
+		Número de professores compartilhados: 2
+		Professores: [Carolina Berger, Marcelo Maraschin], 
+
+		Curso relacionado: AQ
+		Número de professores compartilhados: 8
+		Professores: [Carolina Berger, Jaqueline Suave, João Gustavo Provesi, Marco Aurelio, Michael Ramos, Monia Stremel, Rosane S., Willian Lunardi], 
+
+		Curso relacionado: AGROECO
+		Número de professores compartilhados: 1
+		Professores: [Fernando Domingos], 
+
+		Curso relacionado: GEST AGRON 
+		Número de professores compartilhados: 1
+		Professores: [Fernando Domingos], 
+
+		Curso relacionado: ENGMEC
+		Número de professores compartilhados: 3
+		Professores: [Marcelo Maraschin, Rafael Santiago, Samuel Ferreira], 
+
+		Curso relacionado: ELETROMEC
+		Número de professores compartilhados: 2
+		Professores: [Marcelo Maraschin, Ricardo Teran], 
+
+		Curso relacionado: MECAT
+		Número de professores compartilhados: 2
+		Professores: [Rafael Santiago, Ricardo Teran], 
+
+		Curso relacionado: ADM
+		Número de professores compartilhados: 1
+		Professores: [Samuel Ferreira]]}, 
+
+Curso: BIOTEC
+	 Total de professores= 18
+	 Número de professores exclusivos=1
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: MECAT
+		Número de professores compartilhados: 2
+		Professores: [Ana Maria Martins, Sayonara Varela], 
+
+		Curso relacionado: PQ
+		Número de professores compartilhados: 9
+		Professores: [Ana Paula de Lima, Carolina Berger, Fernando Domingos, Jaqueline Suave, João Gustavo Provesi, Michael Ramos, Monia Stremel, Rita de Cássia, Willian Lunardi], 
+
+		Curso relacionado: CC
+		Número de professores compartilhados: 1
+		Professores: [Carolina Berger], 
+
+		Curso relacionado: AQ
+		Número de professores compartilhados: 8
+		Professores: [Carolina Berger, Jaqueline Suave, João Gustavo Provesi, Lucia Helena, Michael Ramos, Monia Stremel, Paulo Henrique, Willian Lunardi], 
+
+		Curso relacionado: AGROECO
+		Número de professores compartilhados: 6
+		Professores: [Fernando Domingos, Jocleita Peruzzo, Lucia Helena, Luciane Costa, Paula Clarice, Valter Pereira], 
+
+		Curso relacionado: GEST AGRON 
+		Número de professores compartilhados: 4
+		Professores: [Fernando Domingos, Jocleita Peruzzo, Luciane Costa, Valter Pereira], 
+
+		Curso relacionado: ENGMEC
+		Número de professores compartilhados: 1
+		Professores: [Paula Clarice], 
+
+		Curso relacionado: TECINFO
+		Número de professores compartilhados: 1
+		Professores: [Paula Clarice], 
+
+		Curso relacionado: ELETROMEC
+		Número de professores compartilhados: 1
+		Professores: [Paula Clarice], 
+
+		Curso relacionado: ADM
+		Número de professores compartilhados: 2
+		Professores: [Sayonara Varela, Valter Pereira]]}, 
+
+Curso: ENGMEC
+	 Total de professores= 18
+	 Número de professores exclusivos=3
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: ELETROMEC
+		Número de professores compartilhados: 11
+		Professores: [Adriellen Lima, Ailton Durigon, Alisson F., Anderson Luis, Ariton Araldi, Claudio Marques, Eliane Correa, Marcelo Maraschin, Paula Clarice, Rafael Gustavo, Thiago Henrique], 
+
+		Curso relacionado: MECAT
+		Número de professores compartilhados: 4
+		Professores: [Adriellen Lima, Anderson Luis, Rafael Gustavo, Rafael Santiago], 
+
+		Curso relacionado: CC
+		Número de professores compartilhados: 3
+		Professores: [Ailton Durigon, Marcelo Maraschin, Vilma Gisele], 
+
+		Curso relacionado: TECINFO
+		Número de professores compartilhados: 2
+		Professores: [Eliane Correa, Paula Clarice], 
+
+		Curso relacionado: AQ
+		Número de professores compartilhados: 1
+		Professores: [Eliane Correa], 
+
+		Curso relacionado: ADM
+		Número de professores compartilhados: 3
+		Professores: [Eliane Correa, Marisa Santos, Samuel Ferreira], 
+
+		Curso relacionado: GEST AGRON 
+		Número de professores compartilhados: 2
+		Professores: [Eliane Correa, Vilma Gisele], 
+
+		Curso relacionado: PQ
+		Número de professores compartilhados: 3
+		Professores: [Marcelo Maraschin, Rafael Santiago, Samuel Ferreira], 
+
+		Curso relacionado: BIOTEC
+		Número de professores compartilhados: 1
+		Professores: [Paula Clarice], 
+
+		Curso relacionado: AGROECO
+		Número de professores compartilhados: 1
+		Professores: [Paula Clarice]]}, 
+
+Curso: TECINFO
+	 Total de professores= 11
+	 Número de professores exclusivos=1
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: CC
+		Número de professores compartilhados: 6
+		Professores: [Andre Salvaro, Carlos Andres, José Cé, Leonardo Bravo, Paola de Oliveira, Wilson Castello], 
+
+		Curso relacionado: ELETROMEC
+		Número de professores compartilhados: 3
+		Professores: [Eduardo Tealdi, Eliane Correa, Paula Clarice], 
+
+		Curso relacionado: ENGMEC
+		Número de professores compartilhados: 2
+		Professores: [Eliane Correa, Paula Clarice], 
+
+		Curso relacionado: AQ
+		Número de professores compartilhados: 2
+		Professores: [Eliane Correa, Luciane Bittencourt], 
+
+		Curso relacionado: ADM
+		Número de professores compartilhados: 2
+		Professores: [Eliane Correa, Leonardo Bravo], 
+
+		Curso relacionado: GEST AGRON 
+		Número de professores compartilhados: 1
+		Professores: [Eliane Correa], 
+
+		Curso relacionado: BIOTEC
+		Número de professores compartilhados: 1
+		Professores: [Paula Clarice], 
+
+		Curso relacionado: AGROECO
+		Número de professores compartilhados: 1
+		Professores: [Paula Clarice]]}, 
+
+Curso: ELETROMEC
+	 Total de professores= 15
+	 Número de professores exclusivos=1
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: ENGMEC
+		Número de professores compartilhados: 11
+		Professores: [Adriellen Lima, Ailton Durigon, Alisson F., Anderson Luis, Ariton Araldi, Claudio Marques, Eliane Correa, Marcelo Maraschin, Paula Clarice, Rafael Gustavo, Thiago Henrique], 
+
+		Curso relacionado: MECAT
+		Número de professores compartilhados: 5
+		Professores: [Adriellen Lima, Anderson Luis, Jeferson Fraytag, Rafael Gustavo, Ricardo Teran], 
+
+		Curso relacionado: CC
+		Número de professores compartilhados: 2
+		Professores: [Ailton Durigon, Marcelo Maraschin], 
+
+		Curso relacionado: TECINFO
+		Número de professores compartilhados: 3
+		Professores: [Eduardo Tealdi, Eliane Correa, Paula Clarice], 
+
+		Curso relacionado: AQ
+		Número de professores compartilhados: 1
+		Professores: [Eliane Correa], 
+
+		Curso relacionado: ADM
+		Número de professores compartilhados: 1
+		Professores: [Eliane Correa], 
+
+		Curso relacionado: GEST AGRON 
+		Número de professores compartilhados: 1
+		Professores: [Eliane Correa], 
+
+		Curso relacionado: PQ
+		Número de professores compartilhados: 2
+		Professores: [Marcelo Maraschin, Ricardo Teran], 
+
+		Curso relacionado: BIOTEC
+		Número de professores compartilhados: 1
+		Professores: [Paula Clarice], 
+
+		Curso relacionado: AGROECO
+		Número de professores compartilhados: 1
+		Professores: [Paula Clarice]]}, 
+
+Curso: MECAT
+	 Total de professores= 9
+	 Número de professores exclusivos=0
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: ENGMEC
+		Número de professores compartilhados: 4
+		Professores: [Adriellen Lima, Anderson Luis, Rafael Gustavo, Rafael Santiago], 
+
+		Curso relacionado: ELETROMEC
+		Número de professores compartilhados: 5
+		Professores: [Adriellen Lima, Anderson Luis, Jeferson Fraytag, Rafael Gustavo, Ricardo Teran], 
+
+		Curso relacionado: BIOTEC
+		Número de professores compartilhados: 2
+		Professores: [Ana Maria Martins, Sayonara Varela], 
+
+		Curso relacionado: CC
+		Número de professores compartilhados: 1
+		Professores: [Rafael Grebogi], 
+
+		Curso relacionado: PQ
+		Número de professores compartilhados: 2
+		Professores: [Rafael Santiago, Ricardo Teran], 
+
+		Curso relacionado: ADM
+		Número de professores compartilhados: 1
+		Professores: [Sayonara Varela]]}, 
+
+Curso: AGROECO
+	 Total de professores= 9
+	 Número de professores exclusivos=1
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: PQ
+		Número de professores compartilhados: 1
+		Professores: [Fernando Domingos], 
+
+		Curso relacionado: BIOTEC
+		Número de professores compartilhados: 6
+		Professores: [Fernando Domingos, Jocleita Peruzzo, Lucia Helena, Luciane Costa, Paula Clarice, Valter Pereira], 
+
+		Curso relacionado: GEST AGRON 
+		Número de professores compartilhados: 6
+		Professores: [Fernando Domingos, Jocleita Peruzzo, Luciane Costa, Paula Iaschitzki, Roberto Akitoshi, Valter Pereira], 
+
+		Curso relacionado: AQ
+		Número de professores compartilhados: 1
+		Professores: [Lucia Helena], 
+
+		Curso relacionado: ENGMEC
+		Número de professores compartilhados: 1
+		Professores: [Paula Clarice], 
+
+		Curso relacionado: TECINFO
+		Número de professores compartilhados: 1
+		Professores: [Paula Clarice], 
+
+		Curso relacionado: ELETROMEC
+		Número de professores compartilhados: 1
+		Professores: [Paula Clarice], 
+
+		Curso relacionado: ADM
+		Número de professores compartilhados: 1
+		Professores: [Valter Pereira]]}, 
+
+Curso: AQ
+	 Total de professores= 12
+	 Número de professores exclusivos=0
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: CC
+		Número de professores compartilhados: 1
+		Professores: [Carolina Berger], 
+
+		Curso relacionado: PQ
+		Número de professores compartilhados: 8
+		Professores: [Carolina Berger, Jaqueline Suave, João Gustavo Provesi, Marco Aurelio, Michael Ramos, Monia Stremel, Rosane S., Willian Lunardi], 
+
+		Curso relacionado: BIOTEC
+		Número de professores compartilhados: 8
+		Professores: [Carolina Berger, Jaqueline Suave, João Gustavo Provesi, Lucia Helena, Michael Ramos, Monia Stremel, Paulo Henrique, Willian Lunardi], 
+
+		Curso relacionado: ENGMEC
+		Número de professores compartilhados: 1
+		Professores: [Eliane Correa], 
+
+		Curso relacionado: TECINFO
+		Número de professores compartilhados: 2
+		Professores: [Eliane Correa, Luciane Bittencourt], 
+
+		Curso relacionado: ELETROMEC
+		Número de professores compartilhados: 1
+		Professores: [Eliane Correa], 
+
+		Curso relacionado: ADM
+		Número de professores compartilhados: 1
+		Professores: [Eliane Correa], 
+
+		Curso relacionado: GEST AGRON 
+		Número de professores compartilhados: 1
+		Professores: [Eliane Correa], 
+
+		Curso relacionado: AGROECO
+		Número de professores compartilhados: 1
+		Professores: [Lucia Helena]]}, 
+
+Curso: ADM
+	 Total de professores= 6
+	 Número de professores exclusivos=0
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: ENGMEC
+		Número de professores compartilhados: 3
+		Professores: [Eliane Correa, Marisa Santos, Samuel Ferreira], 
+
+		Curso relacionado: TECINFO
+		Número de professores compartilhados: 2
+		Professores: [Eliane Correa, Leonardo Bravo], 
+
+		Curso relacionado: ELETROMEC
+		Número de professores compartilhados: 1
+		Professores: [Eliane Correa], 
+
+		Curso relacionado: AQ
+		Número de professores compartilhados: 1
+		Professores: [Eliane Correa], 
+
+		Curso relacionado: GEST AGRON 
+		Número de professores compartilhados: 2
+		Professores: [Eliane Correa, Valter Pereira], 
+
+		Curso relacionado: CC
+		Número de professores compartilhados: 1
+		Professores: [Leonardo Bravo], 
+
+		Curso relacionado: PQ
+		Número de professores compartilhados: 1
+		Professores: [Samuel Ferreira], 
+
+		Curso relacionado: BIOTEC
+		Número de professores compartilhados: 2
+		Professores: [Sayonara Varela, Valter Pereira], 
+
+		Curso relacionado: MECAT
+		Número de professores compartilhados: 1
+		Professores: [Sayonara Varela], 
+
+		Curso relacionado: AGROECO
+		Número de professores compartilhados: 1
+		Professores: [Valter Pereira]]}, 
+
+Curso: GEST AGRON 
+	 Total de professores= 8
+	 Número de professores exclusivos=0
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: ENGMEC
+		Número de professores compartilhados: 2
+		Professores: [Eliane Correa, Vilma Gisele], 
+
+		Curso relacionado: TECINFO
+		Número de professores compartilhados: 1
+		Professores: [Eliane Correa], 
+
+		Curso relacionado: ELETROMEC
+		Número de professores compartilhados: 1
+		Professores: [Eliane Correa], 
+
+		Curso relacionado: AQ
+		Número de professores compartilhados: 1
+		Professores: [Eliane Correa], 
+
+		Curso relacionado: ADM
+		Número de professores compartilhados: 2
+		Professores: [Eliane Correa, Valter Pereira], 
+
+		Curso relacionado: PQ
+		Número de professores compartilhados: 1
+		Professores: [Fernando Domingos], 
+
+		Curso relacionado: BIOTEC
+		Número de professores compartilhados: 4
+		Professores: [Fernando Domingos, Jocleita Peruzzo, Luciane Costa, Valter Pereira], 
+
+		Curso relacionado: AGROECO
+		Número de professores compartilhados: 6
+		Professores: [Fernando Domingos, Jocleita Peruzzo, Luciane Costa, Paula Iaschitzki, Roberto Akitoshi, Valter Pereira], 
+
+		Curso relacionado: CC
+		Número de professores compartilhados: 1
+		Professores: [Vilma Gisele]]}]
+
+
+
+--------------------------Nova Geração--------------------------
+Novo conjunto: ELETROMEC-ENGMEC
+
+[
+
+Curso: CC
+	 Total de professores= 14
+	 Número de professores exclusivos=3
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: ELETROMEC-ENGMEC
+		Número de professores compartilhados: 3
+		Professores: [Ailton Durigon, Marcelo Maraschin, Vilma Gisele], 
+
+		Curso relacionado: TECINFO
+		Número de professores compartilhados: 6
+		Professores: [Andre Salvaro, Carlos Andres, José Cé, Leonardo Bravo, Paola de Oliveira, Wilson Castello], 
+
+		Curso relacionado: PQ
+		Número de professores compartilhados: 2
+		Professores: [Carolina Berger, Marcelo Maraschin], 
+
+		Curso relacionado: BIOTEC
+		Número de professores compartilhados: 1
+		Professores: [Carolina Berger], 
+
+		Curso relacionado: AQ
+		Número de professores compartilhados: 1
+		Professores: [Carolina Berger], 
+
+		Curso relacionado: ADM
+		Número de professores compartilhados: 1
+		Professores: [Leonardo Bravo], 
+
+		Curso relacionado: MECAT
+		Número de professores compartilhados: 1
+		Professores: [Rafael Grebogi], 
+
+		Curso relacionado: GEST AGRON 
+		Número de professores compartilhados: 1
+		Professores: [Vilma Gisele]]}, 
+
+Curso: PQ
+	 Total de professores= 16
+	 Número de professores exclusivos=1
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: BIOTEC
+		Número de professores compartilhados: 9
+		Professores: [Ana Paula de Lima, Carolina Berger, Fernando Domingos, Jaqueline Suave, João Gustavo Provesi, Michael Ramos, Monia Stremel, Rita de Cássia, Willian Lunardi], 
+
+		Curso relacionado: CC
+		Número de professores compartilhados: 2
+		Professores: [Carolina Berger, Marcelo Maraschin], 
+
+		Curso relacionado: AQ
+		Número de professores compartilhados: 8
+		Professores: [Carolina Berger, Jaqueline Suave, João Gustavo Provesi, Marco Aurelio, Michael Ramos, Monia Stremel, Rosane S., Willian Lunardi], 
+
+		Curso relacionado: AGROECO
+		Número de professores compartilhados: 1
+		Professores: [Fernando Domingos], 
+
+		Curso relacionado: GEST AGRON 
+		Número de professores compartilhados: 1
+		Professores: [Fernando Domingos], 
+
+		Curso relacionado: ELETROMEC-ENGMEC
+		Número de professores compartilhados: 4
+		Professores: [Marcelo Maraschin, Rafael Santiago, Samuel Ferreira, Ricardo Teran], 
+
+		Curso relacionado: MECAT
+		Número de professores compartilhados: 2
+		Professores: [Rafael Santiago, Ricardo Teran], 
+
+		Curso relacionado: ADM
+		Número de professores compartilhados: 1
+		Professores: [Samuel Ferreira]]}, 
+
+Curso: BIOTEC
+	 Total de professores= 18
+	 Número de professores exclusivos=1
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: MECAT
+		Número de professores compartilhados: 2
+		Professores: [Ana Maria Martins, Sayonara Varela], 
+
+		Curso relacionado: PQ
+		Número de professores compartilhados: 9
+		Professores: [Ana Paula de Lima, Carolina Berger, Fernando Domingos, Jaqueline Suave, João Gustavo Provesi, Michael Ramos, Monia Stremel, Rita de Cássia, Willian Lunardi], 
+
+		Curso relacionado: CC
+		Número de professores compartilhados: 1
+		Professores: [Carolina Berger], 
+
+		Curso relacionado: AQ
+		Número de professores compartilhados: 8
+		Professores: [Carolina Berger, Jaqueline Suave, João Gustavo Provesi, Lucia Helena, Michael Ramos, Monia Stremel, Paulo Henrique, Willian Lunardi], 
+
+		Curso relacionado: AGROECO
+		Número de professores compartilhados: 6
+		Professores: [Fernando Domingos, Jocleita Peruzzo, Lucia Helena, Luciane Costa, Paula Clarice, Valter Pereira], 
+
+		Curso relacionado: GEST AGRON 
+		Número de professores compartilhados: 4
+		Professores: [Fernando Domingos, Jocleita Peruzzo, Luciane Costa, Valter Pereira], 
+
+		Curso relacionado: ELETROMEC-ENGMEC
+		Número de professores compartilhados: 1
+		Professores: [Paula Clarice], 
+
+		Curso relacionado: TECINFO
+		Número de professores compartilhados: 1
+		Professores: [Paula Clarice], 
+
+		Curso relacionado: ADM
+		Número de professores compartilhados: 2
+		Professores: [Sayonara Varela, Valter Pereira]]}, 
+
+Curso: TECINFO
+	 Total de professores= 11
+	 Número de professores exclusivos=1
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: CC
+		Número de professores compartilhados: 6
+		Professores: [Andre Salvaro, Carlos Andres, José Cé, Leonardo Bravo, Paola de Oliveira, Wilson Castello], 
+
+		Curso relacionado: ELETROMEC-ENGMEC
+		Número de professores compartilhados: 3
+		Professores: [Eduardo Tealdi, Eliane Correa, Paula Clarice], 
+
+		Curso relacionado: AQ
+		Número de professores compartilhados: 2
+		Professores: [Eliane Correa, Luciane Bittencourt], 
+
+		Curso relacionado: ADM
+		Número de professores compartilhados: 2
+		Professores: [Eliane Correa, Leonardo Bravo], 
+
+		Curso relacionado: GEST AGRON 
+		Número de professores compartilhados: 1
+		Professores: [Eliane Correa], 
+
+		Curso relacionado: BIOTEC
+		Número de professores compartilhados: 1
+		Professores: [Paula Clarice], 
+
+		Curso relacionado: AGROECO
+		Número de professores compartilhados: 1
+		Professores: [Paula Clarice]]}, 
+
+Curso: MECAT
+	 Total de professores= 9
+	 Número de professores exclusivos=0
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: ELETROMEC-ENGMEC
+		Número de professores compartilhados: 6
+		Professores: [Adriellen Lima, Anderson Luis, Rafael Gustavo, Rafael Santiago, Jeferson Fraytag, Ricardo Teran], 
+
+		Curso relacionado: BIOTEC
+		Número de professores compartilhados: 2
+		Professores: [Ana Maria Martins, Sayonara Varela], 
+
+		Curso relacionado: CC
+		Número de professores compartilhados: 1
+		Professores: [Rafael Grebogi], 
+
+		Curso relacionado: PQ
+		Número de professores compartilhados: 2
+		Professores: [Rafael Santiago, Ricardo Teran], 
+
+		Curso relacionado: ADM
+		Número de professores compartilhados: 1
+		Professores: [Sayonara Varela]]}, 
+
+Curso: AGROECO
+	 Total de professores= 9
+	 Número de professores exclusivos=1
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: PQ
+		Número de professores compartilhados: 1
+		Professores: [Fernando Domingos], 
+
+		Curso relacionado: BIOTEC
+		Número de professores compartilhados: 6
+		Professores: [Fernando Domingos, Jocleita Peruzzo, Lucia Helena, Luciane Costa, Paula Clarice, Valter Pereira], 
+
+		Curso relacionado: GEST AGRON 
+		Número de professores compartilhados: 6
+		Professores: [Fernando Domingos, Jocleita Peruzzo, Luciane Costa, Paula Iaschitzki, Roberto Akitoshi, Valter Pereira], 
+
+		Curso relacionado: AQ
+		Número de professores compartilhados: 1
+		Professores: [Lucia Helena], 
+
+		Curso relacionado: ELETROMEC-ENGMEC
+		Número de professores compartilhados: 1
+		Professores: [Paula Clarice], 
+
+		Curso relacionado: TECINFO
+		Número de professores compartilhados: 1
+		Professores: [Paula Clarice], 
+
+		Curso relacionado: ADM
+		Número de professores compartilhados: 1
+		Professores: [Valter Pereira]]}, 
+
+Curso: AQ
+	 Total de professores= 12
+	 Número de professores exclusivos=0
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: CC
+		Número de professores compartilhados: 1
+		Professores: [Carolina Berger], 
+
+		Curso relacionado: PQ
+		Número de professores compartilhados: 8
+		Professores: [Carolina Berger, Jaqueline Suave, João Gustavo Provesi, Marco Aurelio, Michael Ramos, Monia Stremel, Rosane S., Willian Lunardi], 
+
+		Curso relacionado: BIOTEC
+		Número de professores compartilhados: 8
+		Professores: [Carolina Berger, Jaqueline Suave, João Gustavo Provesi, Lucia Helena, Michael Ramos, Monia Stremel, Paulo Henrique, Willian Lunardi], 
+
+		Curso relacionado: ELETROMEC-ENGMEC
+		Número de professores compartilhados: 1
+		Professores: [Eliane Correa], 
+
+		Curso relacionado: TECINFO
+		Número de professores compartilhados: 2
+		Professores: [Eliane Correa, Luciane Bittencourt], 
+
+		Curso relacionado: ADM
+		Número de professores compartilhados: 1
+		Professores: [Eliane Correa], 
+
+		Curso relacionado: GEST AGRON 
+		Número de professores compartilhados: 1
+		Professores: [Eliane Correa], 
+
+		Curso relacionado: AGROECO
+		Número de professores compartilhados: 1
+		Professores: [Lucia Helena]]}, 
+
+Curso: ADM
+	 Total de professores= 6
+	 Número de professores exclusivos=0
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: ELETROMEC-ENGMEC
+		Número de professores compartilhados: 3
+		Professores: [Eliane Correa, Marisa Santos, Samuel Ferreira], 
+
+		Curso relacionado: TECINFO
+		Número de professores compartilhados: 2
+		Professores: [Eliane Correa, Leonardo Bravo], 
+
+		Curso relacionado: AQ
+		Número de professores compartilhados: 1
+		Professores: [Eliane Correa], 
+
+		Curso relacionado: GEST AGRON 
+		Número de professores compartilhados: 2
+		Professores: [Eliane Correa, Valter Pereira], 
+
+		Curso relacionado: CC
+		Número de professores compartilhados: 1
+		Professores: [Leonardo Bravo], 
+
+		Curso relacionado: PQ
+		Número de professores compartilhados: 1
+		Professores: [Samuel Ferreira], 
+
+		Curso relacionado: BIOTEC
+		Número de professores compartilhados: 2
+		Professores: [Sayonara Varela, Valter Pereira], 
+
+		Curso relacionado: MECAT
+		Número de professores compartilhados: 1
+		Professores: [Sayonara Varela], 
+
+		Curso relacionado: AGROECO
+		Número de professores compartilhados: 1
+		Professores: [Valter Pereira]]}, 
+
+Curso: GEST AGRON 
+	 Total de professores= 8
+	 Número de professores exclusivos=0
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: ELETROMEC-ENGMEC
+		Número de professores compartilhados: 2
+		Professores: [Eliane Correa, Vilma Gisele], 
+
+		Curso relacionado: TECINFO
+		Número de professores compartilhados: 1
+		Professores: [Eliane Correa], 
+
+		Curso relacionado: AQ
+		Número de professores compartilhados: 1
+		Professores: [Eliane Correa], 
+
+		Curso relacionado: ADM
+		Número de professores compartilhados: 2
+		Professores: [Eliane Correa, Valter Pereira], 
+
+		Curso relacionado: PQ
+		Número de professores compartilhados: 1
+		Professores: [Fernando Domingos], 
+
+		Curso relacionado: BIOTEC
+		Número de professores compartilhados: 4
+		Professores: [Fernando Domingos, Jocleita Peruzzo, Luciane Costa, Valter Pereira], 
+
+		Curso relacionado: AGROECO
+		Número de professores compartilhados: 6
+		Professores: [Fernando Domingos, Jocleita Peruzzo, Luciane Costa, Paula Iaschitzki, Roberto Akitoshi, Valter Pereira], 
+
+		Curso relacionado: CC
+		Número de professores compartilhados: 1
+		Professores: [Vilma Gisele]]}, 
+
+Curso: ELETROMEC-ENGMEC
+	 Total de professores= 22
+	 Número de professores exclusivos=8
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: MECAT
+		Número de professores compartilhados: 6
+		Professores: [Adriellen Lima, Anderson Luis, Rafael Gustavo, Rafael Santiago, Jeferson Fraytag, Ricardo Teran], 
+
+		Curso relacionado: CC
+		Número de professores compartilhados: 3
+		Professores: [Ailton Durigon, Marcelo Maraschin, Vilma Gisele], 
+
+		Curso relacionado: TECINFO
+		Número de professores compartilhados: 3
+		Professores: [Eliane Correa, Paula Clarice, Eduardo Tealdi], 
+
+		Curso relacionado: AQ
+		Número de professores compartilhados: 1
+		Professores: [Eliane Correa], 
+
+		Curso relacionado: ADM
+		Número de professores compartilhados: 3
+		Professores: [Eliane Correa, Marisa Santos, Samuel Ferreira], 
+
+		Curso relacionado: GEST AGRON 
+		Número de professores compartilhados: 2
+		Professores: [Eliane Correa, Vilma Gisele], 
+
+		Curso relacionado: PQ
+		Número de professores compartilhados: 4
+		Professores: [Marcelo Maraschin, Rafael Santiago, Samuel Ferreira, Ricardo Teran], 
+
+		Curso relacionado: BIOTEC
+		Número de professores compartilhados: 1
+		Professores: [Paula Clarice], 
+
+		Curso relacionado: AGROECO
+		Número de professores compartilhados: 1
+		Professores: [Paula Clarice]]}]
+
+
+--------------------------Nova Geração--------------------------
+Novo conjunto: ELETROMEC-ENGMEC-MECAT
+
+[
+
+Curso: CC
+	 Total de professores= 14
+	 Número de professores exclusivos=3
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: ELETROMEC-ENGMEC-MECAT
+		Número de professores compartilhados: 4
+		Professores: [Ailton Durigon, Marcelo Maraschin, Vilma Gisele, Rafael Grebogi], 
+
+		Curso relacionado: TECINFO
+		Número de professores compartilhados: 6
+		Professores: [Andre Salvaro, Carlos Andres, José Cé, Leonardo Bravo, Paola de Oliveira, Wilson Castello], 
+
+		Curso relacionado: PQ
+		Número de professores compartilhados: 2
+		Professores: [Carolina Berger, Marcelo Maraschin], 
+
+		Curso relacionado: BIOTEC
+		Número de professores compartilhados: 1
+		Professores: [Carolina Berger], 
+
+		Curso relacionado: AQ
+		Número de professores compartilhados: 1
+		Professores: [Carolina Berger], 
+
+		Curso relacionado: ADM
+		Número de professores compartilhados: 1
+		Professores: [Leonardo Bravo], 
+
+		Curso relacionado: GEST AGRON 
+		Número de professores compartilhados: 1
+		Professores: [Vilma Gisele]]}, 
+
+Curso: PQ
+	 Total de professores= 16
+	 Número de professores exclusivos=1
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: BIOTEC
+		Número de professores compartilhados: 9
+		Professores: [Ana Paula de Lima, Carolina Berger, Fernando Domingos, Jaqueline Suave, João Gustavo Provesi, Michael Ramos, Monia Stremel, Rita de Cássia, Willian Lunardi], 
+
+		Curso relacionado: CC
+		Número de professores compartilhados: 2
+		Professores: [Carolina Berger, Marcelo Maraschin], 
+
+		Curso relacionado: AQ
+		Número de professores compartilhados: 8
+		Professores: [Carolina Berger, Jaqueline Suave, João Gustavo Provesi, Marco Aurelio, Michael Ramos, Monia Stremel, Rosane S., Willian Lunardi], 
+
+		Curso relacionado: AGROECO
+		Número de professores compartilhados: 1
+		Professores: [Fernando Domingos], 
+
+		Curso relacionado: GEST AGRON 
+		Número de professores compartilhados: 1
+		Professores: [Fernando Domingos], 
+
+		Curso relacionado: ELETROMEC-ENGMEC-MECAT
+		Número de professores compartilhados: 4
+		Professores: [Marcelo Maraschin, Rafael Santiago, Samuel Ferreira, Ricardo Teran], 
+
+		Curso relacionado: ADM
+		Número de professores compartilhados: 1
+		Professores: [Samuel Ferreira]]}, 
+
+Curso: BIOTEC
+	 Total de professores= 18
+	 Número de professores exclusivos=1
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: ELETROMEC-ENGMEC-MECAT
+		Número de professores compartilhados: 3
+		Professores: [Ana Maria Martins, Sayonara Varela, Paula Clarice], 
+
+		Curso relacionado: PQ
+		Número de professores compartilhados: 9
+		Professores: [Ana Paula de Lima, Carolina Berger, Fernando Domingos, Jaqueline Suave, João Gustavo Provesi, Michael Ramos, Monia Stremel, Rita de Cássia, Willian Lunardi], 
+
+		Curso relacionado: CC
+		Número de professores compartilhados: 1
+		Professores: [Carolina Berger], 
+
+		Curso relacionado: AQ
+		Número de professores compartilhados: 8
+		Professores: [Carolina Berger, Jaqueline Suave, João Gustavo Provesi, Lucia Helena, Michael Ramos, Monia Stremel, Paulo Henrique, Willian Lunardi], 
+
+		Curso relacionado: AGROECO
+		Número de professores compartilhados: 6
+		Professores: [Fernando Domingos, Jocleita Peruzzo, Lucia Helena, Luciane Costa, Paula Clarice, Valter Pereira], 
+
+		Curso relacionado: GEST AGRON 
+		Número de professores compartilhados: 4
+		Professores: [Fernando Domingos, Jocleita Peruzzo, Luciane Costa, Valter Pereira], 
+
+		Curso relacionado: TECINFO
+		Número de professores compartilhados: 1
+		Professores: [Paula Clarice], 
+
+		Curso relacionado: ADM
+		Número de professores compartilhados: 2
+		Professores: [Sayonara Varela, Valter Pereira]]}, 
+
+Curso: TECINFO
+	 Total de professores= 11
+	 Número de professores exclusivos=1
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: CC
+		Número de professores compartilhados: 6
+		Professores: [Andre Salvaro, Carlos Andres, José Cé, Leonardo Bravo, Paola de Oliveira, Wilson Castello], 
+
+		Curso relacionado: ELETROMEC-ENGMEC-MECAT
+		Número de professores compartilhados: 3
+		Professores: [Eduardo Tealdi, Eliane Correa, Paula Clarice], 
+
+		Curso relacionado: AQ
+		Número de professores compartilhados: 2
+		Professores: [Eliane Correa, Luciane Bittencourt], 
+
+		Curso relacionado: ADM
+		Número de professores compartilhados: 2
+		Professores: [Eliane Correa, Leonardo Bravo], 
+
+		Curso relacionado: GEST AGRON 
+		Número de professores compartilhados: 1
+		Professores: [Eliane Correa], 
+
+		Curso relacionado: BIOTEC
+		Número de professores compartilhados: 1
+		Professores: [Paula Clarice], 
+
+		Curso relacionado: AGROECO
+		Número de professores compartilhados: 1
+		Professores: [Paula Clarice]]}, 
+
+Curso: AGROECO
+	 Total de professores= 9
+	 Número de professores exclusivos=1
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: PQ
+		Número de professores compartilhados: 1
+		Professores: [Fernando Domingos], 
+
+		Curso relacionado: BIOTEC
+		Número de professores compartilhados: 6
+		Professores: [Fernando Domingos, Jocleita Peruzzo, Lucia Helena, Luciane Costa, Paula Clarice, Valter Pereira], 
+
+		Curso relacionado: GEST AGRON 
+		Número de professores compartilhados: 6
+		Professores: [Fernando Domingos, Jocleita Peruzzo, Luciane Costa, Paula Iaschitzki, Roberto Akitoshi, Valter Pereira], 
+
+		Curso relacionado: AQ
+		Número de professores compartilhados: 1
+		Professores: [Lucia Helena], 
+
+		Curso relacionado: ELETROMEC-ENGMEC-MECAT
+		Número de professores compartilhados: 1
+		Professores: [Paula Clarice], 
+
+		Curso relacionado: TECINFO
+		Número de professores compartilhados: 1
+		Professores: [Paula Clarice], 
+
+		Curso relacionado: ADM
+		Número de professores compartilhados: 1
+		Professores: [Valter Pereira]]}, 
+
+Curso: AQ
+	 Total de professores= 12
+	 Número de professores exclusivos=0
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: CC
+		Número de professores compartilhados: 1
+		Professores: [Carolina Berger], 
+
+		Curso relacionado: PQ
+		Número de professores compartilhados: 8
+		Professores: [Carolina Berger, Jaqueline Suave, João Gustavo Provesi, Marco Aurelio, Michael Ramos, Monia Stremel, Rosane S., Willian Lunardi], 
+
+		Curso relacionado: BIOTEC
+		Número de professores compartilhados: 8
+		Professores: [Carolina Berger, Jaqueline Suave, João Gustavo Provesi, Lucia Helena, Michael Ramos, Monia Stremel, Paulo Henrique, Willian Lunardi], 
+
+		Curso relacionado: ELETROMEC-ENGMEC-MECAT
+		Número de professores compartilhados: 1
+		Professores: [Eliane Correa], 
+
+		Curso relacionado: TECINFO
+		Número de professores compartilhados: 2
+		Professores: [Eliane Correa, Luciane Bittencourt], 
+
+		Curso relacionado: ADM
+		Número de professores compartilhados: 1
+		Professores: [Eliane Correa], 
+
+		Curso relacionado: GEST AGRON 
+		Número de professores compartilhados: 1
+		Professores: [Eliane Correa], 
+
+		Curso relacionado: AGROECO
+		Número de professores compartilhados: 1
+		Professores: [Lucia Helena]]}, 
+
+Curso: ADM
+	 Total de professores= 6
+	 Número de professores exclusivos=0
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: ELETROMEC-ENGMEC-MECAT
+		Número de professores compartilhados: 4
+		Professores: [Eliane Correa, Marisa Santos, Samuel Ferreira, Sayonara Varela], 
+
+		Curso relacionado: TECINFO
+		Número de professores compartilhados: 2
+		Professores: [Eliane Correa, Leonardo Bravo], 
+
+		Curso relacionado: AQ
+		Número de professores compartilhados: 1
+		Professores: [Eliane Correa], 
+
+		Curso relacionado: GEST AGRON 
+		Número de professores compartilhados: 2
+		Professores: [Eliane Correa, Valter Pereira], 
+
+		Curso relacionado: CC
+		Número de professores compartilhados: 1
+		Professores: [Leonardo Bravo], 
+
+		Curso relacionado: PQ
+		Número de professores compartilhados: 1
+		Professores: [Samuel Ferreira], 
+
+		Curso relacionado: BIOTEC
+		Número de professores compartilhados: 2
+		Professores: [Sayonara Varela, Valter Pereira], 
+
+		Curso relacionado: AGROECO
+		Número de professores compartilhados: 1
+		Professores: [Valter Pereira]]}, 
+
+Curso: GEST AGRON 
+	 Total de professores= 8
+	 Número de professores exclusivos=0
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: ELETROMEC-ENGMEC-MECAT
+		Número de professores compartilhados: 2
+		Professores: [Eliane Correa, Vilma Gisele], 
+
+		Curso relacionado: TECINFO
+		Número de professores compartilhados: 1
+		Professores: [Eliane Correa], 
+
+		Curso relacionado: AQ
+		Número de professores compartilhados: 1
+		Professores: [Eliane Correa], 
+
+		Curso relacionado: ADM
+		Número de professores compartilhados: 2
+		Professores: [Eliane Correa, Valter Pereira], 
+
+		Curso relacionado: PQ
+		Número de professores compartilhados: 1
+		Professores: [Fernando Domingos], 
+
+		Curso relacionado: BIOTEC
+		Número de professores compartilhados: 4
+		Professores: [Fernando Domingos, Jocleita Peruzzo, Luciane Costa, Valter Pereira], 
+
+		Curso relacionado: AGROECO
+		Número de professores compartilhados: 6
+		Professores: [Fernando Domingos, Jocleita Peruzzo, Luciane Costa, Paula Iaschitzki, Roberto Akitoshi, Valter Pereira], 
+
+		Curso relacionado: CC
+		Número de professores compartilhados: 1
+		Professores: [Vilma Gisele]]}, 
+
+Curso: ELETROMEC-ENGMEC-MECAT
+	 Total de professores= 25
+	 Número de professores exclusivos=12
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: BIOTEC
+		Número de professores compartilhados: 3
+		Professores: [Ana Maria Martins, Sayonara Varela, Paula Clarice], 
+
+		Curso relacionado: CC
+		Número de professores compartilhados: 4
+		Professores: [Rafael Grebogi, Ailton Durigon, Marcelo Maraschin, Vilma Gisele], 
+
+		Curso relacionado: PQ
+		Número de professores compartilhados: 4
+		Professores: [Rafael Santiago, Ricardo Teran, Marcelo Maraschin, Samuel Ferreira], 
+
+		Curso relacionado: ADM
+		Número de professores compartilhados: 4
+		Professores: [Sayonara Varela, Eliane Correa, Marisa Santos, Samuel Ferreira], 
+
+		Curso relacionado: TECINFO
+		Número de professores compartilhados: 3
+		Professores: [Eliane Correa, Paula Clarice, Eduardo Tealdi], 
+
+		Curso relacionado: AQ
+		Número de professores compartilhados: 1
+		Professores: [Eliane Correa], 
+
+		Curso relacionado: GEST AGRON 
+		Número de professores compartilhados: 2
+		Professores: [Eliane Correa, Vilma Gisele], 
+
+		Curso relacionado: AGROECO
+		Número de professores compartilhados: 1
+		Professores: [Paula Clarice]]}]
+
+
+--------------------------Nova Geração--------------------------
+Novo conjunto: AGROECO-BIOTEC-GEST AGRON 
+
+[
+
+Curso: CC
+	 Total de professores= 14
+	 Número de professores exclusivos=3
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: ELETROMEC-ENGMEC-MECAT
+		Número de professores compartilhados: 4
+		Professores: [Ailton Durigon, Marcelo Maraschin, Vilma Gisele, Rafael Grebogi], 
+
+		Curso relacionado: TECINFO
+		Número de professores compartilhados: 6
+		Professores: [Andre Salvaro, Carlos Andres, José Cé, Leonardo Bravo, Paola de Oliveira, Wilson Castello], 
+
+		Curso relacionado: PQ
+		Número de professores compartilhados: 2
+		Professores: [Carolina Berger, Marcelo Maraschin], 
+
+		Curso relacionado: AGROECO-BIOTEC-GEST AGRON 
+		Número de professores compartilhados: 2
+		Professores: [Carolina Berger, Vilma Gisele], 
+
+		Curso relacionado: AQ
+		Número de professores compartilhados: 1
+		Professores: [Carolina Berger], 
+
+		Curso relacionado: ADM
+		Número de professores compartilhados: 1
+		Professores: [Leonardo Bravo]]}, 
+
+Curso: PQ
+	 Total de professores= 16
+	 Número de professores exclusivos=1
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: AGROECO-BIOTEC-GEST AGRON 
+		Número de professores compartilhados: 9
+		Professores: [Ana Paula de Lima, Carolina Berger, Fernando Domingos, Jaqueline Suave, João Gustavo Provesi, Michael Ramos, Monia Stremel, Rita de Cássia, Willian Lunardi], 
+
+		Curso relacionado: CC
+		Número de professores compartilhados: 2
+		Professores: [Carolina Berger, Marcelo Maraschin], 
+
+		Curso relacionado: AQ
+		Número de professores compartilhados: 8
+		Professores: [Carolina Berger, Jaqueline Suave, João Gustavo Provesi, Marco Aurelio, Michael Ramos, Monia Stremel, Rosane S., Willian Lunardi], 
+
+		Curso relacionado: ELETROMEC-ENGMEC-MECAT
+		Número de professores compartilhados: 4
+		Professores: [Marcelo Maraschin, Rafael Santiago, Samuel Ferreira, Ricardo Teran], 
+
+		Curso relacionado: ADM
+		Número de professores compartilhados: 1
+		Professores: [Samuel Ferreira]]}, 
+
+Curso: TECINFO
+	 Total de professores= 11
+	 Número de professores exclusivos=1
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: CC
+		Número de professores compartilhados: 6
+		Professores: [Andre Salvaro, Carlos Andres, José Cé, Leonardo Bravo, Paola de Oliveira, Wilson Castello], 
+
+		Curso relacionado: ELETROMEC-ENGMEC-MECAT
+		Número de professores compartilhados: 3
+		Professores: [Eduardo Tealdi, Eliane Correa, Paula Clarice], 
+
+		Curso relacionado: AQ
+		Número de professores compartilhados: 2
+		Professores: [Eliane Correa, Luciane Bittencourt], 
+
+		Curso relacionado: ADM
+		Número de professores compartilhados: 2
+		Professores: [Eliane Correa, Leonardo Bravo], 
+
+		Curso relacionado: AGROECO-BIOTEC-GEST AGRON 
+		Número de professores compartilhados: 2
+		Professores: [Eliane Correa, Paula Clarice]]}, 
+
+Curso: AQ
+	 Total de professores= 12
+	 Número de professores exclusivos=0
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: CC
+		Número de professores compartilhados: 1
+		Professores: [Carolina Berger], 
+
+		Curso relacionado: PQ
+		Número de professores compartilhados: 8
+		Professores: [Carolina Berger, Jaqueline Suave, João Gustavo Provesi, Marco Aurelio, Michael Ramos, Monia Stremel, Rosane S., Willian Lunardi], 
+
+		Curso relacionado: AGROECO-BIOTEC-GEST AGRON 
+		Número de professores compartilhados: 9
+		Professores: [Carolina Berger, Jaqueline Suave, João Gustavo Provesi, Lucia Helena, Michael Ramos, Monia Stremel, Paulo Henrique, Willian Lunardi, Eliane Correa], 
+
+		Curso relacionado: ELETROMEC-ENGMEC-MECAT
+		Número de professores compartilhados: 1
+		Professores: [Eliane Correa], 
+
+		Curso relacionado: TECINFO
+		Número de professores compartilhados: 2
+		Professores: [Eliane Correa, Luciane Bittencourt], 
+
+		Curso relacionado: ADM
+		Número de professores compartilhados: 1
+		Professores: [Eliane Correa]]}, 
+
+Curso: ADM
+	 Total de professores= 6
+	 Número de professores exclusivos=0
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: ELETROMEC-ENGMEC-MECAT
+		Número de professores compartilhados: 4
+		Professores: [Eliane Correa, Marisa Santos, Samuel Ferreira, Sayonara Varela], 
+
+		Curso relacionado: TECINFO
+		Número de professores compartilhados: 2
+		Professores: [Eliane Correa, Leonardo Bravo], 
+
+		Curso relacionado: AQ
+		Número de professores compartilhados: 1
+		Professores: [Eliane Correa], 
+
+		Curso relacionado: AGROECO-BIOTEC-GEST AGRON 
+		Número de professores compartilhados: 3
+		Professores: [Eliane Correa, Valter Pereira, Sayonara Varela], 
+
+		Curso relacionado: CC
+		Número de professores compartilhados: 1
+		Professores: [Leonardo Bravo], 
+
+		Curso relacionado: PQ
+		Número de professores compartilhados: 1
+		Professores: [Samuel Ferreira]]}, 
+
+Curso: ELETROMEC-ENGMEC-MECAT
+	 Total de professores= 25
+	 Número de professores exclusivos=12
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: AGROECO-BIOTEC-GEST AGRON 
+		Número de professores compartilhados: 5
+		Professores: [Ana Maria Martins, Sayonara Varela, Paula Clarice, Eliane Correa, Vilma Gisele], 
+
+		Curso relacionado: CC
+		Número de professores compartilhados: 4
+		Professores: [Rafael Grebogi, Ailton Durigon, Marcelo Maraschin, Vilma Gisele], 
+
+		Curso relacionado: PQ
+		Número de professores compartilhados: 4
+		Professores: [Rafael Santiago, Ricardo Teran, Marcelo Maraschin, Samuel Ferreira], 
+
+		Curso relacionado: ADM
+		Número de professores compartilhados: 4
+		Professores: [Sayonara Varela, Eliane Correa, Marisa Santos, Samuel Ferreira], 
+
+		Curso relacionado: TECINFO
+		Número de professores compartilhados: 3
+		Professores: [Eliane Correa, Paula Clarice, Eduardo Tealdi], 
+
+		Curso relacionado: AQ
+		Número de professores compartilhados: 1
+		Professores: [Eliane Correa]]}, 
+
+Curso: AGROECO-BIOTEC-GEST AGRON 
+	 Total de professores= 23
+	 Número de professores exclusivos=6
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: ELETROMEC-ENGMEC-MECAT
+		Número de professores compartilhados: 5
+		Professores: [Ana Maria Martins, Sayonara Varela, Paula Clarice, Eliane Correa, Vilma Gisele], 
+
+		Curso relacionado: PQ
+		Número de professores compartilhados: 9
+		Professores: [Ana Paula de Lima, Carolina Berger, Fernando Domingos, Jaqueline Suave, João Gustavo Provesi, Michael Ramos, Monia Stremel, Rita de Cássia, Willian Lunardi], 
+
+		Curso relacionado: CC
+		Número de professores compartilhados: 2
+		Professores: [Carolina Berger, Vilma Gisele], 
+
+		Curso relacionado: AQ
+		Número de professores compartilhados: 9
+		Professores: [Carolina Berger, Jaqueline Suave, João Gustavo Provesi, Lucia Helena, Michael Ramos, Monia Stremel, Paulo Henrique, Willian Lunardi, Eliane Correa], 
+
+		Curso relacionado: TECINFO
+		Número de professores compartilhados: 2
+		Professores: [Paula Clarice, Eliane Correa], 
+
+		Curso relacionado: ADM
+		Número de professores compartilhados: 3
+		Professores: [Sayonara Varela, Valter Pereira, Eliane Correa]]}]
+
+
+--------------------------Nova Geração--------------------------
+Novo conjunto: AGROECO-BIOTEC-GEST AGRON -AQ-PQ
+
+[
+
+Curso: CC
+	 Total de professores= 14
+	 Número de professores exclusivos=3
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: ELETROMEC-ENGMEC-MECAT
+		Número de professores compartilhados: 4
+		Professores: [Ailton Durigon, Marcelo Maraschin, Vilma Gisele, Rafael Grebogi], 
+
+		Curso relacionado: TECINFO
+		Número de professores compartilhados: 6
+		Professores: [Andre Salvaro, Carlos Andres, José Cé, Leonardo Bravo, Paola de Oliveira, Wilson Castello], 
+
+		Curso relacionado: AGROECO-BIOTEC-GEST AGRON -AQ-PQ
+		Número de professores compartilhados: 3
+		Professores: [Carolina Berger, Marcelo Maraschin, Vilma Gisele], 
+
+		Curso relacionado: ADM
+		Número de professores compartilhados: 1
+		Professores: [Leonardo Bravo]]}, 
+
+Curso: TECINFO
+	 Total de professores= 11
+	 Número de professores exclusivos=1
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: CC
+		Número de professores compartilhados: 6
+		Professores: [Andre Salvaro, Carlos Andres, José Cé, Leonardo Bravo, Paola de Oliveira, Wilson Castello], 
+
+		Curso relacionado: ELETROMEC-ENGMEC-MECAT
+		Número de professores compartilhados: 3
+		Professores: [Eduardo Tealdi, Eliane Correa, Paula Clarice], 
+
+		Curso relacionado: AGROECO-BIOTEC-GEST AGRON -AQ-PQ
+		Número de professores compartilhados: 3
+		Professores: [Eliane Correa, Luciane Bittencourt, Paula Clarice], 
+
+		Curso relacionado: ADM
+		Número de professores compartilhados: 2
+		Professores: [Eliane Correa, Leonardo Bravo]]}, 
+
+Curso: ADM
+	 Total de professores= 6
+	 Número de professores exclusivos=0
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: ELETROMEC-ENGMEC-MECAT
+		Número de professores compartilhados: 4
+		Professores: [Eliane Correa, Marisa Santos, Samuel Ferreira, Sayonara Varela], 
+
+		Curso relacionado: TECINFO
+		Número de professores compartilhados: 2
+		Professores: [Eliane Correa, Leonardo Bravo], 
+
+		Curso relacionado: AGROECO-BIOTEC-GEST AGRON -AQ-PQ
+		Número de professores compartilhados: 4
+		Professores: [Eliane Correa, Valter Pereira, Sayonara Varela, Samuel Ferreira], 
+
+		Curso relacionado: CC
+		Número de professores compartilhados: 1
+		Professores: [Leonardo Bravo]]}, 
+
+Curso: ELETROMEC-ENGMEC-MECAT
+	 Total de professores= 25
+	 Número de professores exclusivos=12
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: AGROECO-BIOTEC-GEST AGRON -AQ-PQ
+		Número de professores compartilhados: 9
+		Professores: [Ana Maria Martins, Sayonara Varela, Paula Clarice, Eliane Correa, Vilma Gisele, Rafael Santiago, Ricardo Teran, Marcelo Maraschin, Samuel Ferreira], 
+
+		Curso relacionado: CC
+		Número de professores compartilhados: 4
+		Professores: [Rafael Grebogi, Ailton Durigon, Marcelo Maraschin, Vilma Gisele], 
+
+		Curso relacionado: ADM
+		Número de professores compartilhados: 4
+		Professores: [Sayonara Varela, Eliane Correa, Marisa Santos, Samuel Ferreira], 
+
+		Curso relacionado: TECINFO
+		Número de professores compartilhados: 3
+		Professores: [Eliane Correa, Paula Clarice, Eduardo Tealdi]]}, 
+
+Curso: AGROECO-BIOTEC-GEST AGRON -AQ-PQ
+	 Total de professores= 31
+	 Número de professores exclusivos=19
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: CC
+		Número de professores compartilhados: 3
+		Professores: [Carolina Berger, Marcelo Maraschin, Vilma Gisele], 
+
+		Curso relacionado: ELETROMEC-ENGMEC-MECAT
+		Número de professores compartilhados: 9
+		Professores: [Marcelo Maraschin, Rafael Santiago, Samuel Ferreira, Ricardo Teran, Eliane Correa, Ana Maria Martins, Sayonara Varela, Paula Clarice, Vilma Gisele], 
+
+		Curso relacionado: ADM
+		Número de professores compartilhados: 4
+		Professores: [Samuel Ferreira, Eliane Correa, Sayonara Varela, Valter Pereira], 
+
+		Curso relacionado: TECINFO
+		Número de professores compartilhados: 3
+		Professores: [Eliane Correa, Luciane Bittencourt, Paula Clarice]]}]
+
+
+--------------------------Nova Geração--------------------------
+Novo conjunto: AGROECO-BIOTEC-GEST AGRON -AQ-PQ-ELETROMEC-ENGMEC-MECAT-ADM
+
+[
+
+Curso: CC
+	 Total de professores= 14
+	 Número de professores exclusivos=3
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: AGROECO-BIOTEC-GEST AGRON -AQ-PQ-ELETROMEC-ENGMEC-MECAT-ADM
+		Número de professores compartilhados: 6
+		Professores: [Ailton Durigon, Marcelo Maraschin, Vilma Gisele, Rafael Grebogi, Carolina Berger, Leonardo Bravo], 
+
+		Curso relacionado: TECINFO
+		Número de professores compartilhados: 6
+		Professores: [Andre Salvaro, Carlos Andres, José Cé, Leonardo Bravo, Paola de Oliveira, Wilson Castello]]}, 
+
+Curso: TECINFO
+	 Total de professores= 11
+	 Número de professores exclusivos=1
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: CC
+		Número de professores compartilhados: 6
+		Professores: [Andre Salvaro, Carlos Andres, José Cé, Leonardo Bravo, Paola de Oliveira, Wilson Castello], 
+
+		Curso relacionado: AGROECO-BIOTEC-GEST AGRON -AQ-PQ-ELETROMEC-ENGMEC-MECAT-ADM
+		Número de professores compartilhados: 5
+		Professores: [Eduardo Tealdi, Eliane Correa, Paula Clarice, Luciane Bittencourt, Leonardo Bravo]]}, 
+
+Curso: AGROECO-BIOTEC-GEST AGRON -AQ-PQ-ELETROMEC-ENGMEC-MECAT-ADM
+	 Total de professores= 48
+	 Número de professores exclusivos=38
+	 Professores com intersecção=
+	[
+
+		Curso relacionado: TECINFO
+		Número de professores compartilhados: 5
+		Professores: [Eliane Correa, Leonardo Bravo, Paula Clarice, Eduardo Tealdi, Luciane Bittencourt], 
+
+		Curso relacionado: CC
+		Número de professores compartilhados: 6
+		Professores: [Leonardo Bravo, Rafael Grebogi, Ailton Durigon, Marcelo Maraschin, Vilma Gisele, Carolina Berger]]}]
