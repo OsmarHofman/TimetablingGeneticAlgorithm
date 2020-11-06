@@ -3,8 +3,10 @@ package br.edu.ifsc.TimetablingGeneticAlgorithm;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.distributed.DistributedGA;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.distributed.IDistributedGA;
 
+import java.net.InetAddress;
 import java.rmi.Naming;
 import java.rmi.registry.LocateRegistry;
+import java.util.Arrays;
 
 public class TimetablingGeneticAlgorithmApplication {
 
@@ -25,6 +27,10 @@ public class TimetablingGeneticAlgorithmApplication {
 
             LocateRegistry.createRegistry(1099);
 
+            InetAddress inetAddress = InetAddress.getLocalHost();
+            String ip =  inetAddress.getHostAddress();
+
+            System.setProperty( "java.rmi.server.hostname", ip );
             Naming.rebind("rmi://localhost:1099/ga", ga);
 
             // Aguardando requisições
