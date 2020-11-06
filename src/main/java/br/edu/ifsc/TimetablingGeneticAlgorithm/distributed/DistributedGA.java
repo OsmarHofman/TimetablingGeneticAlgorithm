@@ -3,6 +3,7 @@ package br.edu.ifsc.TimetablingGeneticAlgorithm.distributed;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.Chromosome;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.ifsc.Subject;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.UnavailabilityConstraint;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTODistributedData;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOITC;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.genetics.Avaliation;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.genetics.Crossover;
@@ -17,7 +18,13 @@ import java.util.List;
 
 public class DistributedGA implements IDistributedGA, Serializable {
 
-    public Chromosome[] process(DTOITC[] sets, int[] config, List<Subject> dtoIfscSubjects, List<CourseRelation> courseRelations) throws InterruptedException, ClassNotFoundException, RemoteException {
+    public Chromosome process(DTODistributedData data) throws InterruptedException, ClassNotFoundException, RemoteException {
+        int[] config = data.getConfig();
+        DTOITC[] sets = data.getSets();
+        List<CourseRelation> courseRelations = data.getCourseRelations();
+        List<Subject> dtoIfscSubjects = data.getDtoIfscSubjects();
+
+
         final int populationSize = config[0];
         final int classSize = config[1];
         final int elitismPercentage = config[2];
@@ -157,8 +164,9 @@ public class DistributedGA implements IDistributedGA, Serializable {
 
         }
 
+
         //Apresenta os valores relativos ao resultado final obtido
-        return globalBestChromosomes;
+        return Chromosome.groupSets(globalBestChromosomes);
     }
 
 }

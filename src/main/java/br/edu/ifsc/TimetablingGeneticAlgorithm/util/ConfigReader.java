@@ -34,4 +34,24 @@ public class ConfigReader {
         }
         throw new IOException("Erro ao encontrar configurações no arquivo: " + path);
     }
+
+    public static String[] readConfiguration(int itemsNumber, String path) throws IOException {
+        String[] config = new String[itemsNumber];
+        File myObj = new File(path);
+        Scanner myReader;
+
+        try {
+            myReader = new Scanner(myObj);
+            String linha;
+            for (int i = 0; i < config.length; i++) {
+                linha = myReader.nextLine();
+                config[i] = linha.split("=")[1];
+            }
+
+            return config;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        throw new IOException("Erro ao encontrar configurações no arquivo: " + path);
+    }
 }

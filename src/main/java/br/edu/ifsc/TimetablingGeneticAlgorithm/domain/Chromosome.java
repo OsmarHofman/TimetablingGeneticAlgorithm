@@ -289,6 +289,23 @@ public class Chromosome implements Serializable {
         return lessonList.toArray(new Lesson[0]);
     }
 
+    public static Chromosome groupSets(Chromosome[] chromosomes){
+        int geneSize = 0;
+        for (Chromosome chromosome : chromosomes) {
+            geneSize += chromosome.getGenes().length;
+        }
+
+        Chromosome groupedChromosome = new Chromosome(geneSize);
+        int finalPos = 0;
+        for (Chromosome chromosome : chromosomes) {
+            System.arraycopy(chromosome.getGenes(), 0, groupedChromosome.getGenes(), finalPos, chromosome.getGenes().length);
+            finalPos += chromosome.getGenes().length;
+        }
+
+
+        return groupedChromosome;
+    }
+
     /**
      * Checa a avaliação de conflito de horários, para identificar exatamente qual os professores, turmas,
      * e o dia que aconteceu a violação.
