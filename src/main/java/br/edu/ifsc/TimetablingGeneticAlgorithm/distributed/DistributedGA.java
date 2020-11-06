@@ -13,10 +13,18 @@ import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.entities.CourseRela
 
 import java.io.Serializable;
 import java.rmi.RemoteException;
+import java.rmi.server.RMIClientSocketFactory;
+import java.rmi.server.RMIServerSocketFactory;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.Arrays;
 import java.util.List;
 
-public class DistributedGA implements IDistributedGA, Serializable {
+public class DistributedGA extends UnicastRemoteObject implements IDistributedGA, Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    public DistributedGA() throws RemoteException {
+    }
 
     public Chromosome process(DTODistributedData data) throws InterruptedException, ClassNotFoundException, RemoteException {
         int[] config = data.getConfig();
@@ -31,7 +39,6 @@ public class DistributedGA implements IDistributedGA, Serializable {
         final int crossPercentage = config[3];
         final int mutationPercentage = config[4];
         final int geracoes = config[6];
-
         Chromosome[] globalBestChromosomes = new Chromosome[sets.length];
 
         for (int i = 0; i < sets.length; i++) {
