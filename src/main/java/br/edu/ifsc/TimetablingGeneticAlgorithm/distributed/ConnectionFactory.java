@@ -20,7 +20,7 @@ public class ConnectionFactory {
     public void sendSet(String ip, DTODistributedData data, int index, CountDownLatch latch) {
         new Thread(() -> {
             try {
-                IDistributedGA distributedGA = (IDistributedGA) Naming.lookup(ip);
+                IDistributedGA distributedGA = (IDistributedGA) Naming.lookup("rmi://" + ip + ":1099/ga");
                 finalChromosomes[index] = distributedGA.process(data);
             } catch (Exception e) {
                 e.printStackTrace();
