@@ -1,7 +1,6 @@
 package br.edu.ifsc.TimetablingGeneticAlgorithm.geneticalgorithm;
 
 import br.edu.ifsc.TimetablingGeneticAlgorithm.distributed.ConnectionFactory;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.distributed.DistributedGA;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTODistributedData;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOIFSC;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOITC;
@@ -70,7 +69,6 @@ public class GeneticAlgorithm {
 
         int count = 0;
         CountDownLatch latch = new CountDownLatch(availablePCs);
-        DistributedGA distributedGA = new DistributedGA();
         ConnectionFactory connectionFactory = new ConnectionFactory(availablePCs);
         for (int i = 0; i < availablePCs; i++) {
             DTOITC[] setDTO = new DTOITC[numberSetsForPCs[i]];
@@ -82,6 +80,7 @@ public class GeneticAlgorithm {
             connectionFactory.sendSet(PCsIPs[i], data, i, latch);
         }
 
+        latch.await();
 
         Chromosome globalBests = Chromosome.groupSets(connectionFactory.getFinalChromosomes());
 

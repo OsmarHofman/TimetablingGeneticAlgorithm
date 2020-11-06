@@ -20,8 +20,7 @@ public class ConnectionFactory {
     public void sendSet(String ip, DTODistributedData data, int index, CountDownLatch latch) {
         new Thread(() -> {
             try {
-                IDistributedGA distributedGA;
-                distributedGA = (IDistributedGA) Naming.lookup(ip);
+                IDistributedGA distributedGA = (IDistributedGA) Naming.lookup(ip);
                 finalChromosomes[index] = distributedGA.process(data);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -35,7 +34,4 @@ public class ConnectionFactory {
         return finalChromosomes;
     }
 
-    public void setFinalChromosomes(Chromosome[] finalChromosomes) {
-        this.finalChromosomes = finalChromosomes;
-    }
 }
