@@ -51,11 +51,11 @@ public class GeneticAlgorithm {
 
         long startTime = System.currentTimeMillis();
 
-        int availablePCs = 3;
+        int availablePCs = 2;
         if (sets.length < availablePCs)
             availablePCs = sets.length;
 
-        String[] PCsIPs = ConfigReader.readConfiguration(availablePCs, "src//assets//ips.txt");
+        String[] PCsIPs = ConfigReader.readConfiguration(availablePCs, "/home/alunoremoto/TCCWilson/TimetablingGeneticAlgorithm/src/assets/ips.txt");
 
         int[] numberSetsForPCs = new int[availablePCs];
 
@@ -86,9 +86,12 @@ public class GeneticAlgorithm {
 
 
         //Apresenta os valores relativos ao tempo de execução total
+
         long endTime = System.currentTimeMillis();
 
         long totalFinalTime = (endTime - startTime);
+
+        System.out.println(globalBests.toString());
 
         System.out.println("Tempo Total Final: " + totalFinalTime / 1000 + "." + totalFinalTime % 1000 + " segundos");
 

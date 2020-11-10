@@ -9,7 +9,7 @@ public class TimetablingGeneticAlgorithmApplication {
     public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
 
         GeneticAlgorithm ga = new GeneticAlgorithm();
-        ga.process("src//assets//configuracoes.txt");
+        ga.process("/home/alunoremoto/TCCWilson/TimetablingGeneticAlgorithm/src/assets/configuracoes.txt");
     }
 
 }
