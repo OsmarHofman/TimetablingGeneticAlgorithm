@@ -18,13 +18,6 @@ public class Chromosome {
     private int avaliation;
     private boolean hasViolatedHardConstraint;
 
-
-    public Chromosome(int size) {
-        this.genes = new int[size];
-        this.avaliation = 0;
-        this.hasViolatedHardConstraint = false;
-    }
-
     public Chromosome(int size, int classSize, Lesson[] lessons, Course[] courses, DTOIFSC dtoIfsc) {
         this.genes = new int[size * classSize];
         this.avaliation = 0;
@@ -232,14 +225,10 @@ public class Chromosome {
      * @return o {@link Chromosome} com a maior avaliação de toda população.
      */
     public static Chromosome getBestChromosome(Chromosome[] chromosomes) {
-        Chromosome best = null;
-        for (int i = 0; i < chromosomes.length; i++) {
-            if (i == 0) {
-                best = chromosomes[0];
-            } else {
-                if (chromosomes[i].getAvaliation() > best.getAvaliation())
-                    best = chromosomes[i];
-            }
+        Chromosome best = chromosomes[0];
+        for (int i = 1; i < chromosomes.length; i++) {
+            if (chromosomes[i].getAvaliation() > best.getAvaliation())
+                best = chromosomes[i];
         }
 
         return best;
@@ -252,14 +241,11 @@ public class Chromosome {
      * @return o {@link Chromosome} com a menor avaliação de toda população.
      */
     public static Chromosome getWorstChromosome(Chromosome[] chromosomes) {
-        Chromosome worst = null;
-        for (int i = 0; i < chromosomes.length; i++) {
-            if (i == 0) {
-                worst = chromosomes[0];
-            } else {
-                if (chromosomes[i].getAvaliation() < worst.getAvaliation())
-                    worst = chromosomes[i];
-            }
+        Chromosome worst = chromosomes[0];
+        for (int i = 1; i < chromosomes.length; i++) {
+            if (chromosomes[i].getAvaliation() < worst.getAvaliation())
+                worst = chromosomes[i];
+
         }
 
         return worst;

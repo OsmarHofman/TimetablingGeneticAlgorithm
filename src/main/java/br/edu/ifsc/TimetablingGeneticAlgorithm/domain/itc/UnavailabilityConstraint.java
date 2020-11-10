@@ -40,10 +40,6 @@ public class UnavailabilityConstraint {
         return dayPeriod;
     }
 
-    public void setDayPeriod(int dayPeriod) {
-        this.dayPeriod = dayPeriod;
-    }
-
     @Override
     public String toString() {
         return "UnavailabilityConstraint{" +

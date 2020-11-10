@@ -8,10 +8,7 @@ import java.util.Objects;
 public class Subject {
     private int id;
     private String name;
-    private String shortName;
-
-    public Subject() {
-    }
+    private final String shortName;
 
     public Subject(int id, String name, String shortName) {
         this.id = id;
@@ -35,28 +32,6 @@ public class Subject {
         this.name = name;
     }
 
-    public String getShortName() {
-        return shortName;
-    }
-
-    public void setShortName(String shortName) {
-        this.shortName = shortName;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
-        Subject subject = (Subject) o;
-        return id == subject.id && name.equals(subject.name) && shortName.equals(subject.shortName);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, shortName);
-    }
 
     @Override
     public String toString() {

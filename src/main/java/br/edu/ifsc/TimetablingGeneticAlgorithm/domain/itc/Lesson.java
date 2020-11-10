@@ -16,7 +16,7 @@ public class Lesson {
     private int minWorkingDays; //minWorkingDays = cálculo (periodPerWeek / durationPeriod) do IFSC
     private int studentsNumber;
     private UnavailabilityConstraint[] constraints;
-    private Room room;
+    //private Room room;
 
     public Lesson() {
     }
@@ -66,10 +66,6 @@ public class Lesson {
         this.minWorkingDays = minWorkingDays;
     }
 
-    public int getStudentsNumber() {
-        return studentsNumber;
-    }
-
     public void setStudentsNumber(int studentsNumber) {
         this.studentsNumber = studentsNumber;
     }
@@ -80,14 +76,6 @@ public class Lesson {
 
     public void setConstraints(UnavailabilityConstraint[] constraints) {
         this.constraints = constraints;
-    }
-
-    public Room getRoom() {
-        return room;
-    }
-
-    public void setRoom(Room room) {
-        this.room = room;
     }
 
     /**
@@ -106,18 +94,17 @@ public class Lesson {
         this.constraints = constraintList.toArray(this.constraints);
     }
 
-
     @Override
     public String toString() {
         return "Lesson{" +
-                "lessonId='" + lessonId + '\'' +
-                ", courseId='" + courseId + '\'' +
+                "lessonId=" + lessonId +
+                ", courseId=" + courseId +
                 ", professorId=" + Arrays.toString(professorId) +
                 ", lecturesNumber=" + lecturesNumber +
                 ", minWorkingDays=" + minWorkingDays +
                 ", studentsNumber=" + studentsNumber +
                 ", constraints=" + Arrays.toString(constraints) +
-                ", room=" + room +
                 '}';
     }
+
 }

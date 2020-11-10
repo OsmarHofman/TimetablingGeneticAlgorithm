@@ -6,7 +6,7 @@ package br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.entities;
 public class IsRelated {
 
     private String name;
-    private boolean hasAdded;
+    private final boolean hasAdded;
 
     public IsRelated(String name, boolean hasAdded) {
         this.name = name;
@@ -23,9 +23,5 @@ public class IsRelated {
 
     public boolean isHasAdded() {
         return hasAdded;
-    }
-
-    public void setHasAdded(boolean hasAdded) {
-        this.hasAdded = hasAdded;
     }
 }

@@ -6,10 +6,8 @@ package br.edu.ifsc.TimetablingGeneticAlgorithm.domain.ifsc;
 public class Teacher {
     private int id;
     private String name;
-    private String timeoff;
+    private final String timeoff;
 
-    public Teacher() {
-    }
 
     public Teacher(int id, String name, String timeoff) {
         this.id = id;
@@ -35,10 +33,6 @@ public class Teacher {
 
     public String getTimeoff() {
         return timeoff;
-    }
-
-    public void setTimeoff(String timeoff) {
-        this.timeoff = timeoff;
     }
 
     @Override

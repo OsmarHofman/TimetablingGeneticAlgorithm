@@ -12,7 +12,7 @@ import java.util.List;
 public class Intersection implements Serializable {
     private int intersectionProfessorsCount;
     private String intersectionCourse;
-    private List<String> professorsList;
+    private final List<String> professorsList;
 
     public Intersection() {
         intersectionProfessorsCount = 0;
@@ -43,10 +43,6 @@ public class Intersection implements Serializable {
 
     public List<String> getProfessorsList() {
         return professorsList;
-    }
-
-    public void setProfessorsList(List<String> professorsList) {
-        this.professorsList = professorsList;
     }
 
     /**

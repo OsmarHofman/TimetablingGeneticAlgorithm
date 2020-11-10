@@ -38,41 +38,22 @@ public class Lesson {
         return subjectId;
     }
 
-    public void setSubjectId(int subjectId) {
-        this.subjectId = subjectId;
-    }
-
     public int getClassesId() {
         return classesId;
-    }
-
-    public void setClassesId(int classesId) {
-        this.classesId = classesId;
     }
 
     public int[] getTeacherId() {
         return teacherId;
     }
 
-    public void setTeacherId(int[] teacherId) {
-        this.teacherId = teacherId;
-    }
-
     public int getPeriodsPerWeek() {
         return periodsPerWeek;
-    }
-
-    public void setPeriodsPerWeek(int periodsPerWeek) {
-        this.periodsPerWeek = periodsPerWeek;
     }
 
     public int getDurationPeriods() {
         return durationPeriods;
     }
 
-    public void setDurationPeriods(int durationPeriods) {
-        this.durationPeriods = durationPeriods;
-    }
 
     @Override
     public String toString() {

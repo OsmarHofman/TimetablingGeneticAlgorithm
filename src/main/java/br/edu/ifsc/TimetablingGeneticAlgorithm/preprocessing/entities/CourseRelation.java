@@ -50,14 +50,6 @@ public class CourseRelation implements Serializable {
         this.intersection = intersection;
     }
 
-    public int getTotalProfessors() {
-        return totalProfessors;
-    }
-
-    public void setTotalProfessors(int totalProfessors) {
-        this.totalProfessors = totalProfessors;
-    }
-
     @Override
     public String toString() {
         return name;

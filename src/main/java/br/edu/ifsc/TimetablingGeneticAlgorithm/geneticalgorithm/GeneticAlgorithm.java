@@ -17,7 +17,6 @@ import br.edu.ifsc.TimetablingGeneticAlgorithm.util.*;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
 
 public class GeneticAlgorithm {
 

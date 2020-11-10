@@ -3,12 +3,8 @@ package br.edu.ifsc.TimetablingGeneticAlgorithm.genetics;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.Chromosome;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Lesson;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.UnavailabilityConstraint;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOIFSC;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOITC;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Shift;
-
-import javax.security.auth.callback.CallbackHandler;
-import java.util.Arrays;
 import java.util.concurrent.CountDownLatch;
 
 public class Avaliation {

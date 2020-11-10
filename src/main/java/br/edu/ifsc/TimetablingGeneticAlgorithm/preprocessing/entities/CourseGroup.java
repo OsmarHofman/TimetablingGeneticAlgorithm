@@ -6,7 +6,7 @@ import java.util.List;
  * Classe que representa um curso e os ids das turmas pertencentes a ele
  */
 public class CourseGroup {
-    private String groupName;
+    private final String groupName;
     private List<Integer> courses;
 
 
@@ -17,10 +17,6 @@ public class CourseGroup {
 
     public String getGroupName() {
         return groupName;
-    }
-
-    public void setGroupName(String groupName) {
-        this.groupName = groupName;
     }
 
     public List<Integer> getCourses() {

@@ -6,12 +6,9 @@ package br.edu.ifsc.TimetablingGeneticAlgorithm.domain.ifsc;
 public class Classes {
     private int id;
     private String name;
-    private String shortName;
-    private int teacherId;
-    private String timeoff;
-
-    public Classes() {
-    }
+    private final String shortName;
+    private final int teacherId;
+    private final String timeoff;
 
     public Classes(int id, String name, String shortName, int teacherId, String timeoff) {
         this.id = id;
@@ -41,24 +38,8 @@ public class Classes {
         return shortName;
     }
 
-    public void setShortName(String shortName) {
-        this.shortName = shortName;
-    }
-
-    public int getTeacherId() {
-        return teacherId;
-    }
-
-    public void setTeacherId(int teacherId) {
-        this.teacherId = teacherId;
-    }
-
     public String getTimeoff() {
         return timeoff;
-    }
-
-    public void setTimeoff(String timeoff) {
-        this.timeoff = timeoff;
     }
 
     @Override

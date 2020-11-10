@@ -15,16 +15,8 @@ public class Room {
         this.capacity = Integer.parseInt(parameters[1]);
     }
 
-    public int getRoomId() {
-        return roomId;
-    }
-
     public void setRoomId(int roomId) {
         this.roomId = roomId;
-    }
-
-    public int getCapacity() {
-        return capacity;
     }
 
     public void setCapacity(int capacity) {
