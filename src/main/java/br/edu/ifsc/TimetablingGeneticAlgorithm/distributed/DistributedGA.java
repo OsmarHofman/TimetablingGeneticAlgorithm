@@ -169,6 +169,8 @@ public class DistributedGA extends UnicastRemoteObject implements IDistributedGA
 
             globalBestChromosomes[i] = globalBestChromosome;
 
+            System.out.println(globalBestChromosome.toString());
+
         }
 
 
