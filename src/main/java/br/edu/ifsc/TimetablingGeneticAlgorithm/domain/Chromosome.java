@@ -103,7 +103,7 @@ public class Chromosome {
             }
 
             //Para randomizar as matérias, obtém-se duas materias aleatórias, e elas são trocadas entre si
-            for (int k = 0; k < count / 2; k++) {
+            for (int k = 0; k < count * 2; k++) {
                 int p1 = random.nextInt(count) + courseIndex;
                 int p2 = random.nextInt(count) + courseIndex;
                 if (p1 != p2) {
