@@ -65,6 +65,7 @@ buildNumber.properties
 
 HELP.md
 target/
+main/java/META-INF/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
