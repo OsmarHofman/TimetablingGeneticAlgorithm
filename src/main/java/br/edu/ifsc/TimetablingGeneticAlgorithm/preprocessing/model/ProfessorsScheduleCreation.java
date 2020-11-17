@@ -144,8 +144,6 @@ public class ProfessorsScheduleCreation {
      */
     private void createCourseRelation() {
         courseRelationList = new ArrayList<>();
-
-        System.out.println("Criando a relação entre os professores e os cursos...\n");
         for (CourseGroup course : this.coursesList) {
 
             //Cria o curso
@@ -190,6 +188,5 @@ public class ProfessorsScheduleCreation {
                 }
             }
         }
-        System.out.println("Relação entre professores e cursos criada!\n");
     }
 }
