@@ -20,9 +20,13 @@ public class Chromosome implements Serializable {
     private boolean hasViolatedHardConstraint;
 
 
-    public Chromosome(int size) {
+    public Chromosome(int avaliation) {
+        this.avaliation = avaliation;
+    }
+
+    public Chromosome(int size, int avaliation) {
         this.genes = new int[size];
-        this.avaliation = 0;
+        this.avaliation = avaliation;
         this.hasViolatedHardConstraint = false;
     }
 
@@ -295,7 +299,7 @@ public class Chromosome implements Serializable {
             geneSize += chromosome.getGenes().length;
         }
 
-        Chromosome groupedChromosome = new Chromosome(geneSize);
+        Chromosome groupedChromosome = new Chromosome(geneSize,0);
         int finalPos = 0;
         for (Chromosome chromosome : chromosomes) {
             System.arraycopy(chromosome.getGenes(), 0, groupedChromosome.getGenes(), finalPos, chromosome.getGenes().length);

@@ -27,6 +27,7 @@ public class DistributedGA extends UnicastRemoteObject implements IDistributedGA
     }
 
     public Chromosome process(DTODistributedData data) throws InterruptedException, ClassNotFoundException, RemoteException {
+        System.out.println("Iniciando Algoritmo Genético...");
         int[] config = data.getConfig();
         DTOITC[] sets = data.getSets();
         List<CourseRelation> courseRelations = data.getCourseRelations();
@@ -63,96 +64,107 @@ public class DistributedGA extends UnicastRemoteObject implements IDistributedGA
                 }
             }
 
-            //Inicializando população
-            Chromosome[] population = new Chromosome[populationSize];
-            Arrays.setAll(population, x -> new Chromosome(set.getCourses().length, classSize, set.getLessons(), set.getCourses(), dtoIfscSubjects));
+            Chromosome globalBestChromosome = new Chromosome(0);
 
-            int coresNumber = Runtime.getRuntime().availableProcessors();
-
-            //Avaliando a primeira geração com threads
-            Avaliation.threadRate(populationSize, coresNumber, population, set, scheduleRelation, initialAvaliation);
-
-            //Obtendo o melhor cromossomo da primeira geração
-            Chromosome localBest = Chromosome.getBestChromosome(population);
-
-            //Inicializando o melhor cromossomo global
-            Chromosome globalBestChromosome = localBest;
-
-            //Número de execuções do While de fora
-            int iterator = -1;
-
-            //Número de execuções do While de dentro
-            int innerIterator = 0;
-
-            //Melhor avaliação
-            int avaliation = 0;
             long startLocalTime = System.currentTimeMillis();
 
-            //Laço que controla se as gerações estão melhorando
-            while (iterator < geracoes &&
-                    ((localBest.getAvaliation() < initialAvaliation) || localBest.isHasViolatedHardConstraint())) {
 
-                iterator++;
-                innerIterator = 0;
 
-                //Laço do processamento das gerações
-                while (innerIterator < geracoes &&
+            int restartCount = 0;
+
+            while (globalBestChromosome.getAvaliation() < initialAvaliation && restartCount < 10) {
+                //Número de execuções do While de fora
+                int iterator = -1;
+
+                //Número de execuções do While de dentro
+                int innerIterator;
+
+                //Inicializando população
+                Chromosome[] population = new Chromosome[populationSize];
+                Arrays.setAll(population, x -> new Chromosome(set.getCourses().length, classSize, set.getLessons(), set.getCourses(), dtoIfscSubjects));
+
+                int coresNumber = Runtime.getRuntime().availableProcessors();
+
+                //Avaliando a primeira geração com threads
+                Avaliation.threadRate(populationSize, coresNumber, population, set, scheduleRelation, initialAvaliation);
+
+                //Obtendo o melhor cromossomo da primeira geração
+                Chromosome localBest = Chromosome.getBestChromosome(population);
+
+                //Inicializando o melhor cromossomo global
+                globalBestChromosome = localBest;
+
+
+                //Melhor avaliação
+                int avaliation = 0;
+
+                //Laço que controla se as gerações estão melhorando
+                while (iterator < geracoes &&
                         ((localBest.getAvaliation() < initialAvaliation) || localBest.isHasViolatedHardConstraint())) {
 
-                    //Seleção por elitismo
-                    byte proportion = (byte) (populationSize / elitismPercentage);
-                    Chromosome[] eliteChromosomes = Selection.elitism(population, proportion);
+                    iterator++;
+                    innerIterator = 0;
 
-                    //Função de avaliação acumulada
-                    int[] ratingHandler = new int[populationSize];
-                    int faA = 0;
-                    for (int j = 0; j < population.length; j++) {
-                        faA += population[j].getAvaliation();
-                        ratingHandler[j] = faA;
+                    //Laço do processamento das gerações
+                    while (innerIterator < geracoes &&
+                            ((localBest.getAvaliation() < initialAvaliation) || localBest.isHasViolatedHardConstraint())) {
+
+                        //Seleção por elitismo
+                        byte proportion = (byte) (populationSize / elitismPercentage);
+                        Chromosome[] eliteChromosomes = Selection.elitism(population, proportion);
+
+                        //Função de avaliação acumulada
+                        int[] ratingHandler = new int[populationSize];
+                        int faA = 0;
+                        for (int j = 0; j < population.length; j++) {
+                            faA += population[j].getAvaliation();
+                            ratingHandler[j] = faA;
+                        }
+
+                        //Seleção por roleta
+                        Chromosome[] newCouples = Selection.rouletteWheel(population, ratingHandler, faA, proportion);
+
+                        //Cruzamento
+                        Chromosome[] crossedChromosomes = Crossover.cross(newCouples, classSize, crossPercentage);
+
+                        //Unindo as Subpopulações geradas por elitismo e roleta
+                        Chromosome[] newGeneration = new Chromosome[populationSize];
+                        System.arraycopy(crossedChromosomes, 0, newGeneration, 0, crossedChromosomes.length);
+
+                        System.arraycopy(eliteChromosomes, 0, newGeneration, crossedChromosomes.length, eliteChromosomes.length);
+
+                        //Mutação
+                        Mutation.swapMutation(newGeneration, classSize, mutationPercentage);
+
+                        //Atribuindo a nova geração
+                        population = newGeneration;
+
+                        //Avaliando a nova geraação com threads
+                        Avaliation.threadRate(populationSize, coresNumber, population, set, scheduleRelation, initialAvaliation);
+
+                        //Obtendo o melhor cromossomo da geração atual
+                        localBest = Chromosome.getBestChromosome(population);
+
+                        //Caso o melhor cromossomo dessa geração seja melhor que o melhor global
+                        if (globalBestChromosome.getAvaliation() < localBest.getAvaliation())
+                            globalBestChromosome = new Chromosome(localBest.getGenes(), localBest.getAvaliation(), localBest.isHasViolatedHardConstraint());
+
+                        innerIterator++;
+
+
+                        System.out.println("Iteração " + (iterator * geracoes + innerIterator));
+
                     }
 
-                    //Seleção por roleta
-                    Chromosome[] newCouples = Selection.rouletteWheel(population, ratingHandler, faA, proportion);
-
-                    //Cruzamento
-                    Chromosome[] crossedChromosomes = Crossover.cross(newCouples, classSize, crossPercentage);
-
-                    //Unindo as Subpopulações geradas por elitismo e roleta
-                    Chromosome[] newGeneration = new Chromosome[populationSize];
-                    System.arraycopy(crossedChromosomes, 0, newGeneration, 0, crossedChromosomes.length);
-
-                    System.arraycopy(eliteChromosomes, 0, newGeneration, crossedChromosomes.length, eliteChromosomes.length);
-
-                    //Mutação
-                    Mutation.swapMutation(newGeneration, classSize, mutationPercentage);
-
-                    //Atribuindo a nova geração
-                    population = newGeneration;
-
-                    //Avaliando a nova geraação com threads
-                    Avaliation.threadRate(populationSize, coresNumber, population, set, scheduleRelation, initialAvaliation);
-
-                    //Obtendo o melhor cromossomo da geração atual
-                    localBest = Chromosome.getBestChromosome(population);
-
-                    //Caso o melhor cromossomo dessa geração seja melhor que o melhor global
-                    if (globalBestChromosome.getAvaliation() < localBest.getAvaliation())
-                        globalBestChromosome = new Chromosome(localBest.getGenes(), localBest.getAvaliation(), localBest.isHasViolatedHardConstraint());
-
-                    innerIterator++;
-
-
-                    System.out.println("Iteração " + (iterator * geracoes + innerIterator));
+                    //Caso as gerações melhoraram, continua, senão sai dos laços
+                    if (globalBestChromosome.getAvaliation() > avaliation)
+                        avaliation = globalBestChromosome.getAvaliation();
+                    else {
+                        break;
+                    }
 
                 }
-
-                //Caso as gerações melhoraram, continua, senão sai dos laços
-                if (globalBestChromosome.getAvaliation() > avaliation)
-                    avaliation = globalBestChromosome.getAvaliation();
-                else {
-                    break;
-                }
-
+                restartCount++;
             }
 
             //Apresenta os valores relativos as iterações
