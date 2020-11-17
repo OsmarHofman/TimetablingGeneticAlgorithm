@@ -18,6 +18,10 @@ public class Chromosome {
     private int avaliation;
     private boolean hasViolatedHardConstraint;
 
+    public Chromosome(int avaliation) {
+        this.avaliation = avaliation;
+    }
+
     public Chromosome(int size, int classSize, Lesson[] lessons, Course[] courses, DTOIFSC dtoIfsc) {
         this.genes = new int[size * classSize];
         this.avaliation = 0;
