@@ -30,7 +30,7 @@ public class GeneticAlgorithm {
      * @throws ClassNotFoundException Erro ao obter alguma informação de alguma das classes
      */
     public List<DTOSchedule> process(String path) throws IOException, ClassNotFoundException, InterruptedException {
-        System.out.println("Iniciando Algoritmo Genético");
+        System.out.println("Iniciando Algoritmo Genético...");
         //Obtém as configurações do arquivo
         int[] config = ConfigReader.readConfiguration(path);
         final int populationSize = config[0];
