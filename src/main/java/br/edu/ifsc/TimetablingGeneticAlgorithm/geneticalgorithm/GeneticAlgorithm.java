@@ -3,6 +3,7 @@ package br.edu.ifsc.TimetablingGeneticAlgorithm.geneticalgorithm;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOIFSC;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOITC;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOSchedule;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.postprocessing.PostProcessing;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.model.PreProcessing;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.model.ProfessorsScheduleCreation;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.Chromosome;
@@ -60,6 +61,8 @@ public class GeneticAlgorithm {
         //Armazena os melhores cromossomos e todas as gerações
         Chromosome[] globalBests = new Chromosome[sets.length];
 
+        int totalCoursesSize = 0;
+
         long startTime = System.currentTimeMillis();
 
         for (int i = 0; i < sets.length; i++) {
@@ -69,7 +72,7 @@ public class GeneticAlgorithm {
 
             //Obtém o número de cursos dentro de um conjunto
             int coursesSize = preProcessing.getCourseRelationList().get(i).getName().split("-").length;
-
+            totalCoursesSize += coursesSize;
             //Obtém a avaliação inicial, ou seja, a que será usada para a função de avaliação desse conjunto
             int initialAvaliation = Avaliation.getInitialAvaliation(coursesSize);
 
@@ -212,6 +215,15 @@ public class GeneticAlgorithm {
             System.out.println("Indisponibilidade dos Professores:\n");
             globalBests[i].checkProfessorsUnavailabilities(set, dtoifsc, scheduleRelation);
 
+        }
+
+        if (sets.length != 1) {
+            Chromosome finalChromosome = Chromosome.groupSets(globalBests);
+            int initialAvaliation = br.edu.ifsc.TimetablingGeneticAlgorithm.postprocessing.Avaliation.getInitialAvaliation(totalCoursesSize);
+            PostProcessing postProcessing = new PostProcessing(finalChromosome, dtoitc, initialAvaliation);
+            if (postProcessing.hasConflicts(initialAvaliation)) {
+                //TODO fazer processamento
+            }
         }
 
         //Apresenta os valores relativos ao tempo de execução total

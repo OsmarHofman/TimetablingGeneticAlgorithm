@@ -22,11 +22,10 @@ public class Chromosome {
         this.avaliation = avaliation;
     }
 
-    public Chromosome(int size, int classSize, Lesson[] lessons, Course[] courses, DTOIFSC dtoIfsc) {
-        this.genes = new int[size * classSize];
-        this.avaliation = 0;
+    public Chromosome(int size, int avaliation) {
+        this.genes = new int[size];
+        this.avaliation = avaliation;
         this.hasViolatedHardConstraint = false;
-        this.generateRandom(lessons, courses, classSize, dtoIfsc);
     }
 
     public Chromosome(int[] genes, int avaliation) {
@@ -43,6 +42,13 @@ public class Chromosome {
         this.hasViolatedHardConstraint = hasViolatedHardConstraint;
     }
 
+    public Chromosome(int size, int classSize, Lesson[] lessons, Course[] courses, DTOIFSC dtoIfsc) {
+        this.genes = new int[size * classSize];
+        this.avaliation = 0;
+        this.hasViolatedHardConstraint = false;
+        this.generateRandom(lessons, courses, classSize, dtoIfsc);
+    }
+    
     public int[] getGenes() {
         return genes;
     }
@@ -462,6 +468,23 @@ public class Chromosome {
             }
             periodOffset++;
         }
+    }
+
+    public static Chromosome groupSets(Chromosome[] chromosomes) {
+        int geneSize = 0;
+        for (Chromosome chromosome : chromosomes) {
+            geneSize += chromosome.getGenes().length;
+        }
+
+        Chromosome groupedChromosome = new Chromosome(geneSize, 0);
+        int finalPos = 0;
+        for (Chromosome chromosome : chromosomes) {
+            System.arraycopy(chromosome.getGenes(), 0, groupedChromosome.getGenes(), finalPos, chromosome.getGenes().length);
+            finalPos += chromosome.getGenes().length;
+        }
+
+
+        return groupedChromosome;
     }
 
     @Override
