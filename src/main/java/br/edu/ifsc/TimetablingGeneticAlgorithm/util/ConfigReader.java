@@ -14,8 +14,8 @@ public class ConfigReader {
      * @return Vetor com cada um dos parâmetros em cada posição.
      * @throws IOException Erro ao tentar ler o arquivo.
      */
-    public static int[] readConfiguration(String path) throws IOException {
-        int[] config = new int[7];
+    public static int[] readConfiguration(String path, int itemsNumber) throws IOException {
+        int[] config = new int[itemsNumber];
         File myObj = new File(path);
         Scanner myReader;
 

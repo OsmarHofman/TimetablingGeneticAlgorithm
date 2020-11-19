@@ -33,14 +33,16 @@ public class GeneticAlgorithm {
     public List<DTOSchedule> process(String path) throws IOException, ClassNotFoundException, InterruptedException {
         System.out.println("Iniciando Algoritmo Genético...");
         //Obtém as configurações do arquivo
-        int[] config = ConfigReader.readConfiguration(path);
+        int[] config = ConfigReader.readConfiguration(path,8);
         final int populationSize = config[0];
         final int classSize = config[1];
         final int elitismPercentage = config[2];
         final int crossPercentage = config[3];
         final int mutationPercentage = config[4];
         final int joinSetPercentage = config[5];
-        final int geracoes = config[6];
+        final int totalIterationNumber = config[6];
+        final int verificationInterval = config[7];
+
         int coresNumber = Runtime.getRuntime().availableProcessors();
 
         //Obtém os dados do arquivo XML
@@ -117,14 +119,14 @@ public class GeneticAlgorithm {
                 int avaliation = 0;
 
                 //Laço que controla se as gerações estão melhorando
-                while (iterator < geracoes &&
+                while (iterator < totalIterationNumber / verificationInterval &&
                         ((localBest.getAvaliation() < initialAvaliation) || localBest.isHasViolatedHardConstraint())) {
 
                     iterator++;
                     innerIterator = 0;
 
                     //Laço do processamento das gerações
-                    while (innerIterator < geracoes &&
+                    while (innerIterator < verificationInterval &&
                             ((localBest.getAvaliation() < initialAvaliation) || localBest.isHasViolatedHardConstraint())) {
 
                         //Seleção por elitismo
@@ -191,7 +193,8 @@ public class GeneticAlgorithm {
 
             System.out.println("Número de resets: " + (restartCount - 1));
 
-            System.out.println("\nNúmero total de iterações: " + (iterator * geracoes + innerIterator));
+
+            System.out.println("\nNúmero total de iterações: " + (iterator * verificationInterval + innerIterator));
 
             //Apresenta os valores relativos ao tempo de execução
             long endLocalTime = System.currentTimeMillis();
