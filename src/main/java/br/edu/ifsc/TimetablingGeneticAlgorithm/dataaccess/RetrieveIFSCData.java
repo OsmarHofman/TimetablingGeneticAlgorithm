@@ -1,18 +1,17 @@
 package br.edu.ifsc.TimetablingGeneticAlgorithm.dataaccess;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.ifsc.*;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOIFSC;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOIFSC;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Classe que obtém os dados diretamente do XML gerado pelo IFSC
@@ -38,7 +37,7 @@ public class RetrieveIFSCData {
      */
     public DTOIFSC getAllData() {
         try {
-            File fXmlFile = new File("src/assets/Datasets/IFSCFiles/dados.xml");
+            File fXmlFile = new File("/home/alunoremoto/TCCWilson/TimetablingGeneticAlgorithm/src/assets/Datasets/IFSCFiles/dados.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(fXmlFile);

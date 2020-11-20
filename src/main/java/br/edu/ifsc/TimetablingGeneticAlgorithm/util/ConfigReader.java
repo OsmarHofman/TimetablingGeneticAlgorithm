@@ -35,7 +35,7 @@ public class ConfigReader {
     }
 
     public static void setConfiguration(int[] items) {
-        File file = new File("src/assets/configuracoes.txt");
+        File file = new File("/home/alunoremoto/TCCWilson/TimetablingGeneticAlgorithm/src/assets/configuracoes.txt");
         try {
 
             FileWriter fileWriter = new FileWriter(file, false);
@@ -57,7 +57,7 @@ public class ConfigReader {
 
     public static void buildCSV(Chromosome chromosome, int[] configs, String finalTime,
                                 int faAMax, int geracoes, int numExec, int idTest) {
-        File file = new File("src/assets/tests.csv");
+        File file = new File("/home/alunoremoto/TCCWilson/TimetablingGeneticAlgorithm/src/assets/tests.csv");
         try {
 
             FileWriter fileWriter = new FileWriter(file, true);
@@ -76,7 +76,7 @@ public class ConfigReader {
     }
 
     public static void createCSV() {
-        File file = new File("src/assets/tests.csv");
+        File file = new File("/home/alunoremoto/TCCWilson/TimetablingGeneticAlgorithm/src/assets/tests.csv");
         try {
             FileWriter fileWriter = new FileWriter(file, false);
             PrintWriter printWriter = new PrintWriter(fileWriter);

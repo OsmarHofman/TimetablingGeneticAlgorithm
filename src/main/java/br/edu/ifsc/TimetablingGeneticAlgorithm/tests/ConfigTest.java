@@ -9,7 +9,7 @@ import java.io.IOException;
 public class ConfigTest {
 
     public static void execute() throws InterruptedException, IOException, ClassNotFoundException {
-        final int[] qtdChromosomes = new int[]{100};
+        final int[] qtdChromosomes = new int[]{200};
         final int[] crossPercentages = new int[]{30, 50, 60, 70, 90};
         final int[] mutationPercentages = new int[]{5, 10, 20, 30, 50};
         final int[] elitismPercentages = new int[]{4, 8, 20, 30, 40};
@@ -24,7 +24,7 @@ public class ConfigTest {
                         for (int i = 1; i <= 10; i++) {
                             ConfigReader.setConfiguration(new int[]{qtdChromosome, 10, elitismPercentage, crossPercentage,
                                     mutationPercentage, 0, 20000, 1000});
-                            ga.process("src//assets//configuracoes.txt", i);
+                            ga.process("/home/alunoremoto/TCCWilson/TimetablingGeneticAlgorithm/src/assets/configuracoes.txt", i);
                         }
                     }
                 }
