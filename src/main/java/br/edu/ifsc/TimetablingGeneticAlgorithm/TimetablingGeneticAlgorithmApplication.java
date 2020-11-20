@@ -1,7 +1,6 @@
 package br.edu.ifsc.TimetablingGeneticAlgorithm;
 
-import br.edu.ifsc.TimetablingGeneticAlgorithm.geneticalgorithm.GeneticAlgorithm;
-import org.springframework.boot.SpringApplication;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.tests.ConfigTest;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.IOException;
@@ -12,8 +11,7 @@ public class TimetablingGeneticAlgorithmApplication {
     public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
 
         //SpringApplication.run(TimetablingGeneticAlgorithmApplication.class, args);
-		GeneticAlgorithm ga = new GeneticAlgorithm();
-		ga.process("src//assets//configuracoes.txt");
+        ConfigTest.execute();
     }
 
 }

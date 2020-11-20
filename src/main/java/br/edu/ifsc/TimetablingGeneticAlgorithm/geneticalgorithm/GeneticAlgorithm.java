@@ -1,23 +1,22 @@
 package br.edu.ifsc.TimetablingGeneticAlgorithm.geneticalgorithm;
 
-import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOIFSC;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOITC;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOSchedule;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.postprocessing.PostProcessing;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.model.PreProcessing;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.model.ProfessorsScheduleCreation;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.dataaccess.RetrieveIFSCData;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.Chromosome;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.UnavailabilityConstraint;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOIFSC;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOITC;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.genetics.Avaliation;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.genetics.Crossover;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.genetics.Mutation;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.genetics.Selection;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.dataaccess.RetrieveIFSCData;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.util.*;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.postprocessing.PostProcessing;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.model.PreProcessing;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.model.ProfessorsScheduleCreation;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.util.ConfigReader;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.util.ConvertFactory;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.List;
 
 public class GeneticAlgorithm {
 
@@ -26,14 +25,13 @@ public class GeneticAlgorithm {
      * Execução do Algoritmo Genetico
      *
      * @param path caminho do arquivo de configuração que contém os parâmetros necessários ao AG
-     * @return {@link List} de {@link DTOSchedule} que representa os cursos e suas matérias
      * @throws IOException            Erro ao tentar obter os dados do arquivo de configuração
      * @throws ClassNotFoundException Erro ao obter alguma informação de alguma das classes
      */
-    public List<DTOSchedule> process(String path) throws IOException, ClassNotFoundException, InterruptedException {
+    public void process(String path, int testIndex) throws IOException, ClassNotFoundException, InterruptedException {
         System.out.println("Iniciando Algoritmo Genético...");
         //Obtém as configurações do arquivo
-        int[] config = ConfigReader.readConfiguration(path,8);
+        int[] config = ConfigReader.readConfiguration(path, 8);
         final int populationSize = config[0];
         final int classSize = config[1];
         final int elitismPercentage = config[2];
@@ -64,6 +62,9 @@ public class GeneticAlgorithm {
         Chromosome[] globalBests = new Chromosome[sets.length];
 
         int totalCoursesSize = 0;
+        int initialAvaliation = 0;
+        int totalIterations = 0;
+        int restartCount = 0;
 
         long startTime = System.currentTimeMillis();
 
@@ -75,8 +76,9 @@ public class GeneticAlgorithm {
             //Obtém o número de cursos dentro de um conjunto
             int coursesSize = preProcessing.getCourseRelationList().get(i).getName().split("-").length;
             totalCoursesSize += coursesSize;
+
             //Obtém a avaliação inicial, ou seja, a que será usada para a função de avaliação desse conjunto
-            int initialAvaliation = Avaliation.getInitialAvaliation(coursesSize);
+            initialAvaliation = Avaliation.getInitialAvaliation(coursesSize);
 
             /*Matriz de relação dos horarios
             Sendo que 30 é o número de períodos no dia * dias na semana, ou seja, 6 * 5 = 30
@@ -96,7 +98,7 @@ public class GeneticAlgorithm {
             //Número de execuções do While de dentro
             int innerIterator = 0;
 
-            int restartCount = 0;
+            restartCount = 0;
 
             while (globalBestChromosome.getAvaliation() < initialAvaliation && restartCount < 10) {
                 iterator = -1;
@@ -130,7 +132,8 @@ public class GeneticAlgorithm {
                             ((localBest.getAvaliation() < initialAvaliation) || localBest.isHasViolatedHardConstraint())) {
 
                         //Seleção por elitismo
-                        byte proportion = (byte) (populationSize / elitismPercentage);
+                        double elitism = (double) elitismPercentage / 100;
+                        byte proportion = (byte) (populationSize * elitism);
                         Chromosome[] eliteChromosomes = Selection.elitism(population, proportion);
 
                         //Função de avaliação acumulada
@@ -193,8 +196,9 @@ public class GeneticAlgorithm {
 
             System.out.println("Número de resets: " + (restartCount - 1));
 
+            totalIterations = iterator * verificationInterval + innerIterator;
 
-            System.out.println("\nNúmero total de iterações: " + (iterator * verificationInterval + innerIterator));
+            System.out.println("\nNúmero total de iterações: " + totalIterations);
 
             //Apresenta os valores relativos ao tempo de execução
             long endLocalTime = System.currentTimeMillis();
@@ -219,10 +223,11 @@ public class GeneticAlgorithm {
             globalBests[i].checkProfessorsUnavailabilities(set, dtoifsc, scheduleRelation);
 
         }
+        Chromosome finalChromosome = globalBests[0];
 
         if (sets.length != 1) {
-            Chromosome finalChromosome = Chromosome.groupSets(globalBests);
-            int initialAvaliation = br.edu.ifsc.TimetablingGeneticAlgorithm.postprocessing.Avaliation.getInitialAvaliation(totalCoursesSize);
+            finalChromosome = Chromosome.groupSets(globalBests);
+            initialAvaliation = br.edu.ifsc.TimetablingGeneticAlgorithm.postprocessing.Avaliation.getInitialAvaliation(totalCoursesSize);
             PostProcessing postProcessing = new PostProcessing(finalChromosome, dtoitc, initialAvaliation);
             if (postProcessing.hasConflicts(initialAvaliation)) {
                 //TODO fazer processamento
@@ -234,9 +239,12 @@ public class GeneticAlgorithm {
 
         long totalFinalTime = (endTime - startTime);
 
-        System.out.println("Tempo Total Final: " + totalFinalTime / 1000 + "." + totalFinalTime % 1000 + " segundos");
+        String finalTime = totalFinalTime / 1000 + "." + totalFinalTime % 1000;
 
-        return DTOSchedule.convertChromosome(globalBests, dtoifsc, dtoitc);
+        System.out.println("Tempo Total Final: " + finalTime + " segundos");
+
+        ConfigReader.buildCSV(finalChromosome, config, finalTime, initialAvaliation, totalIterations,
+                restartCount - 1, testIndex);
     }
 
 }
