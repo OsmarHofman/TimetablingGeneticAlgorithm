@@ -18,7 +18,7 @@ public class Selection {
      * @return Subpopulação de {@link Chromosome}s selecionados.
      * @throws ClassNotFoundException Erro ao tentar obter o pai através do {@code ratingHandler}.
      */
-    public static Chromosome[] rouletteWheel(Chromosome[] chromosomes, int[] ratingHandler, int faA, byte elitismProportion) throws ClassNotFoundException {
+    public static Chromosome[] rouletteWheel(Chromosome[] chromosomes, int[] ratingHandler, int faA, int elitismProportion) throws ClassNotFoundException {
         //O número de cromossomos que serão selecionados é o descontado de quantos já passaram pelo elitismo
         Chromosome[] parents = new Chromosome[(chromosomes.length - elitismProportion)];
 
@@ -60,7 +60,7 @@ public class Selection {
      * @param proportion  O número de {@link Chromosome} que serão selecionados.
      * @return Subpopulação de {@link Chromosome}s selecionados.
      */
-    public static Chromosome[] elitism(Chromosome[] chromosomes, byte proportion) {
+    public static Chromosome[] elitism(Chromosome[] chromosomes, int proportion) {
 
         Chromosome[] chosenChromosomes = new Chromosome[proportion];
         Chromosome[] eliteChromosomes = new Chromosome[chromosomes.length];

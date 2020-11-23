@@ -133,7 +133,7 @@ public class GeneticAlgorithm {
 
                         //Seleção por elitismo
                         double elitism = (double) elitismPercentage / 100;
-                        byte proportion = (byte) (populationSize * elitism);
+                        int proportion = (int) (populationSize * elitism);
                         Chromosome[] eliteChromosomes = Selection.elitism(population, proportion);
 
                         //Função de avaliação acumulada
