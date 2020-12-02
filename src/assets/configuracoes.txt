@@ -4,4 +4,5 @@ porcentagemElitismo=10
 porcentagemCruzamento=60
 porcentagemMutacao=10
 porcentagemJuncaoCurso=60
-geracoes=100
+totalGeracoes=10000
+intervaloVerificacao=1000

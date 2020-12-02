@@ -29,7 +29,7 @@ public class GeneticAlgorithm {
     public List<DTOSchedule> process(String path) throws IOException, ClassNotFoundException, InterruptedException {
 
         //Obtém as configurações do arquivo
-        int[] config = ConfigReader.readConfiguration(path, 7);
+        int[] config = ConfigReader.readConfiguration(path, 8);
         final int joinSetPercentage = config[5];
 
         //Obtém os dados do arquivo XML
