@@ -6,3 +6,4 @@ porcentagemMutacao=10
 porcentagemJuncaoCurso=60
 totalGeracoes=10000
 intervaloVerificacao=1000
+numeroComputadores=2

@@ -29,8 +29,10 @@ public class GeneticAlgorithm {
     public List<DTOSchedule> process(String path) throws IOException, ClassNotFoundException, InterruptedException {
 
         //Obtém as configurações do arquivo
-        int[] config = ConfigReader.readConfiguration(path, 8);
+        int[] config = ConfigReader.readConfiguration(path, 9);
         final int joinSetPercentage = config[5];
+        int availablePCs = config[9];
+
 
         //Obtém os dados do arquivo XML
         RetrieveIFSCData retrieveIFSCData = new RetrieveIFSCData();
@@ -51,7 +53,6 @@ public class GeneticAlgorithm {
 
         long startTime = System.currentTimeMillis();
 
-        int availablePCs = 2;
         if (sets.length < availablePCs)
             availablePCs = sets.length;
 
