@@ -15,6 +15,9 @@ import java.util.*;
  * Classe que representa um Cromossomo, ou seja, uma estrutura com a possível solução do problema
  */
 public class Chromosome implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     private int[] genes;
     private int avaliation;
     private boolean hasViolatedHardConstraint;
