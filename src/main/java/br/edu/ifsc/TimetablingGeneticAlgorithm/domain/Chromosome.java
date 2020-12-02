@@ -15,6 +15,9 @@ import java.util.*;
  * Classe que representa um Cromossomo, ou seja, uma estrutura com a possível solução do problema
  */
 public class Chromosome implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+
     private int[] genes;
     private int avaliation;
     private boolean hasViolatedHardConstraint;
@@ -289,7 +292,7 @@ public class Chromosome implements Serializable {
         return lessonList.toArray(new Lesson[0]);
     }
 
-    public static Chromosome groupSets(Chromosome[] chromosomes){
+    public static Chromosome groupSets(Chromosome[] chromosomes) {
         int geneSize = 0;
         for (Chromosome chromosome : chromosomes) {
             geneSize += chromosome.getGenes().length;
