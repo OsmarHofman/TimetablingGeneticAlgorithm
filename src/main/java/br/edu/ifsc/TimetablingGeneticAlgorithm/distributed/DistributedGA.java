@@ -13,8 +13,6 @@ import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.entities.CourseRela
 
 import java.io.Serializable;
 import java.rmi.RemoteException;
-import java.rmi.server.RMIClientSocketFactory;
-import java.rmi.server.RMIServerSocketFactory;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Arrays;
 import java.util.List;
@@ -39,7 +37,9 @@ public class DistributedGA extends UnicastRemoteObject implements IDistributedGA
         final int elitismPercentage = config[2];
         final int crossPercentage = config[3];
         final int mutationPercentage = config[4];
-        final int geracoes = config[6];
+        final int totalIterationNumber = config[6];
+        final int verificationInterval = config[7];
+
         Chromosome[] globalBestChromosomes = new Chromosome[sets.length];
 
         for (int i = 0; i < sets.length; i++) {
@@ -99,14 +99,14 @@ public class DistributedGA extends UnicastRemoteObject implements IDistributedGA
                 int avaliation = 0;
 
                 //Laço que controla se as gerações estão melhorando
-                while (iterator < geracoes &&
+                while (iterator < totalIterationNumber / verificationInterval &&
                         ((localBest.getAvaliation() < initialAvaliation) || localBest.isHasViolatedHardConstraint())) {
 
                     iterator++;
                     innerIterator = 0;
 
                     //Laço do processamento das gerações
-                    while (innerIterator < geracoes &&
+                    while (innerIterator < verificationInterval &&
                             ((localBest.getAvaliation() < initialAvaliation) || localBest.isHasViolatedHardConstraint())) {
 
                         //Seleção por elitismo
@@ -152,7 +152,7 @@ public class DistributedGA extends UnicastRemoteObject implements IDistributedGA
                         innerIterator++;
 
 
-                        System.out.println("Iteração " + (iterator * geracoes + innerIterator));
+                        System.out.println("Iteração " + (iterator * verificationInterval + innerIterator));
 
                     }
 
