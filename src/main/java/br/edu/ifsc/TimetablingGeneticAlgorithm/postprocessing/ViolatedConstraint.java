@@ -8,7 +8,7 @@ import br.edu.ifsc.TimetablingGeneticAlgorithm.postprocessing.ScheduleTime.Dia;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.postprocessing.ScheduleTime.Horario;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.util.ConvertFactory;
 
-import java.util.List;
+import java.util.*;
 
 public class ViolatedConstraint {
 
@@ -76,19 +76,40 @@ public class ViolatedConstraint {
     }
 
     public void setAvailableTime(DTOIFSC dtoifsc, Chromosome chromosome) {
-        Teacher teacher = dtoifsc.getProfessorById(professorId);
-        int weekWorkload = ConvertFactory.convertTimeoffToAvailableTime(teacher.getTimeoff());
-        for (int gene : chromosome.getGenes()) {
-            for (Lesson lesson : dtoifsc.getLessons()) {
-                if (lesson.getSubjectId() == gene) {
-                    for (int teacherId : lesson.getTeacherId()) {
-                        if (teacherId == professorId) {
-                            weekWorkload--;
+        for (Integer conflictClass : conflictedClasses) {
+            this.availableTime += sumClassTotalAvailableTime(dtoifsc, conflictClass, chromosome);
+        }
+    }
+
+    public int sumClassTotalAvailableTime(DTOIFSC dtoifsc, int conflictClass, Chromosome chromosome) {
+        int totalAvailableTime = 0;
+        List<Teacher> teachers = dtoifsc.getAllTeachersInClass(conflictClass);
+        for (Teacher teacher : teachers) {
+            int weekWorkload = ConvertFactory.convertTimeoffToAvailableTime(teacher.getTimeoff());
+            for (int gene : chromosome.getGenes()) {
+                for (Lesson lesson : dtoifsc.getLessons()) {
+                    if (lesson.getSubjectId() == gene) {
+                        for (int teacherId : lesson.getTeacherId()) {
+                            if (teacherId == professorId) {
+                                weekWorkload--;
+                            }
                         }
                     }
                 }
             }
+            totalAvailableTime += weekWorkload;
         }
-        availableTime = weekWorkload;
+        return totalAvailableTime;
+    }
+
+    public List<Integer> getConflictedClassWithGreaterAvailableTime(DTOIFSC dtoifsc, Chromosome chromosome) {
+        int[] conflictedClassesAvailableTime = new int[2];
+        for (int i = 0; i < this.conflictedClasses.size(); i++) {
+            conflictedClassesAvailableTime[i] = sumClassTotalAvailableTime(dtoifsc, this.conflictedClasses.get(i), chromosome);
+        }
+        if (conflictedClassesAvailableTime[0] > conflictedClassesAvailableTime[1])
+            return conflictedClasses;
+        Collections.reverse(conflictedClasses);
+        return conflictedClasses;
     }
 }

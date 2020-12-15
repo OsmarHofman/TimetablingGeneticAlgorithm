@@ -507,6 +507,18 @@ public class Chromosome {
         return groupedChromosome;
     }
 
+    //FIXME alterar retorno do metodo
+    public void handleSchedule(int classId, DTOITC dtoitc) throws ClassNotFoundException {
+        for (int i = 0; i < this.genes.length; i += 10) {
+            if (dtoitc.getLessonById(genes[i]).getCourseId() == classId) {
+                //TODO criar metodo para fazer as trocas no intervalo de 10 posicoes
+                break;
+            }
+
+        }
+    }
+
+
     @Override
     public String toString() {
         return "Chromosome{" +

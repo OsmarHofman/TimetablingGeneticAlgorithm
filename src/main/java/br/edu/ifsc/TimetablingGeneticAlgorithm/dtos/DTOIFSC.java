@@ -3,6 +3,7 @@ package br.edu.ifsc.TimetablingGeneticAlgorithm.dtos;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.ifsc.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -93,20 +94,6 @@ public class DTOIFSC {
     }
 
     /**
-     * Obtém o professor pelo seu identificador
-     *
-     * @param id índice que será verificado com os valores dos {@link Teacher}s.
-     * @return {@link Teacher} com Id correspondente.
-     */
-    public Teacher getProfessorById(int id) {
-        for (Teacher teacher : this.professors) {
-            if (teacher.getId() == id)
-                return teacher;
-        }
-        return null;
-    }
-
-    /**
      * Obtém o nome da matéria pelo seu identificador
      *
      * @param id índice que será verificado com os valores doa {@link Lesson}s.
@@ -129,5 +116,20 @@ public class DTOIFSC {
                 ", professors=" + professors +
                 ", rooms=" + rooms +
                 '}';
+    }
+
+    public List<Teacher> getAllTeachersInClass(int conflictClass) {
+        List<Teacher> teachers = new ArrayList<>();
+        for (Lesson lesson : lessons) {
+            if (lesson.getClassesId() == conflictClass) {
+                for (Integer teacherId : lesson.getTeacherId()) {
+                    for (Teacher teacher : professors) {
+                        if (teacher.getId() == teacherId && teachers.stream().noneMatch(x -> x.getId() == teacherId))
+                            teachers.add(teacher);
+                    }
+                }
+            }
+        }
+        return teachers;
     }
 }
