@@ -1,12 +1,9 @@
 package br.edu.ifsc.TimetablingGeneticAlgorithm.dtos;
 
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.ifsc.*;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Shift;
-
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Classe DTO (Data Transfer Object) de todas as classes que representam o XML do IFSC
@@ -67,22 +64,6 @@ public class DTOIFSC {
         this.rooms = rooms;
     }
 
-
-    /**
-     * Converte um timeoff (formato do XMl do IFSC) para um turno.
-     *
-     * @param timeoff {@link String} que representa o timeoff a ser convertido.
-     * @return {@link Shift} com o turno correspondente.
-     */
-    private Shift convertTimeoffToShift(String timeoff) {
-        String[] days = timeoff.replace(".", "").split(",");
-        if (days[0].charAt(0) == '1')
-            return Shift.MATUTINO;
-        else if (days[0].charAt(4) == '1')
-            return Shift.VESPERTINO;
-        return Shift.NOTURNO;
-    }
-
     /**
      * Obtém o nome do curso pelo seu identificador
      *
@@ -107,6 +88,20 @@ public class DTOIFSC {
         for (Teacher teacher : this.professors) {
             if (teacher.getId() == id)
                 return teacher.getName();
+        }
+        return null;
+    }
+
+    /**
+     * Obtém o professor pelo seu identificador
+     *
+     * @param id índice que será verificado com os valores dos {@link Teacher}s.
+     * @return {@link Teacher} com Id correspondente.
+     */
+    public Teacher getProfessorById(int id) {
+        for (Teacher teacher : this.professors) {
+            if (teacher.getId() == id)
+                return teacher;
         }
         return null;
     }

@@ -7,6 +7,9 @@ import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Shift;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.UnavailabilityConstraint;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOIFSC;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOITC;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.postprocessing.ScheduleTime.Dia;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.postprocessing.ScheduleTime.Horario;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.postprocessing.ViolatedConstraint;
 
 import java.util.*;
 
@@ -48,7 +51,7 @@ public class Chromosome {
         this.hasViolatedHardConstraint = false;
         this.generateRandom(lessons, courses, classSize, dtoIfsc);
     }
-    
+
     public int[] getGenes() {
         return genes;
     }
@@ -293,7 +296,8 @@ public class Chromosome {
      * @throws ClassNotFoundException Erro caso não seja encontrado o {@link Lesson}, o professor da {@link Lesson},
      *                                ou o {@link Course}.
      */
-    public void checkScheduleConflicts(DTOITC dtoitc, DTOIFSC dtoifsc) throws ClassNotFoundException {
+    public List<ViolatedConstraint> checkScheduleConflicts(DTOITC dtoitc, DTOIFSC dtoifsc) throws ClassNotFoundException {
+        List<ViolatedConstraint> violatedConstraints = new ArrayList<>();
         for (int i = 0; i < this.getGenes().length; i++) {
             if (this.getGenes()[i] != 0) {
 
@@ -358,6 +362,13 @@ public class Chromosome {
 
                                         System.out.println(shift + "\n\n");
 
+                                        ViolatedConstraint violatedConstraint = new ViolatedConstraint(currentProfessor, professorName, dia.get(),
+                                                horario.get(), Arrays.asList(courseId, conflictCourseId));
+
+                                        violatedConstraint.setAvailableTime(dtoifsc, this);
+
+                                        violatedConstraints.add(violatedConstraint);
+
                                     }
                                 }
                             }
@@ -366,6 +377,9 @@ public class Chromosome {
                 }
             }
         }
+
+        violatedConstraints.sort(Comparator.comparing(ViolatedConstraint::getAvailableTime));
+        return violatedConstraints;
     }
 
 
@@ -377,8 +391,10 @@ public class Chromosome {
      * @param dtoifsc {@link DTOIFSC} que contém os dados dos nomes dos professores e turmas.
      * @throws ClassNotFoundException Erro caso não seja encontrado o {@link Lesson}.
      */
-    public void checkProfessorsUnavailabilities(DTOITC dtoitc, DTOIFSC dtoifsc, boolean[][] relationMatrix) throws
+    public List<ViolatedConstraint> checkProfessorsUnavailabilities(DTOITC dtoitc, DTOIFSC dtoifsc, boolean[][] relationMatrix) throws
             ClassNotFoundException {
+
+        List<ViolatedConstraint> violatedConstraints = new ArrayList<>();
 
         //Valor que representa o deslocamento do dia, ou seja, são duas aulas por dia, então varia entre 0 e 1.
         byte periodOffset = 0;
@@ -457,6 +473,8 @@ public class Chromosome {
                                             System.out.print(dia.get() + " " + horario.get() + " ");
 
                                         System.out.println(shift + "\n\n");
+
+
                                     }
 
                                 }
@@ -468,6 +486,8 @@ public class Chromosome {
             }
             periodOffset++;
         }
+
+        return violatedConstraints;
     }
 
     public static Chromosome groupSets(Chromosome[] chromosomes) {
@@ -496,72 +516,4 @@ public class Chromosome {
                 '}';
     }
 
-
-    /**
-     * Representação dos dias da semana, sendo eles:
-     * <ul>
-     *     <li>Segunda-feira</li>
-     *     <li>Terça-feira</li>
-     *     <li>Quarta-feira</li>
-     *     <li>Quinta-feira</li>
-     *     <li>Sexta-feira</li>
-     * </ul>
-     */
-    private enum Dia {
-        SEGUNDA_FEIRA(0),
-        TERCA_FEIRA(1),
-        QUARTA_FEIRA(2),
-        QUINTA_FEIRA(3),
-        SEXTA_FEIRA(4);
-
-
-        private final int value;
-
-        Dia(int value) {
-            this.value = value;
-        }
-
-        /**
-         * Obtém qual a representação em {@link String} de um Enum a partir do seu valor.
-         *
-         * @param value inteiro que representa o valor da representação.
-         * @return {@link String} que contém a representação do {@code value}.
-         */
-        public static Optional<Dia> valueOf(int value) {
-            return Arrays.stream(values())
-                    .filter(horario -> horario.value == value)
-                    .findFirst();
-        }
-    }
-
-    /**
-     * Representação dos horários que uma turma pode ter, sendo eles:
-     * <ul>
-     *     <li>Primeiro Horário</li>
-     *     <li>Segundo Horário</li>
-     * </ul>
-     */
-    private enum Horario {
-        PRIMEIRO_HORARIO(0),
-        SEGUNDO_HORARIO(1);
-
-
-        private final int value;
-
-        Horario(int value) {
-            this.value = value;
-        }
-
-        /**
-         * Obtém qual a representação em {@link String} de um Enum a partir do seu valor.
-         *
-         * @param value inteiro que representa o valor da representação.
-         * @return {@link String} que contém a representação do {@code value}.
-         */
-        public static Optional<Horario> valueOf(int value) {
-            return Arrays.stream(values())
-                    .filter(horario -> horario.value == value)
-                    .findFirst();
-        }
-    }
 }

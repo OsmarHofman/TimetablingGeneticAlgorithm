@@ -1,4 +1,4 @@
-tamanhoPopulacao=100
+tamanhoPopulacao=200
 tamanhoTurma=10
 porcentagemElitismo=10
 porcentagemCruzamento=60

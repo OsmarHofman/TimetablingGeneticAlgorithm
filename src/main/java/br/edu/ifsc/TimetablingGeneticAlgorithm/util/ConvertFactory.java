@@ -234,4 +234,14 @@ public class ConvertFactory {
         return Shift.NOTURNO;
 
     }
+
+    public static int convertTimeoffToAvailableTime(String timeoff) {
+        int count = 0;
+        for (int i = 0; i < timeoff.length(); i++) {
+            if (timeoff.charAt(i) == '1') {
+                count++;
+            }
+        }
+        return count / 2;
+    }
 }
