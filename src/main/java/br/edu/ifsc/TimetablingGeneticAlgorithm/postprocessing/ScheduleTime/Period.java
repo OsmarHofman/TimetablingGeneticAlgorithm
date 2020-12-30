@@ -10,7 +10,7 @@ import java.util.Optional;
  *     <li>Segundo Horário</li>
  * </ul>
  */
-public enum Horario {
+public enum Period {
 
     PRIMEIRO_HORARIO(0),
     SEGUNDO_HORARIO(1);
@@ -18,7 +18,7 @@ public enum Horario {
 
     private final int value;
 
-    Horario(int value) {
+    Period(int value) {
         this.value = value;
     }
 
@@ -28,9 +28,9 @@ public enum Horario {
      * @param value inteiro que representa o valor da representação.
      * @return {@link String} que contém a representação do {@code value}.
      */
-    public static Optional<Horario> valueOf(int value) {
+    public static Optional<Period> valueOf(int value) {
         return Arrays.stream(values())
-                .filter(horario -> horario.value == value)
+                .filter(period -> period.value == value)
                 .findFirst();
     }
 }

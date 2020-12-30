@@ -4,8 +4,8 @@ import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.Chromosome;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.ifsc.Lesson;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.ifsc.Teacher;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOIFSC;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.postprocessing.ScheduleTime.Dia;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.postprocessing.ScheduleTime.Horario;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.postprocessing.ScheduleTime.Day;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.postprocessing.ScheduleTime.Period;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.util.ConvertFactory;
 
 import java.util.*;
@@ -14,19 +14,19 @@ public class ViolatedConstraint {
 
     int professorId;
     String professorName;
-    Dia dia;
-    Horario horario;
+    Day day;
+    Period period;
     List<Integer> conflictedClasses;
     int availableTime;
 
     public ViolatedConstraint() {
     }
 
-    public ViolatedConstraint(int professorId, String professorName, Dia dia, Horario horario, List<Integer> conflictedClasses) {
+    public ViolatedConstraint(int professorId, String professorName, Day day, Period period, List<Integer> conflictedClasses) {
         this.professorId = professorId;
         this.professorName = professorName;
-        this.dia = dia;
-        this.horario = horario;
+        this.day = day;
+        this.period = period;
         this.conflictedClasses = conflictedClasses;
     }
 
@@ -47,20 +47,20 @@ public class ViolatedConstraint {
         this.professorName = professorName;
     }
 
-    public Dia getDia() {
-        return dia;
+    public Day getDia() {
+        return day;
     }
 
-    public void setDia(Dia dia) {
-        this.dia = dia;
+    public void setDia(Day day) {
+        this.day = day;
     }
 
-    public Horario getHorario() {
-        return horario;
+    public Period getHorario() {
+        return period;
     }
 
-    public void setHorario(Horario horario) {
-        this.horario = horario;
+    public void setHorario(Period period) {
+        this.period = period;
     }
 
     public List<Integer> getConflictedClasses() {
@@ -111,5 +111,9 @@ public class ViolatedConstraint {
             return conflictedClasses;
         Collections.reverse(conflictedClasses);
         return conflictedClasses;
+    }
+
+    public int getChromossomePositionByDayPeriod() {
+        return this.day.ordinal() * 2 + this.period.ordinal();
     }
 }

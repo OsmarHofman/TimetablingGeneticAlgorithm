@@ -13,7 +13,7 @@ import java.util.Optional;
  *     <li>Sexta-feira</li>
  * </ul>
  */
-public enum Dia {
+public enum Day {
     SEGUNDA_FEIRA(0),
     TERCA_FEIRA(1),
     QUARTA_FEIRA(2),
@@ -23,7 +23,7 @@ public enum Dia {
 
     private final int value;
 
-    Dia(int value) {
+    Day(int value) {
         this.value = value;
     }
 
@@ -33,7 +33,7 @@ public enum Dia {
      * @param value inteiro que representa o valor da representação.
      * @return {@link String} que contém a representação do {@code value}.
      */
-    public static Optional<Dia> valueOf(int value) {
+    public static Optional<Day> valueOf(int value) {
         return Arrays.stream(values())
                 .filter(horario -> horario.value == value)
                 .findFirst();

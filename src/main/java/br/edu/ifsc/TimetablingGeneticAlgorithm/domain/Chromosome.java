@@ -7,8 +7,8 @@ import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Shift;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.UnavailabilityConstraint;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOIFSC;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOITC;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.postprocessing.ScheduleTime.Dia;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.postprocessing.ScheduleTime.Horario;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.postprocessing.ScheduleTime.Day;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.postprocessing.ScheduleTime.Period;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.postprocessing.ViolatedConstraint;
 
 import java.util.*;
@@ -347,11 +347,11 @@ public class Chromosome {
 
                                         /*Obtém o dia da violação a partir do índice de 0-9 no qual é dividido por 2
                                          * para poder identificar o dia da semana (segunda-feira, terça-feira, etc.)*/
-                                        Optional<Dia> dia = Dia.valueOf(normalizedIndex / 2);
+                                        Optional<Day> dia = Day.valueOf(normalizedIndex / 2);
 
                                         /*Obtém o horário da violação, no qual se for um valor par é uma violação no
                                          * primeiro horário, e se for ímpar é no segundo horário*/
-                                        Optional<Horario> horario = Horario.valueOf((normalizedIndex % 2 == 0) ? 0 : 1);
+                                        Optional<Period> horario = Period.valueOf((normalizedIndex % 2 == 0) ? 0 : 1);
 
                                         System.out.print("\nProfessor:" + professorName + "\nTurmas conflitantes:" +
                                                 courseName + ", " + conflictCourseName + "\nDia da semana:");
@@ -455,11 +455,11 @@ public class Chromosome {
 
                                         /*Obtém o dia da semana (segunda-feira, terça-feira, etc.) da violação a partir
                                          * do índice de 0-9 */
-                                        Optional<Horario> horario = Horario.valueOf(periodOffset);
+                                        Optional<Period> horario = Period.valueOf(periodOffset);
 
                                         /*Obtém o horário da violação, no qual se for um valor par é uma violação no
                                          * primeiro horário, e se for ímpar é no segundo horário*/
-                                        Optional<Dia> dia = Dia.valueOf(weekOffset);
+                                        Optional<Day> dia = Day.valueOf(weekOffset);
 
 
                                         //Obtém o nome do professor envolvido na violação
@@ -505,17 +505,6 @@ public class Chromosome {
 
 
         return groupedChromosome;
-    }
-
-    //FIXME alterar retorno do metodo
-    public void handleSchedule(int classId, DTOITC dtoitc) throws ClassNotFoundException {
-        for (int i = 0; i < this.genes.length; i += 10) {
-            if (dtoitc.getLessonById(genes[i]).getCourseId() == classId) {
-                //TODO criar metodo para fazer as trocas no intervalo de 10 posicoes
-                break;
-            }
-
-        }
     }
 
 

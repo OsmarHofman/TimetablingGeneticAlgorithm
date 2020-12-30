@@ -4,8 +4,6 @@ import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.Chromosome;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Shift;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOITC;
 
-import java.util.concurrent.CountDownLatch;
-
 public class Avaliation {
 
     /**
@@ -84,5 +82,11 @@ public class Avaliation {
         else if (coursesSize <= 6) return 1000;
         else if (coursesSize <= 10) return 1500;
         return 200 * coursesSize;
+    }
+
+
+    public static boolean rateConflicts(Chromosome possibleChild, DTOITC dtoitc) {
+        //TODO Com base no Avaliation.rate, vemos se o possibleChild resolveu as restrições
+        return false;
     }
 }

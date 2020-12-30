@@ -3,7 +3,6 @@ package br.edu.ifsc.TimetablingGeneticAlgorithm.dtos;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.ifsc.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -107,16 +106,6 @@ public class DTOIFSC {
         return null;
     }
 
-    @Override
-    public String toString() {
-        return "DTOServerData{" +
-                "classes=" + classes +
-                ", lessons=" + lessons +
-                ", subjects=" + subjects +
-                ", professors=" + professors +
-                ", rooms=" + rooms +
-                '}';
-    }
 
     public List<Teacher> getAllTeachersInClass(int conflictClass) {
         List<Teacher> teachers = new ArrayList<>();
@@ -131,5 +120,16 @@ public class DTOIFSC {
             }
         }
         return teachers;
+    }
+
+    @Override
+    public String toString() {
+        return "DTOServerData{" +
+                "classes=" + classes +
+                ", lessons=" + lessons +
+                ", subjects=" + subjects +
+                ", professors=" + professors +
+                ", rooms=" + rooms +
+                '}';
     }
 }
