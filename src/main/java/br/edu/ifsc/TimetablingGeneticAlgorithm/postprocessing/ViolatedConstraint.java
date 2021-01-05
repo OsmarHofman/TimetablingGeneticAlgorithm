@@ -116,4 +116,14 @@ public class ViolatedConstraint {
     public int getChromossomePositionByDayPeriod() {
         return this.day.ordinal() * 2 + this.period.ordinal();
     }
+
+    @Override
+    public String toString() {
+        return "ViolatedConstraint{" +
+                "professorName='" + professorName + '\'' +
+                ", day=" + day +
+                ", period=" + period +
+                ", conflictedClasses=" + conflictedClasses +
+                '}';
+    }
 }

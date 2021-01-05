@@ -6,8 +6,6 @@ import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Shift;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.UnavailabilityConstraint;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOITC;
 
-import java.util.concurrent.CountDownLatch;
-
 public class Avaliation {
 
     /**
@@ -17,38 +15,28 @@ public class Avaliation {
      * @param dtoitc     {@link DTOITC} que contém todas informações relativas a matérias, cursos, salas,
      *                   professores e restrições.
      */
-    public static void rate(Chromosome chromosome, DTOITC dtoitc, int initialAvaliation) throws ClassNotFoundException {
+    public static void rate(Chromosome chromosome, DTOITC dtoitc, int initialAvaliation, boolean hasToRateUnavailabilities) throws ClassNotFoundException {
         int avaliation = initialAvaliation;
 
         chromosome.setHasViolatedHardConstraint(false);
 
         avaliation -= scheduleConflicts(chromosome, dtoitc);
 
-        chromosome.setAvaliation(avaliation);
-    }
-
-    public static void rate(Chromosome chromosome, DTOITC dtoitc) throws ClassNotFoundException {
-
+        if (hasToRateUnavailabilities) {
         /*Matriz de relação dos horarios
         Sendo que 30 é o número de períodos no dia * dias na semana, ou seja, 6 * 5 = 30
         */
-        boolean[][] scheduleRelation = new boolean[dtoitc.getLessons().length][30];
-        for (int j = 0; j < dtoitc.getLessons().length; j++) {
-            for (UnavailabilityConstraint iterationConstraints : dtoitc.getLessons()[j].getConstraints()) {
-                scheduleRelation[j][6 * iterationConstraints.getDay() + iterationConstraints.getDayPeriod()] = true;
+            boolean[][] scheduleRelation = new boolean[dtoitc.getLessons().length][30];
+            for (int j = 0; j < dtoitc.getLessons().length; j++) {
+                for (UnavailabilityConstraint iterationConstraints : dtoitc.getLessons()[j].getConstraints()) {
+                    scheduleRelation[j][6 * iterationConstraints.getDay() + iterationConstraints.getDayPeriod()] = true;
+                }
             }
+
+            avaliation -= professorsUnavailabilities(chromosome, dtoitc, scheduleRelation);
         }
 
-        int avaliation = chromosome.getAvaliation();
-
-        chromosome.setHasViolatedHardConstraint(false);
-
-        avaliation -= scheduleConflicts(chromosome, dtoitc);
-
-        avaliation -= professorsUnavailabilities(chromosome, dtoitc, scheduleRelation);
-
         chromosome.setAvaliation(avaliation);
-
     }
 
 
