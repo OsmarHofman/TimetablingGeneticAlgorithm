@@ -33,7 +33,7 @@ public class GeneticAlgorithm {
     public List<DTOSchedule> process(String path) throws IOException, ClassNotFoundException, InterruptedException {
         System.out.println("Iniciando Algoritmo Genético...");
         //Obtém as configurações do arquivo
-        int[] config = ConfigReader.readConfiguration(path,8);
+        int[] config = ConfigReader.readConfiguration(path, 8);
         final int populationSize = config[0];
         final int classSize = config[1];
         final int elitismPercentage = config[2];
@@ -67,6 +67,8 @@ public class GeneticAlgorithm {
 
         long startTime = System.currentTimeMillis();
 
+        int initialAvaliation;
+
         for (int i = 0; i < sets.length; i++) {
 
             //Obtém o DTOITC respectivo ao conjunto que será processado
@@ -76,7 +78,7 @@ public class GeneticAlgorithm {
             int coursesSize = preProcessing.getCourseRelationList().get(i).getName().split("-").length;
             totalCoursesSize += coursesSize;
             //Obtém a avaliação inicial, ou seja, a que será usada para a função de avaliação desse conjunto
-            int initialAvaliation = Avaliation.getInitialAvaliation(coursesSize);
+            initialAvaliation = Avaliation.getInitialAvaliation(coursesSize);
 
             /*Matriz de relação dos horarios
             Sendo que 30 é o número de períodos no dia * dias na semana, ou seja, 6 * 5 = 30
@@ -221,13 +223,34 @@ public class GeneticAlgorithm {
         }
 
         if (sets.length != 1) {
+
+            System.out.println("\n -------------- Pós-processamento -------------- \n");
             Chromosome finalChromosome = Chromosome.groupSets(globalBests);
-            int initialAvaliation = br.edu.ifsc.TimetablingGeneticAlgorithm.postprocessing.Avaliation.getInitialAvaliation(totalCoursesSize);
-            PostProcessing postProcessing = new PostProcessing(finalChromosome, dtoitc, initialAvaliation);
-            if (postProcessing.hasConflicts(initialAvaliation)) {
-                //TODO fazer processamento
+            initialAvaliation = Avaliation.getInitialAvaliation(totalCoursesSize);
+            PostProcessing postProcessing = new PostProcessing(finalChromosome, dtoitc, dtoifsc, initialAvaliation);
+            if (postProcessing.hasConflicts(finalChromosome, initialAvaliation)) {
+                finalChromosome = postProcessing.resolveConflicts(finalChromosome, initialAvaliation);
+
+                //Checa os conflitos de horários
+                System.out.println("\n -------------- \nConflitos de Horário:\n");
+                finalChromosome.checkScheduleConflicts(dtoitc, dtoifsc);
+
+                /*Matriz de relação dos horarios
+                Sendo que 30 é o número de períodos no dia * dias na semana, ou seja, 6 * 5 = 30
+                */
+                boolean[][] scheduleRelation = new boolean[dtoitc.getLessons().length][30];
+                for (int j = 0; j < dtoitc.getLessons().length; j++) {
+                    for (UnavailabilityConstraint iterationConstraints : dtoitc.getLessons()[j].getConstraints()) {
+                        scheduleRelation[j][6 * iterationConstraints.getDay() + iterationConstraints.getDayPeriod()] = true;
+                    }
+                }
+
+                //Checa as indisponibilidades dos professores
+                System.out.println("Indisponibilidade dos Professores:\n");
+                finalChromosome.checkProfessorsUnavailabilities(dtoitc, dtoifsc, scheduleRelation);
             }
         }
+
 
         //Apresenta os valores relativos ao tempo de execução total
         long endTime = System.currentTimeMillis();

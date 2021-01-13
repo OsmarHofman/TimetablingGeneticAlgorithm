@@ -7,38 +7,60 @@ import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOITC;
 import java.util.*;
 
 public class PostProcessing {
-    private Chromosome chromosome;
+    private final DTOITC dtoitc;
+    private final DTOIFSC dtoifsc;
 
-    public PostProcessing() {
-    }
-
-
-    public PostProcessing(Chromosome chromosome, DTOITC dtoitc, int initialAvaliation) throws ClassNotFoundException {
-        this.chromosome = chromosome;
+    public PostProcessing(Chromosome chromosome, DTOITC dtoitc, DTOIFSC dtoifsc, int initialAvaliation) throws ClassNotFoundException {
+        this.dtoitc = dtoitc;
+        this.dtoifsc = dtoifsc;
         Avaliation.rate(chromosome, dtoitc, initialAvaliation, false);
     }
 
-    public boolean hasConflicts(int initialAvaliation) {
+    public boolean hasConflicts(Chromosome chromosome, int initialAvaliation) {
         return chromosome.getAvaliation() != initialAvaliation;
     }
 
-    public Chromosome depthSearchTree(Stack<Chromosome> chromosomeStack, List<ViolatedConstraint> violatedConstraints, DTOITC dtoitc, DTOIFSC dtoifsc, int violatedConstraintsIndex, int perfectResult) throws ClassNotFoundException {
+    public Chromosome resolveConflicts(Chromosome chromosome, int initialAvaliation) throws ClassNotFoundException {
+        List<ViolatedConstraint> violatedConstraints = chromosome.checkScheduleConflicts(this.dtoitc, this.dtoifsc);
+
+        Stack<Chromosome> stack = new Stack<>();
+
+        stack.add(chromosome);
+
+        Avaliation.rate(chromosome, this.dtoitc, initialAvaliation, true);
+
+        return this.depthSearchTree(stack, violatedConstraints, 0, initialAvaliation, 0);
+
+    }
+
+    public Chromosome depthSearchTree(Stack<Chromosome> chromosomeStack, List<ViolatedConstraint> violatedConstraints, int violatedConstraintsIndex, int perfectResult, int geneIndex) throws ClassNotFoundException {
         Chromosome chromosome = chromosomeStack.peek();
+
         if (chromosome.getAvaliation() == perfectResult)
             return chromosome;
+
         ViolatedConstraint currentViolatedConstraint = violatedConstraints.get(violatedConstraintsIndex);
         List<Integer> sortedConflicts = currentViolatedConstraint.getConflictedClassWithGreaterAvailableTime(dtoifsc, chromosome);
         for (Integer courseWithConflict : sortedConflicts) {
+
             for (int j = 0; j < chromosome.getGenes().length; j += 10) {
-                if (dtoitc.isLessonInCourse(chromosome.getGenes()[j], courseWithConflict)) {
-                    Chromosome child = generateChild(chromosome, j, currentViolatedConstraint, dtoitc, perfectResult);
-                    //FIXME verificar para passas o J como parametro no recursivo para gerar um filho em uma posição diferente do qual ja tentou
+
+                if (this.dtoitc.isLessonInCourse(chromosome.getGenes()[j], courseWithConflict)) {
+
+                    Chromosome child = generateChild(chromosome, j, currentViolatedConstraint, perfectResult, geneIndex);
+
                     if (child == null) {
+
                         chromosomeStack.pop();
-                        return depthSearchTree(chromosomeStack, violatedConstraints, dtoitc, dtoifsc, violatedConstraintsIndex, perfectResult);
+
+                        return depthSearchTree(chromosomeStack, violatedConstraints, violatedConstraintsIndex, perfectResult, ++geneIndex);
+
                     } else {
+
                         chromosomeStack.push(child);
-                        return depthSearchTree(chromosomeStack, violatedConstraints, dtoitc, dtoifsc, ++violatedConstraintsIndex, perfectResult);
+
+                        return depthSearchTree(chromosomeStack, violatedConstraints, ++violatedConstraintsIndex, perfectResult, 0);
+
                     }
                 }
             }
@@ -46,16 +68,23 @@ public class PostProcessing {
         return chromosome;
     }
 
-    private Chromosome generateChild(Chromosome chromosome, int classInitialPosition, ViolatedConstraint violatedConstraint, DTOITC dtoitc, int perfectResult) throws ClassNotFoundException {
+    private Chromosome generateChild(Chromosome chromosome, int classInitialPosition, ViolatedConstraint violatedConstraint, int perfectResult, int geneIndex) throws ClassNotFoundException {
         int conflictPosition = violatedConstraint.getChromossomePositionByDayPeriod() + classInitialPosition;
-        for (int i = classInitialPosition; i < classInitialPosition + 10; i++) {
+        int possibleChildIndex = geneIndex + classInitialPosition;
+
+        for (int i = possibleChildIndex; i < classInitialPosition + 10; i++) {
+
             if (i != conflictPosition && chromosome.getGenes()[i] != 0) {
+
                 Chromosome possibleChild = new Chromosome(chromosome.getGenes(), chromosome.getAvaliation());
+
                 int aux = possibleChild.getGenes()[conflictPosition];
                 possibleChild.getGenes()[conflictPosition] = possibleChild.getGenes()[i];
                 possibleChild.getGenes()[i] = aux;
-                if (Avaliation.rateConflicts(possibleChild, dtoitc, new int[]{conflictPosition, i})) {
-                    Avaliation.rate(possibleChild, dtoitc, perfectResult, false);
+
+                if (Avaliation.rateConflicts(possibleChild, this.dtoitc, new int[]{conflictPosition, i})) {
+
+                    Avaliation.rate(possibleChild, this.dtoitc, perfectResult, false);
                     return possibleChild;
                 }
             }
