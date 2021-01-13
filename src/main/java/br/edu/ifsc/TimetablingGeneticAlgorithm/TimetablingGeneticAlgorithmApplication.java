@@ -16,6 +16,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.Stack;
 
 @SpringBootApplication
 public class TimetablingGeneticAlgorithmApplication {
@@ -39,44 +40,53 @@ public class TimetablingGeneticAlgorithmApplication {
         DTOITC dtoitc = ConvertFactory.convertIFSCtoITC(dtoifsc);
         //FIXME alterar initialavaliation para pegar do arquivo de configuração
         int initialAvaliation = 1500;
-        Chromosome chromosome = new Chromosome(new int[]{272, 272, 459, 777, 273, 777, 777, 459, 0, 0, 879, 879, 416, 415, 879, 416, 415, 417, 0, 0, 880, 617, 620, 615, 620, 621, 615, 618, 0, 0, 885, 883, 886, 882, 884, 882, 0, 0, 0, 0, 1030, 1028, 1027, 1030, 1026, 1026, 1027, 1029, 1031, 1029, 1033, 1036, 1034, 1032, 1035, 1035, 1032, 1036, 1034, 1033, 1041, 1041, 1038, 1037, 1038, 1037, 1039, 1039, 1025, 1025, 1044, 1042, 1043, 1044, 1044, 1044, 1043, 1045, 1045, 1042, 1011, 1011, 1009, 1009, 1017, 1012, 1014, 0, 0, 0, 345, 1020, 1018, 1018, 1024, 1019, 1023, 1021, 1022, 1022, 740, 346, 347, 343, 344, 342, 343, 344, 0, 0, 532, 533, 555, 859, 536, 532, 537, 535, 0, 0, 713, 713, 714, 717, 716, 742, 715, 717, 718, 0, 860, 865, 864, 862, 866, 861, 861, 862, 863, 0, 725, 725, 724, 726, 531, 726, 531, 724, 727, 727, 728, 730, 729, 729, 731, 733, 730, 728, 732, 732, 735, 738, 734, 735, 739, 734, 738, 737, 736, 737, 997, 999, 999, 996, 998, 998, 1002, 1001, 1001, 996, 988, 992, 987, 988, 994, 987, 990, 989, 989, 987, 659, 572, 573, 578, 578, 575, 571, 0, 0, 0, 649, 649, 658, 584, 583, 650, 584, 583, 0, 0, 589, 586, 587, 589, 586, 587, 0, 0, 0, 0, 591, 592, 590, 591, 593, 590, 593, 592, 0, 0, 570, 564, 565, 566, 568, 569, 604, 567, 563, 568, 979, 980, 978, 983, 981, 977, 982, 984, 982, 983, 697, 695, 667, 693, 695, 697, 691, 698, 0, 0, 967, 702, 703, 702, 705, 706, 699, 1047, 0, 0, 768, 675, 672, 670, 673, 673, 670, 669, 673, 669, 746, 677, 771, 680, 676, 770, 682, 681, 746, 772, 774, 684, 689, 689, 683, 745, 690, 745, 773, 685}, initialAvaliation);
+
+        Chromosome chromosome = new Chromosome(new int[]{272, 777, 777, 272, 459, 273, 777, 459, 0, 0, 879, 415, 417, 416, 879, 416, 415, 879, 0, 0, 615, 880, 615, 618, 620, 620, 621, 617, 0, 0, 884, 882, 883, 885, 886, 882, 0, 0, 0, 0, 1026, 1028, 1027, 1031, 1026, 1030, 1029, 1029, 1030, 1027, 1032, 1033, 1034, 1033, 1034, 1032, 1035, 1035, 1036, 1036, 1038, 1041, 1038, 1037, 1025, 1037, 1041, 1039, 1039, 1025, 1044, 1042, 1043, 1044, 1045, 1044, 1044, 1043, 1045, 1042, 1009, 1009, 1011, 1011, 1017, 1012, 1014, 0, 0, 0, 1019, 1022, 1018, 1018, 1024, 1021, 1022, 345, 1023, 1020, 343, 343, 344, 740, 344, 347, 346, 342, 0, 0, 536, 532, 535, 537, 533, 532, 555, 859, 0, 0, 713, 713, 718, 742, 714, 716, 715, 717, 717, 0, 860, 866, 861, 863, 861, 862, 864, 865, 862, 0, 726, 727, 531, 724, 726, 727, 531, 724, 725, 725, 732, 728, 730, 729, 730, 728, 731, 729, 733, 732, 738, 738, 734, 735, 737, 737, 736, 734, 735, 739, 1002, 999, 998, 1001, 998, 999, 997, 996, 1001, 996, 990, 988, 989, 987, 987, 992, 989, 988, 987, 994, 659, 572, 573, 578, 578, 575, 571, 0, 0, 0, 649, 583, 649, 658, 583, 650, 584, 584, 0, 0, 587, 586, 589, 589, 586, 587, 0, 0, 0, 0, 590, 590, 591, 593, 593, 592, 591, 592, 0, 0, 570, 568, 563, 564, 569, 568, 566, 567, 565, 604, 980, 979, 981, 977, 984, 983, 982, 983, 978, 982, 697, 695, 697, 698, 667, 695, 693, 691, 0, 0, 699, 967, 702, 703, 705, 706, 702, 1047, 0, 0, 675, 768, 673, 672, 669, 670, 670, 673, 673, 669, 677, 680, 771, 682, 681, 772, 746, 770, 676, 746, 774, 685, 745, 684, 689, 683, 745, 773, 690, 689}, initialAvaliation);
+
         List<ViolatedConstraint> violatedConstraints = chromosome.checkScheduleConflicts(dtoitc, dtoifsc);
-        Queue<Chromosome> queue = new LinkedList<>();
-        queue.add(chromosome);
+
+        Stack<Chromosome> stack = new Stack<>();
+
+        stack.add(chromosome);
+
         PostProcessing postProcessing = new PostProcessing();
+
         Avaliation.rate(chromosome, dtoitc, initialAvaliation, true);
+
         long initialTime = System.currentTimeMillis();
-        for (ViolatedConstraint violatedConstraint : violatedConstraints) {
-            System.out.printf("\nResolvendo constraint: " + violatedConstraint.toString());
-            List<Integer> sortedConflicts = violatedConstraint.getConflictedClassWithGreaterAvailableTime(dtoifsc, queue.peek());
 
-            queue = postProcessing.resolveConflicts(queue, sortedConflicts, dtoitc, violatedConstraint, initialAvaliation);
+        try {
 
-            //TODO verificar pq esta caindo no break na primeira constraint resolvida
-            if (queue.size() == 1 && queue.peek().getAvaliation() == initialAvaliation)
-                break;
+            chromosome = postProcessing.depthSearchTree(stack, violatedConstraints, dtoitc, dtoifsc, 0, initialAvaliation);
 
-        }
-        long endTime = System.currentTimeMillis();
+        } catch (Exception e) {
 
-        System.out.println("Tempo final:" + (endTime - initialTime));
+            System.err.println(e.getMessage());
+
+        } finally {
+
+            System.out.println("\nNumero de filhos na fila: " + stack.size());
+
+            long endTime = System.currentTimeMillis();
+
+            System.out.println("Tempo final:" + (endTime - initialTime));
+
         /*Matriz de relação dos horarios
         Sendo que 30 é o número de períodos no dia * dias na semana, ou seja, 6 * 5 = 30
         */
-        boolean[][] scheduleRelation = new boolean[dtoitc.getLessons().length][30];
-        for (int j = 0; j < dtoitc.getLessons().length; j++) {
-            for (UnavailabilityConstraint iterationConstraints : dtoitc.getLessons()[j].getConstraints()) {
-                scheduleRelation[j][6 * iterationConstraints.getDay() + iterationConstraints.getDayPeriod()] = true;
+            boolean[][] scheduleRelation = new boolean[dtoitc.getLessons().length][30];
+            for (int j = 0; j < dtoitc.getLessons().length; j++) {
+                for (UnavailabilityConstraint iterationConstraints : dtoitc.getLessons()[j].getConstraints()) {
+                    scheduleRelation[j][6 * iterationConstraints.getDay() + iterationConstraints.getDayPeriod()] = true;
+                }
             }
+
+
+            System.out.println("---------------------------------Avaliação Pós pós-processamento------------------------------------------");
+            System.out.println("Indisponibilidade:");
+            chromosome.checkProfessorsUnavailabilities(dtoitc, dtoifsc, scheduleRelation);
+            System.out.println("Conflitos:");
+            chromosome.checkScheduleConflicts(dtoitc, dtoifsc);
         }
-
-
-        chromosome = queue.peek();
-        System.out.println("---------------------------------Avaliação Pós pós-processamento------------------------------------------");
-        System.out.println("Indisponibilidade:");
-        chromosome.checkProfessorsUnavailabilities(dtoitc, dtoifsc, scheduleRelation);
-        System.out.println("Conflitos:");
-        chromosome.checkScheduleConflicts(dtoitc, dtoifsc);
     }
-
 }

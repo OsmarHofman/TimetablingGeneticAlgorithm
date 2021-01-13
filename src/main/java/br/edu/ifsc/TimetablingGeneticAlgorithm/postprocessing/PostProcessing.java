@@ -1,6 +1,7 @@
 package br.edu.ifsc.TimetablingGeneticAlgorithm.postprocessing;
 
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.Chromosome;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOIFSC;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOITC;
 
 import java.util.*;
@@ -21,33 +22,31 @@ public class PostProcessing {
         return chromosome.getAvaliation() != initialAvaliation;
     }
 
-    public Queue<Chromosome> resolveConflicts(Queue<Chromosome> chromosomeQueue, List<Integer> coursesWithConflicts, DTOITC dtoitc, ViolatedConstraint violatedConstraint, int perfectResult) throws ClassNotFoundException {
-        int queueSize = chromosomeQueue.size();
-        for (int i = 0; i < queueSize; i++) {
-            this.chromosome = chromosomeQueue.peek();
-            for (Integer courseWithConflict : coursesWithConflicts) {
-                for (int j = 0; j < chromosome.getGenes().length; j += 10) {
-                    if (dtoitc.isLessonInCourse(chromosome.getGenes()[j], courseWithConflict)) {
-                        List<Chromosome> children = this.generateChildren(chromosome, j, violatedConstraint, dtoitc, perfectResult);
-                        chromosomeQueue.addAll(children);
+    public Chromosome depthSearchTree(Stack<Chromosome> chromosomeStack, List<ViolatedConstraint> violatedConstraints, DTOITC dtoitc, DTOIFSC dtoifsc, int violatedConstraintsIndex, int perfectResult) throws ClassNotFoundException {
+        Chromosome chromosome = chromosomeStack.peek();
+        if (chromosome.getAvaliation() == perfectResult)
+            return chromosome;
+        ViolatedConstraint currentViolatedConstraint = violatedConstraints.get(violatedConstraintsIndex);
+        List<Integer> sortedConflicts = currentViolatedConstraint.getConflictedClassWithGreaterAvailableTime(dtoifsc, chromosome);
+        for (Integer courseWithConflict : sortedConflicts) {
+            for (int j = 0; j < chromosome.getGenes().length; j += 10) {
+                if (dtoitc.isLessonInCourse(chromosome.getGenes()[j], courseWithConflict)) {
+                    Chromosome child = generateChild(chromosome, j, currentViolatedConstraint, dtoitc, perfectResult);
+                    //FIXME verificar para passas o J como parametro no recursivo para gerar um filho em uma posição diferente do qual ja tentou
+                    if (child == null) {
+                        chromosomeStack.pop();
+                        return depthSearchTree(chromosomeStack, violatedConstraints, dtoitc, dtoifsc, violatedConstraintsIndex, perfectResult);
+                    } else {
+                        chromosomeStack.push(child);
+                        return depthSearchTree(chromosomeStack, violatedConstraints, dtoitc, dtoifsc, ++violatedConstraintsIndex, perfectResult);
                     }
                 }
             }
-            chromosomeQueue.poll();
-            Optional<Chromosome> finals = chromosomeQueue.stream().filter(x -> x.getAvaliation() == perfectResult).findFirst();
-            if (finals.isPresent()) {
-                Queue<Chromosome> bestChromosome = new LinkedList<>();
-                bestChromosome.add(finals.get());
-                return bestChromosome;
-            }
         }
-
-
-        return chromosomeQueue;
+        return chromosome;
     }
 
-    private List<Chromosome> generateChildren(Chromosome chromosome, int classInitialPosition, ViolatedConstraint violatedConstraint, DTOITC dtoitc, int perfectResult) throws ClassNotFoundException {
-        List<Chromosome> children = new ArrayList<>();
+    private Chromosome generateChild(Chromosome chromosome, int classInitialPosition, ViolatedConstraint violatedConstraint, DTOITC dtoitc, int perfectResult) throws ClassNotFoundException {
         int conflictPosition = violatedConstraint.getChromossomePositionByDayPeriod() + classInitialPosition;
         for (int i = classInitialPosition; i < classInitialPosition + 10; i++) {
             if (i != conflictPosition && chromosome.getGenes()[i] != 0) {
@@ -57,12 +56,10 @@ public class PostProcessing {
                 possibleChild.getGenes()[i] = aux;
                 if (Avaliation.rateConflicts(possibleChild, dtoitc, new int[]{conflictPosition, i})) {
                     Avaliation.rate(possibleChild, dtoitc, perfectResult, false);
-                    children.add(possibleChild);
+                    return possibleChild;
                 }
             }
         }
-        return children;
+        return null;
     }
-
-
 }
