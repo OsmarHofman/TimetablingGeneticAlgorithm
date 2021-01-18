@@ -33,7 +33,7 @@ public class GeneticAlgorithm {
     public List<DTOSchedule> process(String path) throws IOException, ClassNotFoundException, InterruptedException {
         System.out.println("Iniciando Algoritmo Genético...");
         //Obtém as configurações do arquivo
-        int[] config = ConfigReader.readConfiguration(path,8);
+        int[] config = ConfigReader.readConfiguration(path, 8);
         final int populationSize = config[0];
         final int classSize = config[1];
         final int elitismPercentage = config[2];
@@ -63,7 +63,6 @@ public class GeneticAlgorithm {
         //Armazena os melhores cromossomos e todas as gerações
         Chromosome[] globalBests = new Chromosome[sets.length];
 
-        int totalCoursesSize = 0;
 
         long startTime = System.currentTimeMillis();
 
@@ -74,7 +73,6 @@ public class GeneticAlgorithm {
 
             //Obtém o número de cursos dentro de um conjunto
             int coursesSize = preProcessing.getCourseRelationList().get(i).getName().split("-").length;
-            totalCoursesSize += coursesSize;
             //Obtém a avaliação inicial, ou seja, a que será usada para a função de avaliação desse conjunto
             int initialAvaliation = Avaliation.getInitialAvaliation(coursesSize);
 
@@ -218,15 +216,6 @@ public class GeneticAlgorithm {
             System.out.println("Indisponibilidade dos Professores:\n");
             globalBests[i].checkProfessorsUnavailabilities(set, dtoifsc, scheduleRelation);
 
-        }
-
-        if (sets.length != 1) {
-            Chromosome finalChromosome = Chromosome.groupSets(globalBests);
-            int initialAvaliation = br.edu.ifsc.TimetablingGeneticAlgorithm.postprocessing.Avaliation.getInitialAvaliation(totalCoursesSize);
-            PostProcessing postProcessing = new PostProcessing(finalChromosome, dtoitc, initialAvaliation);
-            if (postProcessing.hasConflicts(initialAvaliation)) {
-                //TODO fazer processamento
-            }
         }
 
         //Apresenta os valores relativos ao tempo de execução total
