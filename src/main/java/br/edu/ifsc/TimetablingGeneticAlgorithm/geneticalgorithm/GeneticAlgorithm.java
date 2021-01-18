@@ -1,15 +1,19 @@
 package br.edu.ifsc.TimetablingGeneticAlgorithm.geneticalgorithm;
 
+import br.edu.ifsc.TimetablingGeneticAlgorithm.dataaccess.RetrieveIFSCData;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.distributed.ConnectionFactory;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.Chromosome;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.UnavailabilityConstraint;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTODistributedData;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOIFSC;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOITC;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOSchedule;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.genetics.Avaliation;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.postprocessing.PostProcessing;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.model.PreProcessing;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.model.ProfessorsScheduleCreation;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.Chromosome;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.dataaccess.RetrieveIFSCData;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.util.*;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.util.ConfigReader;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.util.ConvertFactory;
 
 import java.io.IOException;
 import java.util.List;
@@ -31,7 +35,7 @@ public class GeneticAlgorithm {
         //Obtém as configurações do arquivo
         int[] config = ConfigReader.readConfiguration(path, 9);
         final int joinSetPercentage = config[5];
-        int availablePCs = config[9];
+        int availablePCs = config[8];
 
 
         //Obtém os dados do arquivo XML
@@ -61,11 +65,14 @@ public class GeneticAlgorithm {
         int[] numberSetsForPCs = new int[availablePCs];
 
         int numberIndex = 0;
+        int totalCourses = 0;
         for (int i = 0; i < sets.length; i++) {
             numberSetsForPCs[numberIndex]++;
             numberIndex++;
             if (numberIndex == availablePCs)
                 numberIndex = 0;
+
+            totalCourses+= preProcessing.getCourseRelationList().get(i).getName().split("-").length;
         }
 
         int count = 0;
@@ -84,6 +91,33 @@ public class GeneticAlgorithm {
         latch.await();
 
         Chromosome globalBests = Chromosome.groupSets(connectionFactory.getFinalChromosomes());
+
+        if (sets.length != 1) {
+            System.out.println("\n -------------- Pós-processamento -------------- \n");
+            int initialAvaliation = Avaliation.getInitialAvaliation(totalCourses);
+            PostProcessing postProcessing = new PostProcessing(globalBests, dtoitc, dtoifsc, initialAvaliation);
+            if (postProcessing.hasConflicts(globalBests, initialAvaliation)) {
+                globalBests = postProcessing.resolveConflicts(globalBests, initialAvaliation);
+
+                //Checa os conflitos de horários
+                System.out.println("\n -------------- \nConflitos de Horário:\n");
+                globalBests.checkScheduleConflicts(dtoitc, dtoifsc);
+
+                /*Matriz de relação dos horarios
+                Sendo que 30 é o número de períodos no dia * dias na semana, ou seja, 6 * 5 = 30
+                */
+                boolean[][] scheduleRelation = new boolean[dtoitc.getLessons().length][30];
+                for (int j = 0; j < dtoitc.getLessons().length; j++) {
+                    for (UnavailabilityConstraint iterationConstraints : dtoitc.getLessons()[j].getConstraints()) {
+                        scheduleRelation[j][6 * iterationConstraints.getDay() + iterationConstraints.getDayPeriod()] = true;
+                    }
+                }
+
+                //Checa as indisponibilidades dos professores
+                System.out.println("Indisponibilidade dos Professores:\n");
+                globalBests.checkProfessorsUnavailabilities(dtoitc, dtoifsc, scheduleRelation);
+            }
+        }
 
 
         //Apresenta os valores relativos ao tempo de execução total

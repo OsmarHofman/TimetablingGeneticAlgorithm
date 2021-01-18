@@ -232,6 +232,15 @@ public class ConvertFactory {
         else if (days[0].charAt(4) == '1')
             return Shift.VESPERTINO;
         return Shift.NOTURNO;
+    }
 
+    public static int convertTimeoffToAvailableTime(String timeoff) {
+        int count = 0;
+        for (int i = 0; i < timeoff.length(); i++) {
+            if (timeoff.charAt(i) == '1') {
+                count++;
+            }
+        }
+        return count / 2;
     }
 }

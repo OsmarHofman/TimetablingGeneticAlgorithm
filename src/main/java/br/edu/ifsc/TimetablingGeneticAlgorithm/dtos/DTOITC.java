@@ -172,6 +172,15 @@ public class DTOITC implements Serializable {
         throw new ClassNotFoundException("Lesson não encontrado");
     }
 
+    public boolean isLessonInCourse(int lessonId, int courseId) {
+        for (Lesson lesson : this.lessons) {
+            if (lesson.getCourseId() == courseId && lesson.getLessonId() == lessonId) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public String toString() {
         return "DTOITC{" +

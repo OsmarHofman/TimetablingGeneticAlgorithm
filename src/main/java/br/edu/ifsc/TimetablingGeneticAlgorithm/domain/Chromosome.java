@@ -7,6 +7,9 @@ import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Shift;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.UnavailabilityConstraint;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOIFSC;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOITC;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.postprocessing.ScheduleTime.Day;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.postprocessing.ScheduleTime.Period;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.postprocessing.ViolatedConstraint;
 
 import java.io.Serializable;
 import java.util.*;
@@ -391,6 +394,101 @@ public class Chromosome implements Serializable {
                 }
             }
         }
+    }
+
+    /**
+     * Checa a avaliação de conflito de horários, para identificar exatamente qual os professores, turmas,
+     * e o dia que aconteceu a violação.
+     *
+     * @param dtoitc  {@link DTOITC} que contém os dados presentes no cromossomo para identificar a violação.
+     * @param dtoifsc {@link DTOIFSC} que contém os dados dos nomes dos professores e turmas.
+     * @throws ClassNotFoundException Erro caso não seja encontrado o {@link Lesson}, o professor da {@link Lesson},
+     *                                ou o {@link Course}.
+     */
+    public List<ViolatedConstraint> checkScheduleConflicts(DTOIFSC dtoifsc, DTOITC dtoitc) throws ClassNotFoundException {
+        List<ViolatedConstraint> violatedConstraints = new ArrayList<>();
+        for (int i = 0; i < this.getGenes().length; i++) {
+            if (this.getGenes()[i] != 0) {
+
+                Shift currentShift = dtoitc.getShiftByLessonId(this.getGenes()[i]);
+
+                //Obtém o vetor dos professores
+                int[] currentProfessors = dtoitc.getProfessorByLessonId(this.getGenes()[i]);
+
+                //Vai de 10 em 10 posições, ou seja, de turma em turma
+                for (int j = i + 10; j < this.getGenes().length; j += 10) {
+
+                    //Caso possa ser dado aula nesse dia. Dias não disponíveis tem valor 0.
+                    if (this.getGenes()[j] != 0) {
+
+                        Shift innerShift = dtoitc.getShiftByLessonId(this.getGenes()[j]);
+                        if (currentShift.equals(innerShift)) {
+
+                            for (int currentProfessor : currentProfessors) {
+
+                                //Obtém o vetor dos professores a serem comparados
+                                int[] innerProfessors = dtoitc.getProfessorByLessonId(this.getGenes()[j]);
+
+                                for (int innerProfessor : innerProfessors) {
+
+                                    //Caso o mesmo professor esteja dando aula em duas turmas ao mesmo tempo
+                                    if (currentProfessor == innerProfessor) {
+
+                                        //Obtém a primeira turma relacionada a violação
+                                        int courseId = dtoitc.getCourseByLessonId(this.getGenes()[i]);
+                                        String courseName = dtoifsc.getCourseNameById(courseId);
+
+                                        //Obtém a segunda turma relacionada a violação
+                                        int conflictCourseId = dtoitc.getCourseByLessonId(this.getGenes()[j]);
+                                        String conflictCourseName = dtoifsc.getCourseNameById(conflictCourseId);
+
+
+                                        //Obtém o professor relacionado a violação
+                                        String professorName = dtoifsc.getProfessorNameById(currentProfessor);
+
+                                        //Obtém o turno que aconteceu a violação
+                                        Shift shift = dtoitc.getShiftByCourseId(courseId);
+
+                                        /*Essa operação é feita para obter somente a parte de unidade do número ,
+                                         * ou seja um valor de 0 a 9. Isso é necessário para saber exatamente qual
+                                         * o dia e horário da violação */
+                                        int normalizedIndex = i % 10;
+
+                                        /*Obtém o dia da violação a partir do índice de 0-9 no qual é dividido por 2
+                                         * para poder identificar o dia da semana (segunda-feira, terça-feira, etc.)*/
+                                        Optional<Day> dia = Day.valueOf(normalizedIndex / 2);
+
+                                        /*Obtém o horário da violação, no qual se for um valor par é uma violação no
+                                         * primeiro horário, e se for ímpar é no segundo horário*/
+                                        Optional<Period> horario = Period.valueOf((normalizedIndex % 2 == 0) ? 0 : 1);
+
+                                        System.out.print("\nProfessor:" + professorName + "\nTurmas conflitantes:" +
+                                                courseName + ", " + conflictCourseName + "\nDia da semana:");
+
+                                        //Caso o valor passado no valueOf esteja dentro de uma das possibilidades do enum
+                                        if (dia.isPresent() && horario.isPresent())
+                                            System.out.print(dia.get() + " " + horario.get() + " ");
+
+                                        System.out.println(shift + "\n\n");
+
+                                        ViolatedConstraint violatedConstraint = new ViolatedConstraint(currentProfessor, professorName, dia.get(),
+                                                horario.get(), Arrays.asList(courseId, conflictCourseId));
+
+                                        violatedConstraint.setAvailableTime(dtoifsc, this);
+
+                                        violatedConstraints.add(violatedConstraint);
+
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        violatedConstraints.sort(Comparator.comparing(ViolatedConstraint::getAvailableTime));
+        return violatedConstraints;
     }
 
 
