@@ -149,6 +149,15 @@ public class Avaliation {
         return avaliation;
     }
 
+    public static int getInitialAvaliation(int coursesSize) {
+
+        //Valores definidos pelo professor
+        if (coursesSize <= 3) return 500;
+        else if (coursesSize <= 6) return 1000;
+        else if (coursesSize <= 10) return 1500;
+        return 200 * coursesSize;
+    }
+
 
     public static boolean rateConflicts(Chromosome possibleChild, DTOITC dtoitc, int[] conflictsPositions) throws ClassNotFoundException {
         for (int conflictsPosition : conflictsPositions) {
