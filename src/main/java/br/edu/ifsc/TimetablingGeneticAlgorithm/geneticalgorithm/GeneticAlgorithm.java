@@ -30,17 +30,20 @@ public class GeneticAlgorithm {
      * @throws IOException            Erro ao tentar obter os dados do arquivo de configuração
      * @throws ClassNotFoundException Erro ao obter alguma informação de alguma das classes
      */
-    public List<DTOSchedule> process(String path) throws IOException, ClassNotFoundException, InterruptedException {
+    public List<DTOSchedule> process(String path, int testIndex) throws IOException, ClassNotFoundException, InterruptedException {
+
+        long startGeneralTime = System.currentTimeMillis();
 
         //Obtém as configurações do arquivo
         int[] config = ConfigReader.readConfiguration(path, 9);
         final int joinSetPercentage = config[5];
         int availablePCs = config[8];
 
-
         //Obtém os dados do arquivo XML
         RetrieveIFSCData retrieveIFSCData = new RetrieveIFSCData();
         DTOIFSC dtoifsc = retrieveIFSCData.getAllData();
+
+        long startPreProcessingTime = System.currentTimeMillis();
 
         //Cria os conjuntos do pré-processamento
         ProfessorsScheduleCreation psc = new ProfessorsScheduleCreation(dtoifsc);
@@ -53,9 +56,11 @@ public class GeneticAlgorithm {
         //Ajusta os cursos que foram pré-processados para a modelagem do DTOITC
         DTOITC[] sets = preProcessing.splitSet(dtoitc);
 
-        //Armazena os melhores cromossomos e todas as gerações
+        long endPreProcessingTime = System.currentTimeMillis();
 
-        long startTime = System.currentTimeMillis();
+        long preProcessingTime = (endPreProcessingTime - startPreProcessingTime);
+
+        //Armazena os melhores cromossomos e todas as gerações
 
         if (sets.length < availablePCs)
             availablePCs = sets.length;
@@ -72,12 +77,15 @@ public class GeneticAlgorithm {
             if (numberIndex == availablePCs)
                 numberIndex = 0;
 
-            totalCourses+= preProcessing.getCourseRelationList().get(i).getName().split("-").length;
+            totalCourses += preProcessing.getCourseRelationList().get(i).getName().split("-").length;
         }
 
         int count = 0;
         CountDownLatch latch = new CountDownLatch(availablePCs);
         ConnectionFactory connectionFactory = new ConnectionFactory(availablePCs);
+
+        long startProcessingTime = System.currentTimeMillis();
+
         for (int i = 0; i < availablePCs; i++) {
             DTOITC[] setDTO = new DTOITC[numberSetsForPCs[i]];
             for (int j = 0; j < numberSetsForPCs[i]; j++) {
@@ -90,18 +98,29 @@ public class GeneticAlgorithm {
 
         latch.await();
 
-        Chromosome globalBests = Chromosome.groupSets(connectionFactory.getFinalChromosomes());
+        long endProcessingTime = System.currentTimeMillis();
+
+        long totalProcessingTime = (endProcessingTime - startProcessingTime);
+
+        Chromosome globalBest = Chromosome.groupSets(connectionFactory.getFinalChromosomes());
+
+        int faMax = 0;
+
+        long totalPosProcessingTime = 0;
 
         if (sets.length != 1) {
+
+            long startPosProcessingTime = System.currentTimeMillis();
+
             System.out.println("\n -------------- Pós-processamento -------------- \n");
-            int initialAvaliation = Avaliation.getInitialAvaliation(totalCourses);
-            PostProcessing postProcessing = new PostProcessing(globalBests, dtoitc, dtoifsc, initialAvaliation);
-            if (postProcessing.hasConflicts(globalBests, initialAvaliation)) {
-                globalBests = postProcessing.resolveConflicts(globalBests, initialAvaliation);
+            faMax = Avaliation.getInitialAvaliation(totalCourses);
+            PostProcessing postProcessing = new PostProcessing(globalBest, dtoitc, dtoifsc, faMax);
+            if (postProcessing.hasConflicts(globalBest, faMax)) {
+                globalBest = postProcessing.resolveConflicts(globalBest, faMax);
 
                 //Checa os conflitos de horários
                 System.out.println("\n -------------- \nConflitos de Horário:\n");
-                globalBests.checkScheduleConflicts(dtoitc, dtoifsc);
+                globalBest.checkScheduleConflicts(dtoitc, dtoifsc);
 
                 /*Matriz de relação dos horarios
                 Sendo que 30 é o número de períodos no dia * dias na semana, ou seja, 6 * 5 = 30
@@ -115,22 +134,29 @@ public class GeneticAlgorithm {
 
                 //Checa as indisponibilidades dos professores
                 System.out.println("Indisponibilidade dos Professores:\n");
-                globalBests.checkProfessorsUnavailabilities(dtoitc, dtoifsc, scheduleRelation);
+                globalBest.checkProfessorsUnavailabilities(dtoitc, dtoifsc, scheduleRelation);
+
+                long endPosProcessingTime = System.currentTimeMillis();
+
+                totalPosProcessingTime = (endPosProcessingTime - startPosProcessingTime);
             }
         }
 
 
         //Apresenta os valores relativos ao tempo de execução total
 
-        long endTime = System.currentTimeMillis();
+        long endGeneralTime = System.currentTimeMillis();
 
-        long totalFinalTime = (endTime - startTime);
+        long totalGeneralTime = (endGeneralTime - startGeneralTime);
 
-        System.out.println(globalBests.toString());
+        System.out.println(globalBest.toString());
 
-        System.out.println("Tempo Total Final: " + totalFinalTime / 1000 + "." + totalFinalTime % 1000 + " segundos");
+        System.out.println("Tempo Total Final: " + totalGeneralTime / 1000 + "." + totalGeneralTime % 1000 + " segundos");
 
-        return DTOSchedule.convertChromosome(globalBests, dtoifsc, dtoitc);
+        ConfigReader.buildCSV(globalBest, config, testIndex, faMax, preProcessingTime, totalProcessingTime,
+                totalPosProcessingTime, totalGeneralTime, 0);
+
+        return DTOSchedule.convertChromosome(globalBest, dtoifsc, dtoitc);
     }
 
 }
