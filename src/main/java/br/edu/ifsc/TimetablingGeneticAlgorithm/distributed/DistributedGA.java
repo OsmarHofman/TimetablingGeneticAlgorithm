@@ -3,6 +3,7 @@ package br.edu.ifsc.TimetablingGeneticAlgorithm.distributed;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.Chromosome;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.ifsc.Subject;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.UnavailabilityConstraint;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOChromosome;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTODistributedData;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOITC;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.genetics.Avaliation;
@@ -24,8 +25,13 @@ public class DistributedGA extends UnicastRemoteObject implements IDistributedGA
     public DistributedGA() throws RemoteException {
     }
 
-    public Chromosome process(DTODistributedData data) throws InterruptedException, ClassNotFoundException, RemoteException {
+    public DTOChromosome process(DTODistributedData data) throws InterruptedException, ClassNotFoundException, RemoteException {
         System.out.println("Iniciando Algoritmo Genético...");
+
+        long startLocalTime = System.currentTimeMillis();
+        long localFinalTime = 0;
+
+
         int[] config = data.getConfig();
         DTOITC[] sets = data.getSets();
         List<CourseRelation> courseRelations = data.getCourseRelations();
@@ -65,9 +71,6 @@ public class DistributedGA extends UnicastRemoteObject implements IDistributedGA
             }
 
             Chromosome globalBestChromosome = new Chromosome(0);
-
-            long startLocalTime = System.currentTimeMillis();
-
 
 
             int restartCount = 0;
@@ -175,19 +178,17 @@ public class DistributedGA extends UnicastRemoteObject implements IDistributedGA
             //Apresenta os valores relativos ao tempo de execução
             long endLocalTime = System.currentTimeMillis();
 
-            long localFinalTime = (endLocalTime - startLocalTime);
+            localFinalTime = (endLocalTime - startLocalTime);
 
             System.out.println("Tempo Local Final: " + localFinalTime / 1000 + "." + localFinalTime % 1000 + " segundos");
 
             globalBestChromosomes[i] = globalBestChromosome;
 
-            System.out.println(globalBestChromosome.toString());
-
         }
 
-
+        System.out.println("Finalizado Processamento do AG");
         //Apresenta os valores relativos ao resultado final obtido
-        return Chromosome.groupSets(globalBestChromosomes);
+        return new DTOChromosome(Chromosome.groupSets(globalBestChromosomes), localFinalTime);
     }
 
 }
