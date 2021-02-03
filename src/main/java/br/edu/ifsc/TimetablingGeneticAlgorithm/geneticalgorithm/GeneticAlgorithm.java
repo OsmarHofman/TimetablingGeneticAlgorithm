@@ -4,10 +4,7 @@ import br.edu.ifsc.TimetablingGeneticAlgorithm.dataaccess.RetrieveIFSCData;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.distributed.ConnectionFactory;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.Chromosome;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.UnavailabilityConstraint;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTODistributedData;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOIFSC;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOITC;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOSchedule;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.*;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.genetics.Avaliation;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.postprocessing.PostProcessing;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.model.PreProcessing;
@@ -31,6 +28,7 @@ public class GeneticAlgorithm {
      * @throws ClassNotFoundException Erro ao obter alguma informação de alguma das classes
      */
     public List<DTOSchedule> process(String path, int testIndex) throws IOException, ClassNotFoundException, InterruptedException {
+        long[] vaofhwa = new long[]{1, 2, 3, 4};
 
         long startGeneralTime = System.currentTimeMillis();
 
@@ -98,6 +96,9 @@ public class GeneticAlgorithm {
 
         latch.await();
 
+        //TODO verificar com o professor como vai ser a soma dos tempos do processamento dos AGs. SE iremos somar eles ou então cada um terá seu tempo separado
+        long gaProcessingTime = connectionFactory.getAverageTime();
+
         long endProcessingTime = System.currentTimeMillis();
 
         long totalProcessingTime = (endProcessingTime - startProcessingTime);
@@ -153,7 +154,7 @@ public class GeneticAlgorithm {
 
         System.out.println("Tempo Total Final: " + totalGeneralTime / 1000 + "." + totalGeneralTime % 1000 + " segundos");
 
-        ConfigReader.buildCSV(globalBest, config, testIndex, faMax, preProcessingTime, totalProcessingTime,
+        ConfigReader.buildCSV(globalBest, config, testIndex, faMax, preProcessingTime, totalProcessingTime, gaProcessingTime,
                 totalPosProcessingTime, totalGeneralTime, 0);
 
         return DTOSchedule.convertChromosome(globalBest, dtoifsc, dtoitc);

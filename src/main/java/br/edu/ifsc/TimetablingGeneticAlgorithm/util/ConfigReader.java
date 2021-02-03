@@ -81,15 +81,15 @@ public class ConfigReader {
     /*TODO Pegar do servidor: gerações, n de resets ou soma dos dois;
                               pegar o tempo individual de cada AG ou a soma deles.*/
     public static void buildCSV(Chromosome chromosome, int[] configs, int idTest, int faMax, long preProcessingTime,
-                                long processingTime, long posProcessingTime, long finalTime, int geracoes) {
+                                long processingTime, long gaAverageProcessingTime, long posProcessingTime, long finalTime, int geracoes) {
 
-        String[] times = new String[4];
+        String[] times = new String[5];
 
         times[0] = preProcessingTime / 1000 + "." + preProcessingTime % 1000;
         times[1] = processingTime / 1000 + "." + processingTime % 1000;
         times[2] = posProcessingTime / 1000 + "." + posProcessingTime % 1000;
         times[3] = finalTime / 1000 + "." + finalTime % 1000;
-
+        times[4] = gaAverageProcessingTime / 1000 + "." + gaAverageProcessingTime % 1000;
         File file = new File("/home/alunoremoto/TCCWilson/TimetablingGeneticAlgorithm/src/assets/tests.csv");
         try {
 
@@ -98,7 +98,7 @@ public class ConfigReader {
 
             printWriter.println(configs[0] + "," + configs[4] + "," + configs[3] + "," + configs[2] + "," +
                     configs[5] + "," + idTest + "," + faMax + "," + chromosome.getAvaliation() + "," + times[0]
-                    + "," + times[1] + "," + times[2] + "," + times[3] + "," + geracoes);
+                    + "," + times[1] + "," + times[4] + "," + times[2] + "," + times[3] + "," + geracoes);
 
             printWriter.close();
             fileWriter.close();
