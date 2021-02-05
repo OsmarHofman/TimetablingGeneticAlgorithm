@@ -48,6 +48,9 @@ public class DistributedGA extends UnicastRemoteObject implements IDistributedGA
 
         Chromosome[] globalBestChromosomes = new Chromosome[sets.length];
 
+        int restartCount = 0;
+        int totalIterations = 0;
+
         for (int i = 0; i < sets.length; i++) {
 
             //Obtém o DTOITC respectivo ao conjunto que será processado
@@ -73,7 +76,7 @@ public class DistributedGA extends UnicastRemoteObject implements IDistributedGA
             Chromosome globalBestChromosome = new Chromosome(0);
 
 
-            int restartCount = 0;
+            restartCount = 0;
 
             while (globalBestChromosome.getAvaliation() < initialAvaliation && restartCount < 10) {
                 //Número de execuções do While de fora
@@ -154,8 +157,9 @@ public class DistributedGA extends UnicastRemoteObject implements IDistributedGA
 
                         innerIterator++;
 
+                        totalIterations = iterator * verificationInterval + innerIterator;
 
-                        System.out.println("Iteração " + (iterator * verificationInterval + innerIterator));
+                        System.out.println("Iteração " + totalIterations);
 
                     }
 
@@ -188,7 +192,7 @@ public class DistributedGA extends UnicastRemoteObject implements IDistributedGA
 
         System.out.println("Finalizado Processamento do AG");
         //Apresenta os valores relativos ao resultado final obtido
-        return new DTOChromosome(Chromosome.groupSets(globalBestChromosomes), localFinalTime);
+        return new DTOChromosome(Chromosome.groupSets(globalBestChromosomes), localFinalTime, totalIterations, (byte) restartCount);
     }
 
 }
