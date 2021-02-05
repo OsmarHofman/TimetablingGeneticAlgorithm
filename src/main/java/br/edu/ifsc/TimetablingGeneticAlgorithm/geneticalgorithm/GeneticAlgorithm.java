@@ -1,19 +1,19 @@
 package br.edu.ifsc.TimetablingGeneticAlgorithm.geneticalgorithm;
 
+import br.edu.ifsc.TimetablingGeneticAlgorithm.dataaccess.RetrieveIFSCData;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.Chromosome;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.UnavailabilityConstraint;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOIFSC;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOITC;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOSchedule;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.postprocessing.PostProcessing;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.model.PreProcessing;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.model.ProfessorsScheduleCreation;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.Chromosome;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.UnavailabilityConstraint;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.genetics.Avaliation;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.genetics.Crossover;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.genetics.Mutation;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.genetics.Selection;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.dataaccess.RetrieveIFSCData;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.util.*;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.model.PreProcessing;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.model.ProfessorsScheduleCreation;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.util.ConfigReader;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.util.ConvertFactory;
 
 import java.io.IOException;
 import java.util.Arrays;

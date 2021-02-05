@@ -63,15 +63,28 @@ public class CourseRelation implements Serializable {
      */
     public void checkListIntersection(String course, List<String> professorCourses) {
         //Lista onde serão incluidos os cursos relacionados
-        List<String> intersectionsName = new ArrayList<>();
-        for (Intersection intersec : intersection) {
-            intersectionsName.add(intersec.getIntersectionCourse());
-        }
+        List<IsRelated> relateds = new ArrayList<>();
+        IsRelated isRelated;
         for (String profCourse : professorCourses) {
-            if (!intersectionsName.contains(profCourse) && !profCourse.equals(course)) {
-                intersection.add(new Intersection(1, profCourse));
+            for (Intersection intersec : intersection) {
+                if (intersec.getIntersectionCourse().equals(profCourse)) {
+                    intersec.setIntersectionProfessorsCount(intersec.getIntersectionProfessorsCount() + 1);
+                    isRelated = new IsRelated(intersec.getIntersectionCourse(), true);
+                } else {
+                    isRelated = new IsRelated(intersec.getIntersectionCourse(), false);
+                }
+                relateds.add(isRelated);
             }
         }
+
+        //Adiciona cada um dos cursos relacionados sem repetição
+        for (String profCourse : professorCourses) {
+            if (!profCourse.equals(course) && !isAlreadyInRelateds(profCourse, relateds)) {
+                intersection.add(new Intersection(1, profCourse));
+            }
+
+        }
+
     }
 
     /**
@@ -185,5 +198,22 @@ public class CourseRelation implements Serializable {
         }
         this.totalProfessors = professors.size() + exclusiveProfessorCount;
     }
+
+
+    /**
+     * Verifica se um curso já está na lista de relacionados.
+     *
+     * @param name     {@link String} com o nome do curso a ser verificado.
+     * @param relateds {@link List} de {@link IsRelated} a ser buscada a informação.
+     * @return {@code true} caso o curso já esteja na lista, e {@code false} caso contrário.
+     */
+    private Boolean isAlreadyInRelateds(String name, List<IsRelated> relateds) {
+        for (IsRelated related : relateds) {
+            if (related.getName().equals(name) && related.isHasAdded())
+                return true;
+        }
+        return false;
+    }
+
 
 }
