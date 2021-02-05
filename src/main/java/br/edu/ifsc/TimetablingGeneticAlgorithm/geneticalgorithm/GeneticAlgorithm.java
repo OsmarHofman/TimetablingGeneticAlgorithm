@@ -28,8 +28,6 @@ public class GeneticAlgorithm {
      * @throws ClassNotFoundException Erro ao obter alguma informação de alguma das classes
      */
     public List<DTOSchedule> process(String path, int testIndex) throws IOException, ClassNotFoundException, InterruptedException {
-        long[] vaofhwa = new long[]{1, 2, 3, 4};
-
         long startGeneralTime = System.currentTimeMillis();
 
         //Obtém as configurações do arquivo
@@ -82,8 +80,6 @@ public class GeneticAlgorithm {
         CountDownLatch latch = new CountDownLatch(availablePCs);
         ConnectionFactory connectionFactory = new ConnectionFactory(availablePCs);
 
-        long startProcessingTime = System.currentTimeMillis();
-
         for (int i = 0; i < availablePCs; i++) {
             DTOITC[] setDTO = new DTOITC[numberSetsForPCs[i]];
             for (int j = 0; j < numberSetsForPCs[i]; j++) {
@@ -96,22 +92,14 @@ public class GeneticAlgorithm {
 
         latch.await();
 
-        //TODO verificar com o professor como vai ser a soma dos tempos do processamento dos AGs. SE iremos somar eles ou então cada um terá seu tempo separado
-        long gaProcessingTime = connectionFactory.getAverageTime();
-
-        long endProcessingTime = System.currentTimeMillis();
-
-        long totalProcessingTime = (endProcessingTime - startProcessingTime);
+        long gaProcessingTime = connectionFactory.getGreaterTime();
 
         Chromosome globalBest = Chromosome.groupSets(connectionFactory.getFinalChromosomes());
 
         int faMax = 0;
 
-        long totalPosProcessingTime = 0;
-
         if (sets.length != 1) {
 
-            long startPosProcessingTime = System.currentTimeMillis();
 
             System.out.println("\n -------------- Pós-processamento -------------- \n");
             faMax = Avaliation.getInitialAvaliation(totalCourses);
@@ -137,9 +125,6 @@ public class GeneticAlgorithm {
                 System.out.println("Indisponibilidade dos Professores:\n");
                 globalBest.checkProfessorsUnavailabilities(dtoitc, dtoifsc, scheduleRelation);
 
-                long endPosProcessingTime = System.currentTimeMillis();
-
-                totalPosProcessingTime = (endPosProcessingTime - startPosProcessingTime);
             }
         }
 
@@ -154,8 +139,8 @@ public class GeneticAlgorithm {
 
         System.out.println("Tempo Total Final: " + totalGeneralTime / 1000 + "." + totalGeneralTime % 1000 + " segundos");
 
-        ConfigReader.buildCSV(globalBest, config, testIndex, faMax, preProcessingTime, totalProcessingTime, gaProcessingTime,
-                totalPosProcessingTime, totalGeneralTime, 0);
+        ConfigReader.buildCSV(globalBest, config, testIndex, faMax, gaProcessingTime, totalGeneralTime,
+                connectionFactory.getGreaterGeneration(), connectionFactory.getGreaterExecution());
 
         return DTOSchedule.convertChromosome(globalBest, dtoifsc, dtoitc);
     }
