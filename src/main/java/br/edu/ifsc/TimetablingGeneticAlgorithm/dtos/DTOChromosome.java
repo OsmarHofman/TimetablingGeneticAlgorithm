@@ -5,6 +5,9 @@ import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.Chromosome;
 import java.io.Serializable;
 
 public class DTOChromosome implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+
     private Chromosome chromosome;
     private long totalTime;
     private int totalExecution;

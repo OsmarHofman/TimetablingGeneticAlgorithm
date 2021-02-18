@@ -116,7 +116,8 @@ public class DistributedGA extends UnicastRemoteObject implements IDistributedGA
                             ((localBest.getAvaliation() < initialAvaliation) || localBest.isHasViolatedHardConstraint())) {
 
                         //Seleção por elitismo
-                        byte proportion = (byte) (populationSize / elitismPercentage);
+                        double elitism = (double) (elitismPercentage / 100);
+                        int proportion = (int) (populationSize * elitism);
                         Chromosome[] eliteChromosomes = Selection.elitism(population, proportion);
 
                         //Função de avaliação acumulada

@@ -10,6 +10,7 @@ import java.util.List;
  * Classe DTO((Data Transfer Object) que representa o modelo adaptado (ITC)
  */
 public class DTOITC implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     private Course[] courses;
     private Lesson[] lessons;
