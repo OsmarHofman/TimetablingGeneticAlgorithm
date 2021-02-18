@@ -7,6 +7,8 @@ import java.io.Serializable;
 import java.util.List;
 
 public class DTODistributedData implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     DTOITC[] sets;
     int[] config;
     List<Subject> dtoIfscSubjects;
