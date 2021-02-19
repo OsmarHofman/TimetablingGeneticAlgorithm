@@ -10,10 +10,12 @@ import java.util.Stack;
 public class PostProcessing {
     private final DTOITC dtoitc;
     private final DTOIFSC dtoifsc;
+    private Chromosome bestChromosome;
 
     public PostProcessing(Chromosome chromosome, DTOITC dtoitc, DTOIFSC dtoifsc, int initialAvaliation) throws ClassNotFoundException {
         this.dtoitc = dtoitc;
         this.dtoifsc = dtoifsc;
+        bestChromosome = new Chromosome(chromosome.getGenes().length);
         Avaliation.rate(chromosome, dtoitc, initialAvaliation, false);
     }
 
@@ -35,7 +37,14 @@ public class PostProcessing {
     }
 
     public Chromosome depthSearchTree(Stack<Chromosome> chromosomeStack, List<ViolatedConstraint> violatedConstraints, int violatedConstraintsIndex, int perfectResult, int geneIndex) throws ClassNotFoundException {
+        if (chromosomeStack.empty()){
+            return bestChromosome;
+        }
+
         Chromosome chromosome = chromosomeStack.peek();
+
+        if (chromosome.getAvaliation() > bestChromosome.getAvaliation())
+            bestChromosome = new Chromosome(chromosome.getGenes(),chromosome.getAvaliation(),chromosome.isHasViolatedHardConstraint());
 
         if (chromosome.getAvaliation() == perfectResult)
             return chromosome;

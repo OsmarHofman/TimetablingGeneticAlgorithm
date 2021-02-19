@@ -46,13 +46,13 @@ public class ConnectionFactory {
         return Arrays.stream(finalChromosomes).max(Comparator.comparing(DTOChromosome::getTotalTime)).get().getTotalTime();
     }
 
-    //TODO Esperar retorno do professor para implementar métodos
     public int getGreaterExecution() {
-        return 0;
+
+        return Arrays.stream(finalChromosomes).max(Comparator.comparing(DTOChromosome::getTotalExecution)).get().getTotalExecution();
     }
 
     public byte getGreaterGeneration() {
-        return 0;
+        return Arrays.stream(finalChromosomes).max(Comparator.comparing(DTOChromosome::getTotalGeneration)).get().getTotalGeneration();
     }
 
 }
