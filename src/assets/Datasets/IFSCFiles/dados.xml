@@ -689,7 +689,6 @@
         <lesson id="205" subjectid="1011" groupid="111" classid="341" teacherids="55,53," classroomids="35" durationperiods="4" periodsperweek="4"/>
         <lesson id="206" subjectid="1012" groupid="111" classid="341" teacherids="89," classroomids="59" durationperiods="2" periodsperweek="2"/>
         <lesson id="208" subjectid="1014" groupid="111" classid="341" teacherids="82," classroomids="59" durationperiods="2" periodsperweek="2"/>
-        <lesson id="210" subjectid="1016" groupid="111" classid="341" teacherids="999," classroomids="54" durationperiods="2" periodsperweek="2"/>
         <lesson id="211" subjectid="1017" groupid="111" classid="341" teacherids="8," classroomids="35" durationperiods="2" periodsperweek="2"/>
         <lesson id="212" subjectid="1018" groupid="114" classid="343" teacherids="56," classroomids="60" durationperiods="4" periodsperweek="4"/>
         <lesson id="213" subjectid="1019" groupid="114" classid="343" teacherids="12," classroomids="50" durationperiods="2" periodsperweek="2"/>
