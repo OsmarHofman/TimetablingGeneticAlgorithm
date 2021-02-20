@@ -46,13 +46,11 @@
         <subject id="572" name="Fundamentos de Agroecologia" short="FUN015301"/>
         <subject id="573" name="GÊNESE E FERTILIDADE DOS SOLOS" short="GFS015301"/>
         <subject id="575" name="Sanidade Vegetal" short="SAV015301"/>
-        <subject id="576" name="INFORMÁTICA" short="INF015301"/>
         <subject id="578" name="PRODUÇÃO VEGETAL 1" short="PV1015301"/>
         <subject id="583" name="PROCESSAMENTO DE ALIMENTOS 2" short="PA2015303"/>
         <subject id="584" name="SISTEMAS AGROFLORESTAIS" short="SIS015303"/>
         <subject id="586" name="Fundamentos da Administração" short="FDA"/>
         <subject id="587" name="Português" short="POR"/>
-        <subject id="588" name="Informática Básica" short="INF"/>
         <subject id="589" name="Matemática aplicada a adm" short="MAA"/>
         <subject id="590" name="Administração de produção" short="APO"/>
         <subject id="591" name="Administração de materiais" short="AMA"/>
@@ -177,7 +175,6 @@
         <subject id="1011" name="Calculo Técnico" short=""/>
         <subject id="1012" name="Desenho Técnico A" short=""/>
         <subject id="1014" name="Metrologia A" short=""/>
-        <subject id="1016" name="Informática" short=""/>
         <subject id="1017" name="Linguagem e Comunicação" short=""/>
         <subject id="1018" name="Eletrônica Industrial" short=""/>
         <subject id="1019" name="Linguagem e Programação" short=""/>
@@ -218,7 +215,7 @@
     <teachers columns="id,name,short,timeoff">
         <teacher short="adriellen.sousa" name="Adriellen Lima de Sousa" id="48" timeoff=".111100001111,.111111111111,.111111111111,.111111111111,.111111111111,.000000000000"/>
         <teacher short="ailton.durigon" name="Ailton Durigon" id="27" timeoff=".000000000000,.111111111111,.111111111111,.111111111111,.111111111111,.000000000000"/>
-        <teacher short="alexandre.perin" name="Alexandre Perin de Souza" id="10" timeoff=".111111111111,.111111111111,.111111111111,.111111111111,.000011111111,.000000000000"/>
+        <teacher short="alexandre.perin" name="Alexandre Perin de Souza" id="10" timeoff=".111111111111,.111111111111,.111111111111,.111111111111,.110011111111,.000000000000"/>
         <teacher short="ana.martins" name="Ana Maria Martins Roeber (subst.)" id="25" timeoff=".111111111111,.111111111111,.111111111111,.111111111111,.111111111111,.111111110000"/>
         <teacher short="ana.veeck" name="Ana Paula de Lima Veeck" id="34" timeoff=".000011111111,.111111111111,.111111111111,.111111111111,.111111111111,.000000000000"/>
         <teacher short="anderson.correia" name="Anderson Luis Garcia Correia" id="39" timeoff=".111111111111,.111111111111,.111111111111,.111111111111,.111111110000,.000000000000"/>
@@ -233,7 +230,7 @@
         <teacher short="eduardo.fogaca" name="Eduardo Tealdi Fogaça" id="17" timeoff=".111111111111,.111111111111,.111111111111,.111111111111,.111111111111,.111111110000"/>
         <teacher short="eliana.borragini" name="Eliana Fernandes Borragini" id="53" timeoff=".000011111111,.111111111111,.111100001111,.111111111111,.111111111111,.000000000000"/>
         <teacher short="eliane.correa" name="Eliane Correa" id="94" timeoff=".111111111111,.111111110000,.111111111111,.111111111111,.111111111111,.000000000000"/>
-        <teacher short="fernando.osorio" name="Fernando da Silva Osório" id="66" timeoff=".111111111111,.111111111111,.111100001111,.000000000000,.000000000000,.000000000000"/>
+        <teacher short="fernando.osorio" name="Fernando da Silva Osório" id="66" timeoff=".111111111111,.111111111111,.111100001111,.000000000000,.000000001111,.000000000000"/>
         <teacher short="fernando.zinger" name="Fernando Domingos Zinger" id="14" timeoff=".111111110000,.000011111111,.111111111111,.111111111111,.111111111111,.000000000000"/>
         <teacher short="" name="Fernando Weber Albiero" id="84" timeoff=".111111111111,.111111111111,.111111111111,.111111111111,.111111111111,.000000000000"/>
         <teacher short="gabriel.madruga" name="Gabriel Granzotto Madruga" id="49" timeoff=".111111111111,.111111111111,.000000001111,.111111111111,.111111110000,.000000000000"/>
@@ -642,7 +639,7 @@
         <lesson id="146" subjectid="772" groupid="51" classid="193" teacherids="65," classroomids="37" durationperiods="3" periodsperweek="3"/>
         <lesson id="147" subjectid="773" groupid="54" classid="195" teacherids="58," classroomids="40" durationperiods="2" periodsperweek="2"/>
         <lesson id="148" subjectid="774" groupid="54" classid="195" teacherids="46," classroomids="40" durationperiods="1" periodsperweek="1"/>
-        <lesson id="149" subjectid="777" groupid="4" classid="321" teacherids="12,88,999," classroomids="50" durationperiods="2" periodsperweek="6"/>
+        <lesson id="149" subjectid="777" groupid="4" classid="321" teacherids="12,88," classroomids="50" durationperiods="2" periodsperweek="6"/>
         <lesson id="150" subjectid="778" groupid="69" classid="681" teacherids="77," classroomids="32" durationperiods="4" periodsperweek="8"/>
         <lesson id="151" subjectid="859" groupid="21" classid="332" teacherids="56," classroomids="60" durationperiods="2" periodsperweek="2"/>
         <lesson id="152" subjectid="860" groupid="72" classid="334" teacherids=",63," classroomids="40" durationperiods="2" periodsperweek="2"/>
@@ -692,7 +689,6 @@
         <lesson id="205" subjectid="1011" groupid="111" classid="341" teacherids="55,53," classroomids="35" durationperiods="4" periodsperweek="4"/>
         <lesson id="206" subjectid="1012" groupid="111" classid="341" teacherids="89," classroomids="59" durationperiods="2" periodsperweek="2"/>
         <lesson id="208" subjectid="1014" groupid="111" classid="341" teacherids="82," classroomids="59" durationperiods="2" periodsperweek="2"/>
-        <lesson id="210" subjectid="1016" groupid="111" classid="341" teacherids="999," classroomids="54" durationperiods="2" periodsperweek="2"/>
         <lesson id="211" subjectid="1017" groupid="111" classid="341" teacherids="8," classroomids="35" durationperiods="2" periodsperweek="2"/>
         <lesson id="212" subjectid="1018" groupid="114" classid="343" teacherids="56," classroomids="60" durationperiods="4" periodsperweek="4"/>
         <lesson id="213" subjectid="1019" groupid="114" classid="343" teacherids="12," classroomids="50" durationperiods="2" periodsperweek="2"/>
