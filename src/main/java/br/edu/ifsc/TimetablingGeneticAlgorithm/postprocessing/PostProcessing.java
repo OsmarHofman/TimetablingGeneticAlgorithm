@@ -66,6 +66,8 @@ public class PostProcessing {
                         return depthSearchTree(chromosomeStack, violatedConstraints, violatedConstraintsIndex, perfectResult, ++geneIndex);
 
                     } else {
+                        if (violatedConstraints.size() - 1 == violatedConstraintsIndex)
+                            return child;
 
                         chromosomeStack.push(child);
 
