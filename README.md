@@ -4,9 +4,9 @@ Backend do trabalho de conclusão de curso referente ao curso de graduação Ci�
 
 ## Requisitos:
 
-- [IDE](https://www.jetbrains.com/pt-br/idea/download) para execução de aplicações Java;
+- [IDE](https://www.jetbrains.com/pt-br/idea/download){:target="_blank"} para execução de aplicações Java;
 
-- [JDK](https://www.oracle.com/br/java/technologies/javase-jdk11-downloads.html);
+- [JDK](https://www.oracle.com/br/java/technologies/javase-jdk11-downloads.html){:target="_blank"};
 
 ## Execução:
 
