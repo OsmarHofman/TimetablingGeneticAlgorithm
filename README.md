@@ -1,4 +1,4 @@
-# Algoritmo Genético distribuído para problema de Timetabling
+# Algoritmo Genético distribuído para problema de Timetabling - Backend
 
 Backend do trabalho de conclusão de curso referente ao curso de graduação Ciência da Computação.
 
