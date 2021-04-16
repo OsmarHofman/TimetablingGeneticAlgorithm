@@ -10,6 +10,8 @@ Backend do trabalho de conclusão de curso referente ao curso de graduação Ci�
 
 - [JDK](https://www.oracle.com/br/java/technologies/javase-jdk11-downloads.html);
 
+- Para execução centralizada, é necessário utilizar a branch master;
+
 - Para execução distribuída, é necessário utilizar as branchs distributed-client e distributed-server para baixar o código das máquinas cliente e servidor, respectivamente.
 
 ### Execução:
