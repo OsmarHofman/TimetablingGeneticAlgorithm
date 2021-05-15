@@ -26,11 +26,11 @@ public class DistributedGA extends UnicastRemoteObject implements IDistributedGA
 
     public Chromosome process(DTODistributedData data) throws InterruptedException, ClassNotFoundException, RemoteException {
         System.out.println("Iniciando Algoritmo Genético...");
+        //Lê as configurações dos parâmetros do sistema e informações necessárias para o processamento
         int[] config = data.getConfig();
         DTOITC[] sets = data.getSets();
         List<CourseRelation> courseRelations = data.getCourseRelations();
         List<Subject> dtoIfscSubjects = data.getDtoIfscSubjects();
-
 
         final int populationSize = config[0];
         final int classSize = config[1];
@@ -68,8 +68,7 @@ public class DistributedGA extends UnicastRemoteObject implements IDistributedGA
 
             long startLocalTime = System.currentTimeMillis();
 
-
-
+            //Contador com o número de vezes que foi resetado
             int restartCount = 0;
 
             while (globalBestChromosome.getAvaliation() < initialAvaliation && restartCount < 10) {
@@ -151,7 +150,6 @@ public class DistributedGA extends UnicastRemoteObject implements IDistributedGA
 
                         innerIterator++;
 
-
                         System.out.println("Iteração " + (iterator * verificationInterval + innerIterator));
 
                     }
@@ -170,8 +168,6 @@ public class DistributedGA extends UnicastRemoteObject implements IDistributedGA
             //Apresenta os valores relativos as iterações
             System.out.println("Conjunto processado");
 
-//        System.out.println("\nNúmero total de iterações: " + (iterator * geracoes + innerIterator));
-
             //Apresenta os valores relativos ao tempo de execução
             long endLocalTime = System.currentTimeMillis();
 
@@ -181,10 +177,9 @@ public class DistributedGA extends UnicastRemoteObject implements IDistributedGA
 
             globalBestChromosomes[i] = globalBestChromosome;
 
-            System.out.println(globalBestChromosome.toString());
+            System.out.println(globalBestChromosome);
 
         }
-
 
         //Apresenta os valores relativos ao resultado final obtido
         return Chromosome.groupSets(globalBestChromosomes);

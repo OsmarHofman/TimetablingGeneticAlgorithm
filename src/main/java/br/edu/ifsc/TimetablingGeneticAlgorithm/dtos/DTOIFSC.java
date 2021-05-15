@@ -1,9 +1,7 @@
 package br.edu.ifsc.TimetablingGeneticAlgorithm.dtos;
 
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.ifsc.*;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Course;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Shift;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -157,9 +155,9 @@ public class DTOIFSC {
                 nightCourses.add(classe.getId());
         }
 
-        System.out.println("manha: " + morningCourses.toString());
-        System.out.println("tarde: " + afternoonCourses.toString());
-        System.out.println("noite: " + nightCourses.toString());
+        System.out.println("manha: " + morningCourses);
+        System.out.println("tarde: " + afternoonCourses);
+        System.out.println("noite: " + nightCourses);
     }
 
     /**
@@ -179,7 +177,7 @@ public class DTOIFSC {
                 timeofflessTeachers.add(teacher);
             }
         }
-        System.out.println(timeofflessTeachers.toString());
+        System.out.println(timeofflessTeachers);
     }
 
 

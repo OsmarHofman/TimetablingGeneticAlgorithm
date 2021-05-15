@@ -6,6 +6,9 @@ import br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.entities.CourseRela
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * DTO que contém todos os dados necessários para execução distribuída
+ */
 public class DTODistributedData implements Serializable {
     DTOITC[] sets;
     int[] config;
