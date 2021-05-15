@@ -35,6 +35,14 @@ public class ConfigReader {
         throw new IOException("Erro ao encontrar configurações no arquivo: " + path);
     }
 
+    /**
+     * A partir de um arquivo, lê os IPs dos computadores
+     *
+     * @param path        caminho do arquivo com as configurações.
+     * @param itemsNumber número de itens que serão lidos do arquivo.
+     * @return Vetor com cada um dos IPs em cada posição.
+     * @throws IOException Erro ao tentar ler o arquivo.
+     */
     public static String[] readConfiguration(int itemsNumber, String path) throws IOException {
         String[] config = new String[itemsNumber];
         File myObj = new File(path);

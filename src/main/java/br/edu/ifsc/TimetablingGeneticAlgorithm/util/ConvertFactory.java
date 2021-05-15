@@ -234,6 +234,12 @@ public class ConvertFactory {
         return Shift.NOTURNO;
     }
 
+    /**
+     * Obtém um valor numérico do timeoff.
+     *
+     * @param timeoff {@link String} para ser obtido o valor.
+     * @return número que indica a quantidade de aulas de uma semana que um professor leciona.
+     */
     public static int convertTimeoffToAvailableTime(String timeoff) {
         int count = 0;
         for (int i = 0; i < timeoff.length(); i++) {

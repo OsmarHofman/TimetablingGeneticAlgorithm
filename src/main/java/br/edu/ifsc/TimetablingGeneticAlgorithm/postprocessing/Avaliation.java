@@ -91,6 +91,17 @@ public class Avaliation {
         return avaliation;
     }
 
+    /**
+     * Avaliação de indisponibilidade de horário de um professor, ou seja, quando está lecionando no seu dia de folga.
+     *
+     * @param chromosome     {@link Chromosome} que será avaliado.
+     * @param dtoitc         {@link DTOITC} que contém todas informações relativas a matérias, cursos, salas,
+     *                       professores e restrições.
+     * @param relationMatrix matriz que representa as indisponibilidades dos professores.
+     * @return a penalização do cromossomo, ou seja, o valor numérico que representa a quantidade de vezes que essa
+     * restrição foi violada, multiplicado pelo peso da violação. Cada violação dessa restrição tem peso 5.
+     * @throws ClassNotFoundException quando não é encontrado um professor no {@code dtoitc}.
+     */
     private static int professorsUnavailabilities(Chromosome chromosome, DTOITC dtoitc, boolean[][] relationMatrix) throws ClassNotFoundException {
         int avaliation = 0;
         //Valor que representa o deslocamento do dia, ou seja, são duas aulas por dia, então varia entre 0 e 1.
@@ -149,14 +160,26 @@ public class Avaliation {
         return avaliation;
     }
 
-
+    /**
+     * Avalia se o cromossomo ainda tem um conflito de horários em específico.
+     *
+     * @param possibleChild      {@link Chromosome} gerado pela árvore e que será verificado.
+     * @param dtoitc             {@link DTOITC} que contém os dados.
+     * @param conflictsPositions vetor de inteiros de duas posições sendo o primeiro inteiro a posição no cromossomo
+     *                           que está o conflito, e o segundo uma outra posição a ser verificada, já que o conflito
+     *                           de horários está entre duas turmas diferentes.
+     * @return true caso o conflito já foi resolvido e false caso contrário.
+     * @throws ClassNotFoundException Caso uma entidade não seja encontrada.
+     */
     public static boolean rateConflicts(Chromosome possibleChild, DTOITC dtoitc, int[] conflictsPositions) throws ClassNotFoundException {
         for (int conflictsPosition : conflictsPositions) {
 
+            //Obtém o turno e professores envolvidos no conflito
             Shift currentShift = dtoitc.getShiftByLessonId(possibleChild.getGenes()[conflictsPosition]);
 
             int[] currentProfessors = dtoitc.getProfessorByLessonId(possibleChild.getGenes()[conflictsPosition]);
 
+            //Vai de 10 em 10 para verificar as outras turmas que podem ter conflito
             for (int i = conflictsPosition % 10; i < possibleChild.getGenes().length; i += 10) {
 
                 if (possibleChild.getGenes()[i] != 0 && i != conflictsPosition) {
@@ -183,9 +206,7 @@ public class Avaliation {
                 }
             }
         }
-
         return true;
     }
-
 
 }

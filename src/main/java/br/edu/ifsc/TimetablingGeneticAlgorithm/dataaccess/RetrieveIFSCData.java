@@ -72,7 +72,7 @@ public class RetrieveIFSCData {
     /**
      * Obtém todos os dados de uma lista de acordo com a sua coluna.
      *
-     * @param nList  {@link NodeList} que representa todos os dadosd dentro de uma das tags do XML.
+     * @param nList  {@link NodeList} que representa todos os dados dentro de uma das tags do XML.
      * @param column Número que representa qual tag está sendo analisada.
      */
     private void getData(NodeList nList, int column) {

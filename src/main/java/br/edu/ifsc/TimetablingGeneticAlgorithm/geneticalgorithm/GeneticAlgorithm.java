@@ -37,7 +37,6 @@ public class GeneticAlgorithm {
         final int joinSetPercentage = config[5];
         int availablePCs = config[8];
 
-
         //Obtém os dados do arquivo XML
         RetrieveIFSCData retrieveIFSCData = new RetrieveIFSCData();
         DTOIFSC dtoifsc = retrieveIFSCData.getAllData();
@@ -53,49 +52,63 @@ public class GeneticAlgorithm {
         //Ajusta os cursos que foram pré-processados para a modelagem do DTOITC
         DTOITC[] sets = preProcessing.splitSet(dtoitc);
 
-        //Armazena os melhores cromossomos e todas as gerações
-
         long startTime = System.currentTimeMillis();
 
+        //Caso haja menos conjuntos do que computadores
         if (sets.length < availablePCs)
             availablePCs = sets.length;
 
         String[] PCsIPs = ConfigReader.readConfiguration(availablePCs, "/home/alunoremoto/TCCWilson/TimetablingGeneticAlgorithm/src/assets/ips.txt");
 
+        //Variavel que controla os conjuntos para cada computador
         int[] numberSetsForPCs = new int[availablePCs];
 
         int numberIndex = 0;
         int totalCourses = 0;
         for (int i = 0; i < sets.length; i++) {
+            /*
+             A ideia é ir atribuindo os conjuntos um por vez para cada computador, e quando chega no ultimo computador,
+             volta para o primeiro para continuar atribuindo os conjuntos
+             */
             numberSetsForPCs[numberIndex]++;
             numberIndex++;
             if (numberIndex == availablePCs)
                 numberIndex = 0;
 
-            totalCourses+= preProcessing.getCourseRelationList().get(i).getName().split("-").length;
+            //Número total de cursos, incluindo os que viraram conjuntos
+            totalCourses += preProcessing.getCourseRelationList().get(i).getName().split("-").length;
         }
 
         int count = 0;
         CountDownLatch latch = new CountDownLatch(availablePCs);
         ConnectionFactory connectionFactory = new ConnectionFactory(availablePCs);
+
         for (int i = 0; i < availablePCs; i++) {
+            //Obtém os dados (DTOITC) somente que o computador da iteração irá utilizar
             DTOITC[] setDTO = new DTOITC[numberSetsForPCs[i]];
             for (int j = 0; j < numberSetsForPCs[i]; j++) {
                 setDTO[j] = sets[count];
                 count++;
             }
+            //Constrói o objeto com os dados e envia para serem processados
             DTODistributedData data = new DTODistributedData(setDTO, config, dtoifsc.getSubjects(), preProcessing.getCourseRelationList());
             connectionFactory.sendSet(PCsIPs[i], data, i, latch);
         }
 
+        //Espera todos os computadores terminarem de processar
         latch.await();
 
         Chromosome globalBests = Chromosome.groupSets(connectionFactory.getFinalChromosomes());
 
+        //Se ao menos 2 computadores processaram, é necessário realizar o pós-processamento
         if (sets.length != 1) {
+
             System.out.println("\n -------------- Pós-processamento -------------- \n");
+
             int initialAvaliation = Avaliation.getInitialAvaliation(totalCourses);
             PostProcessing postProcessing = new PostProcessing(globalBests, dtoitc, dtoifsc, initialAvaliation);
+
+            //Caso haja conflitos para serem resolvidos ainda
             if (postProcessing.hasConflicts(globalBests, initialAvaliation)) {
                 globalBests = postProcessing.resolveConflicts(globalBests, initialAvaliation);
 
@@ -126,7 +139,7 @@ public class GeneticAlgorithm {
 
         long totalFinalTime = (endTime - startTime);
 
-        System.out.println(globalBests.toString());
+        System.out.println(globalBests);
 
         System.out.println("Tempo Total Final: " + totalFinalTime / 1000 + "." + totalFinalTime % 1000 + " segundos");
 
