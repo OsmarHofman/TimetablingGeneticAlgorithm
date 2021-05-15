@@ -16,7 +16,6 @@ public class Lesson {
     private int minWorkingDays; //minWorkingDays = cálculo (periodPerWeek / durationPeriod) do IFSC
     private int studentsNumber;
     private UnavailabilityConstraint[] constraints;
-    //private Room room;
 
     public Lesson() {
     }

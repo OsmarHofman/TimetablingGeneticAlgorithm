@@ -43,6 +43,7 @@ public class GeneticAlgorithm {
         final int totalIterationNumber = config[6];
         final int verificationInterval = config[7];
 
+        //Obtém o número de processadores do computador atual
         int coresNumber = Runtime.getRuntime().availableProcessors();
 
         //Obtém os dados do arquivo XML
@@ -62,7 +63,6 @@ public class GeneticAlgorithm {
 
         //Armazena os melhores cromossomos e todas as gerações
         Chromosome[] globalBests = new Chromosome[sets.length];
-
 
         long startTime = System.currentTimeMillis();
 
@@ -94,11 +94,14 @@ public class GeneticAlgorithm {
             //Número de execuções do While de dentro
             int innerIterator = 0;
 
+            //Número de vezes que o processamento foi reiniciado
             int restartCount = 0;
 
             while (globalBestChromosome.getAvaliation() < initialAvaliation && restartCount < 10) {
+
                 iterator = -1;
                 innerIterator = 0;
+
                 //Inicializando população
                 Chromosome[] population = new Chromosome[populationSize];
                 Arrays.setAll(population, x -> new Chromosome(set.getCourses().length, classSize, set.getLessons(), set.getCourses(), dtoifsc));
@@ -111,7 +114,6 @@ public class GeneticAlgorithm {
 
                 //Inicializando o melhor cromossomo global
                 globalBestChromosome = localBest;
-
 
                 //Melhor avaliação
                 int avaliation = 0;
@@ -169,12 +171,6 @@ public class GeneticAlgorithm {
                             globalBestChromosome = new Chromosome(localBest.getGenes(), localBest.getAvaliation(), localBest.isHasViolatedHardConstraint());
 
                         innerIterator++;
-
-
-//                    System.out.println("Iteração " + (iterator * geracoes + innerIterator));
-
-//            System.out.println("Avaliação: " + localBest.getAvaliation());
-//            System.out.println("Violou: " + localBest.isHasViolatedHardConstraint());
                     }
 
                     //Caso as gerações melhoraram, continua, senão sai dos laços
@@ -191,7 +187,6 @@ public class GeneticAlgorithm {
             System.out.println("################## CONJUNTO " + psc.getCourseRelationList().get(i).getName() + " ##################");
 
             System.out.println("Número de resets: " + (restartCount - 1));
-
 
             System.out.println("\nNúmero total de iterações: " + (iterator * verificationInterval + innerIterator));
 

@@ -106,13 +106,19 @@ public class DTOIFSC {
         return null;
     }
 
-
-    public List<Teacher> getAllTeachersInClass(int conflictClass) {
+    /**
+     * Obtém todos os professores de uma turma com um conflito.
+     *
+     * @param conflictClassId id da turma com o conflito
+     * @return {@link List} de todos os {@link Teacher}.
+     */
+    public List<Teacher> getAllTeachersInClass(int conflictClassId) {
         List<Teacher> teachers = new ArrayList<>();
         for (Lesson lesson : lessons) {
-            if (lesson.getClassesId() == conflictClass) {
+            if (lesson.getClassesId() == conflictClassId) {
                 for (Integer teacherId : lesson.getTeacherId()) {
                     for (Teacher teacher : professors) {
+                        //insere se o professor já não está na lista
                         if (teacher.getId() == teacherId && teachers.stream().noneMatch(x -> x.getId() == teacherId))
                             teachers.add(teacher);
                     }

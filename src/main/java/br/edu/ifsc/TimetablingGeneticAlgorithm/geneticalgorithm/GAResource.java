@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Classe para execução via API
+ */
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping(value = "/ga")

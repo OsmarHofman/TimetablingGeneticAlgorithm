@@ -1,7 +1,6 @@
 package br.edu.ifsc.TimetablingGeneticAlgorithm.preprocessing.entities;
 
 
-//TODO Refatorar para tentar retirar esta classe (método checkListIntersection da CourseRelation)
 public class IsRelated {
     private String name;
     private final boolean hasAdded;

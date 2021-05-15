@@ -6,6 +6,9 @@ import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Shift;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.UnavailabilityConstraint;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOITC;
 
+/**
+ * Utilizada SOMENTE na branch "distributed-client"
+ */
 public class Avaliation {
 
     /**

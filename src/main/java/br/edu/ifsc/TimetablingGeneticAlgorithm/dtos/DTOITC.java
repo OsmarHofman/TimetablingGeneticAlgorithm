@@ -171,7 +171,13 @@ public class DTOITC {
         throw new ClassNotFoundException("Lesson não encontrado");
     }
 
-
+    /**
+     * Indica se uma matéria pertence a um curso.
+     *
+     * @param lessonId Id da matéria.
+     * @param courseId Id do curso.
+     * @return true caso a matéria pertence ao curso e false caso contrário.
+     */
     public boolean isLessonInCourse(int lessonId, int courseId) {
         for (Lesson lesson : this.lessons) {
             if (lesson.getCourseId() == courseId && lesson.getLessonId() == lessonId) {

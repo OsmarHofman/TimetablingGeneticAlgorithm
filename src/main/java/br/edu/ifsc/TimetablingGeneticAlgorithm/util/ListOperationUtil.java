@@ -60,7 +60,7 @@ public class ListOperationUtil {
                 return iteratorProfessor;
             }
         }
-        throw new ClassNotFoundException(ProfessorCourse.class.toString() + " não encontrado");
+        throw new ClassNotFoundException(ProfessorCourse.class + " não encontrado");
     }
 
     /**
@@ -70,7 +70,6 @@ public class ListOperationUtil {
      * @param list    {@link List} de onde serão removidos os itens
      */
     public static void removeItemsOnIndexes(List<Integer> indexes, List<?> list) {
-
         /* inverte os índices para remover os itens de trás para frente e não remover o item incorreto
          * já que a cada vez que um item é removido, a lista é reorganizada. */
         Collections.reverse(indexes);

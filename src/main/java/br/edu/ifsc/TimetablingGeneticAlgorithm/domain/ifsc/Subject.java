@@ -1,7 +1,5 @@
 package br.edu.ifsc.TimetablingGeneticAlgorithm.domain.ifsc;
 
-import java.util.Objects;
-
 /**
  * Classe que representa as disciplinas lecionadas no IFSC
  */

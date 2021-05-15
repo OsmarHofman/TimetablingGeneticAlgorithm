@@ -1,18 +1,17 @@
 package br.edu.ifsc.TimetablingGeneticAlgorithm.dataaccess;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.ifsc.*;
+import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOIFSC;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOIFSC;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Classe que obtém os dados diretamente do XML gerado pelo IFSC
@@ -73,7 +72,7 @@ public class RetrieveIFSCData {
     /**
      * Obtém todos os dados de uma lista de acordo com a sua coluna.
      *
-     * @param nList  {@link NodeList} que representa todos os dadosd dentro de uma das tags do XML.
+     * @param nList  {@link NodeList} que representa todos os dados dentro de uma das tags do XML.
      * @param column Número que representa qual tag está sendo analisada.
      */
     private void getData(NodeList nList, int column) {

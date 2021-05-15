@@ -49,7 +49,7 @@ public class Chromosome {
         this.genes = new int[size * classSize];
         this.avaliation = 0;
         this.hasViolatedHardConstraint = false;
-        this.generateRandom(lessons, courses, classSize, dtoIfsc);
+        this.generateRandom(lessons, courses, classSize, dtoIfsc.getSubjects());
     }
 
     public int[] getGenes() {
@@ -79,11 +79,12 @@ public class Chromosome {
     /**
      * Inicializa o cromossomo aleatóriamente de acordo com {@link Lesson} de cada um dos {@link Course}.
      *
-     * @param lessons   vetor de {@link Lesson} que representa todas as matérias dos cursos.
-     * @param courses   vetor de {@link Course} que representa todos os cursos.
-     * @param classSize valor que representa a quantidade de aulas semanais de todos os cursos.
+     * @param lessons      vetor de {@link Lesson} que representa todas as matérias dos cursos.
+     * @param courses      vetor de {@link Course} que representa todos os cursos.
+     * @param classSize    valor que representa a quantidade de aulas semanais de todos os cursos.
+     * @param ifscSubjects matérias do ifsc para fazer o ajuste das com 1 ou 3 créditos.
      */
-    private void generateRandom(Lesson[] lessons, Course[] courses, int classSize, DTOIFSC dtoifsc) {
+    private void generateRandom(Lesson[] lessons, Course[] courses, int classSize, List<Subject> ifscSubjects) {
         Random random = new Random();
         for (int i = 0; i < courses.length; i++) {
             Lesson[] coursesLesson = new Lesson[courses[i].getLessonsNumber()];
@@ -105,7 +106,7 @@ public class Chromosome {
             count = 0;
 
             //Transforma as matérias com aulas impares (1 ou 3 créditos) em pares (2 ou 4 créditos)
-            coursesLesson = this.joinOddLessons(coursesLesson, dtoifsc.getSubjects());
+            coursesLesson = this.joinOddLessons(coursesLesson, ifscSubjects);
 
             for (Lesson lesson : coursesLesson) {
                 //Esse cálculo representa quantas vezes por semana uma matéria deve estar em um curso
@@ -489,24 +490,6 @@ public class Chromosome {
 
         return violatedConstraints;
     }
-
-    public static Chromosome groupSets(Chromosome[] chromosomes) {
-        int geneSize = 0;
-        for (Chromosome chromosome : chromosomes) {
-            geneSize += chromosome.getGenes().length;
-        }
-
-        Chromosome groupedChromosome = new Chromosome(geneSize, 0);
-        int finalPos = 0;
-        for (Chromosome chromosome : chromosomes) {
-            System.arraycopy(chromosome.getGenes(), 0, groupedChromosome.getGenes(), finalPos, chromosome.getGenes().length);
-            finalPos += chromosome.getGenes().length;
-        }
-
-
-        return groupedChromosome;
-    }
-
 
     @Override
     public String toString() {

@@ -5,6 +5,7 @@ import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Lesson;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.UnavailabilityConstraint;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOITC;
 import br.edu.ifsc.TimetablingGeneticAlgorithm.domain.itc.Shift;
+
 import java.util.concurrent.CountDownLatch;
 
 public class Avaliation {
@@ -69,7 +70,6 @@ public class Avaliation {
      */
     private static void rate(Chromosome[] population, DTOITC dtoitc, boolean[][] relationMatrix, int initialAvaliation, CountDownLatch latch) {
         new Thread(() -> {
-            //System.out.println(Thread.currentThread() + " ativa");
             int avaliation;
 
             for (Chromosome chromosome : population) {
@@ -90,8 +90,6 @@ public class Avaliation {
                     System.err.println("Erro na avaliação de indisponibilidade de professores!");
                     e.printStackTrace();
                 }
-
-                //avaliation -= curriculumCompactness(chromosome);
 
                 chromosome.setAvaliation(avaliation);
 
@@ -204,9 +202,11 @@ public class Avaliation {
                         for (UnavailabilityConstraint constraint : lesson.getConstraints()) {
                             if (constraint.getId() == professor) {
 
+                                //Fazendo o cálculo para obter o dia do relationIndex
                                 int day = Math.floorDiv(relationIndex, 6);
                                 if (day == constraint.getDay()) {
 
+                                    //Fazendo o cálculo para obter o turno
                                     int dayPeriod = shift.ordinal() * 2 + periodOffset;
                                     if (dayPeriod == constraint.getDayPeriod()) {
                                         avaliation += 3;

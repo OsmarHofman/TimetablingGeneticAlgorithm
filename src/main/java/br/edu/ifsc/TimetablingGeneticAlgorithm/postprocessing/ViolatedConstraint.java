@@ -10,6 +10,9 @@ import br.edu.ifsc.TimetablingGeneticAlgorithm.util.ConvertFactory;
 
 import java.util.*;
 
+/**
+ * Utilizada SOMENTE na branch "distributed-client"
+ */
 public class ViolatedConstraint {
 
     int professorId;

@@ -6,6 +6,9 @@ import br.edu.ifsc.TimetablingGeneticAlgorithm.dtos.DTOITC;
 
 import java.util.*;
 
+/**
+ * Utilizada SOMENTE na branch "distributed-client"
+ */
 public class PostProcessing {
     private Chromosome chromosome;
 
@@ -32,7 +35,6 @@ public class PostProcessing {
             for (int j = 0; j < chromosome.getGenes().length; j += 10) {
                 if (dtoitc.isLessonInCourse(chromosome.getGenes()[j], courseWithConflict)) {
                     Chromosome child = generateChild(chromosome, j, currentViolatedConstraint, dtoitc, perfectResult);
-                    //FIXME verificar para passas o J como parametro no recursivo para gerar um filho em uma posição diferente do qual ja tentou
                     if (child == null) {
                         chromosomeStack.pop();
                         return depthSearchTree(chromosomeStack, violatedConstraints, dtoitc, dtoifsc, violatedConstraintsIndex, perfectResult);
